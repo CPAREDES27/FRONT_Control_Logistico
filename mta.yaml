@@ -54,6 +54,10 @@ modules:
       - tasacomvaledeviveres.zip
       name: tasacomvaledeviveres
       target-path: resources/
+    - artifacts:
+      - comtasalogregistrocomb.zip
+      name: comtasalogregistrocomb
+      target-path: resources/
 - name: tasacomcontrollogistico
   type: html5
   path: controllogistico
@@ -77,6 +81,16 @@ modules:
 - name: tasacomvaledeviveres
   type: html5
   path: valedeviveres
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comtasalogregistrocomb
+  type: html5
+  path: logregistrocomb
   build-parameters:
     build-result: dist
     builder: custom
