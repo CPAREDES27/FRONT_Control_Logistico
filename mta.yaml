@@ -58,6 +58,10 @@ modules:
       - comtasalogregistrocomb.zip
       name: comtasalogregistrocomb
       target-path: resources/
+    - artifacts:
+      - comtasareportemdatcomb.zip
+      name: comtasareportemdatcomb
+      target-path: resources/
 - name: tasacomcontrollogistico
   type: html5
   path: controllogistico
@@ -91,6 +95,16 @@ modules:
 - name: comtasalogregistrocomb
   type: html5
   path: logregistrocomb
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comtasareportemdatcomb
+  type: html5
+  path: reportemdatcomb
   build-parameters:
     build-result: dist
     builder: custom
