@@ -1,0 +1,151 @@
+<mvc:View
+	controllerName="com.tasa.consultahorom.controller.Worklist"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic"
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form">
+
+	<semantic:SemanticPage
+		id="page"
+		headerPinnable="false"
+		toggleHeaderOnTitleClick="false">
+
+		<semantic:titleHeading>
+			<Title
+				text="{i18n>worklistTitle}"
+				level="H2"/>
+		</semantic:titleHeading>
+
+		<semantic:headerContent>
+			<f:Form id="idFormHeader" >
+				<f:title>
+					<core:Title text="Datos de Selección" />
+				</f:title>
+				<f:formContainers>
+					<f:FormContainer >
+						<f:formElements>
+							<f:FormElement label="Embarcación">
+								<f:fields>
+									<Input 
+										placeholder="Ingrese Embarcación"
+										showValueHelp="true" />
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Fechas ">
+								<f:fields>
+									<DateRangeSelection 
+										placeholder="Ingrese rango de fecha"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement >
+								<f:fields>
+									<Button text="buscar" type="Emphasized" press="onBusqueda"/>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+				</f:formContainers>
+				<f:layout>
+					<f:ResponsiveGridLayout
+						labelSpanXL="2"
+						labelSpanL="3"
+						labelSpanM="4"
+						labelSpanS="12"
+						adjustLabelSpan="false"
+						emptySpanXL="0"
+						emptySpanL="0"
+						emptySpanM="0"
+						emptySpanS="0"
+						columnsXL="2"
+						columnsL="2"
+						columnsM="1"
+						singleContainerFullSize="false" />
+				</f:layout>
+			</f:Form>
+		</semantic:headerContent>
+
+		<semantic:content>
+			<Table
+				id="table"
+				width="auto"
+				items="{
+					path: '/Categories',
+					sorter: {
+						path: 'CategoryID',
+						descending: false
+					}
+				}"
+				noDataText="{worklistView>/tableNoDataText}"
+				busyIndicatorDelay="{worklistView>/tableBusyDelay}"
+				growing="true"
+				growingScrollToLoad="true"
+				updateFinished=".onUpdateFinished">
+
+				<headerToolbar>
+					<OverflowToolbar>
+						<ToolbarSpacer />
+						<Button icon="sap-icon://excel-attachment" type="Emphasized" press="onExportar" />
+					</OverflowToolbar>
+				</headerToolbar>
+
+				<columns>
+					<Column >
+						<Text text="Nro."/>
+					</Column>
+					<Column >
+						<Text text="Fecha"/>
+					</Column>
+					<Column >
+						<Text text="Motor Principal"/>
+					</Column>
+					<Column >
+						<Text text="Motor Auxiliar 1"/>
+					</Column>
+					<Column >
+						<Text text="Motor Auxiliar 2"/>
+					</Column>
+					<Column >
+						<Text text="Motor Auxiliar 3"/>
+					</Column>
+					<Column >
+						<Text text="Motor Auxiliar 4"/>
+					</Column>
+					<Column >
+						<Text text="Motor Auxiliar 5"/>
+					</Column>
+					<Column >
+						<Text text="Panga"/>
+					</Column>
+					<Column >
+						<Text text="Flujómetro de panga"/>
+					</Column>
+
+				</columns>
+
+				<items>
+					<ColumnListItem
+						type="Navigation"
+						press=".onPress">
+						<cells>
+							<ObjectStatus
+								state="Information"
+								text="{}"
+							/>
+							<Text />
+							<Text />
+							<Text />
+							<Text />
+							<Text />
+							<Text />
+							<Text />
+							<Text />
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</semantic:content>
+
+	</semantic:SemanticPage>
+
+</mvc:View>
