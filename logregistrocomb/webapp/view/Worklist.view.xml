@@ -1,0 +1,183 @@
+<mvc:View
+	controllerName="com.tasa.logregistrocomb.controller.Worklist"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic"
+	xmlns:f="sap.ui.layout.form">
+
+	<semantic:SemanticPage
+		id="page"
+		showFooter="true">
+
+		<semantic:titleHeading>
+			<Title
+				text="{i18n>worklistTitle}"
+				level="H2"/>
+		</semantic:titleHeading>
+
+		<semantic:headerContent>
+			<f:Form id="idFormHeader" >
+				<f:title>
+					<core:Title text="Datos de Selección" />
+				</f:title>
+				<f:formContainers>
+					<f:FormContainer >
+						<f:formElements>
+							<f:FormElement label="Marea">
+								<f:fields>
+									<Input  
+										placeholder="Ingrese Marea"/>
+									<Input 
+										placeholder="Ingrese Marea"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Embarcación">
+								<f:fields>
+									<Input 
+										placeholder="Ingrese Embarcación"
+										showValueHelp="true" />
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Fecha de contabilización">
+								<f:fields>
+									<DateRangeSelection 
+										placeholder="Ingrese rango de fecha"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Tipo de imputación">
+								<f:fields>
+									<Select 
+										placeholder="Ingrese rango de fecha"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Estado">
+								<f:fields>
+									<Select 
+										placeholder="Ingrese rango de fecha"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Cantidad de aciertos">
+								<f:fields>
+									<Input 
+										placeholder="Ingrese número de registros"
+										type="Number"/>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+				</f:formContainers>
+				<f:layout>
+					<f:ResponsiveGridLayout
+						labelSpanXL="2"
+						labelSpanL="3"
+						labelSpanM="4"
+						labelSpanS="12"
+						adjustLabelSpan="false"
+						emptySpanXL="0"
+						emptySpanL="0"
+						emptySpanM="0"
+						emptySpanS="0"
+						columnsXL="2"
+						columnsL="2"
+						columnsM="1"
+						singleContainerFullSize="false" />
+				</f:layout>
+			</f:Form>
+		</semantic:headerContent>
+
+		<semantic:content>
+			<Table
+				id="table"
+				width="auto"
+				mode="MultiSelect"
+				items="{
+					path: '/Customers',
+					sorter: {
+						path: 'CompanyName',
+						descending: false
+					}
+				}"
+				noDataText="{worklistView>/tableNoDataText}"
+				busyIndicatorDelay="{worklistView>/tableBusyDelay}"
+				growing="true"
+				growingScrollToLoad="true"
+				updateFinished=".onUpdateFinished">
+
+				<!-- <headerToolbar>
+					<OverflowToolbar>
+						<Title
+							id="tableHeader"
+							text="{worklistView>/worklistTableTitle}"
+							level="H3"/>
+						<ToolbarSpacer />
+						<SearchField
+							id="searchField"
+							tooltip="{i18n>worklistSearchTooltip}"
+							search=".onSearch">
+							<layoutData>
+								<OverflowToolbarLayoutData
+									maxWidth="200px"
+									priority="NeverOverflow"/>
+							</layoutData>
+						</SearchField>
+					</OverflowToolbar>
+				</headerToolbar> -->
+
+				<columns>
+					<Column >
+						<Text text="Marea"/>
+					</Column>
+					<Column >
+						<Text text="Embarcación"/>
+					</Column>
+					<Column >
+						<Text text="Fecha de contabilización"/>
+					</Column>
+					<Column >
+						<Text text="Doc. SAP generado"/>
+					</Column>
+					<Column >
+						<Text text="Tipo Imputación"/>
+					</Column>
+					<Column >
+						<Text text="Cantidad consumida"/>
+					</Column>
+					<Column >
+						<Text text="Observaciones"/>
+					</Column>
+					<Column >
+						<Text text="Estado"/>
+					</Column>
+				</columns>
+
+				<items>
+					<ColumnListItem
+						type="Active"
+						press=".onPress">
+						<cells>
+							<ObjectStatus
+								text="{}"
+								state="Information"/>
+							<Text text="{}" />
+							<Text text="{}" />
+							<Text text="{}" />
+							<Text text="{}" />
+							<Text text="{}" />
+							<Text text="{}" />
+							<ObjectStatus 
+								text="{}"
+								state="Warning" />
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</semantic:content>
+
+		<semantic:positiveAction>
+			<semantic:PositiveAction text="Anular consumo" press="onAnularConsumo" />
+		</semantic:positiveAction>
+
+	</semantic:SemanticPage>
+
+</mvc:View>
