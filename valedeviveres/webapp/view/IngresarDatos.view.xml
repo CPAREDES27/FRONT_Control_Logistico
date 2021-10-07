@@ -1,0 +1,185 @@
+<mvc:View
+    controllerName="tasa.com.valedeviveres.controller.IngresarDatos" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:f="sap.f"
+	xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout"
+	xmlns:t="sap.ui.table" xmlns:dnd="sap.ui.core.dnd" height="100%" xmlns:form="sap.ui.layout.form" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:ui="sap.ui.table" xmlns:filterbar="sap.ui.comp.filterbar" xmlns:l="sap.ui.layout" xmlns:variants="sap.ui.comp.variants">
+    
+		<App id="app">
+			<pages>
+				<Page id="page" title="{i18n>Vale Viveres}">
+					<content>
+                        <form:Form width="100%" editable="true" visible="true">
+                            <form:title/>
+                            <form:formContainers>
+                                <form:FormContainer visible="true">
+                                    <form:formElements>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Temporada" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <ComboBox editable="true" enabled="true" selectedKey="{modelReqPesca>/SearchPlanta/INPRP}" visible="true" width="50%" valueState="None" maxWidth="100%">
+                                                    <items>
+                                                        <core:Item text="" enabled="true" key="Item"/>
+                                                        <core:Item text="" enabled="true" key="Item"/>
+                                                    </items>
+                                                </ComboBox>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Fecha del vale" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" value="{modelReqPesca>/Search/WERKS}" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogArmadorComercial"/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Planta" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" value="{modelReqPesca>/Search/WERKS}" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogArmadorComercial"/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Centro" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" value="{modelReqPesca>/Search/WERKS}" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogArmadorComercial"/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Alamacén" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" value="{modelReqPesca>/Search/WERKS}" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogEmbarcacion"/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Almacen externo" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" value="{modelReqPesca>/Search/WERKS}" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogArmadorComercial"/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Embarcación" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" value="{modelReqPesca>/Search/WERKS}" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogPlanta"/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Matricula" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" showValueHelp="false" value="{modelReqPesca>/SearchPlanta/DSPTO}" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Armador comerc" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" value="{modelReqPesca>/Search/WERKS}" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogAlmacen"/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Inicio travesía" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <DatePicker width="50%" displayFormat="dd/MM/yyyy" value="{modelReqPesca>/Search/FHREQ}" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="ddMMyyyy"/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Fin de travesía" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <DatePicker width="50%" displayFormat="dd/MM/yyyy" value="{modelReqPesca>/Search/FHREQ}" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="ddMMyyyy"/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Durancion travesía" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" value="{modelReqPesca>/Search/WERKS}" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogArmadorComercial"/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Nro. Tripulantes" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" showValueHelp="false" value="{modelReqPesca>/SearchPlanta/DSPTO}" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Cocinero" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" value="{modelReqPesca>/Search/WERKS}" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogAlmacen"/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Costo viveres día" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" showValueHelp="false" value="{modelReqPesca>/SearchPlanta/DSPTO}" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Proveedor" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <ComboBox editable="true" enabled="true" selectedKey="{modelReqPesca>/SearchPlanta/INPRP}" visible="true" width="50%" valueState="None" maxWidth="100%">
+                                                    <items>
+                                                        <core:Item text="Propia" enabled="true" key="Item"/>
+                                                        <core:Item text="Tercera" enabled="true" key="Item"/>
+                                                    </items>
+                                                </ComboBox>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Observaciones" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" showValueHelp="false" value="{modelReqPesca>/SearchPlanta/DSPTO}" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                                <form:fields>
+                                                    <Button text="Anterior" type="Default" iconFirst="false" width="25%" enabled="true" visible="true" iconDensityAware="false" press="_onBuscarButtonPress"/>
+                                                </form:fields>
+                                                <form:fields>
+                                                    <Button text="Siguiente" type="Default" iconFirst="false" width="25%" enabled="true" visible="true" iconDensityAware="false" press="_onBuscarButtonPress"/>
+                                                </form:fields>
+                                                <form:fields>
+                                                    <Button text="Salir" type="Default" iconFirst="false" width="25%" enabled="true" visible="true" iconDensityAware="false" press="_onBuscarButtonPress"/>
+                                                </form:fields>
+                                        </form:FormElement>
+                                    </form:formElements>
+                                    <form:title/>
+                                </form:FormContainer>
+                            </form:formContainers>
+                            <form:layout>
+                                <form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>
+                            </form:layout>
+                        </form:Form>
+                    </content>
+				</Page>
+			</pages>
+		</App>
+</mvc:View>
