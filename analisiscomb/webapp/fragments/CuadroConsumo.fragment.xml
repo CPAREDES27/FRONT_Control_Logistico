@@ -1,0 +1,23 @@
+<c:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:c="sap.ui.core"
+>
+    <Dialog
+        title="Cuadro de consumo">
+        <beginButton>
+            <Button text="Aceptar" type="Emphasized"  />
+        </beginButton>
+        <buttons>
+        </buttons>
+        <content>
+        </content>
+        <customHeader>
+        </customHeader>
+        <endButton>
+            <Button text="Cerrar" type="Reject" press="onCloseDialog" />
+        </endButton>
+        <subHeader>
+        </subHeader>
+    </Dialog>
+
+</c:FragmentDefinition>

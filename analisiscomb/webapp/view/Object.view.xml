@@ -1,0 +1,350 @@
+<mvc:View
+	controllerName="com.tasa.analisiscomb.controller.Object"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns:semantic="sap.f.semantic"
+	xmlns:layout="sap.ui.layout"
+	xmlns:table="sap.ui.table"
+	xmlns:f="sap.ui.layout.form">
+
+	<semantic:SemanticPage
+		id="page"
+		busy="{objectView>/busy}"
+		busyIndicatorDelay="{objectView>/delay}">
+
+		<semantic:titleHeading>
+			<Title
+				text="Datos de marea {CategoryID}"
+				level="H2"/>
+		</semantic:titleHeading>
+
+		<semantic:headerContent>
+			<f:Form >
+				<f:title>
+					<core:Title text="Datos de marea" />
+				</f:title>
+				<f:formContainers>
+					<f:FormContainer >
+						<f:formElements>
+							<f:FormElement label="Marea">
+								<f:fields>
+									<Input value="{marea}" editable="false" />
+								</f:fields>
+							</f:FormElement>
+							
+							<f:FormElement label="Embarcación">
+								<f:fields>
+									<Input value="{embarcacion}" editable="false" />
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+					<f:FormContainer >
+						<f:formElements>
+							<f:FormElement label="Motivo de marea">
+								<f:fields>
+									<Input editable="false" />
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Cantidad Calas">
+								<f:fields>
+									<Input editable="false" />
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Cantidad descarga">
+								<f:fields>
+									<Input editable="false" />
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Fecha producción">
+								<f:fields>
+									<Input editable="false" />
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+				</f:formContainers>
+				<f:layout>
+					<f:ResponsiveGridLayout
+						labelSpanXL="2"
+						labelSpanL="3"
+						labelSpanM="4"
+						labelSpanS="12"
+						adjustLabelSpan="false"
+						emptySpanXL="0"
+						emptySpanL="0"
+						emptySpanM="0"
+						emptySpanS="0"
+						columnsXL="2"
+						columnsL="2"
+						columnsM="1"
+						singleContainerFullSize="false" />
+				</f:layout>
+			</f:Form>
+		</semantic:headerContent>
+		
+		<semantic:content>
+			<layout:Grid defaultSpan="XL12 L12 M12 S12" >
+
+				<layout:VerticalLayout>
+					<layout:layoutData>
+						<layout:GridData span="XL12 L12 M12 S12"/>
+					</layout:layoutData>
+					<table:Table id="table1" 
+						rows="{/lista}"
+						busyIndicatorDelay="{worklistView>/tableBusyDelay}"
+						rowsUpdated=".onUpdateFinished"
+						visibleRowCount="5">
+						<table:extension>
+							<OverflowToolbar style="Clear">
+								<Title text="Cuadro de análisis"/>
+								<ToolbarSpacer/>
+							</OverflowToolbar>
+						</table:extension>
+						<table:columns>
+							<table:Column width="8rem">
+								<table:multiLabels>
+									<Label text="" textAlign="Center" />
+									<Label text="Evento" textAlign="Center" />
+								</table:multiLabels>
+								<table:template>
+									<Text text="{}"/>     
+								</table:template>
+							</table:Column>
+							<table:Column headerSpan="4" hAlign="Center" width="4rem">
+								<table:multiLabels>
+									<Label text="" textAlign="Center" />
+									<Label text="Fecha/hora Inicio" textAlign="Center" />
+								</table:multiLabels>
+								<table:template>
+									<Text text="{}"/>
+								</table:template>
+							</table:Column>
+							<table:Column headerSpan="4" hAlign="End" width="4rem">
+								<table:multiLabels>
+									<Label text="" />
+									<Label text="Stock Combustible" />
+								</table:multiLabels>
+								<table:template>
+									<Text text="{}"/>
+								</table:template>
+							</table:Column>
+							<table:Column headerSpan="4" hAlign="End" width="4rem">
+								<table:multiLabels>
+									<Label text="Horómetros" />
+									<Label text="MP" textAlign="Center" />
+								</table:multiLabels>
+								<table:template>
+									<Text text="{inop}"/>
+								</table:template>
+							</table:Column>
+							<table:Column headerSpan="4" hAlign="End" width="4rem">
+								<table:multiLabels>
+									<Label text="Horómetros" />
+									<Label text="A1" />
+								</table:multiLabels>
+								<table:template>
+									<Text text="{otro}"/>
+								</table:template>
+							</table:Column>
+							<table:Column headerSpan="2" hAlign="Center" width="4rem">
+								<table:multiLabels >
+									<Label text="Horómetros" />
+									<Label text="A2" />
+								</table:multiLabels>
+								<table:template>
+									<Text text="empty string"/>
+								</table:template>
+							</table:Column>
+							<table:Column headerSpan="2" width="4rem">
+								<table:multiLabels>
+									<Label text="Horómetros" />
+									<Label text="A3" />
+								</table:multiLabels>
+								<table:template>
+									<Text text="empty string"/>
+								</table:template>
+							</table:Column>
+							<table:Column headerSpan="4" hAlign="Center" width="4rem">
+								<table:multiLabels>
+									<Label text="Horómetros" />
+									<Label text="A4" />
+								</table:multiLabels>
+								<table:template>
+									<Text text="empty string"/>
+								</table:template>
+							</table:Column>
+							<table:Column headerSpan="4" width="4rem">
+								<table:multiLabels>
+									<Label text="Horómetros" />
+									<Label text="Panga" />
+								</table:multiLabels>
+								<table:template>
+									<Text text="empty string"/>
+								</table:template>
+							</table:Column>
+							<table:Column headerSpan="4" width="4rem">
+								<table:multiLabels>
+									<Label text="Horómetros" />
+									<Label text="Flujo." />
+								</table:multiLabels>
+								<table:template>
+									<Text text="empty string"/>
+								</table:template>
+							</table:Column>
+							
+							<table:Column headerSpan="2">
+								<table:multiLabels>
+									<Label text="" />
+									<Label text="Suministros" />
+								</table:multiLabels>
+								<table:template>
+									<Text text="empty string"/>
+								</table:template>
+							</table:Column>
+
+						</table:columns>
+					</table:Table>
+
+					<table:Table id="table2" 
+						rows="{/lista}"
+						busyIndicatorDelay="{worklistView>/tableBusyDelay}"
+						rowsUpdated=".onUpdateFinished"
+						visibleRowCount="5">
+						<table:extension>
+							<OverflowToolbar style="Clear">
+								<Title text="Reporte y carga de consumos"/>
+								<ToolbarSpacer/>
+							</OverflowToolbar>
+						</table:extension>
+						<table:columns>
+							<table:Column headerSpan="4" hAlign="Center" width="4rem">
+								<table:multiLabels>
+									<Label text="" textAlign="Center" />
+									<Label text="Fase" textAlign="Center" />
+								</table:multiLabels>
+								<table:template>
+									<Text text="{asig}"/>
+								</table:template>
+							</table:Column>
+							<table:Column headerSpan="4" hAlign="End" width="4rem">
+								<table:multiLabels>
+									<Label text="" />
+									<Label text="Horas Ope. (hr)" />
+								</table:multiLabels>
+								<table:template>
+									<Text text="{pesc}"/>
+								</table:template>
+							</table:Column>
+							<table:Column headerSpan="4" hAlign="End" width="4rem">
+								<table:multiLabels>
+									<Label text="" />
+									<Label text="Consumo (Gln)" textAlign="Center" />
+								</table:multiLabels>
+								<table:template>
+									<Text text="{inop}"/>
+								</table:template>
+							</table:Column>
+							<table:Column headerSpan="4" hAlign="End" width="4rem">
+								<table:multiLabels>
+									<Label text="Horómetros" />
+									<Label text="MP" />
+								</table:multiLabels>
+								<table:template>
+									<Text text="{otro}"/>
+								</table:template>
+							</table:Column>
+							<table:Column headerSpan="2" hAlign="Center" width="4rem">
+								<table:multiLabels >
+									<Label text="Horómetros" />
+									<Label text="A1" />
+								</table:multiLabels>
+								<table:template>
+									<Text text="empty string"/>
+								</table:template>
+							</table:Column>
+							<table:Column headerSpan="2" width="4rem">
+								<table:multiLabels>
+									<Label text="Horómetros" />
+									<Label text="A2" />
+								</table:multiLabels>
+								<table:template>
+									<Text text="empty string"/>
+								</table:template>
+							</table:Column>
+							<table:Column headerSpan="4" hAlign="Center" width="4rem">
+								<table:multiLabels>
+									<Label text="Horómetros" />
+									<Label text="A3" />
+								</table:multiLabels>
+								<table:template>
+									<Text text="empty string"/>
+								</table:template>
+							</table:Column>
+							<table:Column headerSpan="4" width="4rem">
+								<table:multiLabels>
+									<Label text="Horómetros" />
+									<Label text="A4" />
+								</table:multiLabels>
+								<table:template>
+									<Text text="empty string"/>
+								</table:template>
+							</table:Column>
+							<table:Column headerSpan="4" width="4rem">
+								<table:multiLabels>
+									<Label text="Horómetros" />
+									<Label text="Panga" />
+								</table:multiLabels>
+								<table:template>
+									<Text text="empty string"/>
+								</table:template>
+							</table:Column>
+							<table:Column headerSpan="4" width="4rem">
+								<table:multiLabels>
+									<Label text="Horómetros" />
+									<Label text="Fluj" />
+								</table:multiLabels>
+								<table:template>
+									<Text text="empty string"/>
+								</table:template>
+							</table:Column>
+							<table:Column headerSpan="2" hAlign="Center">
+								<table:multiLabels>
+									<Label text="(Gln/Hr)" />
+									<Label text="Real" />
+								</table:multiLabels>
+								<table:template>
+									<Text text="empty string"/>
+								</table:template>
+							</table:Column>
+							<table:Column headerSpan="2">
+								<table:multiLabels>
+									<Label text="(Gln/Hr)" />
+									<Label text="Teórico" />
+								</table:multiLabels>
+								<table:template>
+									<Text text="empty string"/>
+								</table:template>
+							</table:Column>
+							<table:Column headerSpan="4" hAlign="Center">
+								<table:multiLabels>
+									<Label text="" />
+									<Label text="" />
+								</table:multiLabels>
+								<table:template>
+									<Button icon="sap-icon://document-text"/>
+								</table:template>
+							</table:Column>
+							
+						</table:columns>
+					</table:Table>
+					
+				</layout:VerticalLayout>
+			</layout:Grid>
+		</semantic:content>
+
+
+	</semantic:SemanticPage>
+
+</mvc:View>

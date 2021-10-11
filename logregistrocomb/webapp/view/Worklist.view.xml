@@ -32,6 +32,24 @@
 										placeholder="Ingrese Marea"/>
 								</f:fields>
 							</f:FormElement>
+							
+							<f:FormElement label="Fecha de contabilización">
+								<f:fields>
+									<DateRangeSelection 
+										placeholder="Ingrese rango de fecha"/>
+								</f:fields>
+							</f:FormElement>
+							
+							<f:FormElement label="Estado">
+								<f:fields>
+									<Select 
+										placeholder="Ingrese rango de fecha"/>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+					<f:FormContainer >
+						<f:formElements>
 							<f:FormElement label="Embarcación">
 								<f:fields>
 									<Input 
@@ -39,19 +57,7 @@
 										showValueHelp="true" />
 								</f:fields>
 							</f:FormElement>
-							<f:FormElement label="Fecha de contabilización">
-								<f:fields>
-									<DateRangeSelection 
-										placeholder="Ingrese rango de fecha"/>
-								</f:fields>
-							</f:FormElement>
 							<f:FormElement label="Tipo de imputación">
-								<f:fields>
-									<Select 
-										placeholder="Ingrese rango de fecha"/>
-								</f:fields>
-							</f:FormElement>
-							<f:FormElement label="Estado">
 								<f:fields>
 									<Select 
 										placeholder="Ingrese rango de fecha"/>
@@ -62,6 +68,15 @@
 									<Input 
 										placeholder="Ingrese número de registros"
 										type="Number"/>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+					<f:FormContainer >
+						<f:formElements>
+							<f:FormElement >
+								<f:fields>
+									<Button text="Buscar" type="Emphasized" press="onBusqueda" />
 								</f:fields>
 							</f:FormElement>
 						</f:formElements>
@@ -104,13 +119,10 @@
 				growingScrollToLoad="true"
 				updateFinished=".onUpdateFinished">
 
-				<!-- <headerToolbar>
+				<headerToolbar>
 					<OverflowToolbar>
-						<Title
-							id="tableHeader"
-							text="{worklistView>/worklistTableTitle}"
-							level="H3"/>
 						<ToolbarSpacer />
+						<Button icon="sap-icon://excel-attachment" type="Emphasized" press="onExportar" />
 						<SearchField
 							id="searchField"
 							tooltip="{i18n>worklistSearchTooltip}"
@@ -122,7 +134,7 @@
 							</layoutData>
 						</SearchField>
 					</OverflowToolbar>
-				</headerToolbar> -->
+				</headerToolbar>
 
 				<columns>
 					<Column >
@@ -140,7 +152,7 @@
 					<Column >
 						<Text text="Tipo Imputación"/>
 					</Column>
-					<Column >
+					<Column hAlign="End" >
 						<Text text="Cantidad consumida"/>
 					</Column>
 					<Column >

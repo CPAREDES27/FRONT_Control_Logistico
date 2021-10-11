@@ -7,9 +7,7 @@
 	xmlns:f="sap.ui.layout.form">
 
 	<semantic:SemanticPage
-		id="page"
-		headerPinnable="false"
-		toggleHeaderOnTitleClick="false">
+		id="page">
 
 		<semantic:titleHeading>
 			<Title
@@ -32,12 +30,20 @@
 										showValueHelp="true" />
 								</f:fields>
 							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+					<f:FormContainer >
+						<f:formElements>
 							<f:FormElement label="Fechas ">
 								<f:fields>
 									<DateRangeSelection 
 										placeholder="Ingrese rango de fecha"/>
 								</f:fields>
 							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+					<f:FormContainer >
+						<f:formElements>
 							<f:FormElement >
 								<f:fields>
 									<Button text="buscar" type="Emphasized" press="onBusqueda"/>
@@ -86,6 +92,16 @@
 					<OverflowToolbar>
 						<ToolbarSpacer />
 						<Button icon="sap-icon://excel-attachment" type="Emphasized" press="onExportar" />
+						<SearchField
+							id="searchField"
+							tooltip="{i18n>worklistSearchTooltip}"
+							search=".onSearch">
+							<layoutData>
+								<OverflowToolbarLayoutData
+									maxWidth="200px"
+									priority="NeverOverflow"/>
+							</layoutData>
+						</SearchField>
 					</OverflowToolbar>
 				</headerToolbar>
 

@@ -160,6 +160,14 @@ sap.ui.define([
 			}
 		},
 
+		/**
+		 * Buscar seleccion
+		 * @param {*} oEvent 
+		 */
+		onBuscar:function(oEvent){
+
+		},
+
 
 		/**
 		 * Exportacion a excell
@@ -167,7 +175,17 @@ sap.ui.define([
 		 */
 		onExportar:function(oEvent){
 
+		},
+
+		/**
+		 * Filtro de tabla
+		 * @param {*} oEvent 
+		 */
+		onSearch:function(oEvent){
+
 		}
+
+
 
 	});
 });

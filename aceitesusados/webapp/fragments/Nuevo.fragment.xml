@@ -1,0 +1,120 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form">
+    <Dialog
+        title="{worklistView>/titleDialog}">
+        <beginButton>
+            <Button type="Emphasized" icon="sap-icon://save" text="Guardar" press="onGuardar" />
+        </beginButton>
+        <content>
+            <f:Form >
+				<f:formContainers>
+					<f:FormContainer >
+						<f:formElements>
+                            <f:FormElement label="Nro. Reserva" visible="{worklistView>/bVisibleReserva}">
+								<f:fields>
+									<Input  
+                                        value="{/reserva}"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Fecha de reserva">
+								<f:fields>
+									<DatePicker 
+										placeholder="Ingrese rango de fecha"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Embarcación">
+								<f:fields>
+									<Input
+                                        value="{/embarcacion}" 
+										placeholder="Ingrese Embarcación"
+										showValueHelp="true" />
+								</f:fields>
+							</f:FormElement>
+                            <f:FormElement label="Material">
+								<f:fields>
+									<Select />
+								</f:fields>
+							</f:FormElement>
+                            <f:FormElement label="Tipo Material">
+								<f:fields>
+									<Select />
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Centro">
+								<f:fields>
+									<Input  
+										placeholder="Ingrese Centro"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Almacén">
+								<f:fields>
+									<Select 
+										placeholder="Ingrese Almacén"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Nro. Ticket">
+								<f:fields>
+									<Input 
+										placeholder="Ingrese Nro. Ticket"
+                                        type="Number"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Cantidad galones">
+								<f:fields>
+									<Input 
+										placeholder="Ingrese Cant. de galones"
+										type="Number"/>
+								</f:fields>
+							</f:FormElement>
+                            <f:FormElement label="Cantidad barriles">
+								<f:fields>
+									<Input 
+										placeholder="Ingrese Cant. de barriles"
+										type="Number"/>
+								</f:fields>
+							</f:FormElement>
+                            <f:FormElement label="Nro. Guía Remisión">
+								<f:fields>
+									<Input 
+										placeholder="Ingrese guía remisión"/>
+								</f:fields>
+							</f:FormElement>
+                            <f:FormElement label="Total pesos en Kilos">
+								<f:fields>
+									<Input 
+										placeholder="Ingrese peso"
+										type="Number"/>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+				</f:formContainers>
+				<f:layout>
+					<f:ResponsiveGridLayout
+						labelSpanXL="2"
+						labelSpanL="3"
+						labelSpanM="4"
+						labelSpanS="12"
+						adjustLabelSpan="false"
+						emptySpanXL="0"
+						emptySpanL="0"
+						emptySpanM="0"
+						emptySpanS="0"
+						columnsXL="2"
+						columnsL="2"
+						columnsM="1"
+						singleContainerFullSize="false" />
+				</f:layout>
+			</f:Form>
+        </content>
+        <customHeader>
+        </customHeader>
+        <endButton>
+            <Button type="Reject" icon="sap-icon://cancel" text="Cerrar" press="onClose" />
+        </endButton>
+        <subHeader>
+        </subHeader>
+    </Dialog>
+</core:FragmentDefinition>

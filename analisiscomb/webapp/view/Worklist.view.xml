@@ -1,0 +1,291 @@
+<mvc:View
+	controllerName="com.tasa.analisiscomb.controller.Worklist"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic"
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:table="sap.ui.table">
+
+	<semantic:SemanticPage
+		id="page">
+
+		<semantic:titleHeading>
+			<Title
+				text="{i18n>worklistTitle}"
+				level="H2"/>
+		</semantic:titleHeading>
+		
+		<semantic:headerContent>
+			<f:Form id="idFormHeader" >
+				<f:title>
+					<core:Title text="Datos de Selección" />
+				</f:title>
+				<f:formContainers>
+					<f:FormContainer >
+						<f:formElements>
+							<f:FormElement label="Embarcación">
+								<f:fields>
+									<Input 
+										placeholder="Ingrese Embarcación"
+										showValueHelp="true" />
+								</f:fields>
+							</f:FormElement>
+							
+							<f:FormElement label="Fecha de contabilización">
+								<f:fields>
+									<DateRangeSelection 
+										placeholder="Ingrese rango de fecha"/>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+					<f:FormContainer >
+						<f:formElements>
+							
+							<f:FormElement label="Motivo">
+								<f:fields>
+									<Select 
+										placeholder="Ingrese rango de fecha"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Cantidad de aciertos">
+								<f:fields>
+									<Input 
+										placeholder="Ingrese número de registros"
+										type="Number"/>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+					<f:FormContainer >
+						<f:formElements>
+							<f:FormElement >
+								<f:fields>
+									<Button text="Buscar" type="Emphasized" press="onBusqueda" />
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+				</f:formContainers>
+				<f:layout>
+					<f:ResponsiveGridLayout
+						labelSpanXL="2"
+						labelSpanL="3"
+						labelSpanM="4"
+						labelSpanS="12"
+						adjustLabelSpan="false"
+						emptySpanXL="0"
+						emptySpanL="0"
+						emptySpanM="0"
+						emptySpanS="0"
+						columnsXL="2"
+						columnsL="2"
+						columnsM="1"
+						singleContainerFullSize="false" />
+				</f:layout>
+			</f:Form>
+		</semantic:headerContent>
+
+		<semantic:content>
+			<table:Table
+				id="table"
+				width="auto"
+				rows="{
+					path: '/data',
+					sorter: {
+						path: 'CategoryID',
+						descending: false
+					}
+				}"
+				visibleRowCount="07"
+				busyIndicatorDelay="{worklistView>/tableBusyDelay}"
+				updateFinished=".onUpdateFinished">
+				<table:extension>
+					<OverflowToolbar style="Clear">
+						<Button text="Cuadro de consumo" press="onCuadroConsumo"/>
+						<Button text="QlikView" press="onQlikView"/>
+						<Button text="Carga Consumo" press="onCargarConsumo"/>
+						<ToolbarSpacer/>
+						<Button icon="sap-icon://excel-attachment" type="Emphasized" press="onExportar" />
+						<SearchField
+							id="searchField"
+							tooltip="{i18n>worklistSearchTooltip}"
+							search=".onSearch">
+							<layoutData>
+								<OverflowToolbarLayoutData
+									maxWidth="200px"
+									priority="NeverOverflow"/>
+							</layoutData>
+						</SearchField>	
+					</OverflowToolbar>
+				</table:extension>
+				<table:columns>
+					<table:Column width="8rem">
+						<table:label>
+							<Label text="Marea"/>
+						</table:label>
+						<table:template>
+							<Text text="{marea}"/>
+						</table:template>
+					</table:Column>
+					<table:Column width="6rem">
+						<table:label>
+							<Label text="Nomb. Emb."/>
+						</table:label>
+						<table:template>
+							<Text text="{embarcacion}"/>
+						</table:template>
+					</table:Column>
+					<table:Column width="8rem">
+						<table:label>
+							<Label text="Mot. mar."/>
+						</table:label>
+						<table:template>
+							<Text text="{fecha}"/>
+						</table:template>
+					</table:Column>
+					<table:Column width="6rem">
+						<table:label>
+							<Label text="Puert. zarpe"/>
+						</table:label>
+						<table:template>
+							<Text text="{}"/>
+						</table:template>
+					</table:Column>
+					<table:Column width="10rem">
+						<table:label>
+							<Label text="Fecha/hora zarpe"/>
+						</table:label>
+						<table:template>
+							<Text text="{}"/>
+						</table:template>
+					</table:Column>
+					<table:Column width="6rem">
+						<table:label>
+							<Label text="Puert. arribo"/>
+						</table:label>
+						<table:template>
+							<Text text="{}"/>
+						</table:template>
+					</table:Column>
+					<table:Column width="10rem">
+						<table:label>
+							<Label text="Fecha/hora arribo"/>
+						</table:label>
+						<table:template>
+							<Text text="{}"/>
+						</table:template>
+					</table:Column>
+					<table:Column width="8rem">
+						<table:label>
+							<Label text="Fecha prod."/>
+						</table:label>
+						<table:template>
+							<Text text="{}"/>
+						</table:template>
+					</table:Column>
+					<table:Column hAlign="End" width="8rem">
+						<table:label>
+							<Label text="Cant. desc.(TN)"/>
+						</table:label>
+						<table:template>
+							<Text text="{}"/>
+						</table:template>
+					</table:Column>
+					<table:Column hAlign="End" width="8rem">
+						<table:label>
+							<Label text="Stock Inicial"/>
+						</table:label>
+						<table:template>
+							<Text text="{}"/>
+						</table:template>
+					</table:Column>
+					<table:Column hAlign="End" width="8rem">
+						<table:label>
+							<Label text="Sumn. "/>
+						</table:label>
+						<table:template>
+							<Text text="{}"/>
+						</table:template>
+					</table:Column>
+					<table:Column hAlign="End" width="8rem">
+						<table:label>
+							<Label text="Cons. (Gln)"/>
+						</table:label>
+						<table:template>
+							<Text text="{}"/>
+						</table:template>
+					</table:Column>
+					<table:Column hAlign="End" width="8rem">
+						<table:label>
+							<Label text="Stock. final"/>
+						</table:label>
+						<table:template>
+							<Text text="{}"/>
+						</table:template>
+					</table:Column>
+					<table:Column width="6rem">
+						<table:label>
+							<Label text="Obs."/>
+						</table:label>
+						<table:template>
+							<Button icon="sap-icon://document-text" />
+						</table:template>
+					</table:Column>
+					<table:Column width="6rem" hAlign="Center">
+						<table:label>
+							<Label text=""/>
+						</table:label>
+						<table:template>
+							<Button icon="sap-icon://show" type="Emphasized" press="onDeatilPress" />
+						</table:template>
+					</table:Column>
+					<table:Column width="5rem">
+						<table:label>
+							<Label text="Selec."/>
+						</table:label>
+						<table:template>
+							<CheckBox />
+						</table:template>
+					</table:Column >
+					<table:Column hAlign="End" width="8rem">
+						<table:label>
+							<Label text="Cant. Combus. Regularizar"></Label>
+						</table:label>
+						<table:template>
+							<Text text="{}"/>
+						</table:template>
+					</table:Column>
+					<table:Column width="8rem">
+						<table:label>
+							<Label text="Imputación"></Label>
+						</table:label>
+						<table:template>
+							<Select />
+						</table:template>
+					</table:Column>
+					<table:Column width="8rem">
+						<table:label>
+							<Label text="Fecha contable"></Label>
+						</table:label>
+						<table:template>
+							<Text text="{}"/>
+						</table:template>
+					</table:Column>
+					<table:Column width="8rem">
+						<table:label>
+							<Label text="Comentario"></Label>
+						</table:label>
+						<table:template>
+							<Text text="{}"/>
+						</table:template>
+					</table:Column>
+				</table:columns>
+
+			</table:Table>
+		</semantic:content>
+
+	</semantic:SemanticPage>
+
+</mvc:View>

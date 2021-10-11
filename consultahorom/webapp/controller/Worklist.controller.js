@@ -160,12 +160,28 @@ sap.ui.define([
 			}
 		},
 
+		/**
+		 * Busqueda de seleccion
+		 * @param {*} oEvent 
+		 */
 		onBusqueda:function(oEvent){
 
 		},
 
+		/**
+		 * Exportar tabla
+		 * @param {*} oEvent 
+		 */
 		onExportar:function(oEvent){
 			
+		},
+
+		/**
+		 * Filtro de tabla
+		 * @param {*} oEvent 
+		 */
+		onSearch:function(oEvent){
+
 		}
 
 

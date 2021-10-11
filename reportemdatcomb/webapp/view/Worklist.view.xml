@@ -7,9 +7,7 @@
 	xmlns:f="sap.ui.layout.form">
 
 	<semantic:SemanticPage
-		id="page"
-		headerPinnable="false"
-		toggleHeaderOnTitleClick="false">
+		id="page">
 
 		<semantic:titleHeading>
 			<Title
@@ -32,16 +30,29 @@
 										showValueHelp="true" />
 								</f:fields>
 							</f:FormElement>
-							<f:FormElement label="Motivo">
-								<f:fields>
-									<Select 
-										/>
-								</f:fields>
-							</f:FormElement>
+							
 							<f:FormElement label="Fecha zarpe">
 								<f:fields>
 									<DateRangeSelection 
 										placeholder="Ingrese rango de fecha"/>
+								</f:fields>
+							</f:FormElement>
+							
+							<f:FormElement label="Cantidad de aciertos">
+								<f:fields>
+									<Input 
+										placeholder="Ingrese número de registros"
+										type="Number"/>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+					<f:FormContainer >
+						<f:formElements>
+							<f:FormElement label="Motivo">
+								<f:fields>
+									<Select 
+										/>
 								</f:fields>
 							</f:FormElement>
 							<f:FormElement label="Fase">
@@ -49,11 +60,13 @@
 									<Select />
 								</f:fields>
 							</f:FormElement>
-							<f:FormElement label="Cantidad de aciertos">
+						</f:formElements>
+					</f:FormContainer>
+					<f:FormContainer >
+						<f:formElements>
+							<f:FormElement >
 								<f:fields>
-									<Input 
-										placeholder="Ingrese número de registros"
-										type="Number"/>
+									<Button text="Buscar" type="Emphasized" press="onBuscar" />
 								</f:fields>
 							</f:FormElement>
 						</f:formElements>
@@ -106,8 +119,18 @@
 						<Button
 							icon="sap-icon://excel-attachment"
 							type="Emphasized"
-							press="onExportar"
-						/>
+							press="onExportar"/>
+						<SearchField
+							id="searchField"
+							tooltip="{i18n>worklistSearchTooltip}"
+							search=".onSearch">
+							<layoutData>
+								<OverflowToolbarLayoutData
+									maxWidth="200px"
+									priority="NeverOverflow"/>
+							</layoutData>
+						</SearchField>
+
 					</OverflowToolbar>
 				</headerToolbar>
 
