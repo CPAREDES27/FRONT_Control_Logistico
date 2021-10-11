@@ -159,11 +159,36 @@ sap.ui.define([
 				oViewModel.setProperty("/tableNoDataText", this.getResourceBundle().getText("worklistNoDataWithSearchText"));
 			}
 		},
+
+		/**
+		 * Busqueda de seleccion
+		 * @param {*} oEvent 
+		 */
+		onBusqueda:function(oEvent){
+
+		},
+	
 		/**
 		 * Evento anular consumo
 		 * @param {*} oEvent 
 		 */
 		onAnularConsumo:function(oEvent){
+
+		},
+
+		/**
+		 * Exportacion de datos
+		 * @param {*} oEvent 
+		 */
+		onExportar:function(oEvent){
+
+		},
+
+		/**
+		 * Filtro para tabla
+		 * @param {*} oEvent 
+		 */
+		onSearch:function(oEvent){
 
 		}
 

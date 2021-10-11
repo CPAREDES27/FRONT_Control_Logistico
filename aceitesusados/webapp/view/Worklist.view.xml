@@ -1,0 +1,195 @@
+<mvc:View
+	controllerName="com.tasa.aceitesusados.controller.Worklist"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns:semantic="sap.f.semantic"
+	xmlns:f="sap.ui.layout.form">
+
+	<semantic:SemanticPage
+		id="page"
+		headerPinnable="false"
+		toggleHeaderOnTitleClick="false">
+
+		<semantic:titleHeading>
+			<Title
+				text="{i18n>worklistTitle}"
+				level="H2"/>
+		</semantic:titleHeading>
+
+		<semantic:headerContent>
+			<f:Form >
+				<f:title>
+					<core:Title text="Datos de Selección" />
+				</f:title>
+				<f:formContainers>
+					<f:FormContainer >
+						<f:formElements>
+							<f:FormElement label="Reserva">
+								<f:fields>
+									<Input  
+										placeholder="Ingrese Reserva"/>
+								</f:fields>
+							</f:FormElement>
+							
+							<f:FormElement label="Fecha de reserva">
+								<f:fields>
+									<DateRangeSelection 
+										placeholder="Ingrese rango de fecha"/>
+								</f:fields>
+							</f:FormElement>
+							
+							<f:FormElement label="Estado">
+								<f:fields>
+									<Select 
+										placeholder="Ingrese Estado"/>
+								</f:fields>
+							</f:FormElement>
+							<!-- <f:FormElement label="Cantidad de aciertos">
+								<f:fields>
+									<Input 
+										placeholder="Ingrese número de registros"
+										type="Number"/>
+								</f:fields>
+							</f:FormElement> -->
+						</f:formElements>
+					</f:FormContainer>
+					<f:FormContainer>
+						<f:formElements>
+							<f:FormElement label="Embarcación">
+								<f:fields>
+									<Input 
+										placeholder="Ingrese Embarcación"
+										showValueHelp="true" />
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Almacén">
+								<f:fields>
+									<Select 
+										placeholder="Ingrese Almacén"/>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+					<f:FormContainer >
+						<f:formElements>
+							<f:FormElement>
+								<f:fields>
+									<Button  text="Buscar" type="Emphasized" press="onBuscar" />
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+				</f:formContainers>
+				<f:layout>
+					<f:ResponsiveGridLayout
+						labelSpanXL="2"
+						labelSpanL="3"
+						labelSpanM="4"
+						labelSpanS="12"
+						adjustLabelSpan="false"
+						emptySpanXL="0"
+						emptySpanL="0"
+						emptySpanM="0"
+						emptySpanS="0"
+						columnsXL="2"
+						columnsL="2"
+						columnsM="1"
+						singleContainerFullSize="false" />
+				</f:layout>
+			</f:Form>
+		</semantic:headerContent>
+
+		<semantic:content>
+			<Table
+				id="table"
+				width="auto"
+				mode="MultiSelect"
+				items="{
+					path: '/data',
+					sorter: {
+						path: 'CategoryID',
+						descending: false
+					}
+				}"
+				noDataText="{worklistView>/tableNoDataText}"
+				busyIndicatorDelay="{worklistView>/tableBusyDelay}"
+				growing="true"
+				growingScrollToLoad="true"
+				updateFinished=".onUpdateFinished">
+
+				<headerToolbar>
+					<OverflowToolbar>
+						<Button text="Nuevo" type="Ghost" press="onNuevo('Nuevo')" />
+						<Button text="Anular" type="Ghost" press="onAnular" />
+						<ToolbarSpacer />
+						<Button icon="sap-icon://excel-attachment" type="Emphasized" press="onExportar" />
+						<SearchField
+							id="searchField"
+							tooltip="{i18n>worklistSearchTooltip}"
+							search=".onSearch">
+							<layoutData>
+								<OverflowToolbarLayoutData
+									maxWidth="200px"
+									priority="NeverOverflow"/>
+							</layoutData>
+						</SearchField>
+					</OverflowToolbar>
+				</headerToolbar>
+
+				<columns>
+					<Column >
+						<Text text="Reserva"/>
+					</Column>
+					<Column >
+						<Text text="Embarcación"/>
+					</Column>
+					<Column >
+						<Text text="Material"/>
+					</Column>
+					<Column >
+						<Text text="Almacén"/>
+					</Column>
+					<Column >
+						<Text text="Fecha de reserva"/>
+					</Column>
+					<Column hAlign="End">
+						<Text text="Total peso Kg."/>
+					</Column>
+					<Column hAlign="End" >
+						<Text text="Cant. Galones"/>
+					</Column>
+					<Column >
+						<Text text="UM"/>
+					</Column>
+					<Column >
+						<Text text="Estado"/>
+					</Column>
+					<Column >
+						<Text text="Detalle"/>
+					</Column>
+				</columns>
+
+				<items>
+					<ColumnListItem
+						press=".onPress">
+						<cells>
+							<Text text="{reserva}"/>
+							<Text text="{embarcacion}"/>
+							<Text text="{}"/>
+							<Text text="{}"/>
+							<Text text="{}"/>
+							<Text text="{}"/>
+							<Text text="{}"/>
+							<Text text="{}"/>
+							<Text text="{}"/>
+							<Button icon="sap-icon://show" press="onPress" />
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</semantic:content>
+
+	</semantic:SemanticPage>
+
+</mvc:View>

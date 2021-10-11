@@ -43,14 +43,6 @@ modules:
     build-result: resources
     requires:
     - artifacts:
-      - tasacomcontrollogistico.zip
-      name: tasacomcontrollogistico
-      target-path: resources/
-    - artifacts:
-      - tasacomanalisisdecombustible.zip
-      name: tasacomanalisisdecombustible
-      target-path: resources/
-    - artifacts:
       - tasacomvaledeviveres.zip
       name: tasacomvaledeviveres
       target-path: resources/
@@ -58,26 +50,22 @@ modules:
       - comtasalogregistrocomb.zip
       name: comtasalogregistrocomb
       target-path: resources/
-- name: tasacomcontrollogistico
-  type: html5
-  path: controllogistico
-  build-parameters:
-    build-result: dist
-    builder: custom
-    commands:
-    - npm install
-    - npm run build:cf
-    supported-platforms: []
-- name: tasacomanalisisdecombustible
-  type: html5
-  path: analisisdecombustible
-  build-parameters:
-    build-result: dist
-    builder: custom
-    commands:
-    - npm install
-    - npm run build:cf
-    supported-platforms: []
+    - artifacts:
+      - comtasareportemdatcomb.zip
+      name: comtasareportemdatcomb
+      target-path: resources/
+    - artifacts:
+      - comtasaconsultahorom.zip
+      name: comtasaconsultahorom
+      target-path: resources/
+    - artifacts:
+      - comtasaanalisiscomb.zip
+      name: comtasaanalisiscomb
+      target-path: resources/
+    - artifacts:
+      - comtasaaceitesusados.zip
+      name: comtasaaceitesusados
+      target-path: resources/
 - name: tasacomvaledeviveres
   type: html5
   path: valedeviveres
@@ -91,6 +79,46 @@ modules:
 - name: comtasalogregistrocomb
   type: html5
   path: logregistrocomb
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comtasareportemdatcomb
+  type: html5
+  path: reportemdatcomb
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comtasaconsultahorom
+  type: html5
+  path: consultahorom
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comtasaanalisiscomb
+  type: html5
+  path: analisiscomb
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comtasaaceitesusados
+  type: html5
+  path: aceitesusados
   build-parameters:
     build-result: dist
     builder: custom
