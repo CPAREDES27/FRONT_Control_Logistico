@@ -67,7 +67,7 @@
                     "bundleName": "tasa.com.analisisdecombustible.i18n.i18n"
                 }
             },
-            "modelReqPesca": {
+            "modelControlLog": {
                 "preload": true,
                 "type": "sap.ui.model.json.JSONModel"
             }

@@ -48,7 +48,7 @@
                                     <Label text="Cod. embarcación" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input type="Text" showValueHelp="false" value="{modelReqPesca>/SearchPlanta/WERKS}" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    <Input type="Text" showValueHelp="false" value="{modelControlLog>/SearchEmbarcacion/CDEMB}" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -56,7 +56,7 @@
                                     <Label text="Nomb. embarcación" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input type="Text" showValueHelp="false" value="{modelReqPesca>/SearchPlanta/CDPTA}" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    <Input type="Text" showValueHelp="false" value="{modelControlLog>/SearchEmbarcacion/NMEMB}" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -64,7 +64,7 @@
                                     <Label text="R.U.C. armador" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input type="Text" showValueHelp="false" value="{modelReqPesca>/SearchPlanta/STCD1}" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    <Input type="Text" showValueHelp="false" value="{modelControlLog>/SearchEmbarcacion/STCD1}" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -72,7 +72,7 @@
                                     <Label text="Matrícula" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input type="Text" showValueHelp="false" value="{modelReqPesca>/SearchPlanta/CDPTO}" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    <Input type="Text" showValueHelp="false" value="{modelControlLog>/SearchEmbarcacion/MREMB}" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -80,10 +80,10 @@
                                     <Label text="Ind Propiedad" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <ComboBox editable="true" enabled="true" selectedKey="{modelReqPesca>/SearchPlanta/INPRP}" visible="true" width="50%" valueState="None" maxWidth="100%">
+                                    <ComboBox editable="true" enabled="true" selectedKey="{modelControlLog>/SearchEmbarcacion/INPRP}" visible="true" width="50%" valueState="None" maxWidth="100%">
                                         <items>
-                                            <core:Item text="Propia" enabled="true" key="Item"/>
-                                            <core:Item text="Tercera" enabled="true" key="Item"/>
+                                            <core:Item text="Propios" enabled="true" key="Item"/>
+                                            <core:Item text="Terceros" enabled="true" key="Item"/>
                                         </items>
                                     </ComboBox>
                                 </form:fields>
@@ -93,7 +93,7 @@
                                     <Label text="Desc. armador" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input type="Text" showValueHelp="false" value="{modelReqPesca>/SearchPlanta/DESCR}" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    <Input type="Text" showValueHelp="false" value="{modelControlLog>/SearchEmbarcacion/NAME1}" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -101,7 +101,7 @@
                                         <Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                     </form:label>
                                     <form:fields>
-                                        <Button text="Buscar" type="Default" icon="sap-icon://search" iconFirst="true" width="50%" enabled="true" visible="true" iconDensityAware="false" press="_onBuscarButtonPress"/>
+                                        <Button text="Buscar" type="Default" icon="sap-icon://search" iconFirst="true" width="50%" enabled="true" visible="true" iconDensityAware="false" press="_onBucarEmbarcacion"/>
                                     </form:fields>
                             </form:FormElement>
                         </form:formElements>
@@ -115,7 +115,7 @@
                 </form:layout>
             </form:Form>
             <Table id="sap_Responsive_Page_0-content-build_simple_Table-1628124395481" width="1090.71875px" noDataText="No data" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiSmallMargin"
-            items="{path:'modelReqPesca>/ListCentroReqPesca', templateShareable:true}">
+            items="{path:'modelControlLog>/ListACombustible', templateShareable:true}">
                 <infoToolbar>
                     <Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
                         <content>
@@ -254,14 +254,12 @@
                         <ColumnListItem type="Active">
                             <cells>
                                 
-                                <Link text="{modelReqPesca>WERKS}" press="_onpress_centrolinkreqpesca" id="lnk_Numope" ></Link>
-                                <Text text="{modelReqPesca>CDPTA}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                <Text text="{modelReqPesca>DESCR}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                <Text text="{modelReqPesca>STCD1}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                <Text text="{modelReqPesca>NAME1}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                <Text text="{modelReqPesca>INPRP}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                <Text text="{modelReqPesca>CDPTO}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                <Text text="{modelReqPesca>DSPTO}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <Link text="{modelControlLog>CDEMB}" press="_onpress_embarcacionlinkCLog" id="lnk_Numope" ></Link>
+                                <Text text="{modelControlLog>MREMB}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <Text text="{modelControlLog>NMEMB}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <Text text="{modelControlLog>STCD1}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <Text text="{modelControlLog>NAME1}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                
                             </cells>
                         </ColumnListItem>
                     
@@ -277,7 +275,7 @@
                                     <Label text="Número de Filas" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input type="Number" showValueHelp="false" value="{modelReqPesca>/SearchPlanta/Numfilas}" enabled="true" visible="true" width="200px" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    <Input type="Number" showValueHelp="false" value="{modelControlLog>/SearchEmbarcacion/Numfilas}" enabled="true" visible="true" width="200px" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
                             </form:FormElement>
                         </form:formElements>
