@@ -1,6 +1,6 @@
 <mvc:View
 	controllerName="com.tasa.consultahorom.controller.Worklist"
-	xmlns="sap.m"
+	xmlns="sap.ui.table" xmlns:m="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:semantic="sap.f.semantic"
 	xmlns:core="sap.ui.core"
@@ -10,7 +10,7 @@
 		id="page">
 
 		<semantic:titleHeading>
-			<Title
+			<m:Title
 				text="{i18n>worklistTitle}"
 				level="H2"/>
 		</semantic:titleHeading>
@@ -25,9 +25,69 @@
 						<f:formElements>
 							<f:FormElement label="Embarcación">
 								<f:fields>
-									<Input 
-										placeholder="Ingrese Embarcación"
-										showValueHelp="true" />
+									<m:Input  change="multiInputPlanta" class="sapUiSmallMarginBottom"
+												id="idEmbarcacionIni"
+												width="100%"
+												placeholder="Ingresar Embarcacion..."
+												showSuggestion="true"
+												showValueHelp="false"
+												valueState="Information"
+												valueStateText="Ingrese un texto"
+												suggestionRows="{Embarcacion>/listaEmbarcacion}">
+												<m:suggestionColumns>
+													<m:Column
+														hAlign="Begin"
+														popinDisplay="Inline"
+														demandPopin="true"
+														minScreenWidth="Tablet">
+														<m:Label text="Codigo Embarcacion"/>
+													</m:Column>
+													<m:Column
+														hAlign="End"
+														popinDisplay="Inline"
+														demandPopin="true"
+														minScreenWidth="Tablet">
+														<m:Label text="Descripcion"/>
+													</m:Column>
+													<m:Column
+														hAlign="End"
+														popinDisplay="Inline"
+														demandPopin="true"
+														minScreenWidth="Tablet">
+														<m:Label text="Matricula"/>
+													</m:Column>	
+													<m:Column
+														hAlign="End"
+														popinDisplay="Inline"
+														demandPopin="true"
+														minScreenWidth="Tablet">
+														<m:Label text="RUC"/>
+													</m:Column>	
+													<m:Column
+														hAlign="End"
+														popinDisplay="Inline"
+														demandPopin="true"
+														minScreenWidth="Tablet">
+														<m:Label text="Desc. Armador"/>
+													</m:Column>	
+												</m:suggestionColumns>
+												<m:suggestionRows>
+													<m:ColumnListItem>
+													<m:cells>
+														<m:Label text="{Embarcacion>CDEMB}"/>
+														<m:Label text="{Embarcacion>MREMB}"/>
+														<m:Label text="{Embarcacion>NMEMB}"/>
+														<m:Label text="{Embarcacion>LIFNR}"/>
+														<m:Label text="{Embarcacion>NAME1}"/>
+														<m:Label text="{
+																parts:[{path:'Codigo Embarcacion'},{path:'Descripcion'},{path:'Matricula'},{path:'RUC'},{path:'Desc. Armador'}],
+																type: 'sap.ui.model.type.Currency',
+																formatOptions: {showMeasure: true}
+																}"/>
+													</m:cells>
+													</m:ColumnListItem>
+												</m:suggestionRows>
+											</m:Input>
 								</f:fields>
 							</f:FormElement>
 						</f:formElements>
@@ -36,7 +96,7 @@
 						<f:formElements>
 							<f:FormElement label="Fechas ">
 								<f:fields>
-									<DateRangeSelection 
+									<m:DateRangeSelection id="idFecha"
 										placeholder="Ingrese rango de fecha"/>
 								</f:fields>
 							</f:FormElement>
@@ -46,7 +106,8 @@
 						<f:formElements>
 							<f:FormElement >
 								<f:fields>
-									<Button text="buscar" type="Emphasized" press="onBusqueda"/>
+									<m:Button text="buscar" type="Emphasized" press="onBusqueda" tooltip="Busqueda"/>
+									<m:Button text="limpiar" type="Emphasized" press="onLimpiar" tooltip="Limpiar Datos de búsqueda"/>
 								</f:fields>
 							</f:FormElement>
 						</f:formElements>
@@ -73,92 +134,182 @@
 
 		<semantic:content>
 			<Table
-				id="table"
-				width="auto"
-				items="{
-					path: '/Categories',
-					sorter: {
-						path: 'CategoryID',
-						descending: false
-					}
-				}"
-				noDataText="{worklistView>/tableNoDataText}"
-				busyIndicatorDelay="{worklistView>/tableBusyDelay}"
-				growing="true"
-				growingScrollToLoad="true"
-				updateFinished=".onUpdateFinished">
-
-				<headerToolbar>
-					<OverflowToolbar>
-						<ToolbarSpacer />
-						<Button icon="sap-icon://excel-attachment" type="Emphasized" press="onExportar" />
-						<SearchField
-							id="searchField"
-							tooltip="{i18n>worklistSearchTooltip}"
-							search=".onSearch">
-							<layoutData>
-								<OverflowToolbarLayoutData
-									maxWidth="200px"
-									priority="NeverOverflow"/>
-							</layoutData>
-						</SearchField>
-					</OverflowToolbar>
-				</headerToolbar>
-
+                            id="table"
+                            rows="{Horometro>/listaHorometro}"
+                            visibleRowCount="7"
+                            showColumnVisibilityMenu="{ui>/showVisibilityMenuEntry}"
+                            enableColumnFreeze="{ui>/showFreezeMenuEntry}"
+                            enableCellFilter="{ui>/enableCellFilter}"
+                            columnSelect="onColumnSelect"
+                            cellContextmenu="onProductIdCellContextMenu"
+                            ariaLabelledBy="title">
+				<extension>
+					<m:OverflowToolbar style="Clear">
+						<m:Title id="title" text="Lista de precios: {dataPrecio.str_ppc.total}" />
+						<m:ToolbarSpacer/>
+						<m:ToolbarSeparator/>
+                        <m:Button icon="sap-icon://excel-attachment" press="onDataExport" text="Exportar" tooltip="Exportar Excel"/>
+						<m:SearchField
+							placeholder="Búsqueda rápida"
+							value="{ui>/globalFilter}"
+							search="filterGlobally"
+							width="15rem"/>
+					</m:OverflowToolbar>
+				</extension>
 				<columns>
-					<Column >
-						<Text text="Nro."/>
+               
+                	<Column
+						id="fecha"
+						width="11rem"
+						sortProperty="fecha"
+						filterProperty="fecha"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
+                       
+							<m:Label text="Fecha" />
+						
+						
+						<template>
+							<m:Text text="{Horometro>fecha}" wrapping="false" />
+						</template>
 					</Column>
-					<Column >
-						<Text text="Fecha"/>
+                   
+                    <Column
+						id="motorPrincipal"
+						width="11rem"
+						sortProperty="motorPrincipal"
+						filterProperty="motorPrincipal"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+						hAlign="End">
+                       
+                            <m:Label text="Motor Principal" />
+                       
+						
+						<template>
+							<m:Text text="{path:'Horometro>motorPrincipal',type:'sap.ui.model.type.Float'}" wrapping="false" />
+						</template>
 					</Column>
-					<Column >
-						<Text text="Motor Principal"/>
+                    <Column
+						id="motorAuxiliar"
+						width="11rem"
+						sortProperty="motorAuxiliar"
+						filterProperty="motorAuxiliar"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+						hAlign="End">
+                        
+                            <m:Label text="Motor Auxiliar 1" />
+                    
+						
+						<template>
+							<m:Text text="{path:'Horometro>motorAuxiliar',type:'sap.ui.model.type.Float'}" wrapping="false" />
+						</template>
 					</Column>
-					<Column >
-						<Text text="Motor Auxiliar 1"/>
+                    <Column
+						id="motorAuxiliar2"
+						width="22rem"
+						sortProperty="motorAuxiliar2"
+						filterProperty="motorAuxiliar2"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+						hAlign="End">
+                      
+                            <m:Label text="Motor Auxiliar 2" />
+                     
+						
+						<template>
+							<m:Text text="{path:'Horometro>motorAuxiliar2',type:'sap.ui.model.type.Float'}"  />
+						</template>
 					</Column>
-					<Column >
-						<Text text="Motor Auxiliar 2"/>
+                    <Column
+						id="motorAuxiliar3"
+						width="11rem"
+						sortProperty="motorAuxiliar3"
+						filterProperty="motorAuxiliar3"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+						hAlign="End">
+                         
+                            <m:Label text="Motor Auxiliar 3" />
+                        
+						
+						<template>
+							<m:Text text="{path:'Horometro>motorAuxiliar3',type:'sap.ui.model.type.Float'}" wrapping="false" />
+						</template>
 					</Column>
-					<Column >
-						<Text text="Motor Auxiliar 3"/>
+                    <Column
+						id="motorAuxiliar4"
+						width="11rem"
+						sortProperty="motorAuxiliar4"
+						filterProperty="motorAuxiliar4"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+						hAlign="End">
+                      
+                            <m:Label text="Motor Auxiliar 4" />
+                 
+						
+						<template>
+							<m:Text text="{path:'Horometro>motorAuxiliar4',type:'sap.ui.model.type.Float'}" wrapping="false" />
+						</template>
 					</Column>
-					<Column >
-						<Text text="Motor Auxiliar 4"/>
+                    <Column
+						id="motorAuxiliar5"
+						width="11rem"
+						sortProperty="motorAuxiliar5"
+						filterProperty="motorAuxiliar5"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+						hAlign="End">
+                         
+                            <m:Label text="Motor Auxiliar 5" />
+                   
+						
+						<template>
+							<m:Text text="{path:'Horometro>motorAuxiliar5',type:'sap.ui.model.type.Float'}" wrapping="false" />
+						</template>
 					</Column>
-					<Column >
-						<Text text="Motor Auxiliar 5"/>
+                    <Column
+						id="panga"
+						width="11rem"
+						sortProperty="panga"						
+						filterProperty="panga"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+                        headerSpan="2,1"
+						hAlign="End"
+						>
+                        <m:Label text="Panga" textAlign="Center" width="100%"/>
+						<template>
+							<m:Text  text="{path:'Horometro>panga',type:'sap.ui.model.type.Float'}" wrapping="false" />
+						</template>
 					</Column>
-					<Column >
-						<Text text="Panga"/>
+					 <Column
+						id="flujometro"
+						width="11rem"
+						sortProperty="flujometro"						
+						filterProperty="flujometro"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+                        headerSpan="2,1"
+						hAlign="Flujómetro de panga"
+						>
+                        <m:Label text="Max" textAlign="Center" width="100%"/>
+						<template>
+							<m:Text  text="{path:'Horometro>flujometro',type:'sap.ui.model.type.Float'}" wrapping="false" />
+						</template>
 					</Column>
-					<Column >
-						<Text text="Flujómetro de panga"/>
-					</Column>
+                    
+
+					<!--Columnas-->
 
 				</columns>
+				<footer>
+					<m:OverflowToolbar id="infobar">
 
-				<items>
-					<ColumnListItem
-						type="Navigation"
-						press=".onPress">
-						<cells>
-							<ObjectStatus
-								state="Information"
-								text="{}"
-							/>
-							<Text />
-							<Text />
-							<Text />
-							<Text />
-							<Text />
-							<Text />
-							<Text />
-							<Text />
-						</cells>
-					</ColumnListItem>
-				</items>
+                    </m:OverflowToolbar>
+				</footer>
 			</Table>
 		</semantic:content>
 

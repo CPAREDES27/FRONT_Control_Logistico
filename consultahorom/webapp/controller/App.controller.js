@@ -3,9 +3,8 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel"
 ], function (BaseController, JSONModel) {
 	"use strict";
-
 	return BaseController.extend("com.tasa.consultahorom.controller.App", {
-
+		
 		onInit : function () {
 			var oViewModel,
 				fnSetAppNotBusy,
@@ -29,6 +28,7 @@ sap.ui.define([
 
 			// apply content density mode to root view
 			this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
+			
 		}
 	});
 
