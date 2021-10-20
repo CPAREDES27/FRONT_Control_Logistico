@@ -1,0 +1,433 @@
+<mvc:View
+    controllerName="tasa.com.valedeviveres.controller.RegistrarValeViveres" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:f="sap.f"
+	xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout"
+	xmlns:t="sap.ui.table" xmlns:dnd="sap.ui.core.dnd" height="100%" xmlns:form="sap.ui.layout.form" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:ui="sap.ui.table" xmlns:filterbar="sap.ui.comp.filterbar" xmlns:l="sap.ui.layout" xmlns:variants="sap.ui.comp.variants">
+    
+		<App id="app">
+			<pages>
+				<Page id="page" title="{i18n>Ingresar datos}">
+					<content>
+                        <form:Form width="100%" editable="true" visible="true">
+                            <form:title/>
+                            <form:formContainers>
+                                <form:FormContainer visible="true">
+                                    <form:formElements>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Temporada" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <ComboBox change="onChangeTemporada" selectedKey="{modelValeViveres>/SearchTemporada/CDTPO}" id="cbo_filter_Werks" editable="true"  enabled="true" visible="true" width="50%"
+                                                    valueState="None" maxWidth="100%" items="{ path : 'modelValeViveres>/ListTemporada' }">
+                                                    <items>
+                                                        <core:Item text="{modelValeViveres>DSTPO}" enabled="true" key="{modelValeViveres>CDTPO}"/>
+                                                    </items>
+                                                </ComboBox>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Planta" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" value="{modelValeViveres>/ValeVCab/CDPTA}" showValueHelp="false" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogPlantaNewReg"/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Alamacén" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" value="{modelValeViveres>/ValeVCab/CDALM}" showValueHelp="false" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogAlmacenNewReg"/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Embarcación" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" value="{modelValeViveres>/ValeVCab/CDEMB}" showValueHelp="false" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogEmbarcacionNewReg"/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Matricula" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" showValueHelp="false" value="" enabled="true" visible="true" width="50%" valueHelpOnly="false" editable="true" valueStateText="Invalid entry" maxLength="0"/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Armador comerc" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" value="{modelValeViveres>/ValeVCab/ARMCOMERC}" showValueHelp="false" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogArmadorComercialNewReg"/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Inicio travesía" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <DatePicker width="50%" displayFormat="dd/MM/yyyy" value="{modelValeViveres>/ValeVCab/FITVS}" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="ddMMyyyy"/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Fin de travesía" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <DatePicker width="50%" displayFormat="dd/MM/yyyy" value="{modelValeViveres>/ValeVCab/FFTVS}" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="ddMMyyyy"/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Nro. Tripulantes" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" showValueHelp="false" value="{modelValeViveres>/ValeVCab/NRTRI}" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Cocinero" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" value="{modelValeViveres>/ValeVCab/codTripul}" showValueHelp="false" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogCocinero"/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Proveedor" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <ComboBox change="CargaProveedor" selectedKey="{modelValeViveres>/SearchProveedor/DSTPO}" editable="true"  enabled="true" visible="true" width="50%"
+                                                    valueState="None" maxWidth="100%" items="{ path : 'modelValeViveres>/ListProveedor' }">
+                                                    <items>
+                                                        <core:Item text="{modelValeViveres>NAME1}" enabled="true" key="{modelValeViveres>STCD1}"/>
+                                                    </items>
+                                                </ComboBox>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Observaciones" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" showValueHelp="false" value="" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Button text="Actualizar" type="Default" icon="sap-icon://add" iconFirst="false" width="25%" enabled="true" visible="true" iconDensityAware="false" press=""/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                    </form:formElements>
+                                    <form:title/>
+                                </form:FormContainer>
+                                <form:FormContainer visible="true">
+                                    <form:formElements>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Fecha del vale" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" value="{modelValeViveres>/ValeVCab/FechaVale}" showValueHelp="false" enabled="true" visible="true" width="50%" valueHelpOnly="true" editable="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest=""/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Centro" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" value="{modelValeViveres>/ValeVCab/WERKS}" showValueHelp="false" enabled="true" visible="true" width="50%" valueHelpOnly="true" editable="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest=""/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Almacén externo" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" value="{modelValeViveres>/ValeVCab/WERKS}" showValueHelp="false" enabled="true" visible="true" width="50%" valueHelpOnly="true" editable="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest=""/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Text/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Indicador de propiedad" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" value="{modelValeViveres>/ValeVCab/INPRP}" showValueHelp="false" enabled="true" visible="true" width="50%" valueHelpOnly="true" editable="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest=""/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="RUC armador comerc" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" value="{modelValeViveres>/ValeVCab/WERKS}" showValueHelp="false" enabled="true" visible="true" width="50%" valueHelpOnly="true" editable="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest=""/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Text/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Duración de travesía" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" value="{modelValeViveres>/ValeVCab/DRTVS}" showValueHelp="false" enabled="true" visible="true" width="50%" valueHelpOnly="true" editable="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest=""/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Text/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Text/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Text/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="RUC proveedor" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" value="{modelValeViveres>/ValeVCab/CDPVE}" showValueHelp="false" enabled="true" visible="true" width="50%" valueHelpOnly="true" editable="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest=""/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                    </form:formElements>
+                                    <form:title/>
+                                </form:FormContainer>
+                            </form:formContainers>
+                            <form:layout>
+                                <form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>
+                            </form:layout>
+                        </form:Form>
+                        <Table width="100%" noDataText="No data" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiSmallMargin"
+                            items="{path:'modelValeViveres>/Suministros', templateShareable:true}">
+                                <infoToolbar>
+                                    <Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
+                                        <content>
+                                            <Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                        </content>
+                                    </Toolbar>
+                                </infoToolbar>
+                                <headerToolbar>
+                                    <OverflowToolbar width="auto" height="auto" design="Transparent" visible="true" enabled="true">
+                                        <content>
+                                            <ToolbarSpacer width=""/>
+                                            <OverflowToolbarButton text="Action" type="Default" icon="sap-icon://action-settings" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+                                        </content>
+                                    </OverflowToolbar>
+                                </headerToolbar>
+                                <columns>
+                                    <Column width="30px" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+                                        <header>
+                                            <Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                        </header>
+                                        <footer/>
+                                    </Column>
+                                    <Column width="30px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                                        <header>
+                                            <Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                        </header>
+                                        <footer/>
+                                    </Column>
+                                    <Column width="60px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                                        <header>
+                                            <Text text="Posición" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                        </header>
+                                        <footer/>
+                                    </Column>
+                                    <Column width="60px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                                        <header>
+                                            <Text text="Suministro" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                        </header>
+                                        <footer/>
+                                    </Column>
+                                    <Column width="60px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                                        <header>
+                                            <Text text="Ración" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                        </header>
+                                        <footer/>
+                                    </Column>
+                                    <Column width="60px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                                        <header>
+                                            <Text text="Unidad de medida" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                        </header>
+                                        <footer/>
+                                    </Column>
+                                    <Column width="60px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                                        <header>
+                                            <Text text="Costo unitario" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                        </header>
+                                        <footer/>
+                                    </Column>
+                                    <Column width="60px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                                        <header>
+                                            <Text text="Costo total" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                        </header>
+                                        <footer/>
+                                    </Column>
+                                    <Column width="60px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                                        <header>
+                                            <Text text="Observaciónes" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                        </header>
+                                        <footer/>
+                                    </Column>
+                                    <Column width="60px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                                        <header>
+                                            <Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                        </header>
+                                        <footer/>
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem type="Active">
+                                        <cells>
+                                            <layout:HorizontalLayout>
+                                                <layout:content/>
+                                            </layout:HorizontalLayout>
+                                            <layout:HorizontalLayout>
+                                                <layout:content/>
+                                            </layout:HorizontalLayout>
+                                            <layout:HorizontalLayout>
+                                                <layout:content/>
+                                            </layout:HorizontalLayout>
+                                            <layout:HorizontalLayout>
+                                                <layout:content/>
+                                            </layout:HorizontalLayout>
+                                            <layout:HorizontalLayout>
+                                                <layout:content/>
+                                            </layout:HorizontalLayout>
+                                            <layout:HorizontalLayout>
+                                                <layout:content/>
+                                            </layout:HorizontalLayout>
+                                            <layout:HorizontalLayout>
+                                                <layout:content/>
+                                            </layout:HorizontalLayout>
+                                            <layout:HorizontalLayout>
+                                                <layout:content/>
+                                            </layout:HorizontalLayout>
+                                        </cells>
+                                    </ColumnListItem>
+                                    <ColumnListItem type="Active">
+                                        <cells>
+                                            <layout:HorizontalLayout>
+                                                <layout:content/>
+                                            </layout:HorizontalLayout>
+                                            <layout:HorizontalLayout>
+                                                <layout:content/>
+                                            </layout:HorizontalLayout>
+                                            <layout:HorizontalLayout>
+                                                <layout:content/>
+                                            </layout:HorizontalLayout>
+                                            <layout:HorizontalLayout>
+                                                <layout:content/>
+                                            </layout:HorizontalLayout>
+                                            <layout:HorizontalLayout>
+                                                <layout:content/>
+                                            </layout:HorizontalLayout>
+                                            <layout:HorizontalLayout>
+                                                <layout:content/>
+                                            </layout:HorizontalLayout>
+                                            <layout:HorizontalLayout>
+                                                <layout:content/>
+                                            </layout:HorizontalLayout>
+                                            <layout:HorizontalLayout>
+                                                <layout:content/>
+                                            </layout:HorizontalLayout>
+                                        </cells>
+                                    </ColumnListItem>
+                                    <ColumnListItem type="Active">
+                                        <cells>
+                                            <layout:HorizontalLayout>
+                                                <layout:content/>
+                                            </layout:HorizontalLayout>
+                                            <layout:HorizontalLayout>
+                                                <layout:content/>
+                                            </layout:HorizontalLayout>
+                                            <layout:HorizontalLayout>
+                                                <layout:content/>
+                                            </layout:HorizontalLayout>
+                                            <layout:HorizontalLayout>
+                                                <layout:content/>
+                                            </layout:HorizontalLayout>
+                                            <layout:HorizontalLayout>
+                                                <layout:content/>
+                                            </layout:HorizontalLayout>
+                                            <layout:HorizontalLayout>
+                                                <layout:content/>
+                                            </layout:HorizontalLayout>
+                                            <layout:HorizontalLayout>
+                                                <layout:content/>
+                                            </layout:HorizontalLayout>
+                                            <layout:HorizontalLayout>
+                                                <layout:content/>
+                                            </layout:HorizontalLayout>
+                                        </cells>
+                                    </ColumnListItem>
+                                        <ColumnListItem type="Active">
+                                            <cells>
+                                                <Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Text text="{modelValeViveres>FFTVS}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Text text="{modelValeViveres>NRPOS}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Text text="{modelValeViveres>DSSUM}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Text text="{modelValeViveres>CNRAC}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Text text="{modelValeViveres>DSUMD}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Text text="{modelValeViveres>CUSUM}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Text text="{modelValeViveres>QTSUM}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Text text="{modelValeViveres>OBPVA}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </cells>
+                                        </ColumnListItem>
+                                </items>
+                            </Table>
+                    </content>
+                    <footer>
+                        <OverflowToolbar width="100%" height="40px" design="Auto" enabled="true" visible="true">
+                            <content>
+                                <ToolbarSpacer width=""/>
+                                <Button text="Guardar" type="Default" icon="" iconFirst="false" width="20%" enabled="true" visible="true" iconDensityAware="false" press="validarCabecera"/>
+                            </content>
+                        </OverflowToolbar>
+                    </footer>
+				</Page>
+			</pages>
+		</App>
+</mvc:View>

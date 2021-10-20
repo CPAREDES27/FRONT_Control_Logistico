@@ -1,0 +1,43 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"  xmlns="sap.m" xmlns:form="sap.ui.layout.form" xmlns:layout="sap.ui.layout">
+    <Dialog horizontalScrolling="true" showHeader="true" state="None" stretch="false" title="Anular vale" type="Standard" verticalScrolling="true">
+        <content>
+            <form:Form width="750px" editable="true" visible="true">
+                <form:title/>
+                    <form:formContainers>
+                        <form:FormContainer visible="true">
+                            <form:formElements>
+                                <form:FormElement visible="true">
+                                    <form:label>
+                                        <Label text="Vale" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    </form:label>
+                                    <form:fields>
+                                        <Input type="Text" value="{modelValeViveres>/ValeAnula/NRVVI}" editable="false" showValueHelp="false" enabled="true" visible="true" width="40%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogPlantaNewReg"/>
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement visible="true">
+                                        <form:label>
+                                            <Label text="Motivo" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                        </form:label>
+                                        <form:fields>
+                                            <Input type="Text" value="{modelValeViveres>/ValeAnula/OBVVI}" editable="true" showValueHelp="false" enabled="true" visible="true" width="100%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogAlmacenNewReg"/>
+                                        </form:fields>
+                                </form:FormElement>
+                            </form:formElements>
+                            <form:title/>
+                        </form:FormContainer>
+                    </form:formContainers>
+                       <form:layout>
+                                <form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>
+                            </form:layout>
+                        </form:Form>
+                    </content>
+                    <beginButton/>
+                            <buttons>
+                                <Button text="Aceptar" type="Accept" icon="sap-icon://begin" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="AnularVale"/>
+                                <Button text="Cancelar" type="Reject" icon="sap-icon://begin" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="_onCloseDialogAnular"/>
+                            </buttons>
+                            <customHeader/>
+                        <endButton/>
+                    <subHeader/>
+				</Dialog>
+</core:FragmentDefinition>

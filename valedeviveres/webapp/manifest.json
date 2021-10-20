@@ -10,7 +10,22 @@
         "title": "{{appTitle}}",
         "description": "{{appDescription}}",
         "resources": "resources.json",
-        "ach": "ach"
+        "ach": "ach",
+        "crossNavigation": {
+            "inbounds": {
+                "tasa-com-valedeviveres-inbound": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "ValedeViveres",
+                    "action": "display",
+                    "title": "{{flpTitle}}",
+                    "subTitle": "{{flpSubtitle}}",
+                    "icon": "sap-icon://legend"
+                }
+            }
+        }        
     },
     "sap.ui": {
         "technology": "UI5",
@@ -45,6 +60,23 @@
                 "sap.f": {}
             }
         },
+		"config": {
+			"sample": {
+				"files": [
+                    "DlgAlmacen.fragment.xml",
+                    "DlgArmadorComercial.fragment.xml",
+                    "DlgEmbarcacion.fragment.xml",
+                    "DlgNewReg.fragment.xml",
+                    "DlgPlanta.fragment.xml",
+                    "DlgCocinero.fragment.xml",
+                    "RegistrarValeViveres.view.xml",
+                    "RegistrarValeViveres.controller.js",
+                    "Main.view.xml",
+                    "Main.controller.js",
+					"manifest.json"
+				]
+			}
+		},
         "contentDensities": {
             "compact": true,
             "cozy": true
@@ -55,6 +87,10 @@
                 "settings": {
                     "bundleName": "tasa.com.valedeviveres.i18n.i18n"
                 }
+            },
+            "modelValeViveres": {
+                "preload": true,
+                "type": "sap.ui.model.json.JSONModel"
             }
         },
         "resources": {
@@ -75,22 +111,43 @@
                 "clearControlAggregation": false
             },
             "routes": [
-                {
-                    "name": "RouteMain",
-                    "pattern": "RouteMain",
-                    "target": [
-                        "TargetMain"
-                    ]
-                }
+				{
+					"pattern": "Main/:context:",
+					"name": "Main",
+					"target": [
+						"Main"
+					]
+				},
+				{
+					"pattern": "",
+					"name": "default",
+					"target": [
+						"Main"
+					]
+				},
+				{
+					"pattern": "RegistrarValeViveres/:context:",
+					"name": "RegistrarValeViveres",
+					"target": [
+						"RegistrarValeViveres"
+					]
+				}
             ],
             "targets": {
-                "TargetMain": {
-                    "viewType": "XML",
-                    "transition": "slide",
-                    "clearControlAggregation": false,
-                    "viewId": "Main",
-                    "viewName": "Main"
-                }
+				"Main": {
+					"controlAggregation": "pages",
+					"viewName": "Main",
+					"viewId": "Main",
+					"viewLevel": 1,
+					"transition": "slide"
+				},
+				"RegistrarValeViveres": {
+					"controlAggregation": "pages",
+					"viewName": "RegistrarValeViveres",
+					"viewId": "RegistrarValeViveres",
+					"viewLevel": 2,
+					"transition": "slide"
+				}                
             }
         }
     },

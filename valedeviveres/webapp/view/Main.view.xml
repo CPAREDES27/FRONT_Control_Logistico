@@ -26,7 +26,7 @@
                                                 <Label text="Vale Inicio" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" showValueHelp="false" value="{modelReqPesca>/SearchPlanta/WERKS}" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                                <Input type="Text" showValueHelp="false" value="{modelValeViveres>/SearchValeVieres/NRVVI }" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -34,7 +34,7 @@
                                                 <Label text="Vale Fin" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" showValueHelp="false" value="{modelReqPesca>/SearchPlanta/WERKS}" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                                <Input type="Text" showValueHelp="false" value="{modelValeViveres>/SearchValeVieres/NRVVI }" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -42,7 +42,7 @@
                                                 <Label text="Fecha Inicio" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <DatePicker width="50%" displayFormat="dd/MM/yyyy" value="{modelReqPesca>/Search/FHREQ}" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="ddMMyyyy"/>
+                                                <DatePicker width="50%" displayFormat="dd/MM/yyyy" value="{modelValeViveres>/Search/FCVVI }" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="ddMMyyyy"/>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -50,7 +50,7 @@
                                                 <Label text="Fecha Fin" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <DatePicker width="50%" displayFormat="dd/MM/yyyy" value="{modelReqPesca>/Search/FHREQ}" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="ddMMyyyy"/>
+                                                <DatePicker width="50%" displayFormat="dd/MM/yyyy" value="{modelValeViveres>/Search/FCVVI }" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="ddMMyyyy"/>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -58,7 +58,7 @@
                                                 <Label text="Armador Comercial" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" value="{modelReqPesca>/Search/WERKS}" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogArmadorComercial"/>
+                                                <Input type="Text" value="{modelValeViveres>/Search/ARCMC}" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogArmadorComercial"/>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -66,7 +66,7 @@
                                                 <Label text="Embarcación" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" value="{modelReqPesca>/Search/WERKS}" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogEmbarcacion"/>
+                                                <Input type="Text" value="{modelValeViveres>/Search/CDEMB}" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogEmbarcacion"/>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -74,7 +74,7 @@
                                                 <Label text="Planta" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" value="{modelReqPesca>/Search/WERKS}" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogPlanta"/>
+                                                <Input type="Text" value="{modelValeViveres>/Search/CDTPO}" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogPlanta"/>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -82,7 +82,7 @@
                                                 <Label text="Almacén" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" value="{modelReqPesca>/Search/WERKS}" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogAlmacen"/>
+                                                <Input type="Text" value="{modelValeViveres>/Search/CDPTA}" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogAlmacen"/>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -90,7 +90,7 @@
                                                 <Label text="Temporada" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <ComboBox editable="true" enabled="true" selectedKey="{modelReqPesca>/SearchPlanta/INPRP}" visible="true" width="50%" valueState="None" maxWidth="100%">
+                                                <ComboBox editable="true" enabled="true" selectedKey="{modelValeViveres>/SearchValeVieres/CDALM}" visible="true" width="50%" valueState="None" maxWidth="100%">
                                                     <items>
                                                         <core:Item text="" enabled="true" key="Item"/>
                                                         <core:Item text="" enabled="true" key="Item"/>
@@ -100,23 +100,23 @@
                                         </form:FormElement>
                                         <form:FormElement visible="true">
                                             <form:label>
-                                                <Label text="Ind. Propiedad" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Label text="Indicador de Propiedad" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <ComboBox editable="true" enabled="true" selectedKey="{modelReqPesca>/SearchPlanta/INPRP}" visible="true" width="50%" valueState="None" maxWidth="100%">
+                                                <ComboBox editable="true" enabled="true" selectedKey="{modelValeViveres>/SearchValeVieres/INPRP}" visible="true" width="50%" valueState="None" maxWidth="100%">
                                                     <items>
-                                                        <core:Item text="" enabled="true" key="Item"/>
-                                                        <core:Item text="" enabled="true" key="Item"/>
+                                                        <core:Item text="Propia" enabled="true" key="P"/>
+                                                        <core:Item text="Tercera" enabled="true" key="T"/>
                                                     </items>
                                                 </ComboBox>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
                                             <form:label>
-                                                <Label text="Desc. Puerto" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Label text="Cantidad de aciertos" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" showValueHelp="false" value="{modelReqPesca>/SearchPlanta/DSPTO}" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                                <Input type="Text" showValueHelp="false" value="{modelValeViveres>/SearchValeVieres/Numfilas}" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -124,7 +124,7 @@
                                                     <Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                 </form:label>
                                                 <form:fields>
-                                                    <Button text="Ejecutar" type="Default" icon="sap-icon://open-command-field" iconFirst="false" width="25%" enabled="true" visible="true" iconDensityAware="false" press="_onBuscarButtonPress"/>
+                                                    <Button text="Ejecutar" type="Default" icon="sap-icon://open-command-field" iconFirst="false" width="25%" enabled="true" visible="true" iconDensityAware="false" press="SearchMain"/>
                                                 </form:fields>
                                         </form:FormElement>
                                     </form:formElements>
@@ -136,7 +136,7 @@
                             </form:layout>
                         </form:Form>
                         <Table width="100%" noDataText="No data" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiSmallMargin"
-                            items="{path:'modelReqPesca>/ListCentroReqPesca', templateShareable:true}">
+                            items="{path:'modelValeViveres>/ListMain', templateShareable:true}" >
                                 <infoToolbar>
                                     <Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
                                         <content>
@@ -148,7 +148,7 @@
                                     <OverflowToolbar width="auto" height="auto" design="Transparent" visible="true" enabled="true">
                                         <content>
                                             <ToolbarSpacer width=""/>
-                                            <OverflowToolbarButton text="Action" type="Default" icon="" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+                                            <Button text="Exportar a Excel" type="Ghost" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press=""/>
                                             <OverflowToolbarButton text="Action" type="Default" icon="sap-icon://action-settings" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
                                         </content>
                                     </OverflowToolbar>
@@ -156,23 +156,23 @@
                                 <columns>
                                     <Column width="60px" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
                                         <header>
-                                            <Text text="Vale" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            <Text text="Vale"  width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                         </header>
                                         <footer/>
                                     </Column>
                                     <Column width="60px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
                                         <header>
-                                            <Text text="Embarcación" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            <Text text="Embarcación"  width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                         </header>
                                         <footer/>
                                     </Column>
-                                    <Column width="60px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                                    <Column width="80px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
                                         <header>
                                             <Text text="Armador" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                         </header>
                                         <footer/>
                                     </Column>
-                                    <Column width="60px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                                    <Column width="58px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
                                         <header>
                                             <Text text="Planta" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                         </header>
@@ -184,7 +184,7 @@
                                         </header>
                                         <footer/>
                                     </Column>
-                                    <Column width="80px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                                    <Column width="60px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
                                         <header>
                                             <Text text="Ind. propiedad" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                         </header>
@@ -196,37 +196,36 @@
                                         </header>
                                         <footer/>
                                     </Column>
-                                    <Column width="60px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                                    <Column width="50px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
                                         <header>
                                             <Text text="Fecha" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                         </header>
                                         <footer/>
                                     </Column>
-                                    <Column width="60px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                                    <Column width="37px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
                                         <header>
                                             <Text text="Estado" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                         </header>
                                         <footer/>
                                     </Column>
-                                    <Column width="100px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                                    <Column width="68px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
                                         <header>
                                             <Text text="Orden extracción" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                         </header>
                                         <footer/>
                                     </Column>
-                                    <Column width="60px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                                    <Column width="55px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
                                         <header>
-                                            <Text text="Costo" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            <Text text="Centro costo" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                         </header>
                                         <footer/>
                                     </Column>
-                                    <Column width="60px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                                    <Column width="48px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
                                         <header>
                                             <Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                         </header>
                                         <footer/>
                                     </Column>
-                                    
                                 </columns>
                                     
                                 <items>
@@ -318,19 +317,18 @@
                                         <ColumnListItem type="Active">
                                             <cells>
                                                 
-                                                <Text text="{modelReqPesca>CDPTA}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                <Text text="{modelReqPesca>DESCR}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                <Text text="{modelReqPesca>CDPTA}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                <Text text="{modelReqPesca>CDPTA}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                <Text text="{modelReqPesca>CDPTA}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                <Text text="{modelReqPesca>CDPTA}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                <Text text="{modelReqPesca>CDPTA}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                <Text text="{modelReqPesca>CDPTA}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                <Text text="{modelReqPesca>CDPTA}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                <Text text="{modelReqPesca>CDPTA}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                <Text text="{modelReqPesca>CDPTA}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                <Link text="{modelReqPesca>WERKS}" press="_onpress_centrolinkreqpesca" ></Link>
-
+                                                <Link text="{modelValeViveres>NRVVI}" width="auto" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true" press="_onPressDetalle"/>
+                                                <Text text="{modelValeViveres>NMEMB}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Text text="{modelValeViveres>NAME1}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Text text="{modelValeViveres>DESCR}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Text text="{modelValeViveres>DSALM}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Text text="{modelValeViveres>INPRP}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Text text="{modelValeViveres>DSTPO}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Text text="{modelValeViveres>FCVVI}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Text text="{modelValeViveres>ESVVI}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Text text="{modelValeViveres>AUFNR}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Text text="{modelValeViveres>KOSTL}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Button text="Anular" type="Ghost" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="_onPressAnularVale"/>
                                             </cells>
                                         </ColumnListItem>
                                     
@@ -346,7 +344,7 @@
                                                     <Label text="Número de Filas" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                 </form:label>
                                                 <form:fields>
-                                                    <Input type="Number" showValueHelp="false" value="{modelReqPesca>/SearchPlanta/Numfilas}" enabled="true" visible="true" width="200px" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                                    <Input type="Number" showValueHelp="false" value="{modelValeViveres>/SearchValeVieres/Numfilas}" enabled="true" visible="true" width="200px" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                                 </form:fields>
                                             </form:FormElement>
                                         </form:formElements>

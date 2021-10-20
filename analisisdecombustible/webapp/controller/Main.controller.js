@@ -79,10 +79,10 @@
                 var self = this;
                 var cdemb = self.getView().getModel("modelControlLog").getProperty("/SearchEmbarcacion").CDEMB;
                 var nmemb = self.getView().getModel("modelControlLog").getProperty("/SearchEmbarcacion").NMEMB;
-                //var stcd1 = self.getView().getModel("modelControlLog").getProperty("/SearchEmbarcacion").STCD1; NO SALE DATOS EN EL SHAWER
+                var stcd1 = self.getView().getModel("modelControlLog").getProperty("/SearchEmbarcacion").STCD1; 
                 var mremb = self.getView().getModel("modelControlLog").getProperty("/SearchEmbarcacion").MREMB;
                 var inprp = self.getView().getModel("modelControlLog").getProperty("/SearchEmbarcacion").INPRP;
-                //var name1 = self.getView().getModel("modelControlLog").getProperty("/SearchEmbarcacion").NAME1; NO SALE DATOS EN EL SHAWER
+                var name1 = self.getView().getModel("modelControlLog").getProperty("/SearchEmbarcacion").NAME1;
 
                 var numfilas = self.getView().getModel("modelControlLog").getProperty("/SearchEmbarcacion").Numfilas;
             
@@ -96,10 +96,10 @@
                 var options = [];
                 if (cdemb) options.push({ cantidad: "40", control: "INPUT", "key": "CDEMB", valueHigh: "", valueLow: cdemb }); 
                 if (nmemb) options.push({ cantidad: "40", control: "INPUT", "key": "NMEMB", valueHigh: "", valueLow: nmemb }); 
-                //if (stcd1) options.push({ cantidad: "40", control: "INPUT", "key": "STCD1", valueHigh: "", valueLow: stcd1 }); 
+                if (stcd1) options.push({ cantidad: "40", control: "INPUT", "key": "STCD1", valueHigh: "", valueLow: stcd1 }); 
                 if (mremb) options.push({ cantidad: "40", control: "INPUT", "key": "MREMB", valueHigh: "", valueLow: mremb }); 
                 if (inprp) options.push({ cantidad: "40", control: "COMBOBOX", "key": "INPRP", valueHigh: "", valueLow: inprp }); 
-                //if (name1) options.push({ cantidad: "40", control: "INPUT", "key": "NAME1", valueHigh: "", valueLow: name1 }); 
+                if (name1) options.push({ cantidad: "40", control: "INPUT", "key": "NAME1", valueHigh: "", valueLow: name1 }); 
 
                 self.ejecutarReadTable(table, options, user, numfilas, model, property);
 

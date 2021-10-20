@@ -1,15 +1,16 @@
 sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"sap/ui/Device",
-	"tasa/com/valedeviveres/model/models"
-], function (UIComponent, Device, models) {
+	"com/sap/build/standard/untitledPrototype/model/models",
+	"./model/errorHandling"
+], function(UIComponent, Device, models, errorHandling) {
 	"use strict";
 
 	var navigationWithContext = {
 
 	};
 
-	return UIComponent.extend("tasa.com.valedeviveres.Component", {
+	return UIComponent.extend("com.sap.build.standard.untitledPrototype.Component", {
 
 		metadata: {
 			manifest: "json"
@@ -20,18 +21,30 @@ sap.ui.define([
 		 * @public
 		 * @override
 		 */
-		init: function () {
+		init: function() {
+			// set the device model
+			this.setModel(models.createDeviceModel(), "device");
+			// set the FLP model
+			this.setModel(models.createFLPModel(), "FLP");
+
+			// set the dataSource model
+			this.setModel(new sap.ui.model.json.JSONModel({}), "dataSource");
+
+			// set application model
+			var oApplicationModel = new sap.ui.model.json.JSONModel({});
+			this.setModel(oApplicationModel, "applicationModel");
+
 			// call the base component's init function
 			UIComponent.prototype.init.apply(this, arguments);
 
-			// enable routing
-			this.getRouter().initialize();
+			// delegate error handling
+			errorHandling.register(this);
 
-			// set the device model
-			this.setModel(models.createDeviceModel(), "device");
-        },
-        /*
-        createContent: function() {
+			// create the views based on the url/hash
+			this.getRouter().initialize();
+		},
+
+		createContent: function() {
 			var app = new sap.m.App({
 				id: "App"
 			});
@@ -43,11 +56,12 @@ sap.ui.define([
 
 			return app;
 		},
-*/
+
 		getNavigationPropertyForNavigationWithContext: function(sEntityNameSet, targetPageName) {
 			var entityNavigations = navigationWithContext[sEntityNameSet];
 			return entityNavigations == null ? null : entityNavigations[targetPageName];
 		}
 
 	});
+
 });
