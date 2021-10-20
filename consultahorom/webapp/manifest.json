@@ -89,6 +89,10 @@
                 "Embarcacion":{
                     "type": "sap.ui.model.json.JSONModel",
                     "preload":true
+                },
+                "EmbarcacionSearch":{
+                    "type": "sap.ui.model.json.JSONModel",
+                    "preload":true
                 }
                 
         },

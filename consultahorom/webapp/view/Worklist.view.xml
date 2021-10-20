@@ -25,69 +25,7 @@
 						<f:formElements>
 							<f:FormElement label="Embarcación">
 								<f:fields>
-									<m:Input  change="multiInputPlanta" class="sapUiSmallMarginBottom"
-												id="idEmbarcacionIni"
-												width="100%"
-												placeholder="Ingresar Embarcacion..."
-												showSuggestion="true"
-												showValueHelp="false"
-												valueState="Information"
-												valueStateText="Ingrese un texto"
-												suggestionRows="{Embarcacion>/listaEmbarcacion}">
-												<m:suggestionColumns>
-													<m:Column
-														hAlign="Begin"
-														popinDisplay="Inline"
-														demandPopin="true"
-														minScreenWidth="Tablet">
-														<m:Label text="Codigo Embarcacion"/>
-													</m:Column>
-													<m:Column
-														hAlign="End"
-														popinDisplay="Inline"
-														demandPopin="true"
-														minScreenWidth="Tablet">
-														<m:Label text="Descripcion"/>
-													</m:Column>
-													<m:Column
-														hAlign="End"
-														popinDisplay="Inline"
-														demandPopin="true"
-														minScreenWidth="Tablet">
-														<m:Label text="Matricula"/>
-													</m:Column>	
-													<m:Column
-														hAlign="End"
-														popinDisplay="Inline"
-														demandPopin="true"
-														minScreenWidth="Tablet">
-														<m:Label text="RUC"/>
-													</m:Column>	
-													<m:Column
-														hAlign="End"
-														popinDisplay="Inline"
-														demandPopin="true"
-														minScreenWidth="Tablet">
-														<m:Label text="Desc. Armador"/>
-													</m:Column>	
-												</m:suggestionColumns>
-												<m:suggestionRows>
-													<m:ColumnListItem>
-													<m:cells>
-														<m:Label text="{Embarcacion>CDEMB}"/>
-														<m:Label text="{Embarcacion>MREMB}"/>
-														<m:Label text="{Embarcacion>NMEMB}"/>
-														<m:Label text="{Embarcacion>LIFNR}"/>
-														<m:Label text="{Embarcacion>NAME1}"/>
-														<m:Label text="{
-																parts:[{path:'Codigo Embarcacion'},{path:'Descripcion'},{path:'Matricula'},{path:'RUC'},{path:'Desc. Armador'}],
-																type: 'sap.ui.model.type.Currency',
-																formatOptions: {showMeasure: true}
-																}"/>
-													</m:cells>
-													</m:ColumnListItem>
-												</m:suggestionRows>
-											</m:Input>
+								<m:Input type="Text" id="idEmbarcacion" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogEmbarcacion"/>			
 								</f:fields>
 							</f:FormElement>
 						</f:formElements>
@@ -136,13 +74,15 @@
 			<Table
                             id="table"
                             rows="{Horometro>/listaHorometro}"
+							selectionMode="None"
                             visibleRowCount="7"
                             showColumnVisibilityMenu="{ui>/showVisibilityMenuEntry}"
                             enableColumnFreeze="{ui>/showFreezeMenuEntry}"
                             enableCellFilter="{ui>/enableCellFilter}"
                             columnSelect="onColumnSelect"
                             cellContextmenu="onProductIdCellContextMenu"
-                            ariaLabelledBy="title">
+                            ariaLabelledBy="title"
+							>
 				<extension>
 					<m:OverflowToolbar style="Clear">
 						<m:Title id="title" text="Lista de precios: {dataPrecio.str_ppc.total}" />

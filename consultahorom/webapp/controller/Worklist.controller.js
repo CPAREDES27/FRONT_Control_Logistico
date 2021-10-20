@@ -28,8 +28,8 @@ sap.ui.define([
 		 * @public
 		 */
 		onInit : function () {
-			
 			this.listaEmbarcacion();
+			
 		},
 		listaEmbarcacion: function(){
 			
@@ -64,19 +64,33 @@ sap.ui.define([
 					var dataPuerto=data.data;
 					console.log(dataPuerto);
 					console.log(this.getView().getModel("Embarcacion").setProperty("/listaEmbarcacion",dataPuerto));
+				
 				  }).catch(error => console.log(error)
 				  );
 		},
 		onBusqueda: function(){
 			oGlobalBusyDialog.open();
 			
-			var idEmbarcacionIni = this.byId("idEmbarcacionIni").getValue();
+			var idEmbarcacion = this.byId("idEmbarcacion").getValue();
+			console.log(idEmbarcacion);
 			var idFechaIni = this.byId("idFecha").mProperties.dateValue;
 			var idFechaFin = this.byId("idFecha").mProperties.secondDateValue;
 			console.log(this.byId("idFecha"));
-			if(!this.byId("idFecha").mProperties.dateValue){
-				MessageBox.error("Debe ingresar un rango de fechas");
+			var error="";
+			var valido=true;
+			if(!idEmbarcacion){
+				error="Debe ingresar un código de embarcación\n";
 				oGlobalBusyDialog.close();
+				valido= false;
+			}
+			if(!this.byId("idFecha").mProperties.dateValue){
+				error+="Debe ingresar un rango de fechas"
+				
+				oGlobalBusyDialog.close();
+				valido= false;
+			}
+			if(!valido){
+				MessageBox.error(error);
 				return false;
 			}
 			var dateIni = new Date(idFechaIni);
@@ -103,8 +117,7 @@ sap.ui.define([
 				diaFin= this.zeroFill(diaFin,2);
 			}
 			var fechaFin = dateFin.getFullYear()+""+mesFin+""+diaFin;
-			console.log(fechaIni);
-			console.log(fechaFin);
+			
 			var body={
 				"fieldStr_emb": [
 				],
@@ -114,7 +127,7 @@ sap.ui.define([
 				],
 				"fieldT_mensaje": [
 				],
-				"p_cdemb": idEmbarcacionIni,
+				"p_cdemb": idEmbarcacion,
 				"p_ffevn": fechaFin,
 				"p_fievn": fechaIni,
 				"p_user": "FGARCIA"
@@ -299,9 +312,157 @@ sap.ui.define([
 					this.byId("table").getBinding().filter(oFilter, "Application");
 					  },
 					  onLimpiar: function(){
-						  this.byId("idEmbarcacionIni").setValue("");
+						  this.byId("idEmbarcacion").setValue("");
 						  this.byId("idFecha").setValue("");
-					  }
+					  },
+					  _onOpenDialogEmbarcacion: function() {
+						
+						this.getView().getModel("EmbarcacionSearch").setProperty("/listaEmbarcacion","");
+						this._getDialogEmbarcacion().open();
+						
+						},
+			
+						_onCloseDialogEmbarcacion: function() {
+							this._getDialogEmbarcacion().close();
+						},
+			
+						_getDialogEmbarcacion : function () {
+							if (!this._oDialogEmbarcacion) {
+								this._oDialogEmbarcacion = sap.ui.xmlfragment("com.tasa.consultahorom.view.DlgEmbarcacion", this.getView().getController());
+								this.getView().addDependent(this._oDialogEmbarcacion);
+							}
+							sap.ui.getCore().byId("idEmbarcacion").setValue("");
+						sap.ui.getCore().byId("idEmbarcacionDesc").setValue("");
+						sap.ui.getCore().byId("idMatricula").setValue("");
+						sap.ui.getCore().byId("idRuc").setValue("");
+						sap.ui.getCore().byId("idArmador").setValue("");
+							return this._oDialogEmbarcacion;
+						},
+						_onBuscarButtonPress: function(){
+							var idEmbarcacion =sap.ui.getCore().byId("idEmbarcacion").getValue();
+							var idEmbarcacionDesc =sap.ui.getCore().byId("idEmbarcacionDesc").getValue();
+							var idMatricula =sap.ui.getCore().byId("idMatricula").getValue();
+							var idRuc =sap.ui.getCore().byId("idRuc").getValue();
+							var idArmador =sap.ui.getCore().byId("idArmador").getValue();
+							console.log(this.getView().getModel("Embarcacion"));
+							console.log(idEmbarcacion);
+							var arrayEmbarcacion = this.getView().getModel("Embarcacion").oData.listaEmbarcacion;
+							var arrayActual=[];
+							var tamanio = arrayEmbarcacion.length;
+							console.log(tamanio);
+							if(!idEmbarcacion && !idEmbarcacionDesc && !idMatricula && !idRuc && !idArmador){
+								oGlobalBusyDialog.open();
+								this.listaEmbarcacion2();
+								oGlobalBusyDialog.close();
+								this.getView().getModel("EmbarcacionSearch").setProperty("/listaEmbarcacion",this.getView().getModel("Embarcacion").oData.listaEmbarcacion);
+							}
+							for(var i=0;i<tamanio;i++){
+								
+								if(idEmbarcacion &&  arrayEmbarcacion[i].CDEMB===idEmbarcacion){
+									arrayActual.push({
+										"CDEMB":arrayEmbarcacion[i].CDEMB,
+										"MREMB":arrayEmbarcacion[i].MREMB,
+										"NMEMB":arrayEmbarcacion[i].NMEMB,
+										"LIFNR":arrayEmbarcacion[i].LIFNR,
+										"NAME1":arrayEmbarcacion[i].NAME1
+									})
+									console.log(arrayActual);
+									this.getView().getModel("EmbarcacionSearch").setProperty("/listaEmbarcacion",arrayActual);
+								}
+								if(idMatricula &&  arrayEmbarcacion[i].MREMB===idMatricula){
+									arrayActual.push({
+										"CDEMB":arrayEmbarcacion[i].CDEMB,
+										"MREMB":arrayEmbarcacion[i].MREMB,
+										"NMEMB":arrayEmbarcacion[i].NMEMB,
+										"LIFNR":arrayEmbarcacion[i].LIFNR,
+										"NAME1":arrayEmbarcacion[i].NAME1
+									})
+									console.log(arrayActual);
+									this.getView().getModel("EmbarcacionSearch").setProperty("/listaEmbarcacion",arrayActual);
+								}
+								if(idEmbarcacionDesc &&  arrayEmbarcacion[i].NMEMB===idEmbarcacionDesc){
+									arrayActual.push({
+										"CDEMB":arrayEmbarcacion[i].CDEMB,
+										"MREMB":arrayEmbarcacion[i].MREMB,
+										"NMEMB":arrayEmbarcacion[i].NMEMB,
+										"LIFNR":arrayEmbarcacion[i].LIFNR,
+										"NAME1":arrayEmbarcacion[i].NAME1
+									})
+									console.log(arrayActual);
+									this.getView().getModel("EmbarcacionSearch").setProperty("/listaEmbarcacion",arrayActual);
+								}
+								if(idRuc &&  arrayEmbarcacion[i].LIFNR===idRuc){
+									arrayActual.push({
+										"CDEMB":arrayEmbarcacion[i].CDEMB,
+										"MREMB":arrayEmbarcacion[i].MREMB,
+										"NMEMB":arrayEmbarcacion[i].NMEMB,
+										"LIFNR":arrayEmbarcacion[i].LIFNR,
+										"NAME1":arrayEmbarcacion[i].NAME1
+									})
+									console.log(arrayActual);
+									this.getView().getModel("EmbarcacionSearch").setProperty("/listaEmbarcacion",arrayActual);
+								}
+							}
+							
+							
+						
+						},
+						listaEmbarcacion2: function(){
+							oGlobalBusyDialog.open();
+							var body={
+								"option": [
+									
+								],
+								"option2": [
+									{
+										"wa":"ESEMB = 'O'"
+									},
+									{
+										"wa":"AND INPRP LIKE 'P'"
+									}							   
+								],
+								"options": [
+								  
+								],
+								"options2": [
+								 
+								],
+								"p_user": "BUSQEMB"
+							  }
+							  fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+								  {
+									  method: 'POST',
+									  body: JSON.stringify(body)
+								  })
+								  .then(resp => resp.json()).then(data => {
+									var dataPuerto=data.data;
+									this.getView().getModel("Embarcacion").setProperty("/listaEmbarcacion",dataPuerto);
+									oGlobalBusyDialog.close();
+
+									
+								  }).catch(error => console.log(error)
+								  );
+						},
+						editarMasivo: function(oEvent){
+							var indices = sap.ui.getCore().byId("table1").getSelectedIndices();
+							console.log(indices);
+							if(indices.length>1){
+								MessageBox.error("Solo puede seleccionar un elemento");
+								return false;
+							}else{
+								var data = this.getView().getModel("Embarcacion").oData.listaEmbarcacion[indices].CDEMB;
+								console.log(data);
+								this.byId("idEmbarcacion").setValue(data);
+								this._onCloseDialogEmbarcacion();
+							}
+
+						},
+						buscar: function(evt){
+							var indices = evt.mParameters.listItem.oBindingContexts.EmbarcacionSearch.sPath.split("/")[2];
+							var data = this.getView().getModel("Embarcacion").oData.listaEmbarcacion[indices].CDEMB;
+							this.byId("idEmbarcacion").setValue(data);
+								this._onCloseDialogEmbarcacion();
+						}
 
 	
 
