@@ -89,6 +89,7 @@
 						<m:ToolbarSpacer/>
 						<m:ToolbarSeparator/>
                         <m:Button icon="sap-icon://excel-attachment" press="onDataExport" text="Exportar" tooltip="Exportar Excel"/>
+						<m:Button icon="sap-icon://excel-attachment" press="onDataExport2" text="Exportar Embarcacion" tooltip="Exportar"/>
 						<m:SearchField
 							placeholder="Búsqueda rápida"
 							value="{ui>/globalFilter}"

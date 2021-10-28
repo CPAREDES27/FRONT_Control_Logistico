@@ -1,8 +1,9 @@
 <mvc:View
 	controllerName="com.tasa.reportemdatcomb.controller.Worklist"
-	xmlns="sap.m"
+	xmlns="sap.ui.table" xmlns:m="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:semantic="sap.f.semantic"
+	xmlns:u="sap.ui.unified"
 	xmlns:core="sap.ui.core"
 	xmlns:f="sap.ui.layout.form">
 
@@ -10,7 +11,7 @@
 		id="page">
 
 		<semantic:titleHeading>
-			<Title
+			<m:Title
 				text="{i18n>worklistTitle}"
 				level="H2"/>
 		</semantic:titleHeading>
@@ -25,22 +26,42 @@
 						<f:formElements>
 							<f:FormElement label="Embarcación">
 								<f:fields>
-									<Input 
-										placeholder="Ingrese Embarcación"
-										showValueHelp="true" />
+									<m:Input type="Text" id="idEmbarcacion" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogEmbarcacion"/>
 								</f:fields>
 							</f:FormElement>
 							
 							<f:FormElement label="Fecha zarpe">
 								<f:fields>
-									<DateRangeSelection 
-										placeholder="Ingrese rango de fecha"/>
+									<m:DateRangeSelection  id="idFechaIniVigencia" width="377.609375px" displayFormat="dd/MM/yyyy" valueFormat="yyyyMMdd"/>
 								</f:fields>
 							</f:FormElement>
 							
+							
+						</f:formElements>
+					</f:FormContainer>
+					<f:FormContainer >
+						<f:formElements>
+							<f:FormElement label="Motivo">
+								<f:fields>
+									<m:ComboBox editable="true"  id="idFase" items="{Fase>/FASE}" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%">
+                                        <m:items>
+                                            <core:Item text="{Fase>descripcion}" enabled="true" key="{Fase>id}"/>
+                                        </m:items>
+                                </m:ComboBox>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Fase">
+								<f:fields>
+									<m:ComboBox editable="true"  id="idMotivo" items="{Motivo>/ZCDMMA}" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%">
+                                        <m:items>
+                                            <core:Item text="{Motivo>descripcion}" enabled="true" key="{Motivo>id}"/>
+                                        </m:items>
+                                </m:ComboBox>
+								</f:fields>
+							</f:FormElement>
 							<f:FormElement label="Cantidad de aciertos">
 								<f:fields>
-									<Input 
+									<m:Input id="idAciertos"
 										placeholder="Ingrese número de registros"
 										type="Number"/>
 								</f:fields>
@@ -49,24 +70,9 @@
 					</f:FormContainer>
 					<f:FormContainer >
 						<f:formElements>
-							<f:FormElement label="Motivo">
-								<f:fields>
-									<Select 
-										/>
-								</f:fields>
-							</f:FormElement>
-							<f:FormElement label="Fase">
-								<f:fields>
-									<Select />
-								</f:fields>
-							</f:FormElement>
-						</f:formElements>
-					</f:FormContainer>
-					<f:FormContainer >
-						<f:formElements>
 							<f:FormElement >
 								<f:fields>
-									<Button text="Buscar" type="Emphasized" press="onBuscar" />
+									<m:Button text="Buscar" type="Emphasized" press="loadTabla" />
 								</f:fields>
 							</f:FormElement>
 						</f:formElements>
@@ -93,96 +99,184 @@
 
 		<semantic:content>
 			<Table
-				id="table"
-				width="auto"
-				items="{
-					path: '/Categories',
-					sorter: {
-						path: 'CategoryID',
-						descending: false
-					}
-				}"
-				noDataText="{worklistView>/tableNoDataText}"
-				busyIndicatorDelay="{worklistView>/tableBusyDelay}"
-				growing="true"
-				growingScrollToLoad="true"
-				updateFinished=".onUpdateFinished">
-
-				<headerToolbar>
-					<OverflowToolbar>
-						<ObjectAttribute
-							active="true"
-							text="%0"
-							title="Indicador de modificación"
-						/>
-						<ToolbarSpacer />
-						<Button
-							icon="sap-icon://excel-attachment"
-							type="Emphasized"
-							press="onExportar"/>
-						<SearchField
-							id="searchField"
-							tooltip="{i18n>worklistSearchTooltip}"
-							search=".onSearch">
-							<layoutData>
-								<OverflowToolbarLayoutData
-									maxWidth="200px"
-									priority="NeverOverflow"/>
-							</layoutData>
-						</SearchField>
-
-					</OverflowToolbar>
-				</headerToolbar>
-
+                            id="table"
+                            rows="{Lista>/listaLista}"
+							selectionMode="None"
+                            visibleRowCount="7"
+                            showColumnVisibilityMenu="{ui>/showVisibilityMenuEntry}"
+                            enableColumnFreeze="{ui>/showFreezeMenuEntry}"
+                            enableCellFilter="{ui>/enableCellFilter}"
+                            columnSelect="onColumnSelect"
+                            cellContextmenu="onProductIdCellContextMenu"
+                            ariaLabelledBy="title"
+							>
+				<extension>
+					<m:OverflowToolbar style="Clear">
+						<m:Title id="title" text="Indicador de modificación: " />
+						<m:ToolbarSpacer/>
+						<m:ToolbarSeparator/>
+                        <m:Button icon="sap-icon://excel-attachment" press="onDataExport" text="Exportar" tooltip="Exportar Excel"/>
+						<m:SearchField
+							placeholder="Búsqueda rápida"
+							value="{ui>/globalFilter}"
+							search="filterGlobally"
+							width="15rem"/>
+					</m:OverflowToolbar>
+				</extension>
 				<columns>
-					<Column >
-						<Text text="Embarcación"/>
+                	<Column
+						id="fecha"
+						width="11rem"
+						sortProperty="fecha"
+						filterProperty="fecha"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
+                       
+							<m:Label text="Embarcación" />
+						
+						
+						<template>
+							<m:Text text="{Lista>NMEMB}" wrapping="false" />
+						</template>
 					</Column>
-					<Column >
-						<Text text="Marea"/>
+                   
+                    <Column
+						id="NRMAR"
+						width="11rem"
+						sortProperty="NRMAR"
+						filterProperty="NRMAR"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+						>
+                       
+                            <m:Label text="Marea" />
+                       
+						
+						<template>
+							<m:Text text="{path:'Lista>NRMAR'}" wrapping="false" />
+						</template>
 					</Column>
-					<Column >
-						<Text text="Fase"/>
+                    <Column
+						id="DESC_CDFAS"
+						width="11rem"
+						sortProperty="DESC_CDFAS"
+						filterProperty="DESC_CDFAS"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+						>
+                        
+                            <m:Label text="Fase" />
+                    
+						
+						<template>
+							<m:Text text="{path:'Lista>DESC_CDFAS'}" wrapping="false" />
+						</template>
 					</Column>
-					<Column >
-						<Text text="Motivo de marea"/>
+                    <Column
+						id="motorAuxiliar2"
+						width="22rem"
+						sortProperty="motorAuxiliar2"
+						filterProperty="motorAuxiliar2"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+						>
+                      
+                            <m:Label text="Motivo de marea" />
+                     
+						
+						<template>
+							<m:Text text="{path:'Lista>DESC_CDMMA'}"  />
+						</template>
 					</Column>
-					<Column >
-						<Text text="Fec. producción"/>
+                    <Column
+						id="FECCONMOV"
+						width="11rem"
+						sortProperty="FECCONMOV"
+						filterProperty="FECCONMOV"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+						>
+                         
+                            <m:Label text="Fec. producción" />
+                        
+						
+						<template>
+							<m:Text text="{path:'Lista>FECCONMOV'}" wrapping="false" />
+						</template>
 					</Column>
-					<Column >
-						<Text text="Fec. modificación"/>
+                    <Column
+						id="FCMOD"
+						width="11rem"
+						sortProperty="FCMOD"
+						filterProperty="FCMOD"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+						hAlign="End">
+                      
+                            <m:Label text="Fec. modificación" />
+                 
+						
+						<template>
+							<m:Text text="{path:'Lista>FCMOD'}" wrapping="false" />
+						</template>
 					</Column>
-					<Column >
-						<Text text="Usuario"/>
+                    <Column
+						id="ATMOD"
+						width="11rem"
+						sortProperty="ATMOD"
+						filterProperty="ATMOD"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+						>
+                         
+                            <m:Label text="Usuario" />
+                   
+						
+						<template>
+							<m:Text text="{path:'Lista>ATMOD'}" wrapping="false" />
+						</template>
 					</Column>
-					<Column >
-						<Text text="Descarga(TN)"/>
+                    <Column
+						id="CNPDS"
+						width="11rem"
+						sortProperty="CNPDS"						
+						filterProperty="CNPDS"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+                        hAlign="End"
+						
+						>
+                        <m:Label text="Descarga (TN)"  width="100%"/>
+						<template>
+							<m:Text  text="{path:'Lista>CNPDS'}" wrapping="false" />
+						</template>
 					</Column>
-					<Column >
-						<Text text="Texto explicativo por modif."/>
+					<Column
+						id="OBCOM"
+						width="11rem"
+						sortProperty="OBCOM"						
+						filterProperty="OBCOM"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+                        
+						
+						>
+                        <m:Label text="Texto explicativo por modificación"  width="100%"/>
+						<template>
+							<m:Text  text="{path:'Lista>OBCOM'}" wrapping="false" />
+						</template>
 					</Column>
-					
-				</columns>
+					 
+                    
 
-				<items>
-					<ColumnListItem
-						type="Navigation"
-						press=".onPress">
-						<cells>
-							<ObjectStatus
-								state="Information"
-								text="{}"/>
-							<Select />
-							<Select />
-							<Text text="{}" />
-							<Text text="{}" />
-							<Text text="{}" />
-							<Text text="{}" />
-							<Text text="{}" />
-						</cells>
-					</ColumnListItem>
-				</items>
+					<!--Columnas-->
+
+				</columns>
+				<footer>
+					<m:OverflowToolbar id="infobar">
+
+                    </m:OverflowToolbar>
+				</footer>
 			</Table>
 		</semantic:content>
 

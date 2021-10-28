@@ -3,10 +3,15 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"../model/formatter",
 	"sap/ui/model/Filter",
-	"sap/ui/model/FilterOperator"
-], function (BaseController, JSONModel, formatter, Filter, FilterOperator) {
+	"sap/ui/model/FilterOperator",
+	"sap/m/MessageBox"
+], function (BaseController, JSONModel, formatter, Filter, FilterOperator,MessageBox) {
 	"use strict";
-
+	var oGlobalBusyDialog = new sap.m.BusyDialog();
+	const mainUrlServices = 'https://cf-nodejs-qas.cfapps.us10.hana.ondemand.com/api/';
+	var mimeDet=null;
+	var fileName=null;
+	var fileDetails=null;
 	return BaseController.extend("com.tasa.reportemdatcomb.controller.Worklist", {
 
 		formatter: formatter,
@@ -20,172 +25,369 @@ sap.ui.define([
 		 * @public
 		 */
 		onInit : function () {
-			var oViewModel,
-				iOriginalBusyDelay,
-				oTable = this.byId("table");
-
-			// Put down worklist table's original value for busy indicator delay,
-			// so it can be restored later on. Busy handling on the table is
-			// taken care of by the table itself.
-			iOriginalBusyDelay = oTable.getBusyIndicatorDelay();
-			// keeps the search state
-			this._aTableSearchState = [];
-
-			// Model used to manipulate control states
-			oViewModel = new JSONModel({
-				worklistTableTitle : this.getResourceBundle().getText("worklistTableTitle"),
-				shareOnJamTitle: this.getResourceBundle().getText("worklistTitle"),
-				shareSendEmailSubject: this.getResourceBundle().getText("shareSendEmailWorklistSubject"),
-				shareSendEmailMessage: this.getResourceBundle().getText("shareSendEmailWorklistMessage", [location.href]),
-				tableNoDataText : this.getResourceBundle().getText("tableNoDataText"),
-				tableBusyDelay : 0
-			});
-			this.setModel(oViewModel, "worklistView");
-
-			// Make sure, busy indication is showing immediately so there is no
-			// break after the busy indication for loading the view's meta data is
-			// ended (see promise 'oWhenMetadataIsLoaded' in AppController)
-			oTable.attachEventOnce("updateFinished", function(){
-				// Restore original busy indicator delay for worklist's table
-				oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
-			});
+			this.loadCombos();	
+			this.loadIndicadorP();
+			this.byId("idAciertos").setValue("200");
 		},
 
-		/* =========================================================== */
-		/* event handlers                                              */
-		/* =========================================================== */
+		_onOpenDialogEmbarcacion: function() {
+			this._getDialogEmbarcacion().open();
+			},
 
-		/**
-		 * Triggered by the table's 'updateFinished' event: after new table
-		 * data is available, this handler method updates the table counter.
-		 * This should only happen if the update was successful, which is
-		 * why this handler is attached to 'updateFinished' and not to the
-		 * table's list binding's 'dataReceived' method.
-		 * @param {sap.ui.base.Event} oEvent the update finished event
-		 * @public
-		 */
-		onUpdateFinished : function (oEvent) {
-			// update the worklist's object counter after the table update
-			var sTitle,
-				oTable = oEvent.getSource(),
-				iTotalItems = oEvent.getParameter("total");
-			// only update the counter if the length is final and
-			// the table is not empty
-			if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
-				sTitle = this.getResourceBundle().getText("worklistTableTitleCount", [iTotalItems]);
-			} else {
-				sTitle = this.getResourceBundle().getText("worklistTableTitle");
-			}
-			this.getModel("worklistView").setProperty("/worklistTableTitle", sTitle);
-		},
+			_onCloseDialogEmbarcacion: function() {
+				this._getDialogEmbarcacion().close();
+			},
 
-		/**
-		 * Event handler when a table item gets pressed
-		 * @param {sap.ui.base.Event} oEvent the table selectionChange event
-		 * @public
-		 */
-		onPress : function (oEvent) {
-			// The source is the list item that got pressed
-			this._showObject(oEvent.getSource());
-		},
-
-		/**
-		 * Event handler for navigating back.
-		 * We navigate back in the browser history
-		 * @public
-		 */
-		onNavBack : function() {
-			// eslint-disable-next-line sap-no-history-manipulation
-			history.go(-1);
-		},
-
-
-		onSearch : function (oEvent) {
-			if (oEvent.getParameters().refreshButtonPressed) {
-				// Search field's 'refresh' button has been pressed.
-				// This is visible if you select any master list item.
-				// In this case no new search is triggered, we only
-				// refresh the list binding.
-				this.onRefresh();
-			} else {
-				var aTableSearchState = [];
-				var sQuery = oEvent.getParameter("query");
-
-				if (sQuery && sQuery.length > 0) {
-					aTableSearchState = [new Filter("CategoryID", FilterOperator.Contains, sQuery)];
+			_getDialogEmbarcacion : function () {
+				if (!this._oDialogEmbarcacion) {
+					this._oDialogEmbarcacion = sap.ui.xmlfragment("com.tasa.reportemdatcomb.view.DlgEmbarcacion", this.getView().getController());
+					this.getView().addDependent(this._oDialogEmbarcacion);
 				}
-				this._applySearch(aTableSearchState);
-			}
+				sap.ui.getCore().byId("idEmbarcacion").setValue("");
+			sap.ui.getCore().byId("idEmbarcacionDesc").setValue("");
+			sap.ui.getCore().byId("idMatricula").setValue("");
+			sap.ui.getCore().byId("idRuc").setValue("");
+			sap.ui.getCore().byId("idArmador").setValue("");
+				return this._oDialogEmbarcacion;
+			},
+			listaEmbarcacion: function(){
+				oGlobalBusyDialog.open();
+				console.log("BusquedaEmbarca");
+				var idEmbarcacion =sap.ui.getCore().byId("idEmbarcacion").getValue();
+				var idEmbarcacionDesc =sap.ui.getCore().byId("idEmbarcacionDesc").getValue();
+				var idMatricula =sap.ui.getCore().byId("idMatricula").getValue();
+				var idRuc =sap.ui.getCore().byId("idRuc").getValue();
+				var idArmador =sap.ui.getCore().byId("idArmador").getValue();
+				var idPropiedad = sap.ui.getCore().byId("idPropiedad").getSelectedKey();
+				
+				var options=[];
+				var options2=[];
+				options.push({
+					"cantidad": "20",
+					"control": "COMBOBOX",
+					"key": "ESEMB",
+					"valueHigh": "",
+					"valueLow": "O"
+				})
+				if(idEmbarcacion){
+					options.push({
+						"cantidad": "20",
+						"control": "COMBOBOX",
+						"key": "CDEMB",
+						"valueHigh": "",
+						"valueLow": idEmbarcacion
+						
+					});
+				}
+				if(idEmbarcacionDesc){
+					options.push({
+						"cantidad": "20",
+						"control": "COMBOBOX",
+						"key": "NMEMB",
+						"valueHigh": "",
+						"valueLow": idEmbarcacionDesc
+						
+					});
+				}
+				if(idMatricula){
+					options.push({
+						"cantidad": "20",
+						"control": "COMBOBOX",
+						"key": "MREMB",
+						"valueHigh": "",
+						"valueLow": idMatricula
+					})
+				}
+				if(idPropiedad){
+					options.push({
+						"cantidad": "20",
+						"control": "COMBOBOX",
+						"key": "INPRP",
+						"valueHigh": "",
+						"valueLow": idPropiedad
+					})
+				}
+				if(idRuc){
+					options2.push({
+						"cantidad": "20",
+						"control": "COMBOBOX",
+						"key": "STCD1",
+						"valueHigh": "",
+						"valueLow": idRuc
+					})
+				}
+				if(idArmador){
+					options2.push({
+						"cantidad": "20",
+						"control": "COMBOBOX",
+						"key": "NAME1",
+						"valueHigh": "",
+						"valueLow": idArmador
+					})
+				}
+				
+				var body={
+					"option": [
+					  
+					],
+					"option2": [
+					  
+					],
+					"options": options,
+					"options2": options2,
+					"p_user": "BUSQEMB"
+				  }
+				  console.log(body);
+				fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+					  {
+						  method: 'POST',
+						  body: JSON.stringify(body)
+					  })
+					  .then(resp => resp.json()).then(data => {
+						  console.log(data);
+						var dataPuerto=data.data;
+						console.log(dataPuerto);
+						console.log(this.getView().getModel("Embarcacion").setProperty("/listaEmbarcacion",dataPuerto));
+						
+							sap.ui.getCore().byId("titleEmbarca").setText("Lista de registros: "+dataPuerto.length);
+						if(dataPuerto.length<=0){
+							sap.ui.getCore().byId("titleEmbarca").setText("Lista de registros: No se encontraron resultados");
+						}
+						oGlobalBusyDialog.close();
+					  }).catch(error => console.log(error)
+				);
+			},
+			buscar: function(evt){
+				var indices = evt.mParameters.listItem.oBindingContexts.Embarcacion.sPath.split("/")[2];
+				var data = this.getView().getModel("Embarcacion").oData.listaEmbarcacion[indices].WERKS;
+				this.byId("idEmbarcacion").setValue(data);
+				this._onCloseDialogEmbarcacion();
+			},
+			loadIndicadorP: function(){
+				oGlobalBusyDialog.open();
+				var ZINPRP=null;
+				var body={
+					"dominios": [
+					  {
+						"domname": "ZINPRP",
+						"status": "A"
+					  }
+					]
+				}
+				fetch(`${mainUrlServices}dominios/Listar/`,
+					  {
+						  method: 'POST',
+						  body: JSON.stringify(body)
+					  })
+					  .then(resp => resp.json()).then(data => {
+						console.log(data);
+							
+						ZINPRP= data.data.find(d => d.dominio == "ZINPRP").data;
+							
+							this.getModel("Propiedad").setProperty("/ZINPRP", ZINPRP);
+							oGlobalBusyDialog.close();
+					  }).catch(error => console.log(error)
+				);
+	
+			},
+			loadCombos: function(){
+				oGlobalBusyDialog.open();
+				var FASE=null;
+				var ZCDMMA=null;
+		
+				const body={
+					"dominios": [
+						{
+							"domname": "FASE",
+							"status": "A"
+						  },
+						  {
+							"domname": "ZCDMMA",
+							"status": "A"
+						  }				  
+					]
+				  }
+				fetch(`${mainUrlServices}dominios/Listar`,
+					  {
+						  method: 'POST',
+						  body: JSON.stringify(body)
+					  })
+					  .then(resp => resp.json()).then(data => {
+						var dataPuerto=data;
+						console.log(dataPuerto);
+						FASE= data.data.find(d => d.dominio == "FASE").data;
+						ZCDMMA = data.data.find(d => d.dominio == "ZCDMMA").data;
+			
+						this.getModel("Fase").setProperty("/FASE", FASE);
+						this.getModel("Motivo").setProperty("/ZCDMMA", ZCDMMA);
+					
+						oGlobalBusyDialog.close();
+					  }).catch(error => console.log(error)
+					  );
+			},
+			castFechas: function(fecha){
+				var arrayFecha=fecha.split("/");
+				console.log(arrayFecha);
+				var fechas = arrayFecha[2]+""+arrayFecha[1]+""+arrayFecha[0];
+				return fechas;
+			},
+			
+			loadTabla: function(){
+				oGlobalBusyDialog.open();
+				var idEmbarcacion = this.byId("idEmbarcacion").getValue();
+				var fechaIni = this.byId("idFechaIniVigencia").getValue();
+				var idMotivo = this.byId("idMotivo").getSelectedKey();
+				var idFase = this.byId("idFase").getSelectedKey();
+				var idAciertos= this.byId("idAciertos").getValue();
+				var error=""
+				var options=[];
+				var estado=true;
+				if(!fechaIni){
+				 error="Debe ingresar una fecha de inicio de vigencia\n";
+				 estado=false;
+				}
+				
+				if(!estado){
+					MessageBox.error(error);
+					oGlobalBusyDialog.close()
+					return false;
+				}
+				var feccc =[];
+				feccc= fechaIni.trim().split("-");
+				for(var i=0;i<feccc.length;i++){
+					feccc[i]=feccc[i].trim();
+				}
+				var fechaIniVigencia= this.castFechas(feccc[0]);
+				var fechaIniVigencia2= this.castFechas(feccc[1]);
 
-		},
+				if(fechaIni){
+					options.push({
+						cantidad: "10",
+						control:"MULTIINPUT",
+						key:"FIEVN",
+						valueHigh: fechaIniVigencia2,
+						valueLow:fechaIniVigencia
+					});
+				}
+				if(idEmbarcacion){
+					options.push({
+						cantidad: "10",
+						control:"INPUT",
+						key:"WERKS",
+						valueHigh: "",
+						valueLow:idEmbarcacion
+					});
+				}
+				if(idMotivo){
+					options.push({
+						cantidad: "10",
+						control:"COMBOBOX",
+						key:"CDMMA",
+						valueHigh: "",
+						valueLow:idMotivo
+					});
+				}
+				var body={
+					"fieldsT_flocc": [
+					  
+					],
+					"fieldsT_mensaje": [
+					
+					],
+					"option": [
+					  
+					],
+					"options": options,
+					"p_cant": idAciertos,
+					"p_fase": idFase
+				  }
+				  console.log(body);
+				  fetch(`${mainUrlServices}reportesmodifdatoscombustible/Listar/`,
+					   {
+						   method: 'POST',
+						   body: JSON.stringify(body)
+					   })
+					   .then(resp => resp.json()).then(data => {
+							console.log(data);
+							this.getModel("Lista").setProperty("/listaLista", data.t_flocc);
+							this.byId("title").setText("Indicador de modificación: "+data.indicadorPorc+"%");
+							oGlobalBusyDialog.close();
+					   }).catch(error => console.log(error)
+					   );
 
-		/**
-		 * Event handler for refresh event. Keeps filter, sort
-		 * and group settings and refreshes the list binding.
-		 * @public
-		 */
-		onRefresh : function () {
-			var oTable = this.byId("table");
-			oTable.getBinding("items").refresh();
-		},
-
-		/* =========================================================== */
-		/* internal methods                                            */
-		/* =========================================================== */
-
-		/**
-		 * Shows the selected item on the object page
-		 * On phones a additional history entry is created
-		 * @param {sap.m.ObjectListItem} oItem selected Item
-		 * @private
-		 */
-		_showObject : function (oItem) {
-			this.getRouter().navTo("object", {
-				objectId: oItem.getBindingContext().getProperty("CategoryID")
-			});
-		},
-
-		/**
-		 * Internal helper method to apply both filter and search state together on the list binding
-		 * @param {sap.ui.model.Filter[]} aTableSearchState An array of filters for the search
-		 * @private
-		 */
-		_applySearch: function(aTableSearchState) {
-			var oTable = this.byId("table"),
-				oViewModel = this.getModel("worklistView");
-			oTable.getBinding("items").filter(aTableSearchState, "Application");
-			// changes the noDataText of the list in case there are no filter results
-			if (aTableSearchState.length !== 0) {
-				oViewModel.setProperty("/tableNoDataText", this.getResourceBundle().getText("worklistNoDataWithSearchText"));
-			}
-		},
-
-		/**
-		 * Buscar seleccion
-		 * @param {*} oEvent 
-		 */
-		onBuscar:function(oEvent){
-
-		},
-
-
-		/**
-		 * Exportacion a excell
-		 * @param {*} oEvent 
-		 */
-		onExportar:function(oEvent){
-
-		},
-
-		/**
-		 * Filtro de tabla
-		 * @param {*} oEvent 
-		 */
-		onSearch:function(oEvent){
-
-		}
-
-
-
+			},
+			onDataExport:  function() {
+				var oExport = new Export({
+					exportType: new ExportTypeCSV({
+					  separatorChar: ";",
+					  charset: "utf-8"
+					}),
+					//PoliticaPrecio>/listaPolitica
+					models: this.getView().getModel("Horometro"),
+					rows:{path:""},
+					rows: { path: "/listaHorometro" },
+					columns: [
+					  {
+						name: "Embarcación",
+						template: {
+						  content: "{NMEMB}"
+						}
+					  },
+					  {
+						name: "Marea",
+						template: {
+						  content: "{NRMAR}"
+						}
+					  },
+					  {
+						name: "Fase",
+						template: {
+						  content: "{DESC_CDFAS}"
+						}
+					  },
+					  {
+						name: "Motivo de marea",
+						template: {
+						  content: "{DESC_CDMMA}"
+						}
+					  },
+					  {
+						name: "Fec. producción",
+						template: {
+						  content: "{FECCONMOV}"
+						}
+					  },
+					  {
+						name: "Fec. modificación",
+						template: {
+						  content: "{FCMOD}"
+						}
+					  },
+					  {
+						name: "Usuario",
+						template: {
+						  content: "{ATMOD}"
+						}
+					  },
+					  {
+						name: "Descarga (TN)",
+						template: {
+						  content: "{CNPDS}"
+						}
+					  },
+					  {
+						name: "Texto explicativo por modificación",
+						template: {
+						  content: "{OBCOM}"
+						}
+					  }
+					]
+				  });
+				  oExport.saveFile("Politica de Precios").catch(function(oError) {
+					MessageBox.error("Error when downloading data. ..." + oError);
+				  }).then(function() {
+					oExport.destroy();
+				  });
+				}
 	});
 });

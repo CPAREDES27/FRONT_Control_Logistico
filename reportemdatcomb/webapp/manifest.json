@@ -81,7 +81,28 @@
             "": {
                 "type": "sap.ui.model.json.JSONModel",
                 "preload": true
+            },
+            "Embarcacion":{
+                "type": "sap.ui.model.json.JSONModel",
+                "preload":true
+            },
+            "Fase":{
+                "type": "sap.ui.model.json.JSONModel",
+                "preload":true
+            },
+            "Motivo":{
+                "type": "sap.ui.model.json.JSONModel",
+                "preload":true
+            },
+            "Propiedad":{
+                "type": "sap.ui.model.json.JSONModel",
+                "preload":true
+            },
+            "Lista":{
+                "type": "sap.ui.model.json.JSONModel",
+                "preload":true
             }
+            
         },
         "routing": {
             "config": {

@@ -44,7 +44,11 @@
                                     <Label text="Ind. Propiedad" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input type="Text" showValueHelp="false" id="idIndicadorP" value="Propios" enabled="false" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    <ComboBox editable="true" selectedKey="P" id="idPropiedad" items="{Propiedad>/ZINPRP}" enabled="true" visible="true" width="auto" valueState="None" maxWidth="50%">
+                                        <items>
+                                                        <core:Item text="{Propiedad>descripcion}" enabled="true" key="{Propiedad>id}"/>
+                                        </items>
+                                </ComboBox>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -138,6 +142,7 @@
 					<ObjectIdentifier
 						text="{Embarcacion>NAME1}"/>
 				</cells>
+                
 			</ColumnListItem>
 		</items>
         

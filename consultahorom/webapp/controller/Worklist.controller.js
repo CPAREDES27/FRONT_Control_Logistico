@@ -28,46 +28,151 @@ sap.ui.define([
 		 * @public
 		 */
 		onInit : function () {
-			this.listaEmbarcacion();
+			
 			
 		},
 		listaEmbarcacion: function(){
+			oGlobalBusyDialog.open();
+			console.log("BusquedaEmbarca");
+			var idEmbarcacion =sap.ui.getCore().byId("idEmbarcacion").getValue();
+			var idEmbarcacionDesc =sap.ui.getCore().byId("idEmbarcacionDesc").getValue();
+			var idMatricula =sap.ui.getCore().byId("idMatricula").getValue();
+			var idRuc =sap.ui.getCore().byId("idRuc").getValue();
+			var idArmador =sap.ui.getCore().byId("idArmador").getValue();
+			var idPropiedad = sap.ui.getCore().byId("idIndicadorP").getValue();
+
+			var options=[];
+			var options2=[];
+			options.push({
+				"cantidad": "20",
+				"control": "COMBOBOX",
+				"key": "ESEMB",
+				"valueHigh": "",
+				"valueLow": "O"
+			})
+			if(idEmbarcacion){
+				options.push({
+					"cantidad": "20",
+					"control": "COMBOBOX",
+					"key": "CDEMB",
+					"valueHigh": "",
+					"valueLow": idEmbarcacion
+					
+				});
+			}
+			if(idEmbarcacionDesc){
+				options.push({
+					"cantidad": "20",
+					"control": "COMBOBOX",
+					"key": "NMEMB",
+					"valueHigh": "",
+					"valueLow": idEmbarcacionDesc
+					
+				});
+			}
+			if(idMatricula){
+				options.push({
+					"cantidad": "20",
+					"control": "COMBOBOX",
+					"key": "MREMB",
+					"valueHigh": "",
+					"valueLow": idMatricula
+				})
+			}
+			if(idPropiedad){
+				options.push({
+					"cantidad": "20",
+					"control": "COMBOBOX",
+					"key": "INPRP",
+					"valueHigh": "",
+					"valueLow": idPropiedad
+				})
+			}
+			if(idRuc){
+				options2.push({
+					"cantidad": "20",
+					"control": "COMBOBOX",
+					"key": "STCD1",
+					"valueHigh": "",
+					"valueLow": idRuc
+				})
+			}
+			if(idArmador){
+				options2.push({
+					"cantidad": "20",
+					"control": "COMBOBOX",
+					"key": "NAME1",
+					"valueHigh": "",
+					"valueLow": idArmador
+				})
+			}
 			
 			var body={
 				"option": [
-					
-				],
-				"option2": [
-				   
-				],
-				"options": [
 				  
 				],
-				"options2": [
-				 {
-					 "cantidad":"10",
-					 "control":"COMBOBOX",
-					 "key":"ESEMB",
-					 "valueHigh":"",
-					 "valueLow":"0"
-
-				 }
+				"option2": [
+				  
 				],
+				"options": options,
+				"options2": options2,
 				"p_user": "BUSQEMB"
 			  }
-			  fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+			  console.log(body);
+			fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
 				  {
 					  method: 'POST',
 					  body: JSON.stringify(body)
 				  })
 				  .then(resp => resp.json()).then(data => {
+					  console.log(data);
 					var dataPuerto=data.data;
 					console.log(dataPuerto);
 					console.log(this.getView().getModel("Embarcacion").setProperty("/listaEmbarcacion",dataPuerto));
-				
+					
+						sap.ui.getCore().byId("titleEmbarca").setText("Lista de registros: "+dataPuerto.length);
+					if(dataPuerto.length<=0){
+						sap.ui.getCore().byId("titleEmbarca").setText("Lista de registros: No se encontraron resultados");
+					}
+					oGlobalBusyDialog.close();
 				  }).catch(error => console.log(error)
-				  );
+			);
 		},
+		// listaEmbarcacion: function(){
+			
+		// 	var body={
+		// 		"option": [
+					
+		// 		],
+		// 		"option2": [
+				   
+		// 		],
+		// 		"options": [
+				  
+		// 		],
+		// 		"options2": [
+		// 		 {
+		// 			 "cantidad":"10",
+		// 			 "control":"COMBOBOX",
+		// 			 "key":"ESEMB",
+		// 			 "valueHigh":"",
+		// 			 "valueLow":"0"
+		// 		 }
+		// 		],
+		// 		"p_user": "BUSQEMB"
+		// 	  }
+		// 	fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+		// 		  {
+		// 			  method: 'POST',
+		// 			  body: JSON.stringify(body)
+		// 		  })
+		// 		  .then(resp => resp.json()).then(data => {
+		// 			var dataPuerto=data.data;
+		// 			console.log(dataPuerto);
+		// 			console.log(this.getView().getModel("Embarcacion").setProperty("/listaEmbarcacion",dataPuerto));
+		// 		  }).catch(error => console.log(error)
+		// 	);
+		// },
 		onBusqueda: function(){
 			oGlobalBusyDialog.open();
 			
@@ -146,61 +251,7 @@ sap.ui.define([
 					  }).catch(error => console.log(error)
 					  );
 		},
-		buscarFecha: function(oEvent){
-                debugger;
-			var dateIni= new Date(oEvent.mParameters.from);
-			var dateIni2 = new Date(oEvent.mParameters.to);
-			if(oEvent.mParameters.from==null){
-				dateIni="";	
-			}
-			if(oEvent.mParameters.to==null){
-				dateIni2="";	
-			}
-			var id=oEvent.mParameters.id;
-			var fechaIni="";
-			var fechaIni2="";
-			if(dateIni){
-				 fechaIni=this.generateFecha(dateIni);
-			}
-			if(dateIni2){
-				 fechaIni2=this.generateFecha(dateIni2);
-			}
-
-			console.log(fechaIni);
-			console.log(fechaIni2);
-			
-			if(id==="application-politicadeprecios-display-component---App--idFechaIniVigencia")
-			{
-				JsonFechaIni={
-					fechaIni:fechaIni,
-					fechaIni2:fechaIni2
-				}
-			}else{
-				JsonFechaFin={
-					fechaFin:fechaIni,
-					fechaFin2:fechaIni2
-				}
-			}
-		   
-			console.log(JsonFechaIni);
-			console.log(JsonFechaFin);
-		   
-		},
-		generateFecha: function(date){
-			var day=date.getDate();
-			var anio=date.getFullYear();
-			var mes=date.getMonth()+1;
-			if(mes<10){
-				mes=this.zeroFill(mes,2);
-			}
-			if(day<10){
-				day=this.zeroFill(day,2);
-			}
-			var fecha= anio.toString()+mes.toString()+day.toString();
-		   
-		   
-			return fecha;
-		},
+		
 		zeroFill: function( number, width )
 		{
 			width -= number.toString().length;
@@ -212,7 +263,7 @@ sap.ui.define([
 		},
 		onDataExport:  function() {
 			var oExport = new Export({
-				exportType: new ExportTypeCSV({ // required from "sap/ui/core/util/ExportTypeCSV"
+				exportType: new ExportTypeCSV({
 				  separatorChar: ";",
 				  charset: "utf-8"
 				}),
@@ -458,12 +509,180 @@ sap.ui.define([
 
 						},
 						buscar: function(evt){
-							var indices = evt.mParameters.listItem.oBindingContexts.EmbarcacionSearch.sPath.split("/")[2];
+							var indices = evt.mParameters.listItem.oBindingContexts.Embarcacion.sPath.split("/")[2];
 							var data = this.getView().getModel("Embarcacion").oData.listaEmbarcacion[indices].CDEMB;
 							this.byId("idEmbarcacion").setValue(data);
 								this._onCloseDialogEmbarcacion();
+						},
+						onDataExport2: function(){
+							oGlobalBusyDialog.open();
+						
+							var idFechaIni = this.byId("idFecha").mProperties.dateValue;
+							var idFechaFin = this.byId("idFecha").mProperties.secondDateValue;
+							var error="";
+							var valido=true;
+							
+							if(!this.byId("idFecha").mProperties.dateValue){
+								error+="Debe ingresar un rango de fechas"
+								oGlobalBusyDialog.close();
+								valido= false;
+							}
+							if(!valido){
+								MessageBox.error(error);
+								return false;
+							}
+							var dateIni = new Date(idFechaIni);
+							var mesIni;
+							var diaIni;
+							mesIni=dateIni.getMonth()+1;
+							diaIni=dateIni.getDate();
+							if(mesIni<10){
+								mesIni= this.zeroFill(mesIni,2);
+							}
+							if(diaIni<10){
+								diaIni= this.zeroFill(diaIni,2);
+							}
+							var fechaIni = dateIni.getFullYear()+""+mesIni+""+diaIni;
+							var dateFin = new Date(idFechaFin);
+							var mesFin;
+							var diaFin;
+							mesFin=dateFin.getMonth()+1;
+							diaFin=dateFin.getDate();
+							if(mesFin<10){
+								mesFin= this.zeroFill(mesFin,2);
+							}
+							if(diaFin<10){
+								diaFin= this.zeroFill(diaFin,2);
+							}
+							var fechaFin = dateFin.getFullYear()+""+mesFin+""+diaFin;
+							console.log(fechaIni+" "+fechaFin);
+							var body={
+								"fieldStr_emb": [
+								],
+								"fieldStr_evn": [
+								],
+								"fieldStr_lho": [
+								],
+								"fieldT_mensaje": [
+								],
+								"p_cdemb": "",
+								"p_ffevn": fechaFin,
+								"p_fievn": fechaIni,
+								"p_user": "FGARCIA"
+							  }
+							  console.log(body);
+							fetch(`${mainUrlServices}consultahorometro/Listar/`,
+									  {
+										  method: 'POST',
+										  body: JSON.stringify(body)
+									  })
+									  .then(resp => resp.json()).then(data => {
+										var dataHorometro = data.listaHorometro;
+										this.getView().getModel("HorometroEmba").setProperty("/listaHorometro",dataHorometro);
+										console.log(dataHorometro);
+										while(dataHorometro.length>1){
+											this.exportaList();
+											oGlobalBusyDialog.close();
+											break;
+										}
+									  }).catch(error => console.log(error)
+									  );
+									  
+									  
+									  
+						},
+						exportaList: function(){
+							var oExport = new Export({
+								exportType: new ExportTypeCSV({ // required from "sap/ui/core/util/ExportTypeCSV"
+								  separatorChar: ";",
+								  charset: "utf-8"
+								}),
+								//PoliticaPrecio>/listaPolitica
+								models: this.getView().getModel("HorometroEmba"),
+								rows:{path:""},
+								rows: { path: "/listaHorometro" },
+								columns: [
+								  {
+										name: "Matrícula",
+										template: {
+										  content: "{matricula}"
+										}
+								  },
+								  {
+									name: "Nombre Embarcación",
+									template: {
+									  content: "{nombreEmbarcacion}"
+									}
+								  },
+								  {
+									name: "Flota",
+									template: {
+									  content: "{flota}"
+									}
+								  },
+								  {
+									name: "fecha",
+									template: {
+									  content: "{fecha}"
+									}
+								  },
+								  {
+									name: "Motor Principal",
+									template: {
+									  content: "{motorPrincipal}"
+									}
+								  },
+								  {
+									name: "Motor Auxiliar 1",
+									template: {
+									  content: "{motorAuxiliar}"
+									}
+								  },
+								  {
+									name: "Motor Auxiliar 2",
+									template: {
+									  content: "{motorAuxiliar2}"
+									}
+								  },
+								  {
+									name: "Motor Auxiliar 3",
+									template: {
+									  content: "{motorAuxiliar3}"
+									}
+								  },
+								  {
+									name: "Motor Auxiliar 4",
+									template: {
+									  content: "{motorAuxiliar4}"
+									}
+								  },
+								  {
+									name: "Motor Auxiliar 5",
+									template: {
+									  content: "{motorAuxiliar5}"
+									}
+								  },
+								  {
+									name: "Panga",
+									template: {
+									  content: "{panga}"
+									}
+								  },
+								  {
+									name: "Flujometro",
+									template: {
+									  content: "{flujometro}"
+									}
+								  }
+								]
+							  });
+							  oExport.saveFile("Politica de Precios").catch(function(oError) {
+								MessageBox.error("Error when downloading data. ..." + oError);
+							  }).then(function() {
+								oExport.destroy();
+							  });
 						}
-
+						
 	
 
 	});

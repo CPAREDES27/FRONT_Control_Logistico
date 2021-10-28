@@ -1,6 +1,6 @@
 <mvc:View
 	controllerName="com.tasa.logregistrocomb.controller.Worklist"
-	xmlns="sap.m"
+	xmlns="sap.ui.table" xmlns:m="sap.m"
 	xmlns:core="sap.ui.core"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:semantic="sap.f.semantic"
@@ -11,7 +11,7 @@
 		showFooter="true">
 
 		<semantic:titleHeading>
-			<Title
+			<m:Title
 				text="{i18n>worklistTitle}"
 				level="H2"/>
 		</semantic:titleHeading>
@@ -26,25 +26,26 @@
 						<f:formElements>
 							<f:FormElement label="Marea">
 								<f:fields>
-									<Input  
+									<m:Input  id="idMareaIni"
 										placeholder="Ingrese Marea"/>
-									<Input 
+									<m:Input  id="idMareaFin"
 										placeholder="Ingrese Marea"/>
 								</f:fields>
 							</f:FormElement>
 							
 							<f:FormElement label="Fecha de contabilización">
 								<f:fields>
-									<DateRangeSelection 
+									<m:DateRangeSelection id="idFecha"
 										placeholder="Ingrese rango de fecha"/>
 								</f:fields>
 							</f:FormElement>
 							
 							<f:FormElement label="Estado">
-								<f:fields>
-									<Select 
-										placeholder="Ingrese rango de fecha"/>
-								</f:fields>
+								<m:ComboBox editable="true" selectedKey="P" id="idEstado" items="{Estado>/ZDO_ESREGC}" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%">
+                                        <m:items>
+                                                        <core:Item text="{Estado>descripcion}" enabled="true" key="{Estado>id}"/>
+                                        </m:items>
+                                </m:ComboBox>
 							</f:FormElement>
 						</f:formElements>
 					</f:FormContainer>
@@ -52,20 +53,21 @@
 						<f:formElements>
 							<f:FormElement label="Embarcación">
 								<f:fields>
-									<Input 
-										placeholder="Ingrese Embarcación"
-										showValueHelp="true" />
+									<m:Input type="Text" id="idEmbarcacion" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogEmbarcacion"/>
 								</f:fields>
 							</f:FormElement>
 							<f:FormElement label="Tipo de imputación">
 								<f:fields>
-									<Select 
-										placeholder="Ingrese rango de fecha"/>
+									<m:ComboBox editable="true"  id="idImputacion" items="{Imputacion>/ZD_TPIMPU}" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%">
+                                        <m:items>
+                                            <core:Item text="{Imputacion>descripcion}" enabled="true" key="{Imputacion>id}"/>
+                                        </m:items>
+                                </m:ComboBox>
 								</f:fields>
 							</f:FormElement>
 							<f:FormElement label="Cantidad de aciertos">
 								<f:fields>
-									<Input 
+									<m:Input id="idAciertos"
 										placeholder="Ingrese número de registros"
 										type="Number"/>
 								</f:fields>
@@ -76,7 +78,7 @@
 						<f:formElements>
 							<f:FormElement >
 								<f:fields>
-									<Button text="Buscar" type="Emphasized" press="onBusqueda" />
+									<m:Button text="Buscar" type="Emphasized" press="onBusqueda" />
 								</f:fields>
 							</f:FormElement>
 						</f:formElements>
@@ -103,86 +105,191 @@
 
 		<semantic:content>
 			<Table
-				id="table"
-				width="auto"
-				mode="MultiSelect"
-				items="{
-					path: '/Customers',
-					sorter: {
-						path: 'CompanyName',
-						descending: false
-					}
-				}"
-				noDataText="{worklistView>/tableNoDataText}"
-				busyIndicatorDelay="{worklistView>/tableBusyDelay}"
-				growing="true"
-				growingScrollToLoad="true"
-				updateFinished=".onUpdateFinished">
-
-				<headerToolbar>
-					<OverflowToolbar>
-						<ToolbarSpacer />
-						<Button icon="sap-icon://excel-attachment" type="Emphasized" press="onExportar" />
-						<SearchField
-							id="searchField"
-							tooltip="{i18n>worklistSearchTooltip}"
-							search=".onSearch">
-							<layoutData>
-								<OverflowToolbarLayoutData
-									maxWidth="200px"
-									priority="NeverOverflow"/>
-							</layoutData>
-						</SearchField>
-					</OverflowToolbar>
-				</headerToolbar>
-
+                            id="table"
+                            rows="{Combustible>/listaCombustible}"
+							selectionMode="Multitoggle"
+                            visibleRowCount="7"
+                            showColumnVisibilityMenu="{ui>/showVisibilityMenuEntry}"
+                            enableColumnFreeze="{ui>/showFreezeMenuEntry}"
+                            enableCellFilter="{ui>/enableCellFilter}"
+                            columnSelect="onColumnSelect"
+                            cellContextmenu="onProductIdCellContextMenu"
+                            ariaLabelledBy="title"
+							>
+				<extension>
+					<m:OverflowToolbar style="Clear">
+						<m:Title id="title" text="Lista de registros:" />
+						<m:ToolbarSpacer/>
+						<m:ToolbarSeparator/>
+                        <m:Button icon="sap-icon://excel-attachment" press="onDataExport" text="Exportar" tooltip="Exportar Excel"/>
+						<m:SearchField
+							placeholder="Búsqueda rápida"
+							value="{ui>/globalFilter}"
+							search="filterGlobally"
+							width="15rem"/>
+					</m:OverflowToolbar>
+				</extension>
 				<columns>
-					<Column >
-						<Text text="Marea"/>
+					
+					<Column
+						id="iconEstado"
+						width="11rem"
+						sortProperty="semana"
+						filterProperty="semana"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+						>
+						
+                            <m:Label text="" />
+                        
+						<template>
+							<m:ObjectStatus
+							class="sapUiSmallMarginBottom"
+							title=""
+							active="true"
+							state="{Combustible>color}"
+							icon="{Combustible>estado}" />
+						</template>
 					</Column>
-					<Column >
-						<Text text="Embarcación"/>
-					</Column>
-					<Column >
-						<Text text="Fecha de contabilización"/>
-					</Column>
-					<Column >
-						<Text text="Doc. SAP generado"/>
-					</Column>
-					<Column >
-						<Text text="Tipo Imputación"/>
-					</Column>
-					<Column hAlign="End" >
-						<Text text="Cantidad consumida"/>
-					</Column>
-					<Column >
-						<Text text="Observaciones"/>
-					</Column>
-					<Column >
-						<Text text="Estado"/>
-					</Column>
-				</columns>
 
-				<items>
-					<ColumnListItem
-						type="Active"
-						press=".onPress">
-						<cells>
-							<ObjectStatus
-								text="{}"
-								state="Information"/>
-							<Text text="{}" />
-							<Text text="{}" />
-							<Text text="{}" />
-							<Text text="{}" />
-							<Text text="{}" />
-							<Text text="{}" />
-							<ObjectStatus 
-								text="{}"
-								state="Warning" />
-						</cells>
-					</ColumnListItem>
-				</items>
+                	<Column
+						id="fecha"
+						width="11rem"
+						sortProperty="fecha"
+						filterProperty="fecha"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
+                       
+							<m:Label text="Marea" />
+						
+						
+						<template>
+							<m:Text text="{Combustible>nrmar}" wrapping="false" />
+						</template>
+					</Column>
+                   
+                    <Column
+						id="motorPrincipal"
+						width="11rem"
+						sortProperty="motorPrincipal"
+						filterProperty="motorPrincipal"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+						>
+                       
+                            <m:Label text="Embarcación" />
+                       
+						
+						<template>
+							<m:Text text="{path:'Combustible>werks'}" wrapping="false" />
+						</template>
+					</Column>
+                    <Column
+						id="motorAuxiliar"
+						width="11rem"
+						sortProperty="motorAuxiliar"
+						filterProperty="motorAuxiliar"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+						>
+                        
+                            <m:Label text="Fecha Contabilización" />
+                    
+						
+						<template>
+							<m:Text text="{path:'Combustible>fecon'}" wrapping="false" />
+						</template>
+					</Column>
+                    <Column
+						id="motorAuxiliar2"
+						width="22rem"
+						sortProperty="motorAuxiliar2"
+						filterProperty="motorAuxiliar2"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+						>
+                      
+                            <m:Label text="Documento SAP Generado" />
+                     
+						
+						<template>
+							<m:Text text="{path:'Combustible>nrdco'}"  />
+						</template>
+					</Column>
+                    <Column
+						id="motorAuxiliar3"
+						width="11rem"
+						sortProperty="motorAuxiliar3"
+						filterProperty="motorAuxiliar3"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+						>
+                         
+                            <m:Label text="Tipo	Imputación" />
+                        
+						
+						<template>
+							<m:Text text="{path:'Combustible>dsimp'}" wrapping="false" />
+						</template>
+					</Column>
+                    <Column
+						id="motorAuxiliar4"
+						width="11rem"
+						sortProperty="motorAuxiliar4"
+						filterProperty="motorAuxiliar4"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+						hAlign="End">
+                      
+                            <m:Label text="Cantidad Consumida" />
+                 
+						
+						<template>
+							<m:Text text="{path:'Combustible>cncon'}" wrapping="false" />
+						</template>
+					</Column>
+                    <Column
+						id="motorAuxiliar5"
+						width="11rem"
+						sortProperty="motorAuxiliar5"
+						filterProperty="motorAuxiliar5"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+						>
+                         
+                            <m:Label text="Observaciones" />
+                   
+						
+						<template>
+							<m:Text text="{path:'Combustible>dsobs'}" wrapping="false" />
+						</template>
+					</Column>
+                    <Column
+						id="panga"
+						width="11rem"
+						sortProperty="panga"						
+						filterProperty="panga"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+                        headerSpan="2,1"
+						
+						>
+                        <m:Label text="Estado" textAlign="Center" width="100%"/>
+						<template>
+							<m:Text  text="{path:'Combustible>desc_ESPRO'}" wrapping="false" />
+						</template>
+					</Column>
+					 
+                    
+
+					<!--Columnas-->
+
+				</columns>
+				<footer>
+					<m:OverflowToolbar id="infobar">
+
+                    </m:OverflowToolbar>
+				</footer>
 			</Table>
 		</semantic:content>
 

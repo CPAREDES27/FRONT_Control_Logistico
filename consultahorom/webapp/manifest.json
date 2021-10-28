@@ -93,6 +93,10 @@
                 "EmbarcacionSearch":{
                     "type": "sap.ui.model.json.JSONModel",
                     "preload":true
+                },
+                "HorometroEmba":{
+                    "type": "sap.ui.model.json.JSONModel",
+                    "preload":true
                 }
                 
         },
