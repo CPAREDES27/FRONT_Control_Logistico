@@ -1,25 +1,168 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",
+    "./BaseController",
     "sap/m/MessageBox",
-	"sap/ui/core/routing/History"
+    "sap/ui/core/routing/History",
+    "sap/ui/export/library",
+    "sap/ui/export/Spreadsheet",
+    "sap/ui/core/library"
+
 ],
 	/**
 	 * @param {typeof sap.ui.core.mvc.Controller} Controller
 	 */
-	function (Controller, MessageBox, History) {
-		"use strict";
+	function (BaseController, MessageBox, History, exportLibrary, Spreadsheet, CoreLibrary) {
+        "use strict";
+        var EdmType = exportLibrary.EdmType;
+        var ValueState = CoreLibrary
 
-		return Controller.extend("tasa.com.valedeviveres.controller.BaseController", {
+		return BaseController.extend("tasa.com.valedeviveres.controller.Main", {
+
+            //formatter: formatter,
+            dataTableKeys: [
+                'NRVVI',
+                'NMEMB',
+                'NAME1',
+                'DESCR',
+                'DSALM',
+                'DESC_INPRP',
+                'DSTPO',
+                'FCVVI',
+                'ESVVI',
+                'AUFNR',
+                'KOSTL'
+            ],
+
 			onInit: function () {
-			    this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                //this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                this.oRouter = this.getRouter();
                 this.oRouter.getTarget("Main").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
-                this.getView().getModel("modelValeViveres").setProperty("/SearchCliente", {});
-                this.getView().getModel("modelValeViveres").setProperty("/SearchValeVieres", {});
-                this.getView().getModel("modelValeViveres").setProperty("/ValeAnula", {});
-                this.getView().getModel("modelValeViveres").setProperty("/VerDetalle", {});
-                //this.getView().getModel("modelValeViveres").setProperty("/Suministro", {});
+                
             },
-            
+
+            CargaIndPropiedad: function () {
+
+                var domname = "ZINPRP";
+                var property = "/ListIndPropiedad";
+                this.EjecutarDominios(domname, property);
+            },
+
+            CargaTemporada: function () {
+
+                var domname = "TEMPORADA";
+                var property = "/ListTemporada";
+                this.EjecutarDominios(domname, property);
+            },
+
+            EjecutarDominios: function (domname, property) {
+
+                var urlNodeJS = "https://cf-nodejs-qas.cfapps.us10.hana.ondemand.com";
+                var self = this;
+                
+                var objectRT = {
+                        "dominios": [
+                            {
+                            "domname": domname,
+                            "status": "A"
+                            }
+                        ]
+                        };
+
+    
+                var urlPost = urlNodeJS + "/api/dominios/Listar";
+
+                $.ajax({
+                    url: urlPost,
+                    type: 'POST',
+                    cache: false,
+                    async: false,
+                    dataType: 'json',
+                    data: JSON.stringify(objectRT),
+                    success: function (data, textStatus, jqXHR) {
+                        self.getView().getModel("modelValeViveres").setProperty(property, data.data[0].data);
+                        console.log(data);
+                    },
+                    error: function (xhr, readyState) {
+                        console.log(xhr);
+                    }
+                });
+            },
+
+            onExportar: function(oEvent){
+
+                var aCols, oRowBinding, oSettings, oSheet, oTable;
+
+                if (!this._oTable) {
+                    this._oTable = this.byId('tbl_valeviveres');
+                }
+
+                oTable = this._oTable;
+                oRowBinding = oTable.getBinding('items');
+                aCols = this.createColumnConfig();
+
+                oSettings = {
+                    workbook: { columns: aCols },
+                    dataSource: oRowBinding,
+                    fileName: 'ValeViveres.xlsx',
+                    worker: false // We need to disable worker because we are using a Mockserver as OData Service
+                };
+
+                oSheet = new Spreadsheet(oSettings);
+                oSheet.build().finally(function () {
+                    oSheet.destroy();
+                });
+
+            },
+
+            createColumnConfig: function () {
+                var aCols = [];
+                const title = [];
+                const table = this.byId('tbl_valeviveres');
+                let tableColumns = table.getColumns();
+                const dataTable = table.getBinding('items').oList;
+                    /**
+                 * Obtener solo las opciones que se exportarán
+                 */
+                for (let i = 0; i < tableColumns.length; i++) {
+                    let header = tableColumns[i].getAggregation('header');
+                    if (header) {
+                        let headerColId = tableColumns[i].getAggregation('header').getId();
+                        let headerCol = sap.ui.getCore().byId(headerColId);
+                        let headerColValue = headerCol.getText();
+                            title.push(headerColValue);
+                    }
+                }
+                    title.pop();
+                    /**
+                 * Combinar los títulos y los campos de la cabecera
+                 */
+                const properties = title.map((t, i) => {
+                    return {
+                        column: t,
+                        key: this.dataTableKeys[i]
+                    }
+                })
+                    properties.forEach(p => {
+                    const typeValue = typeof dataTable[0][p.key];
+                    let propCol = {
+                        label: p.column,
+                        property: p.key
+                    };
+                        switch (typeValue) {
+                        case 'number':
+                            propCol.type = EdmType.Number;
+                            propCol.scale = 0;
+                            break;
+                        case 'string':
+                            propCol.type = EdmType.String;
+                            propCol.wrap = true;
+                            break;
+                    }
+                        aCols.push(propCol);
+                });
+                    return aCols;
+            },
+
+            //
             _onPressDetalle: function(oEvent) {
 
                 var self = this;
@@ -156,6 +299,16 @@ sap.ui.define([
                 var sAppId = "App6162382ab6194a3617e34917";
 
                 var oParams = {};
+                this.getView().getModel("modelValeViveres").setProperty("/SearchCliente", {});
+                this.getView().getModel("modelValeViveres").setProperty("/SearchValeVieres", {});
+                this.getView().getModel("modelValeViveres").setProperty("/SearchEmbarcacion", {});
+                this.getView().getModel("modelValeViveres").setProperty("/SearchPlanta", {});
+                this.getView().getModel("modelValeViveres").setProperty("/SearchAlmacen", {});
+                this.getView().getModel("modelValeViveres").setProperty("/ValeAnula", {});
+                this.getView().getModel("modelValeViveres").setProperty("/VerDetalle", {});
+                this.CargaTemporada();
+                this.CargaIndPropiedad();
+
 
                 if (oEvent.mParameters.data.context) {
                     this.sContext = oEvent.mParameters.data.context;
@@ -187,37 +340,218 @@ sap.ui.define([
                     this.getView().bindObject(oPath);
                 }
 
-            },    
-            
-            CargaCliente: function () {
+            },
 
-                /*
-                var viewCall = self.getView().getModel("modelValeViveres").getProperty("/ViewCall");
-
-                if (viewCall === "main" || viewCall === "main") {
-                }
-                */
+            //
+            CargaEmbarcacion: function () {
 
                 var self = this;
-                var kunnr = self.getView().getModel("modelValeViveres").getProperty("/SearchCliente").KUNNR;
-                var name1 = self.getView().getModel("modelValeViveres").getProperty("/SearchCliente").NAME1;
-                var stcd1 = self.getView().getModel("modelValeViveres").getProperty("/SearchCliente").STCD1;
-                var numfilas = self.getView().getModel("modelValeViveres").getProperty("/SearchCliente").Numfilas;
+                var cdemb = self.getView().getModel("modelValeViveres").getProperty("/SearchEmbarcacion").CDEMB; //Cod emba
+                var mremb = self.getView().getModel("modelValeViveres").getProperty("/SearchEmbarcacion").MREMB; //matricula
+                var nmemb = self.getView().getModel("modelValeViveres").getProperty("/SearchEmbarcacion").NMEMB; //nomb emba
+                var stcd1 = self.getView().getModel("modelValeViveres").getProperty("/SearchEmbarcacion").STCD1; //ruc emba
+                var name1 = self.getView().getModel("modelValeViveres").getProperty("/SearchEmbarcacion").NAME1; //desc armador
+                var inprp = self.getView().getModel("modelValeViveres").getProperty("/SearchEmbarcacion").INPRP;
+                
+                var user = "FGARCIA";
+                var model = "modelValeViveres";
+                var property = "/ListEmbarcacion";
+                
+                var cdembAux = "CDEMB LIKE '"+ cdemb +"'";
+                var mrembAux = "MREMB LIKE '"+ mremb +"'";
+                var nmembAux = "NMEMB LIKE '"+ nmemb +"'";
+                var stcd1Aux = "STCD1 LIKE '"+ stcd1 +"'";
+                var name1Aux = "NAME1 LIKE '"+ name1 +"'";
+                var inprpAux = "INPRP LIKE '"+ inprp +"'";
+            
+                var wa = [];
+                if (cdemb) wa.push({ wa: cdembAux }); 
+                if (mremb) wa.push({ wa: mrembAux });
+                if (nmemb) wa.push({ wa: nmembAux }); 
+                if (stcd1) wa.push({ wa: stcd1Aux });
+                if (name1) wa.push({ wa: name1Aux });
+                if (inprp) wa.push({ wa: inprpAux });
+           
+                self.ejecutarConsultarEmbarcacion(wa, user, model, property);
+
+            },
+            //
+
+            ejecutarConsultarEmbarcacion: function (wa, user, model, property) {
+
+                var self = this;
+                var urlNodeJS = "https://cf-nodejs-qas.cfapps.us10.hana.ondemand.com";
+
+
+                var objectRT = {
+                    "option": wa,
+                    "option2": [],
+                    "options": [],
+                    "options2": [],
+                    "p_user": user
+                };
+
+                var urlPost = urlNodeJS + "/api/embarcacion/ConsultarEmbarcacion/";
+
+                $.ajax({
+                    url: urlPost,
+                    type: 'POST',
+                    cache: false,
+                    async: false,
+                    dataType: 'json',
+                    data: JSON.stringify(objectRT),
+                    success: function (data, textStatus, jqXHR) {
+                        self.getView().getModel(model).setProperty(property, data.data);
+                        console.log(data);
+                    },
+                    error: function (xhr, readyState) {
+                        console.log(xhr);
+                    }
+                });
+            },
+
+            //CLIENTE
+            _onpress_clientelink: function (oEvent) {
+                    
+                    var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                    var self = this;
+                    var path = oEvent.getSource().oPropagatedProperties.oBindingContexts.modelValeViveres.sPath;
+					var kunnrSelected = self.getView().getModel('modelValeViveres').getProperty(path);
+					var name1Selected = self.getView().getModel('modelValeViveres').getProperty(path);
+					var stcd1Selected = self.getView().getModel('modelValeViveres').getProperty(path);
+					var kunnr = kunnrSelected.KUNNR;
+					var name1 = name1Selected.NAME1;
+					var stcd1 = stcd1Selected.STCD1;
+
+					self.getView().getModel('modelValeViveres').setProperty("/SearchCliente/KUNNR",kunnr);
+					self.getView().getModel('modelValeViveres').setProperty("/SearchCliente/NAME1",name1);
+					self.getView().getModel('modelValeViveres').setProperty("/SearchCliente/STCD1",stcd1);
+					self._onCloseDialogArmadorComercial();
+            },
+
+            //
+            _onpress_plantalink: function (oEvent) {
+                    
+                    var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                    var self = this;
+                    var path = oEvent.getSource().oPropagatedProperties.oBindingContexts.modelValeViveres.sPath;
+					var werksSelected = self.getView().getModel('modelValeViveres').getProperty(path);
+					var cdptaSelected = self.getView().getModel('modelValeViveres').getProperty(path);
+					var descrSelected = self.getView().getModel('modelValeViveres').getProperty(path);
+					var werks = werksSelected.WERKS;
+					var cdpta = cdptaSelected.CDPTA;
+					var descr = descrSelected.DESCR;
+					
+
+					self.getView().getModel('modelValeViveres').setProperty("/SearchPlanta/WERKS",werks);
+					self.getView().getModel('modelValeViveres').setProperty("/SearchPlanta/CDPTA",cdpta);
+					self.getView().getModel('modelValeViveres').setProperty("/SearchPlanta/DESCR",descr);
+					self._onCloseDialogPlanta();
+            },
+
+            _onpress_Almacenlink: function (oEvent) {
+                    
+                    var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                    var self = this;
+                    var path = oEvent.getSource().oPropagatedProperties.oBindingContexts.modelValeViveres.sPath;
+					var cdalmSelected = self.getView().getModel('modelValeViveres').getProperty(path);
+					var dsalmSelected = self.getView().getModel('modelValeViveres').getProperty(path);
+                    var cdptaSelected = self.getView().getModel('modelValeViveres').getProperty(path);
+                    var cdaleSelected = self.getView().getModel('modelValeViveres').getProperty(path);
+                    
+                    var cdalm = cdalmSelected.CDALM;
+					var dsalm = dsalmSelected.DSALM;
+                    var cdpta = cdptaSelected.CDPTA;
+                    var cdale = cdaleSelected.CDALE;
+
+
+					self.getView().getModel('modelValeViveres').setProperty("/SearchAlmacen/CDALM",cdalm);
+					self.getView().getModel('modelValeViveres').setProperty("/SearchAlmacen/DSALM",dsalm);
+                    self.getView().getModel('modelValeViveres').setProperty("/SearchAlmacen/CDPTA",cdpta);
+                    self.getView().getModel('modelValeViveres').setProperty("/SearchAlmacen/CDALE",cdale);
+                    self._getDialogAlmacen().close();
+            },
+
+            CargaAlmacen: function () {
+
+                var self = this;
+                var cdalm = self.getView().getModel("modelValeViveres").getProperty("/SearchAlmacen").CDALM; //Codigo
+                var dsalm = self.getView().getModel("modelValeViveres").getProperty("/SearchAlmacen").DSALM; //Codigo
+                var cdpta = self.getView().getModel("modelValeViveres").getProperty("/SearchAlmacen").CDPTA; //Planta
+                var numfilas = self.getView().getModel("modelValeViveres").getProperty("/SearchAlmacen").Numfilas;
                 
                 if (!numfilas) numfilas = 50;
                             
-                var table = "ZV_FLRP";
+                var table = "ZFLALM";
                 var user = "FGARCIA";
                 var model = "modelValeViveres";
-                var property = "/ListClient";
+                var property = "/ListAlmacen";
                 var options = [];
-                //if (kunnr) options.push({ text : "40", text : "", text : "KUNNR", text : "", text : kunnr }); 
-                if (name1) options.push({ cantidad: "40", control: "", "key": "NAME1", valueHigh: "", valueLow: name1 }); 
-                if (stcd1) options.push({ cantidad: "40", control: "", "key": "STCD1", valueHigh: "", valueLow: stcd1 }); 
+                if (cdalm) options.push({ cantidad: "40", control: "INPUT", "key": "CDALM", valueHigh: "", valueLow: cdalm }); 
+                if (dsalm) options.push({ cantidad: "40", control: "INPUT", "key": "DSALM", valueHigh: "", valueLow: dsalm }); 
+                if (cdpta) options.push({ cantidad: "40", control: "INPUT", "key": "CDPTA", valueHigh: "", valueLow: cdpta }); 
                 
                 self.ejecutarReadTable(table, options, user, numfilas, model, property);
 
             },
+
+            searchPlanta: function () {
+
+                var self = this;
+                var werks = self.getView().getModel("modelValeViveres").getProperty("/SearchPlanta").WERKS;
+                var cdpta = self.getView().getModel("modelValeViveres").getProperty("/SearchPlanta").CDPTA;
+                var descr = self.getView().getModel("modelValeViveres").getProperty("/SearchPlanta").DESCR;
+                var stcd1 = self.getView().getModel("modelValeViveres").getProperty("/SearchPlanta").STCD1;
+                var name1 = self.getView().getModel("modelValeViveres").getProperty("/SearchPlanta").NAME1;
+                var cdpto = self.getView().getModel("modelValeViveres").getProperty("/SearchPlanta").CDPTO;
+                var dspto = self.getView().getModel("modelValeViveres").getProperty("/SearchPlanta").DSPTO;
+                //var inprp = self.getView().getModel6("modelValeViveres").getProperty("/SearchPlanta").INPRP;
+
+                var numfilas = self.getView().getModel("modelValeViveres").getProperty("/SearchPlanta").Numfilas;
+                
+                if (!numfilas) numfilas = 50;
+                            
+                var table = "ZV_FLPL";
+                var user = "FGARCIA";
+                var model = "modelValeViveres";
+                var property = "/ListPlanta";
+                var options = [];
+                if (werks) options.push({ cantidad: "40", control: "INPUT", "key": "WERKS", valueHigh: "", valueLow: werks }); 
+                if (cdpta) options.push({ cantidad: "40", control: "INPUT", "key": "CDPTA", valueHigh: "", valueLow: cdpta }); 
+                if (descr) options.push({ cantidad: "40", control: "INPUT", "key": "DESCR", valueHigh: "", valueLow: descr }); 
+                if (stcd1) options.push({ cantidad: "40", control: "INPUT", "key": "STCD1", valueHigh: "", valueLow: stcd1 }); 
+                if (name1) options.push({ cantidad: "40", control: "INPUT", "key": "NAME1", valueHigh: "", valueLow: name1 }); 
+                if (cdpto) options.push({ cantidad: "40", control: "INPUT", "key": "CDPTO", valueHigh: "", valueLow: cdpto }); 
+                if (dspto) options.push({ cantidad: "40", control: "INPUT", "key": "DSPTO", valueHigh: "", valueLow: dspto }); 
+                //if (inprp) options.push({ cantidad: "40", control: "INPUT", "key": "INPRP", valueHigh: "", valueLow: inprp }); 
+                
+                self.ejecutarReadTable(table, options, user, numfilas, model, property);                
+            
+            },
+            
+            CargaCliente: function () {
+
+                var self = this;
+                var kunnr = self.getView().getModel("modelValeViveres").getProperty("/SearchCliente").KUNNR; //NroCliente
+                var name1 = self.getView().getModel("modelValeViveres").getProperty("/SearchCliente").NAME1; //Descripcion
+                var stcd1 = self.getView().getModel("modelValeViveres").getProperty("/SearchCliente").STCD1; //RUC
+                var numfilas = self.getView().getModel("modelValeViveres").getProperty("/SearchCliente").Numfilas;
+                
+                if (!numfilas) numfilas = 50;
+                            
+                var table = "KNA1";
+                var user = "FGARCIA";
+                var model = "modelValeViveres";
+                var property = "/ListClient";
+                var options = [];
+                if (kunnr) options.push({ cantidad: "40", control: "INPUT", "key": "KUNNR", valueHigh: "", valueLow: kunnr }); 
+                if (name1) options.push({ cantidad: "40", control: "INPUT", "key": "NAME1", valueHigh: "", valueLow: name1 }); 
+                if (stcd1) options.push({ cantidad: "40", control: "INPUT", "key": "STCD1", valueHigh: "", valueLow: stcd1 }); 
+                
+                self.ejecutarReadTable(table, options, user, numfilas, model, property);
+
+            },
+            //
 
             ejecutarReadTable: function (table, options, user, numfilas, model, property) {
 
@@ -261,39 +595,33 @@ sap.ui.define([
             SearchMain: function () {
 
                 var self = this;
-                var Nrvvi = self.getView().getModel("modelValeViveres").getProperty("/SearchValeVieres").NRVVI ;
-                var Nmemb = self.getView().getModel("modelValeViveres").getProperty("/SearchValeVieres").NMEMB ;
-                var Name1 = self.getView().getModel("modelValeViveres").getProperty("/SearchValeVieres").NAME1 ;
-                var Descr = self.getView().getModel("modelValeViveres").getProperty("/SearchValeVieres").DESCR ;
-                var Inprp = self.getView().getModel("modelValeViveres").getProperty("/SearchValeVieres").INPRP;
-                var Dstpo = self.getView().getModel("modelValeViveres").getProperty("/SearchValeVieres").DSTPO;
-                var Fcvvi = self.getView().getModel("modelValeViveres").getProperty("/SearchValeVieres").FCVVI;
-                var Esvvi = self.getView().getModel("modelValeViveres").getProperty("/SearchValeVieres").ESVVI;
-                var Aufnr = self.getView().getModel("modelValeViveres").getProperty("/SearchValeVieres").AUFNR;
-                var Kostl = self.getView().getModel("modelValeViveres").getProperty("/SearchValeVieres").KOSTL;
+                var nrvvi = self.getView().getModel("modelValeViveres").getProperty("/SearchValeVieres").NRVVI;
+                var nmemb = self.getView().getModel("modelValeViveres").getProperty("/SearchValeVieres").NMEMB;
+                var arcmc = self.getView().getModel("modelValeViveres").getProperty("/SearchCliente").KUNNR;
+                var cdemb = self.getView().getModel("modelValeViveres").getProperty("/SearchValeVieres").CDEMB;
+                var cdtpo = self.getView().getModel("modelValeViveres").getProperty("/SearchPlanta").WERKS;
+                var cdpta = self.getView().getModel("modelValeViveres").getProperty("/SearchAlmacen").CDALM;
+                var cdalm = self.getView().getModel("modelValeViveres").getProperty("/SearchValeVieres").CDTPO;
+                var inprp = self.getView().getModel("modelValeViveres").getProperty("/SearchValeVieres").INPRP;
                 var numfilas = self.getView().getModel("modelValeViveres").getProperty("/SearchValeVieres").Numfilas;
 
-                if(!Nrvvi) Nrvvi = "";
-                if(!Nmemb) Nmemb = "";
-                if(!Name1) Name1 = "";
-                if(!Descr) Descr = "";
-                if(!Inprp) Inprp = "";
-                if(!Dstpo) Dstpo = "";
-                if(!Fcvvi) Fcvvi = "";
-                if(!Esvvi) Esvvi = "";
-                if(!Aufnr) Aufnr = "";
-                if(!Kostl) Kostl = "";
+                if(!nrvvi) nrvvi = "";
+                if(!nmemb) nmemb = "";
+                if(!arcmc) arcmc = "";
+                if(!cdemb) cdemb = "";
+                if(!cdtpo) cdtpo = "";
+                if(!cdpta) cdpta = "";
+                if(!cdalm) cdalm = "";
+                if(!inprp) inprp = "";
 
-                var nrvviAux = "NRVVI LIKE '"+ Nrvvi +"'";
-                var nmembAux = "NMEMB LIKE '"+ Nmemb +"'";
-                var name1Aux = "NAME1 LIKE '"+ Name1 +"'";
-                var descrAux = "DESCR LIKE '"+ Descr +"'";
-                var inprpAux = "INPRP LIKE '"+ Inprp +"'";
-                var dstpoAux = "DSTPO LIKE '"+ Dstpo +"'";
-                var fcvviAux = "FCVVI LIKE '"+ Fcvvi +"'";
-                var esvviAux = "ESVVI LIKE '"+ Esvvi +"'";
-                var AufnrAux = "AUFNR LIKE '"+ Aufnr +"'";
-                var kostlAux = "KOSTL LIKE '"+ Kostl +"'";
+                var nrvviAux = "NRVVI LIKE '"+ nrvvi +"'";
+                var nmembAux = "NMEMB LIKE '"+ nmemb +"'";
+                var arcmcAux = "ARCMC LIKE '"+ arcmc +"'";
+                var cdembAux = "CDEMB LIKE '"+ cdemb +"'";
+                var cdtpoAux = "CDTPO LIKE '"+ cdtpo +"'";
+                var cdptaAux = "CDPTA LIKE '"+ cdpta +"'";
+                var cdalmAux = "CDALM LIKE '"+ cdalm +"'";
+                var inprpAux = "INPRP LIKE '"+ inprp +"'";
                 
                 if (!numfilas) numfilas = 50;
                 
@@ -302,16 +630,14 @@ sap.ui.define([
                 var property = "/ListMain";
                 var options = [];
 
-                if (Nrvvi) options.push({ text: nrvviAux });
-                if (Nmemb) options.push({ text: nmembAux });
-                if (Name1) options.push({ text: name1Aux });
-                if (Descr) options.push({ text: descrAux });
-                if (Inprp) options.push({ text: inprpAux });
-                if (Dstpo) options.push({ text: dstpoAux });
-                if (Fcvvi) options.push({ text: fcvviAux });
-                if (Esvvi) options.push({ text: esvviAux });
-                if (Aufnr) options.push({ text: AufnrAux });
-                if (Kostl) options.push({ text: kostlAux });
+                if (nrvvi) options.push({ text: nrvviAux });
+                if (nmemb) options.push({ text: nmembAux });
+                if (arcmc) options.push({ text: arcmcAux });
+                if (cdemb) options.push({ text: cdembAux });
+                if (cdtpo) options.push({ text: cdtpoAux });
+                if (cdpta) options.push({ text: cdptaAux });
+                if (cdalm) options.push({ text: cdalmAux });
+                if (inprp) options.push({ text: inprpAux });
                 
                 self.SearchValeViveres(options, user, numfilas, model, property);
 
@@ -403,6 +729,7 @@ sap.ui.define([
             },
 
             doNavigate: function(sRouteName, oBindingContext, fnPromiseResolve, sViaRelation) {
+
                 var sPath = (oBindingContext) ? oBindingContext.getPath() : null;
                 var oModel = (oBindingContext) ? oBindingContext.getModel() : null;
 
@@ -424,7 +751,7 @@ sap.ui.define([
                         this.oRouter.navTo(sRouteName, {
                             context: sPath,
                             masterContext: sMasterContext
-                        }, false);
+                        }, true);
                     } else {
                         oModel.createBindingContext(sNavigationPropertyName, oBindingContext, null, function(bindingContext) {
                             if (bindingContext) {

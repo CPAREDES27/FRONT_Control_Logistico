@@ -108,7 +108,7 @@
                 "viewPath": "tasa.com.valedeviveres.view",
                 "controlAggregation": "pages",
                 "controlId": "app",
-                "clearControlAggregation": false
+                "clearControlAggregation": true
             },
             "routes": [
 				{
@@ -137,16 +137,16 @@
 				"Main": {
 					"controlAggregation": "pages",
 					"viewName": "Main",
-					"viewId": "Main",
 					"viewLevel": 1,
-					"transition": "slide"
+                    "transition": "slide",
+                    "clearControlAggregation": true
 				},
 				"RegistrarValeViveres": {
 					"controlAggregation": "pages",
 					"viewName": "RegistrarValeViveres",
-					"viewId": "RegistrarValeViveres",
 					"viewLevel": 2,
-					"transition": "slide"
+                    "transition": "slide",
+                    "clearControlAggregation": true
 				}                
             }
         }

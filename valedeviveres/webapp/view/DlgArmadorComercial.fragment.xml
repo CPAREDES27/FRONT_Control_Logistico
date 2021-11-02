@@ -1,6 +1,6 @@
 
 <core:FragmentDefinition xmlns:core="sap.ui.core"  xmlns="sap.m" xmlns:form="sap.ui.layout.form" xmlns:layout="sap.ui.layout">
-    <Dialog horizontalScrolling="true" showHeader="true" state="None" stretch="false" title="Centro" type="Standard" verticalScrolling="true">
+    <Dialog horizontalScrolling="true" showHeader="true" state="None" stretch="false" title="Búsqueda de clientes" type="Standard" verticalScrolling="true">
         <content>
             <form:Form width="1132.71875px" editable="true" visible="true">
                 <form:title/>
@@ -12,7 +12,7 @@
                                     <Label text="Nro. Clientes" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input type="Text" showValueHelp="false" value="{modelReqPesca>/SearchPlanta/WERKS}" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    <Input type="Text" showValueHelp="false" value="{modelValeViveres>/SearchCliente/KUNNR}" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -20,7 +20,7 @@
                                     <Label text="Descripcion" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input type="Text" showValueHelp="false" value="{modelReqPesca>/SearchPlanta/CDPTA}" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    <Input type="Text" showValueHelp="false" value="{modelValeViveres>/SearchCliente/NAME1}" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -28,7 +28,7 @@
                                     <Label text="R.U.C." design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input type="Text" showValueHelp="false" value="{modelReqPesca>/SearchPlanta/STCD1}" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    <Input type="Text" showValueHelp="false" value="{modelValeViveres>/SearchCliente/STCD1}" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -36,8 +36,16 @@
                                     <Label text="Cant de aciertos" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input type="Text" showValueHelp="false" value="{modelReqPesca>/SearchPlanta/CDPTO}" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    <Input type="Text" showValueHelp="false" value="{modelValeViveres>/SearchCliente/Numfilas}" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
+                            </form:FormElement>
+                            <form:FormElement visible="true">
+                                    <form:label>
+                                        <Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    </form:label>
+                                    <form:fields>
+                                        <Button text="Buscar" type="Default" icon="sap-icon://search" iconFirst="true" width="50%" enabled="true" visible="true" iconDensityAware="false" press="CargaCliente"/>
+                                    </form:fields>
                             </form:FormElement>
                         </form:formElements>
                         <form:title/>
@@ -51,7 +59,7 @@
                 </form:layout>
             </form:Form>
             <Table width="1090.71875px" noDataText="No data" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiSmallMargin"
-            items="{path:'modelReqPesca>/ListCentroReqPesca', templateShareable:true}">
+            items="{path:'modelValeViveres>/ListClient', templateShareable:true}">
                 <infoToolbar>
                     <Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
                         <content>
@@ -179,9 +187,9 @@
                         <ColumnListItem type="Active">
                             <cells>
                                 
-                                <Link text="{modelReqPesca>WERKS}" press="_onpress_centrolinkreqpesca" ></Link>
-                                <Text text="{modelReqPesca>CDPTA}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                <Text text="{modelReqPesca>DESCR}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <Link text="{modelValeViveres>KUNNR}" press="_onpress_clientelink" ></Link>
+                                <Text text="{modelValeViveres>NAME1}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <Text text="{modelValeViveres>STCD1}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                             
                             </cells>
                         </ColumnListItem>
@@ -198,7 +206,7 @@
                                     <Label text="Número de Filas" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input type="Number" showValueHelp="false" value="{modelReqPesca>/SearchPlanta/Numfilas}" enabled="true" visible="true" width="200px" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    <Input type="Number" showValueHelp="false" value="{modelValeViveres>/SearchPlanta/Numfilas}" enabled="true" visible="true" width="200px" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
                             </form:FormElement>
                         </form:formElements>

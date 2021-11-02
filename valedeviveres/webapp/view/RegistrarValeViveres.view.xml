@@ -3,9 +3,7 @@
 	xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout"
 	xmlns:t="sap.ui.table" xmlns:dnd="sap.ui.core.dnd" height="100%" xmlns:form="sap.ui.layout.form" xmlns:html="http://www.w3.org/1999/xhtml"
 	xmlns:ui="sap.ui.table" xmlns:filterbar="sap.ui.comp.filterbar" xmlns:l="sap.ui.layout" xmlns:variants="sap.ui.comp.variants">
-    
-		<App id="app">
-			<pages>
+
 				<Page id="page" title="{i18n>Ingresar datos}">
 					<content>
                         <form:Form width="100%" editable="true" visible="true">
@@ -18,7 +16,7 @@
                                                 <Label text="Temporada" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <ComboBox change="onChangeTemporada" selectedKey="{modelValeViveres>/SearchTemporada/CDTPO}" id="cbo_filter_Werks" editable="true"  enabled="true" visible="true" width="50%"
+                                                <ComboBox change="onChangeTemporada" selectedKey="{modelValeViveres>/ValeVCab/CDTPO}" id="cbo_filter_Werks" editable="true"  enabled="true" visible="true" width="50%"
                                                     valueState="None" maxWidth="100%" items="{ path : 'modelValeViveres>/ListTemporada' }">
                                                     <items>
                                                         <core:Item text="{modelValeViveres>DSTPO}" enabled="true" key="{modelValeViveres>CDTPO}"/>
@@ -31,24 +29,35 @@
                                                 <Label text="Planta" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" value="{modelValeViveres>/ValeVCab/CDPTA}" showValueHelp="false" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogPlantaNewReg"/>
+                                                <HBox width="auto">
+                                                    <Input type="Text" value="{modelValeViveres>/ValeVCab/CDPTA}" showValueHelp="true" enabled="true" visible="true" width="276px" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogPlanta"/>
+                                                    <Text text="" width="10px" textAlign="Center"/>
+                                                    <Text text=" {modelValeViveres>/ValeVCab/DESCR}" width="auto" textAlign="Center" class="sapMTextEMB"/>
+                                                </HBox>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
                                             <form:label>
-                                                <Label text="Alamacén" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Label text="Almacén" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" value="{modelValeViveres>/ValeVCab/CDALM}" showValueHelp="false" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogAlmacenNewReg"/>
+                                                <HBox width="auto">
+                                                    <Input type="Text" value="{modelValeViveres>/ValeVCab/CDALM}" showValueHelp="true" enabled="true" visible="true" width="276px" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogAlmacen"/>
+                                                    <Text text="" width="10px" textAlign="Center"/>
+                                                    <Text text="{modelValeViveres>/ValeVCab/DSALM}" width="auto" textAlign="Center" class="sapMTextEMB"/>
+                                                </HBox>
                                             </form:fields>
                                         </form:FormElement>
-                                        
                                         <form:FormElement visible="true">
                                             <form:label>
                                                 <Label text="Embarcación" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" value="{modelValeViveres>/ValeVCab/CDEMB}" showValueHelp="false" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogEmbarcacionNewReg"/>
+                                                <HBox width="auto">
+                                                    <Input type="Text" value="{modelValeViveres>/ValeVCab/CDEMB}" showValueHelp="true" enabled="true" visible="true" width="276px" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="OpenDialogEmbarcacion"/>
+                                                    <Text text="" width="10px" textAlign="Center"/>
+                                                    <Text text="{modelValeViveres>/ValeVCab/NMEMB}" width="auto" textAlign="Center" class="sapMTextEMB"/>
+                                                </HBox>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -56,15 +65,19 @@
                                                 <Label text="Matricula" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" showValueHelp="false" value="" enabled="true" visible="true" width="50%" valueHelpOnly="false" editable="true" valueStateText="Invalid entry" maxLength="0"/>
+                                                <Input type="Text" showValueHelp="false" value="{modelValeViveres>/ValeVCab/MREMB}" enabled="true" visible="true" width="50%" valueHelpOnly="false" editable="false" valueStateText="Invalid entry" maxLength="0"/>
                                             </form:fields>
                                         </form:FormElement>
-                                        <form:FormElement visible="true">
+                                         <form:FormElement visible="true">
                                             <form:label>
-                                                <Label text="Armador comerc" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Label text="Armador Comercial" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" value="{modelValeViveres>/ValeVCab/ARMCOMERC}" showValueHelp="false" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogArmadorComercialNewReg"/>
+                                                <HBox width="auto">
+                                                    <Input type="Text" value="{modelValeViveres>/ValeVCab/KUNNR}" showValueHelp="true" enabled="true" visible="true" width="276px" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogArmadorComercial"/>
+                                                    <Text text="" width="10px" textAlign="Center"/>
+                                                    <Text text="{modelValeViveres>/ValeVCab/NAME1}" width="auto" textAlign="Center" class="sapMTextEMB"/>
+                                                </HBox>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -83,8 +96,7 @@
                                                 <DatePicker width="50%" displayFormat="dd/MM/yyyy" value="{modelValeViveres>/ValeVCab/FFTVS}" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="ddMMyyyy"/>
                                             </form:fields>
                                         </form:FormElement>
-                                        
-                                        <form:FormElement visible="true">
+                                        <form:FormElement visible="{modelValeViveres>/ValeVCab/NumTripu}">
                                             <form:label>
                                                 <Label text="Nro. Tripulantes" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
@@ -92,12 +104,24 @@
                                                 <Input type="Text" showValueHelp="false" value="{modelValeViveres>/ValeVCab/NRTRI}" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                             </form:fields>
                                         </form:FormElement>
-                                        <form:FormElement visible="true">
+                                        <form:FormElement visible="{modelValeViveres>/ValeVCab/Cocinero}">
                                             <form:label>
                                                 <Label text="Cocinero" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" value="{modelValeViveres>/ValeVCab/codTripul}" showValueHelp="false" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogCocinero"/>
+                                                <HBox width="auto">
+                                                    <Input type="Text" value="{modelValeViveres>/ValeVCab/PERNR}" showValueHelp="true" enabled="true" visible="true" width="276px" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogCocinero"/>
+                                                    <Text text="" width="10px" textAlign="Center"/>
+                                                    <Text text="{modelValeViveres>/ValeVCab/VORNA} {modelValeViveres>/ValeVCab/NACHN} {modelValeViveres>/ValeVCab/NACH2}" width="auto" textAlign="Center" class="sapMTextEMB"/>
+                                                </HBox>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="{modelValeViveres>/ValeVCab/CostVivs}">
+                                            <form:label>
+                                                <Label text="Costo víveres día" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" showValueHelp="false" value="{modelValeViveres>/ValeVCab/CSTVD}" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -105,7 +129,7 @@
                                                 <Label text="Proveedor" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <ComboBox change="CargaProveedor" selectedKey="{modelValeViveres>/SearchProveedor/DSTPO}" editable="true"  enabled="true" visible="true" width="50%"
+                                                <ComboBox change="CargaProveedor" selectedKey="{modelValeViveres>/ValeVCab/DSTPO}" editable="true"  enabled="true" visible="true" width="50%"
                                                     valueState="None" maxWidth="100%" items="{ path : 'modelValeViveres>/ListProveedor' }">
                                                     <items>
                                                         <core:Item text="{modelValeViveres>NAME1}" enabled="true" key="{modelValeViveres>STCD1}"/>
@@ -123,10 +147,10 @@
                                         </form:FormElement>
                                         <form:FormElement visible="true">
                                             <form:label>
-                                                <Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Label text="Importe de víveres incluido IGV S/." design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Button text="Actualizar" type="Default" icon="sap-icon://add" iconFirst="false" width="25%" enabled="true" visible="true" iconDensityAware="false" press=""/>
+                                                <Text text="{modelValeViveres>/ValeVCab/CostTotal}"/>
                                             </form:fields>
                                         </form:FormElement>
                                     </form:formElements>
@@ -139,7 +163,7 @@
                                                 <Label text="Fecha del vale" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" value="{modelValeViveres>/ValeVCab/FechaVale}" showValueHelp="false" enabled="true" visible="true" width="50%" valueHelpOnly="true" editable="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest=""/>
+                                                <Input type="Text" value="{modelValeViveres>/Now}" showValueHelp="false" enabled="true" visible="true" width="50%" valueHelpOnly="true" editable="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest=""/>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -155,7 +179,7 @@
                                                 <Label text="Almacén externo" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" value="{modelValeViveres>/ValeVCab/WERKS}" showValueHelp="false" enabled="true" visible="true" width="50%" valueHelpOnly="true" editable="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest=""/>
+                                                <Input type="Text" value="{modelValeViveres>/ValeVCab/CDALE}" showValueHelp="false" enabled="true" visible="true" width="50%" valueHelpOnly="true" editable="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest=""/>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -171,7 +195,12 @@
                                                 <Label text="Indicador de propiedad" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" value="{modelValeViveres>/ValeVCab/INPRP}" showValueHelp="false" enabled="true" visible="true" width="50%" valueHelpOnly="true" editable="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest=""/>
+                                                <ComboBox change="" selectedKey="{modelValeViveres>/ValeVCab/INPRP}" id="cbo_filter" editable="false"  enabled="true" visible="true" width="50%"
+                                                    valueState="None" maxWidth="100%" items="{ path : 'modelValeViveres>/ListIndPropiedad' }">
+                                                    <items>
+                                                        <core:Item text="{modelValeViveres>descripcion}" enabled="true" key="{modelValeViveres>id}"/>
+                                                    </items>
+                                                </ComboBox>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -179,7 +208,7 @@
                                                 <Label text="RUC armador comerc" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" value="{modelValeViveres>/ValeVCab/WERKS}" showValueHelp="false" enabled="true" visible="true" width="50%" valueHelpOnly="true" editable="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest=""/>
+                                                <Input type="Text" value="{modelValeViveres>/ValeVCab/STCD1}" showValueHelp="false" enabled="true" visible="true" width="50%" valueHelpOnly="true" editable="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest=""/>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -195,7 +224,7 @@
                                                 <Label text="Duración de travesía" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" value="{modelValeViveres>/ValeVCab/DRTVS}" showValueHelp="false" enabled="true" visible="true" width="50%" valueHelpOnly="true" editable="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest=""/>
+                                                <Input type="Text" value="{modelValeViveres>/DRTVS}" showValueHelp="false" enabled="true" visible="true" width="50%" valueHelpOnly="true" editable="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest=""/>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -227,7 +256,7 @@
                                                 <Label text="RUC proveedor" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" value="{modelValeViveres>/ValeVCab/CDPVE}" showValueHelp="false" enabled="true" visible="true" width="50%" valueHelpOnly="true" editable="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest=""/>
+                                                <Input type="Text" value="{modelValeViveres>/ValeVCab/DRTVS}" showValueHelp="false" enabled="true" visible="true" width="50%" valueHelpOnly="true" editable="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest=""/>
                                             </form:fields>
                                         </form:FormElement>
                                     </form:formElements>
@@ -238,7 +267,7 @@
                                 <form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>
                             </form:layout>
                         </form:Form>
-                        <Table width="100%" noDataText="No data" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiSmallMargin"
+                        <Table width="99%" noDataText="No data" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiSmallMargin"
                             items="{path:'modelValeViveres>/Suministros', templateShareable:true}">
                                 <infoToolbar>
                                     <Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
@@ -251,7 +280,10 @@
                                     <OverflowToolbar width="auto" height="auto" design="Transparent" visible="true" enabled="true">
                                         <content>
                                             <ToolbarSpacer width=""/>
-                                            <OverflowToolbarButton text="Action" type="Default" icon="sap-icon://action-settings" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+                                            <Button text="Generar Sumninistros" type="Default" iconFirst="false" width="auto" enabled="true" visible="true" iconDensityAware="false" press="validarCabecera"/>
+                                            <Button text="TestModel" type="Default" iconFirst="false" width="auto" enabled="true" visible="false" iconDensityAware="false" press="testModel"/>
+                                            <OverflowToolbarButton text="Settings" type="Transparent" icon="sap-icon://sort" iconFirst="true" width="auto" enabled="true" visible="false" iconDensityAware="false" press="_onOverflowToolbarButtonPress"/>
+                                            <OverflowToolbarButton text="Group" type="Transparent" icon="sap-icon://group-2" iconFirst="true" width="auto" enabled="true" visible="false" iconDensityAware="false"/>
                                         </content>
                                     </OverflowToolbar>
                                 </headerToolbar>
@@ -264,7 +296,7 @@
                                     </Column>
                                     <Column width="30px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
                                         <header>
-                                            <Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            <Text text="Fecha" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                         </header>
                                         <footer/>
                                     </Column>
@@ -405,14 +437,14 @@
                                         <ColumnListItem type="Active">
                                             <cells>
                                                 <Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                <Text text="{modelValeViveres>FFTVS}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                <Text text="{modelValeViveres>NRPOS}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                <Text text="{modelValeViveres>DSSUM}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                <Text text="{modelValeViveres>CNRAC}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                <Text text="{modelValeViveres>DSUMD}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                <Text text="{modelValeViveres>CUSUM}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Text text="{modelValeViveres>Fecha}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Text text="{modelValeViveres>Posicion}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Text text="{modelValeViveres>DescSuministro}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Text text="{modelValeViveres>Racion}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Text text="{modelValeViveres>DescUndMedida}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Text text="{modelValeViveres>CostUnitario}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Text text="{modelValeViveres>CostTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                 <Text text="{modelValeViveres>QTSUM}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                <Text text="{modelValeViveres>OBPVA}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                 <Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </cells>
                                         </ColumnListItem>
@@ -423,11 +455,11 @@
                         <OverflowToolbar width="100%" height="40px" design="Auto" enabled="true" visible="true">
                             <content>
                                 <ToolbarSpacer width=""/>
+                                <Button text="Atras" type="Default" icon="" iconFirst="false" width="20%" enabled="true" visible="true" iconDensityAware="false" press=""/>
                                 <Button text="Guardar" type="Default" icon="" iconFirst="false" width="20%" enabled="true" visible="true" iconDensityAware="false" press="validarCabecera"/>
                             </content>
                         </OverflowToolbar>
                     </footer>
 				</Page>
-			</pages>
-		</App>
+
 </mvc:View>
