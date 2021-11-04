@@ -4,8 +4,10 @@ sap.ui.define([
 	"../model/formatter",
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
+	"sap/ui/core/util/ExportTypeCSV",
+    "sap/ui/core/util/Export",
 	"sap/m/MessageBox"
-], function (BaseController, JSONModel, formatter, Filter, FilterOperator,MessageBox) {
+], function (BaseController, JSONModel, formatter, Filter, FilterOperator,ExportTypeCSV,Export,MessageBox) {
 	"use strict";
 	var oGlobalBusyDialog = new sap.m.BusyDialog();
 	const mainUrlServices = 'https://cf-nodejs-qas.cfapps.us10.hana.ondemand.com/api/';
@@ -72,7 +74,7 @@ sap.ui.define([
 				if(idEmbarcacion){
 					options.push({
 						"cantidad": "20",
-						"control": "COMBOBOX",
+						"control": "INPUT",
 						"key": "CDEMB",
 						"valueHigh": "",
 						"valueLow": idEmbarcacion
@@ -82,7 +84,7 @@ sap.ui.define([
 				if(idEmbarcacionDesc){
 					options.push({
 						"cantidad": "20",
-						"control": "COMBOBOX",
+						"control": "INPUT",
 						"key": "NMEMB",
 						"valueHigh": "",
 						"valueLow": idEmbarcacionDesc
@@ -92,7 +94,7 @@ sap.ui.define([
 				if(idMatricula){
 					options.push({
 						"cantidad": "20",
-						"control": "COMBOBOX",
+						"control": "INPUT",
 						"key": "MREMB",
 						"valueHigh": "",
 						"valueLow": idMatricula
@@ -110,7 +112,7 @@ sap.ui.define([
 				if(idRuc){
 					options2.push({
 						"cantidad": "20",
-						"control": "COMBOBOX",
+						"control": "INPUT",
 						"key": "STCD1",
 						"valueHigh": "",
 						"valueLow": idRuc
@@ -119,7 +121,7 @@ sap.ui.define([
 				if(idArmador){
 					options2.push({
 						"cantidad": "20",
-						"control": "COMBOBOX",
+						"control": "INPUT",
 						"key": "NAME1",
 						"valueHigh": "",
 						"valueLow": idArmador
@@ -309,6 +311,11 @@ sap.ui.define([
 					   })
 					   .then(resp => resp.json()).then(data => {
 							console.log(data);
+							for(var i=0;i<data.t_flocc.length;i++){
+								if(data.t_flocc[i].FECCONMOV===null || data.t_flocc[i].FECCONMOV==="null"){
+									data.t_flocc[i].FECCONMOV="";
+								}
+							}
 							this.getModel("Lista").setProperty("/listaLista", data.t_flocc);
 							this.byId("title").setText("Indicador de modificación: "+data.indicadorPorc+"%");
 							oGlobalBusyDialog.close();
@@ -323,9 +330,9 @@ sap.ui.define([
 					  charset: "utf-8"
 					}),
 					//PoliticaPrecio>/listaPolitica
-					models: this.getView().getModel("Horometro"),
+					models: this.getView().getModel("Lista"),
 					rows:{path:""},
-					rows: { path: "/listaHorometro" },
+					rows: { path: "/listaLista" },
 					columns: [
 					  {
 						name: "Embarcación",

@@ -1,7 +1,8 @@
 <mvc:View
 	controllerName="com.tasa.aceitesusados.controller.Worklist"
-	xmlns="sap.m"
+	
 	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.ui.table" xmlns:m="sap.m"
 	xmlns:core="sap.ui.core"
 	xmlns:semantic="sap.f.semantic"
 	xmlns:f="sap.ui.layout.form">
@@ -12,7 +13,7 @@
 		toggleHeaderOnTitleClick="false">
 
 		<semantic:titleHeading>
-			<Title
+			<m:Title
 				text="{i18n>worklistTitle}"
 				level="H2"/>
 		</semantic:titleHeading>
@@ -27,22 +28,25 @@
 						<f:formElements>
 							<f:FormElement label="Reserva">
 								<f:fields>
-									<Input  
-										placeholder="Ingrese Reserva"/>
+									<m:Input  id="idReserva"
+										placeholder="Ingrese Reserva" maxLength="20"/>
 								</f:fields>
 							</f:FormElement>
 							
 							<f:FormElement label="Fecha de reserva">
 								<f:fields>
-									<DateRangeSelection 
+									<m:DateRangeSelection id="idFecha"
 										placeholder="Ingrese rango de fecha"/>
 								</f:fields>
 							</f:FormElement>
 							
 							<f:FormElement label="Estado">
 								<f:fields>
-									<Select 
-										placeholder="Ingrese Estado"/>
+									<m:ComboBox editable="true"  id="idEstado" items="{path:'Estado>/ZD_FLESRNV',sorter:{path:'id'}}" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%">
+                                        <m:items>
+                                                <core:Item text="{Estado>descripcion}" enabled="true" key="{Estado>id}"/>
+                                        </m:items>
+                                </m:ComboBox>
 								</f:fields>
 							</f:FormElement>
 							<!-- <f:FormElement label="Cantidad de aciertos">
@@ -58,15 +62,17 @@
 						<f:formElements>
 							<f:FormElement label="Embarcación">
 								<f:fields>
-									<Input 
-										placeholder="Ingrese Embarcación"
-										showValueHelp="true" />
+									<m:Input type="Text" id="idEmbarcacion2" showValueHelp="true" enabled="true" visible="true" width="91%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogEmbarcacion"/>
+									<m:Text text="" id="txtEmbarca" width="50%" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 								</f:fields>
 							</f:FormElement>
 							<f:FormElement label="Almacén">
 								<f:fields>
-									<Select 
-										placeholder="Ingrese Almacén"/>
+									<m:ComboBox editable="true"  id="idAlmacen" items="{Almacen>/ALMACEN}" enabled="true" visible="true" width="auto" valueState="None" maxWidth="50%">
+                                        <m:items>
+                                                <core:Item text="{Almacen>descripcion}" enabled="true" key="{Almacen>id}"/>
+                                        </m:items>
+                                	</m:ComboBox>
 								</f:fields>
 							</f:FormElement>
 						</f:formElements>
@@ -75,7 +81,8 @@
 						<f:formElements>
 							<f:FormElement>
 								<f:fields>
-									<Button  text="Buscar" type="Emphasized" press="onBuscar" />
+									<m:Button  text="Buscar" type="Emphasized" press="onBusqueda" />
+									<m:Button  text="Limpiar" type="Emphasized" press="onLimpiar" />
 								</f:fields>
 							</f:FormElement>
 						</f:formElements>
@@ -102,91 +109,165 @@
 
 		<semantic:content>
 			<Table
-				id="table"
-				width="auto"
-				mode="MultiSelect"
-				items="{
-					path: '/data',
-					sorter: {
-						path: 'CategoryID',
-						descending: false
-					}
-				}"
-				noDataText="{worklistView>/tableNoDataText}"
-				busyIndicatorDelay="{worklistView>/tableBusyDelay}"
-				growing="true"
-				growingScrollToLoad="true"
-				updateFinished=".onUpdateFinished">
-
-				<headerToolbar>
-					<OverflowToolbar>
-						<Button text="Nuevo" type="Ghost" press="onNuevo('Nuevo')" />
-						<Button text="Anular" type="Ghost" press="onAnular" />
-						<ToolbarSpacer />
-						<Button icon="sap-icon://excel-attachment" type="Emphasized" press="onExportar" />
-						<SearchField
-							id="searchField"
-							tooltip="{i18n>worklistSearchTooltip}"
-							search=".onSearch">
-							<layoutData>
-								<OverflowToolbarLayoutData
-									maxWidth="200px"
-									priority="NeverOverflow"/>
-							</layoutData>
-						</SearchField>
-					</OverflowToolbar>
-				</headerToolbar>
-
+                            id="table"
+                            rows="{Aceite>/listaAceite}"
+							selectionMode="MultiToggle"
+                            visibleRowCount="7"
+                            showColumnVisibilityMenu="{ui>/showVisibilityMenuEntry}"
+                            enableColumnFreeze="{ui>/showFreezeMenuEntry}"
+                            enableCellFilter="{ui>/enableCellFilter}"
+                            columnSelect="onColumnSelect"
+                            cellContextmenu="onProductIdCellContextMenu"
+                            ariaLabelledBy="title"
+							>
+				<extension>
+					<m:OverflowToolbar style="Clear">
+						<m:Title id="title" text="Lista de precios: {dataPrecio.str_ppc.total}" />
+						<m:ToolbarSpacer/>
+						<m:ToolbarSeparator/>
+						<m:Button icon="sap-icon://add" press="onNuevo" text="Nuevo" tooltip="Nuevo"/>
+						<m:Button icon="sap-icon://decline" press="onAnular" text="Anular" tooltip="Anular"/>
+                        <m:Button icon="sap-icon://excel-attachment" press="onDataExport" text="Exportar" tooltip="Exportar Excel"/>
+						<m:SearchField
+							placeholder="Búsqueda rápida"
+							value="{ui>/globalFilter}"
+							search="filterGlobally"
+							width="15rem"/>
+					</m:OverflowToolbar>
+				</extension>
 				<columns>
-					<Column >
-						<Text text="Reserva"/>
+               
+                	<Column
+						id="NRRNV"
+						width="11rem"
+						sortProperty="NRRNV"
+						filterProperty="NRRNV"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
+							<m:Label text="Reserva" />
+						<template>
+							<m:Text text="{Aceite>NRRNV}" wrapping="false" />
+						</template>
 					</Column>
-					<Column >
-						<Text text="Embarcación"/>
+                   <Column
+						id="NMEMB"
+						width="11rem"
+						sortProperty="NMEMB"
+						filterProperty="NMEMB"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
+							<m:Label text="Embarcación" />
+						<template>
+							<m:Text text="{Aceite>NMEMB}" wrapping="false" />
+						</template>
 					</Column>
-					<Column >
-						<Text text="Material"/>
+					<Column
+						id="CDSUM"
+						width="11rem"
+						sortProperty="CDSUM"
+						filterProperty="CDSUM"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
+							<m:Label text="Material" />
+						<template>
+							<m:Text text="{Aceite>CDSUM}" wrapping="false" />
+						</template>
 					</Column>
-					<Column >
-						<Text text="Almacén"/>
+					<Column
+						id="CDALM"
+						width="11rem"
+						sortProperty="CDALM"
+						filterProperty="CDALM"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
+							<m:Label text="Almacén" />
+						<template>
+							<m:Text text="{Aceite>CDALM}" wrapping="false" />
+						</template>
 					</Column>
-					<Column >
-						<Text text="Fecha de reserva"/>
+					<Column
+						id="FHCRN"
+						width="11rem"
+						sortProperty="FHCRN"
+						filterProperty="FHCRN"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
+							<m:Label text="Fecha de reserva" />
+						<template>
+							<m:Text text="{Aceite>FHCRN}" wrapping="false" />
+						</template>
 					</Column>
-					<Column hAlign="End">
-						<Text text="Total peso Kg."/>
+					<Column
+						id="CNSUM"
+						width="11rem"
+						sortProperty="CNSUM"
+						filterProperty="CNSUM"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
+							<m:Label text="Total peso Kg" />
+						<template>
+							<m:Text text="{Aceite>CNSUM}" wrapping="false" />
+						</template>
 					</Column>
-					<Column hAlign="End" >
-						<Text text="Cant. Galones"/>
+					<Column
+						id="fecha"
+						width="11rem"
+						sortProperty="fecha"
+						filterProperty="fecha"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
+							<m:Label text="Cant. galones" />
+						<template>
+							<m:Text text="{Aceite>NRTGA}" wrapping="false" />
+						</template>
 					</Column>
-					<Column >
-						<Text text="UM"/>
+					<Column
+						id="MSEHL"
+						width="11rem"
+						sortProperty="MSEHL"
+						filterProperty="MSEHL"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
+							<m:Label text="UM" />
+						<template>
+							<m:Text text="{Aceite>MSEHL}" wrapping="false" />
+						</template>
 					</Column>
-					<Column >
-						<Text text="Estado"/>
+					<Column
+						id="ESRNV"
+						width="11rem"
+						sortProperty="ESRNV"
+						filterProperty="ESRNV"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
+							<m:Label text="Estado" />
+						<template>
+							<m:Text text="{Aceite>DESC_ESRNV}" wrapping="false" />
+						</template>
 					</Column>
-					<Column >
-						<Text text="Detalle"/>
+					<Column
+						id="idDetalle"
+						width="11rem"
+						sortProperty="ESRNV"
+						filterProperty="ESRNV"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
+							<m:Label text="Detalle" />
+						<template>
+							<m:Button icon="sap-icon://show" press="onDetail" />
+						</template>
 					</Column>
-				</columns>
+                   
+                    
 
-				<items>
-					<ColumnListItem
-						press=".onPress">
-						<cells>
-							<Text text="{reserva}"/>
-							<Text text="{embarcacion}"/>
-							<Text text="{}"/>
-							<Text text="{}"/>
-							<Text text="{}"/>
-							<Text text="{}"/>
-							<Text text="{}"/>
-							<Text text="{}"/>
-							<Text text="{}"/>
-							<Button icon="sap-icon://show" press="onPress" />
-						</cells>
-					</ColumnListItem>
-				</items>
+					<!--Columnas-->
+
+				</columns>
+				<footer>
+					<m:OverflowToolbar id="infobar">
+
+                    </m:OverflowToolbar>
+				</footer>
 			</Table>
 		</semantic:content>
 

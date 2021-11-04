@@ -42,7 +42,7 @@ sap.ui.define([
 			if(idEmbarcacion){
 				options.push({
 					"cantidad": "20",
-					"control": "COMBOBOX",
+					"control": "INPUT",
 					"key": "CDEMB",
 					"valueHigh": "",
 					"valueLow": idEmbarcacion
@@ -52,7 +52,7 @@ sap.ui.define([
 			if(idEmbarcacionDesc){
 				options.push({
 					"cantidad": "20",
-					"control": "COMBOBOX",
+					"control": "INPUT",
 					"key": "NMEMB",
 					"valueHigh": "",
 					"valueLow": idEmbarcacionDesc
@@ -62,7 +62,7 @@ sap.ui.define([
 			if(idMatricula){
 				options.push({
 					"cantidad": "20",
-					"control": "COMBOBOX",
+					"control": "INPUT",
 					"key": "MREMB",
 					"valueHigh": "",
 					"valueLow": idMatricula
@@ -80,7 +80,7 @@ sap.ui.define([
 			if(idRuc){
 				options2.push({
 					"cantidad": "20",
-					"control": "COMBOBOX",
+					"control": "INPUT",
 					"key": "STCD1",
 					"valueHigh": "",
 					"valueLow": idRuc
@@ -89,7 +89,7 @@ sap.ui.define([
 			if(idArmador){
 				options2.push({
 					"cantidad": "20",
-					"control": "COMBOBOX",
+					"control": "INPUT",
 					"key": "NAME1",
 					"valueHigh": "",
 					"valueLow": idArmador
@@ -126,42 +126,6 @@ sap.ui.define([
 					oGlobalBusyDialog.close();
 				  }).catch(error => console.log(error)
 			);
-		},
-		listaEmbarcacion: function(){
-			oGlobalBusyDialog.open();
-			var body={
-				"option": [
-					
-				],
-				"option2": [
-				   
-				],
-				"options": [
-				  
-				],
-				"options2": [
-				 {
-					 "cantidad":"10",
-					 "control":"COMBOBOX",
-					 "key":"ESEMB",
-					 "valueHigh":"",
-					 "valueLow":"0"
-				 }
-				],
-				"p_user": "BUSQEMB"
-			  }
-			  fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
-				  {
-					  method: 'POST',
-					  body: JSON.stringify(body)
-				  })
-				  .then(resp => resp.json()).then(data => {
-					var dataPuerto=data.data;
-					console.log(dataPuerto);
-					console.log(this.getView().getModel("EmbarcacionSearch").setProperty("/listaEmbarcacion",dataPuerto));
-					
-				  }).catch(error => console.log(error)
-				  );
 		},
 		zeroFill: function( number, width )
 		{
@@ -273,7 +237,7 @@ sap.ui.define([
 				if(idEmbarcacion){
 					options.push({
 						"cantidad": "20",
-						"control": "COMBOBOX",
+						"control": "INPUT",
 						"key": "CDEMB",
 						"valueHigh": "",
 						"valueLow": idEmbarcacion
@@ -283,7 +247,7 @@ sap.ui.define([
 				if(idEmbarcacionDesc){
 					options.push({
 						"cantidad": "20",
-						"control": "COMBOBOX",
+						"control": "INPUT",
 						"key": "NMEMB",
 						"valueHigh": "",
 						"valueLow": idEmbarcacionDesc
@@ -293,7 +257,7 @@ sap.ui.define([
 				if(idMatricula){
 					options.push({
 						"cantidad": "20",
-						"control": "COMBOBOX",
+						"control": "INPUT",
 						"key": "MREMB",
 						"valueHigh": "",
 						"valueLow": idMatricula
@@ -311,7 +275,7 @@ sap.ui.define([
 				if(idRuc){
 					options2.push({
 						"cantidad": "20",
-						"control": "COMBOBOX",
+						"control": "INPUT",
 						"key": "STCD1",
 						"valueHigh": "",
 						"valueLow": idRuc
@@ -320,7 +284,7 @@ sap.ui.define([
 				if(idArmador){
 					options2.push({
 						"cantidad": "20",
-						"control": "COMBOBOX",
+						"control": "INPUT",
 						"key": "NAME1",
 						"valueHigh": "",
 						"valueLow": idArmador
@@ -379,15 +343,15 @@ sap.ui.define([
 				var error="";
 				var valido=true;
 
-				// if(!this.byId("idFecha").mProperties.dateValue){
-				// 	error+="Debe ingresar un rango de fechas"
-				// 	oGlobalBusyDialog.close();
-				// 	valido= false;
-				// }
-				// if(!valido){
-				// 	MessageBox.error(error);
-				// 	return false;
-				// }
+				if(!this.byId("idFecha").mProperties.dateValue){
+					error+="Debe ingresar un rango de fechas"
+					oGlobalBusyDialog.close();
+					valido= false;
+				}
+				if(!valido){
+					MessageBox.error(error);
+					return false;
+				}
 				var dateIni = new Date(idFechaIni);
 				var mesIni;
 				var diaIni;
@@ -415,6 +379,7 @@ sap.ui.define([
 				console.log(fechaIni + " " + fechaFin);
 				
 			//#endregion
+			var errors="";
 			var options=[];
 				if(idMareaIni && !idMareaFin){
 					options.push({
@@ -512,6 +477,12 @@ sap.ui.define([
 				  .then(resp => resp.json()).then(data => {
 					var dataPuerto=data;
 					console.log(dataPuerto);
+					console.log(dataPuerto.mensaje);
+					if(dataPuerto.str_lgcco==="null" || dataPuerto.str_lgcco===null){
+						errors=dataPuerto.mensaje;
+						this.byId("title").setText("Lista de registros: No se encontraron resultados");
+					}
+					
 					console.log(dataPuerto.str_lgcco);
 					var arrayLista=dataPuerto.str_lgcco;
 					
@@ -519,10 +490,15 @@ sap.ui.define([
 					this.byId("title").setText("Lista de registros: "+dataPuerto.str_lgcco.length);
 					if(dataPuerto.str_lgcco.length<=0){
 						this.byId("title").setText("Lista de registros: No se encontraron resultados");
+						
 					}
+					
 					console.log(arrayLista.length);
 					oGlobalBusyDialog.close();
-				  }).catch(error => console.log(error)
+				  }).catch((error) =>{
+					MessageBox.error(errors);
+					oGlobalBusyDialog.close();
+				  }
 				  );
 			},
 		onDataExport:  function() {

@@ -81,7 +81,12 @@
             "": {
                 "type": "sap.ui.model.json.JSONModel",
                 "preload": true
+            },
+            "Estado": {
+                "type": "sap.ui.model.json.JSONModel",
+                "preload": true
             }
+            
         },
         "routing": {
             "config": {

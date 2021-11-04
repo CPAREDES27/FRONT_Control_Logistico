@@ -104,7 +104,7 @@
 						emptySpanS="0"
 						columnsXL="2"
 						columnsL="2"
-						columnsM="1"
+						columnsM="2"
 						singleContainerFullSize="false" />
 				</f:layout>
 			</f:Form>

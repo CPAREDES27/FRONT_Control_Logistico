@@ -53,7 +53,7 @@
 						<f:formElements>
 							<f:FormElement label="Embarcación">
 								<f:fields>
-									<m:Input type="Text" id="idEmbarcacion" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogEmbarcacion"/>
+									<m:Input type="Text" id="idEmbarcacion" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogEmbarcacion"/>
 								</f:fields>
 							</f:FormElement>
 							<f:FormElement label="Tipo de imputación">
@@ -107,7 +107,7 @@
 			<Table
                             id="table"
                             rows="{Combustible>/listaCombustible}"
-							selectionMode="Multitoggle"
+							selectionMode="MultiToggle"
                             visibleRowCount="7"
                             showColumnVisibilityMenu="{ui>/showVisibilityMenuEntry}"
                             enableColumnFreeze="{ui>/showFreezeMenuEntry}"

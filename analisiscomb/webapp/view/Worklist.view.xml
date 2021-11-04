@@ -26,16 +26,14 @@
 						<f:formElements>
 							<f:FormElement label="Embarcación">
 								<f:fields>
-									<Input 
-										placeholder="Ingrese Embarcación"
-										showValueHelp="true" />
+									<Input type="Text" id="idEmbarcacion" showValueHelp="true" enabled="true" visible="true" width="91%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogEmbarcacion"/>
+									<Text text="" id="txtEmbarca" width="50%" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 								</f:fields>
 							</f:FormElement>
 							
-							<f:FormElement label="Fecha de contabilización">
+							<f:FormElement label="Fecha de Inicio">
 								<f:fields>
-									<DateRangeSelection 
-										placeholder="Ingrese rango de fecha"/>
+									<DateRangeSelection width="50%" displayFormat="dd/MM/yyyy" id="idFechaInicio" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd"/>
 								</f:fields>
 							</f:FormElement>
 						</f:formElements>
@@ -45,13 +43,16 @@
 							
 							<f:FormElement label="Motivo">
 								<f:fields>
-									<Select 
-										placeholder="Ingrese rango de fecha"/>
+									<ComboBox editable="true"  id="idEstado" items="{path:'Estado>/ZCDMMA',sorter:{path:'id'}}" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%">
+                                        <items>
+                                                <core:Item text="{Estado>descripcion}" enabled="true" key="{Estado>id}"/>
+                                        </items>
+                                	</ComboBox>
 								</f:fields>
 							</f:FormElement>
 							<f:FormElement label="Cantidad de aciertos">
 								<f:fields>
-									<Input 
+									<Input id="idCant"
 										placeholder="Ingrese número de registros"
 										type="Number"/>
 								</f:fields>
@@ -111,7 +112,7 @@
 						<SearchField
 							id="searchField"
 							tooltip="{i18n>worklistSearchTooltip}"
-							search=".onSearch">
+							search="filterGlobally">
 							<layoutData>
 								<OverflowToolbarLayoutData
 									maxWidth="200px"
