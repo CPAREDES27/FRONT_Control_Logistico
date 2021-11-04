@@ -14,43 +14,27 @@
                                 <form:FormContainer visible="true">
                                     <form:formElements>
                                         <form:FormElement visible="true">
-                                                <form:label>
-                                                    <Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                </form:label>
-                                                <form:fields>
-                                                    <Button text="Nuevo" type="Default" icon="sap-icon://add" iconFirst="false" width="25%" enabled="true" visible="true" iconDensityAware="false" press="_onBuscarButtonPress"/>
-                                                </form:fields>
-                                        </form:FormElement>
-                                        <form:FormElement visible="true">
                                             <form:label>
-                                                <Label text="Vale Inicio" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Label text="Vale" labelFor="multiInput1" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" showValueHelp="false" value="{modelValeViveres>/SearchValeVieres/NRVVI }" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                                <HBox>
+                                                    <Input type="Text" showValueHelp="false" value="{modelValeViveres>/SearchValeVieres/NRVVI}" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                                    <Text text="a" width="20px" textAlign="Center" />
+                                                    <Input type="Text" showValueHelp="false" value="{modelValeViveres>/SearchValeVieres/NRVVI}" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                                </HBox>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
                                             <form:label>
-                                                <Label text="Vale Fin" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Label text="Fecha" labelFor="multiInput1" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" showValueHelp="false" value="{modelValeViveres>/SearchValeVieres/NRVVI }" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
-                                            </form:fields>
-                                        </form:FormElement>
-                                        <form:FormElement visible="true">
-                                            <form:label>
-                                                <Label text="Fecha Inicio" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            </form:label>
-                                            <form:fields>
-                                                <DatePicker width="50%" displayFormat="dd/MM/yyyy" value="{modelValeViveres>/Search/FCVVI }" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="ddMMyyyy"/>
-                                            </form:fields>
-                                        </form:FormElement>
-                                        <form:FormElement visible="true">
-                                            <form:label>
-                                                <Label text="Fecha Fin" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            </form:label>
-                                            <form:fields>
-                                                <DatePicker width="50%" displayFormat="dd/MM/yyyy" value="{modelValeViveres>/Search/FCVVI }" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="ddMMyyyy"/>
+                                                <HBox>
+                                                    <DatePicker width="auto" displayFormat="dd/MM/yyyy" value="{modelValeViveres>/Search/FCVVI}" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="ddMMyyyy"/>
+                                                    <Text text="a" width="20px" textAlign="Center" />
+                                                    <DatePicker width="auto" displayFormat="dd/MM/yyyy" value="{modelValeViveres>/Search/FCVVI}" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="ddMMyyyy"/>
+                                                </HBox>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -58,7 +42,7 @@
                                                 <Label text="Armador Comercial" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" value="{modelValeViveres>/Search/ARCMC}" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogArmadorComercial"/>
+                                                <Input type="Text" value="{modelValeViveres>/SearchCliente/KUNNR}" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogArmadorComercial"/>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -74,7 +58,7 @@
                                                 <Label text="Planta" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" value="{modelValeViveres>/Search/CDTPO}" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogPlanta"/>
+                                                <Input type="Text" value="{modelValeViveres>/SearchPlanta/CDPTA}" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogPlanta"/>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -82,18 +66,17 @@
                                                 <Label text="Almacén" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Input type="Text" value="{modelValeViveres>/Search/CDPTA}" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogAlmacen"/>
+                                                <Input type="Text" value="{modelValeViveres>/SearchAlmacen/CDALM}" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogAlmacen"/>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
                                             <form:label>
-                                                <Label text="Temporada" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Label text="Temporada" design="Standard"  width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <ComboBox editable="true" enabled="true" selectedKey="{modelValeViveres>/SearchValeVieres/CDALM}" visible="true" width="50%" valueState="None" maxWidth="100%">
+                                                <ComboBox editable="true" enabled="true" selectedKey="{modelValeViveres>/SearchValeVieres/CDTPO}" visible="true" items="{ path : 'modelValeViveres>/ListTemporada' }" width="50%" valueState="None" maxWidth="100%">
                                                     <items>
-                                                        <core:Item text="" enabled="true" key="Item"/>
-                                                        <core:Item text="" enabled="true" key="Item"/>
+                                                        <core:Item text="{modelValeViveres>descripcion}" enabled="true" key="{modelValeViveres>id}"/>
                                                     </items>
                                                 </ComboBox>
                                             </form:fields>
@@ -103,10 +86,9 @@
                                                 <Label text="Indicador de Propiedad" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <ComboBox editable="true" enabled="true" selectedKey="{modelValeViveres>/SearchValeVieres/INPRP}" visible="true" width="50%" valueState="None" maxWidth="100%">
+                                                <ComboBox editable="true" enabled="true" selectedKey="{modelValeViveres>/SearchValeVieres/INPRP}" visible="true" items="{ path : 'modelValeViveres>/ListIndPropiedad' }" width="50%" valueState="None" maxWidth="100%">
                                                     <items>
-                                                        <core:Item text="Propia" enabled="true" key="P"/>
-                                                        <core:Item text="Tercera" enabled="true" key="T"/>
+                                                        <core:Item text="{modelValeViveres>descripcion}" enabled="true" key="{modelValeViveres>id}"/>
                                                     </items>
                                                 </ComboBox>
                                             </form:fields>
@@ -130,26 +112,131 @@
                                     </form:formElements>
                                     <form:title/>
                                 </form:FormContainer>
+                                <form:FormContainer visible="true">
+                                    <form:formElements>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Text/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Text/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Text/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Text/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Centro" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" value="{modelValeViveres>/SearchPlanta/WERKS}" showValueHelp="false" enabled="true" visible="true" width="50%" valueHelpOnly="true" editable="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest=""/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="Almacén externo" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Input type="Text" value="{modelValeViveres>/SearchAlmacen/CDALE}" showValueHelp="false" enabled="true" visible="true" width="50%" valueHelpOnly="true" editable="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest=""/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Text/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Text/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Text/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Text/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Text/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                        <form:FormElement visible="true">
+                                            <form:label>
+                                                <Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            </form:label>
+                                            <form:fields>
+                                                <Text/>
+                                            </form:fields>
+                                        </form:FormElement>
+                                    </form:formElements>
+                                    <form:title/>
+                                </form:FormContainer>
                             </form:formContainers>
                             <form:layout>
                                 <form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>
                             </form:layout>
                         </form:Form>
-                        <Table width="100%" noDataText="No data" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiSmallMargin"
+                        <Table width="99%" id="tbl_valeviveres" noDataText="No data" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiSmallMargin"
                             items="{path:'modelValeViveres>/ListMain', templateShareable:true}" >
                                 <infoToolbar>
-                                    <Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
-                                        <content>
-                                            <Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </content>
-                                    </Toolbar>
-                                </infoToolbar>
+                                <Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
+                                    <content>
+                                        <Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    </content>
+                                </Toolbar>
+                            </infoToolbar>
+                            
                                 <headerToolbar>
                                     <OverflowToolbar width="auto" height="auto" design="Transparent" visible="true" enabled="true">
                                         <content>
                                             <ToolbarSpacer width=""/>
-                                            <Button text="Exportar a Excel" type="Ghost" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press=""/>
-                                            <OverflowToolbarButton text="Action" type="Default" icon="sap-icon://action-settings" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+                                            <Button press="onExportar" icon="sap-icon://excel-attachment" tooltip="Exportar excel" type="Emphasized"/>
+                                            <Button text="Nuevo" type="Default" iconFirst="false" width="auto" enabled="true" visible="true" iconDensityAware="false" press="_onBuscarButtonPress"/>
+                                            <SearchField placeholder="Busqueda rápida" showSearchButton="true" visible="true" width="auto" search="handleLiveChange"/>
+                                            <OverflowToolbarButton text="Settings" type="Transparent" icon="sap-icon://sort" iconFirst="true" width="auto" enabled="true" visible="false" iconDensityAware="false" press="_onOverflowToolbarButtonPress"/>
+                                            <OverflowToolbarButton text="Group" type="Transparent" icon="sap-icon://group-2" iconFirst="true" width="auto" enabled="true" visible="false" iconDensityAware="false"/>
                                         </content>
                                     </OverflowToolbar>
                                 </headerToolbar>
@@ -322,7 +409,7 @@
                                                 <Text text="{modelValeViveres>NAME1}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                 <Text text="{modelValeViveres>DESCR}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                 <Text text="{modelValeViveres>DSALM}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                <Text text="{modelValeViveres>INPRP}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                <Text text="{modelValeViveres>DESC_INPRP}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                 <Text text="{modelValeViveres>DSTPO}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                 <Text text="{modelValeViveres>FCVVI}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                 <Text text="{modelValeViveres>ESVVI}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>

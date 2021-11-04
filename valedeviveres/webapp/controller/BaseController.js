@@ -13,10 +13,14 @@
 			// some basic functionalities
  
             // just this.getRouter() ...
+
+
+
             getRouter: function() {
             
             // ... instead of
-            return UIComponent.getRouterFor(this);
+            //return UIComponent.getRouterFor(this);
+            return this.getOwnerComponent().getRouter();
         
             },
         
@@ -28,6 +32,8 @@
         
             },
         
+
+            
             // just this.setModel() ...
             setModel: function(oModel, sName) {
         
