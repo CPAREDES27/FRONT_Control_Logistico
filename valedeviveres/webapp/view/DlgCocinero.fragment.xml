@@ -52,7 +52,7 @@
                                         <Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                     </form:label>
                                     <form:fields>
-                                        <Button text="Buscar" type="Default" icon="sap-icon://search" iconFirst="true" width="50%" enabled="true" visible="true" iconDensityAware="false" press="CargaUsuario"/>
+                                        <Button text="Buscar" type="Default" icon="sap-icon://search" iconFirst="true" width="50%" enabled="true" visible="true" iconDensityAware="false" press="_onUsuarioButtonPress"/>
                                     </form:fields>
                             </form:FormElement>
                         </form:formElements>
@@ -119,90 +119,6 @@
                 </columns>
                     
                 <items>
-                    <ColumnListItem type="Active">
-                        <cells>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                        </cells>
-                    </ColumnListItem>
-                    <ColumnListItem type="Active">
-                        <cells>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                        </cells>
-                    </ColumnListItem>
-                    <ColumnListItem type="Active">
-                        <cells>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                        </cells>
-                    </ColumnListItem>
                   
                         <ColumnListItem type="Active">
                             <cells>

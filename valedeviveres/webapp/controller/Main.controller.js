@@ -4,13 +4,18 @@ sap.ui.define([
     "sap/ui/core/routing/History",
     "sap/ui/export/library",
     "sap/ui/export/Spreadsheet",
-    "sap/ui/core/library"
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
+    "sap/ui/core/library",
+    "sap/ui/core/Item"
 
 ],
 	/**
 	 * @param {typeof sap.ui.core.mvc.Controller} Controller
 	 */
-	function (BaseController, MessageBox, History, exportLibrary, Spreadsheet, CoreLibrary) {
+    function (BaseController, MessageBox, Filter, FilterOperator, JSONModel, 
+              History, exportLibrary, Spreadsheet, CoreLibrary, Item) {
         "use strict";
         var EdmType = exportLibrary.EdmType;
         var ValueState = CoreLibrary
@@ -38,6 +43,15 @@ sap.ui.define([
                 this.oRouter.getTarget("Main").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
                 
             },
+
+            _onPlantaButtonPress: function () {
+                this.searchPlanta();
+            },
+
+            _onAlmacenButtonPress: function () {
+                this.CargaAlmacen();
+            },
+
 
             CargaIndPropiedad: function () {
 
@@ -166,11 +180,13 @@ sap.ui.define([
             _onPressDetalle: function(oEvent) {
 
                 var self = this;
-                var sPath = oEvent.oSource.oParent.oBindingContexts.modelValeViveres.sPath
+                //var sPath = oEvent.oSource.oParent.oBindingContexts.modelValeViveres.sPath
+                var sPath = oEvent.getSource().oBindingContexts.modelValeViveres.sPath
                 var rowSelected = self.getView().getModel('modelValeViveres').getProperty(sPath);
                 this.getView().getModel("modelValeViveres").setProperty("/VerDetalle", rowSelected);
                 var vale = rowSelected.NRVVI;
                 var fechaFin = rowSelected.FFTVS; // 22/06/2009
+                var totales = 0;
 
                 var dia = fechaFin.substring(0, 2);
                 var mes = fechaFin.substring(3, 5);
@@ -194,11 +210,38 @@ sap.ui.define([
                         + "/" + 
                         (String(fechaFin.getMonth() + 1).length < 2 ? "0" + String(fechaFin.getMonth() + 1)  : String(fechaFin.getMonth() + 1) ) + "/" + 
                         fechaFin.getFullYear()
+
+                        //QTSUM
+                        //results.s_posicion[i].QTSUM = formatted_date
+                        totales = totales + parseInt(results.s_posicion[j].QTSUM);
                     }
                     self.getView().getModel("modelValeViveres").setProperty("/ListaSuministro", results.s_posicion);
+                    self.getView().getModel("modelValeViveres").setProperty("/VerDetalle/QTSUM", totales);
+                    self.getView().getModel("modelValeViveres").setProperty("/RowListaSuministro", results.s_posicion.length);
                 });
                 this._getDialogVerDetalle().open();
 
+            },
+
+            _onImprimirDetalle: function(){
+                var self = this;
+                var numVale = self.getView().getModel("modelValeViveres").getProperty("/VerDetalle").NRVVI; //Codigo
+                var user = "FGARCIA";
+ 
+                self.generarBase64ImpresionVVI(numVale, user, function(callback){
+                    var base64EncodedPDF = callback.base64; //"JVBERi0xLjcNCiW..."; // the encoded string
+                    var decodedPdfContent = atob(base64EncodedPDF);
+                    var byteArray = new Uint8Array(decodedPdfContent.length)
+                    for(var i=0; i<decodedPdfContent.length; i++){
+                        byteArray[i] = decodedPdfContent.charCodeAt(i);
+                    }
+                    var blob = new Blob([byteArray.buffer], { type: 'application/pdf' });
+                    var _pdfurl = URL.createObjectURL(blob);
+
+                    window.open(_pdfurl, "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=500,width=800,height=400");
+                    //self.getView().getModel("modelValeViveres").setProperty("/Source", _pdfurl);
+                });
+                
             },
 
             getListaSuministros: function (vale, callback) {
@@ -300,15 +343,24 @@ sap.ui.define([
 
                 var oParams = {};
                 this.getView().getModel("modelValeViveres").setProperty("/SearchCliente", {});
-                this.getView().getModel("modelValeViveres").setProperty("/SearchValeVieres", {});
+                this.getView().getModel("modelValeViveres").setProperty("/SearchValeViveres", {});
                 this.getView().getModel("modelValeViveres").setProperty("/SearchEmbarcacion", {});
                 this.getView().getModel("modelValeViveres").setProperty("/SearchPlanta", {});
                 this.getView().getModel("modelValeViveres").setProperty("/SearchAlmacen", {});
+                this.getView().getModel("modelValeViveres").setProperty("/Search", {});
                 this.getView().getModel("modelValeViveres").setProperty("/ValeAnula", {});
                 this.getView().getModel("modelValeViveres").setProperty("/VerDetalle", {});
                 this.CargaTemporada();
                 this.CargaIndPropiedad();
+                this.searchPlanta();
+                this.CargaAlmacen();
 
+                var oInputPlanta = this.byId("plantaInput");
+			    oInputPlanta.setSuggestionRowValidator(this.suggestionRowValidatorPlanta);
+
+                var oInputAlmacen = this.byId("AlmacenInput");
+			    oInputAlmacen.setSuggestionRowValidator(this.suggestionRowValidatorAlmacen);
+                
 
                 if (oEvent.mParameters.data.context) {
                     this.sContext = oEvent.mParameters.data.context;
@@ -340,6 +392,24 @@ sap.ui.define([
                     this.getView().bindObject(oPath);
                 }
 
+            },
+
+            suggestionRowValidatorPlanta: function (oColumnListItem) {
+                var aCells = oColumnListItem.getCells();
+
+                return new Item({
+                    key: aCells[0].getText(),
+                    text: aCells[1].getText() + " " + aCells[7].getText()
+                });
+            },
+
+            suggestionRowValidatorAlmacen: function (oColumnListItem) {
+                var aCells = oColumnListItem.getCells();
+
+                return new Item({
+                    key: aCells[1].getText(),
+                    text: aCells[3].getText() + " " + aCells[2].getText()
+                });
             },
 
             //
@@ -449,6 +519,30 @@ sap.ui.define([
 					self._onCloseDialogPlanta();
             },
 
+            _onpress_embarcacionlink: function (oEvent) {
+                    
+                    var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                    var self = this;
+                    var path = oEvent.getSource().oPropagatedProperties.oBindingContexts.modelValeViveres.sPath;
+					var rowSelected = self.getView().getModel('modelValeViveres').getProperty(path);
+					var cdemb = rowSelected.CDEMB;
+					var mremb = rowSelected.MREMB;
+                    var nmemb = rowSelected.NMEMB;
+                    var inprp = rowSelected.INPRP;
+                    var stcd1 = rowSelected.STCD1;
+                    var kunnr = rowSelected.KUNNR;
+					var name1 = rowSelected.NAME1;
+
+					self.getView().getModel('modelValeViveres').setProperty("/SearchEmbarcacion/KUNNR",kunnr);
+					self.getView().getModel('modelValeViveres').setProperty("/SearchEmbarcacion/NAME1",name1);
+					self.getView().getModel('modelValeViveres').setProperty("/SearchEmbarcacion/STCD1",stcd1);
+					self.getView().getModel('modelValeViveres').setProperty("/SearchEmbarcacion/CDEMB",cdemb);
+					self.getView().getModel('modelValeViveres').setProperty("/SearchEmbarcacion/MREMB",mremb);
+                    self.getView().getModel('modelValeViveres').setProperty("/SearchEmbarcacion/NMEMB",nmemb);
+                    self.getView().getModel('modelValeViveres').setProperty("/SearchEmbarcacion/INPRP",inprp);
+					self._onCloseDialogEmbarcacion();
+            },
+
             _onpress_Almacenlink: function (oEvent) {
                     
                     var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
@@ -475,8 +569,8 @@ sap.ui.define([
             CargaAlmacen: function () {
 
                 var self = this;
-                var cdalm = self.getView().getModel("modelValeViveres").getProperty("/SearchAlmacen").CDALM; //Codigo
-                var dsalm = self.getView().getModel("modelValeViveres").getProperty("/SearchAlmacen").DSALM; //Codigo
+                var cdalm = self.getView().getModel("modelValeViveres").getProperty("/SearchAlmacen").CDALM; //
+                var dsalm = self.getView().getModel("modelValeViveres").getProperty("/SearchAlmacen").DSALM; //
                 var cdpta = self.getView().getModel("modelValeViveres").getProperty("/SearchAlmacen").CDPTA; //Planta
                 var numfilas = self.getView().getModel("modelValeViveres").getProperty("/SearchAlmacen").Numfilas;
                 
@@ -553,6 +647,40 @@ sap.ui.define([
             },
             //
 
+            generarBase64ImpresionVVI: function (numVale, user, callback) {
+
+                var self = this;
+                var urlNodeJS = "https://cf-nodejs-qas.cfapps.us10.hana.ondemand.com";
+
+
+                var objectRT = {
+                    "numValeVivere": numVale,
+                    "p_user": user
+                };
+
+    
+                var urlPost = urlNodeJS + "/api/tripulantes/PDFValeViveres";
+
+                $.ajax({
+                    url: urlPost,
+                    type: 'POST',
+                    cache: false,
+                    async: false,
+                    dataType: 'json',
+                    data: JSON.stringify(objectRT),
+                    success: function (data, textStatus, jqXHR) {
+                        if (callback) {
+                            callback(data);
+                        } else {
+                            //self.getView().getModel("modelValeViveres").setProperty("/ListaSuministro", data.data);
+                        }
+                    },
+                    error: function (xhr, readyState) {
+                        console.log(xhr);
+                    }
+                });
+            },
+
             ejecutarReadTable: function (table, options, user, numfilas, model, property) {
 
                 var self = this;
@@ -592,20 +720,52 @@ sap.ui.define([
                 });
             },
 
+            _onButtonPressLimpiar: function () {
+                this._onButtonLimpiar();
+            },
+
+            _onButtonLimpiar: function() {
+                var self = this;
+                this.getView().byId("drs1").setValue("");
+                this.getView().byId("drs2").setValue("");
+                self.getView().getModel("modelValeViveres").setProperty("/SearchValeViveres/NRVVI1", "");
+                self.getView().getModel("modelValeViveres").setProperty("/SearchValeViveres/NRVVI2", "");
+                self.getView().getModel("modelValeViveres").setProperty("/SearchValeViveres/FCVVI1", "");
+                self.getView().getModel("modelValeViveres").setProperty("/SearchValeViveres/FCVVI2", "");
+                self.getView().getModel("modelValeViveres").setProperty("/SearchCliente/KUNNR", "");
+                self.getView().getModel("modelValeViveres").setProperty("/SearchEmbarcacion/CDEMB", "");
+                self.getView().getModel("modelValeViveres").setProperty("/SearchAlmacen/CDALM", "");
+                self.getView().getModel("modelValeViveres").setProperty("/SearchValeViveres/Numfilas", "");
+                self.getView().getModel("modelValeViveres").setProperty("/Search/Numfilas", "50");
+                self.getView().getModel("modelValeViveres").setProperty("/ListMain", {});
+            },
+
             SearchMain: function () {
 
                 var self = this;
-                var nrvvi = self.getView().getModel("modelValeViveres").getProperty("/SearchValeVieres").NRVVI;
-                var nmemb = self.getView().getModel("modelValeViveres").getProperty("/SearchValeVieres").NMEMB;
+                var nrvvi;
+                var nrvvi1 = self.getView().getModel("modelValeViveres").getProperty("/SearchValeViveres").NRVVI1;
+                var nrvvi2 = self.getView().getModel("modelValeViveres").getProperty("/SearchValeViveres").NRVVI2;
+                var nmemb = self.getView().getModel("modelValeViveres").getProperty("/SearchValeViveres").NMEMB;
+                var fcvvi;
+                var fcvvi1 = self.getView().getModel("modelValeViveres").getProperty("/SearchValeViveres").FCVVI1;
+                var fcvvi2 = self.getView().getModel("modelValeViveres").getProperty("/SearchValeViveres").FCVVI2;
                 var arcmc = self.getView().getModel("modelValeViveres").getProperty("/SearchCliente").KUNNR;
-                var cdemb = self.getView().getModel("modelValeViveres").getProperty("/SearchValeVieres").CDEMB;
+                var cdemb = self.getView().getModel("modelValeViveres").getProperty("/SearchEmbarcacion").CDEMB;
                 var cdtpo = self.getView().getModel("modelValeViveres").getProperty("/SearchPlanta").WERKS;
-                var cdpta = self.getView().getModel("modelValeViveres").getProperty("/SearchAlmacen").CDALM;
-                var cdalm = self.getView().getModel("modelValeViveres").getProperty("/SearchValeVieres").CDTPO;
-                var inprp = self.getView().getModel("modelValeViveres").getProperty("/SearchValeVieres").INPRP;
-                var numfilas = self.getView().getModel("modelValeViveres").getProperty("/SearchValeVieres").Numfilas;
+                var cdpta = this.getView().byId("plantaInput").getSelectedKey();
+                //var CDALM = self.getView().getModel("modelValeViveres").getProperty("/SearchAlmacen").CDALM;
+                var cdalm = this.getView().byId("AlmacenInput").getSelectedKey();
+                var inprp = self.getView().getModel("modelValeViveres").getProperty("/SearchValeViveres").INPRP;
+                var numfilas = self.getView().getModel("modelValeViveres").getProperty("/SearchValeViveres").Numfilas;
 
-                if(!nrvvi) nrvvi = "";
+                if (!nrvvi1 && !nrvvi2) nrvvi = "";
+                if (nrvvi1 && !nrvvi2) nrvvi = "NRVVI LIKE '" + nrvvi1 + "'";
+                if (nrvvi1 && nrvvi2) nrvvi = "NRVVI BETWEEN '" + nrvvi1 + "' AND '" + nrvvi2 + "'";
+                //if(!nrvvi) nrvvi = "";
+                if (!fcvvi1 && !fcvvi2) fcvvi = "";
+                if (fcvvi1 && !fcvvi2) fcvvi = "FCVVI LIKE '" + fcvvi1 + "'";
+                if (fcvvi1 && fcvvi2) fcvvi = "FCVVI BETWEEN " + fcvvi1 + " AND " + fcvvi2;
                 if(!nmemb) nmemb = "";
                 if(!arcmc) arcmc = "";
                 if(!cdemb) cdemb = "";
@@ -614,7 +774,8 @@ sap.ui.define([
                 if(!cdalm) cdalm = "";
                 if(!inprp) inprp = "";
 
-                var nrvviAux = "NRVVI LIKE '"+ nrvvi +"'";
+                var nrvviAux = nrvvi;
+                var fcvviAux = fcvvi;
                 var nmembAux = "NMEMB LIKE '"+ nmemb +"'";
                 var arcmcAux = "ARCMC LIKE '"+ arcmc +"'";
                 var cdembAux = "CDEMB LIKE '"+ cdemb +"'";
@@ -631,6 +792,7 @@ sap.ui.define([
                 var options = [];
 
                 if (nrvvi) options.push({ text: nrvviAux });
+                if (fcvvi) options.push({ text: fcvviAux });
                 if (nmemb) options.push({ text: nmembAux });
                 if (arcmc) options.push({ text: arcmcAux });
                 if (cdemb) options.push({ text: cdembAux });
@@ -784,6 +946,21 @@ sap.ui.define([
 
             },
 
+            handleLiveChange : function(oEvent){
+                var aFilter = [];
+                var sQuery = oEvent.getParameter("query");
+
+                if (sQuery) {
+                    aFilter.push(new Filter("NRVVI", FilterOperator.Contains, sQuery));
+                }
+
+                    // filter binding
+                var oList = this.getView().byId("tbl_valeviveres");
+                var oBinding = oList.getBinding("items");
+                oBinding.filter(aFilter);
+
+            },
+
             _getDialogArmadorComercial : function () {
                 if (!this._oDialogArmadorComercial) {
                     this._oDialogArmadorComercial = sap.ui.xmlfragment("tasa.com.valedeviveres.view.DlgArmadorComercial", this.getView().getController());
@@ -795,7 +972,7 @@ sap.ui.define([
 
             //
             _onOpenDialogEmbarcacion: function() {
-            this._getDialogEmbarcacion().open();
+                this._getDialogEmbarcacion().open();;
             },
 
             _onCloseDialogEmbarcacion: function() {

@@ -1,0 +1,14 @@
+{
+	"SupplierCollection": [
+		{
+            "CentroDescarga": "",
+            "CentroDescripcion": "",
+            "CentroCodigo": "",
+			"FechaInicioDescarga": "",
+			"HoraInicioDescarga": "",
+            "CantidadFilas": "200" 
+		}
+    ],
+    
+    "busyIndicatorRegistroTolvas": false
+}
