@@ -1,0 +1,289 @@
+
+<core:FragmentDefinition xmlns:core="sap.ui.core"   xmlns="sap.m" xmlns:t="sap.ui.table" xmlns:form="sap.ui.layout.form" xmlns:layout="sap.ui.layout">
+    <Dialog horizontalScrolling="true" showHeader="true" state="None" stretch="false" title="Análisis de combustible" type="Standard" verticalScrolling="true">
+        <content>
+    <Panel height="auto" width="100%" headerText="Datos de marea" expandable="true" expanded="true" expandAnimation="true" backgroundDesign="Solid">
+     
+							
+						
+        <content>
+            	<core:Icon
+                    src="sap-icon://accept"
+                    class="size1"
+                    color="green" >
+                    <core:layoutData>
+                        <FlexItemData growFactor="1" />
+                    </core:layoutData>
+                </core:Icon>
+        	<Text text="  MotMarea:" id="idMotMarea2"/>
+            <form:Form width="100%" editable="true" visible="true">
+                <form:title/>
+                <form:formContainers>
+                    <form:FormContainer visible="true">
+                    
+                        <form:formElements>
+                            <form:FormElement visible="true">
+                                <form:label>
+
+                                    <Label text="Marea" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                </form:label>
+                                <form:fields>
+                                    <Text Text="" id="idMarea"/>
+                                </form:fields>
+                            </form:FormElement>
+                            <form:FormElement visible="true">
+                                <form:label>
+                                    <Label text="Cant. Calas" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                </form:label>
+                                <form:fields>
+                                    <Text text="" id="idCalas"/>
+                                </form:fields>
+                            </form:FormElement>
+                            
+                            
+                            </form:formElements>
+					</form:FormContainer>
+
+
+                    <form:FormContainer >
+						<form:formElements>
+                            
+                            <form:FormElement visible="true">
+                                <form:label>
+                                    <Label text="Embarcación" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                </form:label>
+                                <form:fields>
+                                       <Text Text="" id="idEmbarcacion"/>
+                                </form:fields>
+                            </form:FormElement>
+
+                        </form:formElements>
+                        <form:title/>
+                        
+                    </form:FormContainer>
+                    
+                    <form:FormContainer >
+						<form:formElements>
+                            
+                            <form:FormElement visible="true">
+                                <form:label>
+                                    <Label text="Motivo de marea:" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                </form:label>
+                                <form:fields>
+                                       <Text Text="" id="idZarpe"/>
+                                </form:fields>
+                            </form:FormElement>
+
+                        </form:formElements>
+                        <form:title/>
+                        
+                    </form:FormContainer>
+                </form:formContainers>
+                
+                <form:layout>
+					<form:ResponsiveGridLayout
+						labelSpanXL="6"
+						labelSpanL="6"
+						labelSpanM="6"
+						labelSpanS="12"
+						adjustLabelSpan="false"
+						emptySpanXL="0"
+						emptySpanL="0"
+						emptySpanM="0"
+						emptySpanS="0"
+						columnsXL="3"
+						columnsL="3"
+						columnsM="3"
+						singleContainerFullSize="false" />
+				</form:layout>
+            </form:Form>
+            </content>
+    </Panel>
+    <Panel height="auto" width="100%" headerText="Cuadro de Análisis" expandable="true" expanded="true" expandAnimation="true" backgroundDesign="Solid">
+        
+    
+            <t:Table
+				id="table"
+				rows="{path:'ConsumoTwo>/listaConsumoTwo'}"
+				visibleRowCount="7"
+                selectionMode="None"
+				showColumnVisibilityMenu="{ui>/showVisibilityMenuEntry}"
+				enableColumnFreeze="{ui>/showFreezeMenuEntry}"
+				enableCellFilter="{ui>/enableCellFilter}"
+				columnSelect="onColumnSelect"
+				cellContextmenu="onProductIdCellContextMenu"
+				ariaLabelledBy="title">
+			
+			    <t:columns>
+
+
+                	<t:Column
+						id="NRMAR"
+						width="11rem"
+						sortProperty="NRMAR"
+						filterProperty="NRMAR"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
+						<Label text="Evento" />
+						<t:template>
+							<Text text="{ConsumoTwo>DESC_CDTEV}" wrapping="false" />
+						</t:template>
+					</t:Column>
+                    <t:Column
+						id="NRDES"
+						width="11rem"
+						sortProperty="NRDES"
+						filterProperty="NRDES"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
+						<Label text="Fecha/hora Inicio" />
+						<t:template>
+							<Text text="{ConsumoTwo>FIEVN} {ConsumoTwo>HIEVN}" wrapping="false" />
+						</t:template>
+					</t:Column>
+                    <t:Column
+						id="DESCR"
+						width="11rem"
+						sortProperty="DESCR"
+						filterProperty="DESCR"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
+						<Label text="Stock Combustible" />
+						<t:template>
+							<Text text="{ConsumoTwo>STCMB}" wrapping="false" />
+						</t:template>
+					</t:Column>
+                    <t:Column
+						id="CDSPC"
+						width="11rem"
+						sortProperty="CDSPC"
+						filterProperty="CDSPC"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+                        visible="true">
+						<Label text="MP" />
+						<t:template>
+							<Text text="{ConsumoTwo>HORPR}" wrapping="false" />
+						</t:template>
+					</t:Column>
+                    
+                    <t:Column
+						id="FIDES"
+						width="11rem"
+						sortProperty="FIDES"
+						filterProperty="FIDES"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
+						<Label text="A1" />
+						<t:template>
+							<Text text="{ConsumoTwo>HORA1} {ConsumoTwo>HIDES}" wrapping="false" />
+						</t:template>
+					</t:Column>
+                    <t:Column
+						id="FFDES"
+						width="11rem"
+						sortProperty="FFDES"
+						filterProperty="FFDES"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
+						<Label text="A2" />
+						<t:template>
+							<Text text="{ConsumoTwo>HORA2}" wrapping="false" />
+						</t:template>
+					</t:Column>
+                    <t:Column
+						id="CNPDS"
+						width="11rem"
+						sortProperty="CNPDS"
+						filterProperty="CNPDS"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+						hAlign="End">
+						<Label text="A3" />
+						<t:template>
+							<Text text="{ConsumoTwo>HORA3}" wrapping="false" />
+						</t:template>
+					</t:Column>
+                    <t:Column
+						id="FECCONMOV"
+						width="11rem"
+						sortProperty="FECCONMOV"
+						filterProperty="FECCONMOV"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
+						<Label text="A4" />
+						<t:template>
+							<Text text="{ConsumoTwo>HORA4}" wrapping="false" />
+						</t:template>
+					</t:Column>
+                    <t:Column
+						id="NMEMB"
+						width="11rem"
+						sortProperty="NMEMB"
+						filterProperty="NMEMB"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
+						<Label text="Panga" />
+						<t:template>
+							<Text text="{ConsumoTwo>HORPA}" wrapping="false" />
+						</t:template>
+					</t:Column>
+                    <t:Column
+						id="NAME1"
+						width="11rem"
+						sortProperty="NAME1"
+						filterProperty="NAME1"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
+						<Label text="Fluj." />
+						<t:template>
+							<Text text="{ConsumoTwo>HORFL}" wrapping="false" />
+						</t:template>
+					</t:Column>
+                    <t:Column
+						id="PRCTP"
+						width="11rem"
+						sortProperty="PRCTP"
+						filterProperty="PRCTP"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+						hAlign="End">
+						<Label text="Suministros" />
+						<t:template>
+							<Text text="{ConsumoTwo>CNSUM}" wrapping="false" />
+						</t:template>
+					</t:Column>
+                    
+					<!--Columnas-->
+
+				</t:columns>
+				
+			</t:Table>
+
+    </Panel>
+   
+            <form:Form width="67%" editable="true" visible="true">
+                <form:title/>
+                <form:formContainers>
+                    <form:FormContainer visible="true">
+                        <form:formElements>
+                           
+                        </form:formElements>
+                        <form:title/>
+                    </form:FormContainer>
+                </form:formContainers>
+                <form:layout>
+                    <form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>
+                </form:layout>
+            </form:Form>
+        </content>
+        <beginButton/>
+        <buttons>
+            <Button text="Cerrar"
+             type="Reject" icon="sap-icon://decline" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="_onCloseDialogArmador"/>
+        </buttons>
+        <customHeader/>
+        <endButton/>
+        <subHeader/>
+    </Dialog>
+</core:FragmentDefinition>

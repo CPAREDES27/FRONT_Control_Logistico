@@ -43,7 +43,7 @@
 							
 							<f:FormElement label="Motivo">
 								<f:fields>
-									<ComboBox editable="true"  id="idEstado" items="{path:'Estado>/ZCDMMA',sorter:{path:'id'}}" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%">
+									<ComboBox editable="true"  id="idEstado" items="{path:'Estado>/ZCDMMACOM',sorter:{path:'id'}}" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%">
                                         <items>
                                                 <core:Item text="{Estado>descripcion}" enabled="true" key="{Estado>id}"/>
                                         </items>
@@ -52,7 +52,7 @@
 							</f:FormElement>
 							<f:FormElement label="Cantidad de aciertos">
 								<f:fields>
-									<Input id="idCant"
+									<Input id="idCant" value="5"
 										placeholder="Ingrese número de registros"
 										type="Number"/>
 								</f:fields>
@@ -91,21 +91,20 @@
 		<semantic:content>
 			<table:Table
 				id="table"
-				width="auto"
-				rows="{
-					path: '/data',
-					sorter: {
-						path: 'CategoryID',
-						descending: false
-					}
-				}"
-				visibleRowCount="07"
-				busyIndicatorDelay="{worklistView>/tableBusyDelay}"
-				updateFinished=".onUpdateFinished">
+                            rows="{Combustible>/listaCombustible}"
+							selectionMode="MultiToggle"
+                            visibleRowCount="7"
+                            showColumnVisibilityMenu="{ui>/showVisibilityMenuEntry}"
+                            enableColumnFreeze="{ui>/showFreezeMenuEntry}"
+                            enableCellFilter="{ui>/enableCellFilter}"
+                            columnSelect="onColumnSelect"
+                            cellContextmenu="onProductIdCellContextMenu"
+                            ariaLabelledBy="title"
+							>
 				<table:extension>
 					<OverflowToolbar style="Clear">
-						<Button text="Cuadro de consumo" press="onCuadroConsumo"/>
-						<Button text="QlikView" press="onQlikView"/>
+						<Button text="Cuadro de consumo" press="_onOpenDialogArmador"/>
+						<Button text="QlikView" press="onExporQlikView"/>
 						<Button text="Carga Consumo" press="onCargarConsumo"/>
 						<ToolbarSpacer/>
 						<Button icon="sap-icon://excel-attachment" type="Emphasized" press="onExportar" />
@@ -121,13 +120,13 @@
 						</SearchField>	
 					</OverflowToolbar>
 				</table:extension>
-				<table:columns>
+				<table:columns editable="false">
 					<table:Column width="8rem">
 						<table:label>
 							<Label text="Marea"/>
 						</table:label>
 						<table:template>
-							<Text text="{marea}"/>
+							<Text text="{Combustible>NRMAR}"/>
 						</table:template>
 					</table:Column>
 					<table:Column width="6rem">
@@ -135,7 +134,7 @@
 							<Label text="Nomb. Emb."/>
 						</table:label>
 						<table:template>
-							<Text text="{embarcacion}"/>
+							<Text text="{Combustible>NMEMB}"/>
 						</table:template>
 					</table:Column>
 					<table:Column width="8rem">
@@ -143,7 +142,7 @@
 							<Label text="Mot. mar."/>
 						</table:label>
 						<table:template>
-							<Text text="{fecha}"/>
+							<Text text="{Combustible>DSMMA}"/>
 						</table:template>
 					</table:Column>
 					<table:Column width="6rem">
@@ -151,7 +150,7 @@
 							<Label text="Puert. zarpe"/>
 						</table:label>
 						<table:template>
-							<Text text="{}"/>
+							<Text text="{Combustible>PTOZA}"/>
 						</table:template>
 					</table:Column>
 					<table:Column width="10rem">
@@ -159,7 +158,7 @@
 							<Label text="Fecha/hora zarpe"/>
 						</table:label>
 						<table:template>
-							<Text text="{}"/>
+							<Text text="{Combustible>FECZA} {Combustible>HIZAR}"/>
 						</table:template>
 					</table:Column>
 					<table:Column width="6rem">
@@ -167,7 +166,7 @@
 							<Label text="Puert. arribo"/>
 						</table:label>
 						<table:template>
-							<Text text="{}"/>
+							<Text text="{Combustible>PTOAR}"/>
 						</table:template>
 					</table:Column>
 					<table:Column width="10rem">
@@ -175,7 +174,7 @@
 							<Label text="Fecha/hora arribo"/>
 						</table:label>
 						<table:template>
-							<Text text="{}"/>
+							<Text text="{Combustible>FECAR} {Combustible>HIARR}"/>
 						</table:template>
 					</table:Column>
 					<table:Column width="8rem">
@@ -183,7 +182,7 @@
 							<Label text="Fecha prod."/>
 						</table:label>
 						<table:template>
-							<Text text="{}"/>
+							<Text text="{Combustible>FECCONMOV}"/>
 						</table:template>
 					</table:Column>
 					<table:Column hAlign="End" width="8rem">
@@ -191,7 +190,7 @@
 							<Label text="Cant. desc.(TN)"/>
 						</table:label>
 						<table:template>
-							<Text text="{}"/>
+							<Text text="{Combustible>CNPDS}"/>
 						</table:template>
 					</table:Column>
 					<table:Column hAlign="End" width="8rem">
@@ -199,7 +198,7 @@
 							<Label text="Stock Inicial"/>
 						</table:label>
 						<table:template>
-							<Text text="{}"/>
+							<Text text="{Combustible>STCMB}"/>
 						</table:template>
 					</table:Column>
 					<table:Column hAlign="End" width="8rem">
@@ -207,7 +206,7 @@
 							<Label text="Sumn. "/>
 						</table:label>
 						<table:template>
-							<Text text="{}"/>
+							<Text text="{Combustible>CNSUM}"/>
 						</table:template>
 					</table:Column>
 					<table:Column hAlign="End" width="8rem">
@@ -215,7 +214,7 @@
 							<Label text="Cons. (Gln)"/>
 						</table:label>
 						<table:template>
-							<Text text="{}"/>
+							<Text text="{Combustible>CONSU}"/>
 						</table:template>
 					</table:Column>
 					<table:Column hAlign="End" width="8rem">
@@ -223,7 +222,7 @@
 							<Label text="Stock. final"/>
 						</table:label>
 						<table:template>
-							<Text text="{}"/>
+							<Text text="{Combustible>STFIN}"/>
 						</table:template>
 					</table:Column>
 					<table:Column width="6rem">
@@ -231,7 +230,7 @@
 							<Label text="Obs."/>
 						</table:label>
 						<table:template>
-							<Button icon="sap-icon://document-text" />
+							<Button   visible="{Combustible>estado}" icon="sap-icon://document-text" />
 						</table:template>
 					</table:Column>
 					<table:Column width="6rem" hAlign="Center">
@@ -239,7 +238,7 @@
 							<Label text=""/>
 						</table:label>
 						<table:template>
-							<Button icon="sap-icon://show" type="Emphasized" press="onDeatilPress" />
+							<Button icon="sap-icon://show" type="Emphasized" press="onDetail" />
 						</table:template>
 					</table:Column>
 					<table:Column width="5rem">
@@ -247,7 +246,7 @@
 							<Label text="Selec."/>
 						</table:label>
 						<table:template>
-							<CheckBox />
+							<CheckBox selected="{Combustible>estadoCheck}" editable="{Combustible>SoloLecturaAjustComb}"/>
 						</table:template>
 					</table:Column >
 					<table:Column hAlign="End" width="8rem">
@@ -258,12 +257,17 @@
 							<Text text="{}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="8rem">
+					<table:Column width="15rem">
 						<table:label>
 							<Label text="Imputación"></Label>
 						</table:label>
 						<table:template>
-							<Select />
+								<ComboBox editable="true" selectedKey="{Combustible>comboKey}"  id="idEstado2" items="{path:'EstadoGrilla>/ZD_TPIMPU',sorter:{path:'id'}}" enabled="{Combustible>estadoCombo}" visible="true" width="auto" valueState="None" maxWidth="100%">
+                                        <items>
+                                                <core:Item text="{EstadoGrilla>descripcion}" enabled="true" key="{EstadoGrilla>id}"/>
+                                        </items>
+                                </ComboBox>
+						
 						</table:template>
 					</table:Column>
 					<table:Column width="8rem">
@@ -271,15 +275,15 @@
 							<Label text="Fecha contable"></Label>
 						</table:label>
 						<table:template>
-							<Text text="{}"/>
+							<Text text="{Combustible>FECCONMOV}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="8rem">
+					<table:Column width="20rem">
 						<table:label>
 							<Label text="Comentario"></Label>
 						</table:label>
 						<table:template>
-							<Text text="{}"/>
+							<Input value="{Combustible>DSOBS}" editable="{Combustible>SoloLecturaAjustComb}"/>
 						</table:template>
 					</table:Column>
 				</table:columns>

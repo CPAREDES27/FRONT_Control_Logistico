@@ -85,6 +85,32 @@
             "Estado": {
                 "type": "sap.ui.model.json.JSONModel",
                 "preload": true
+            },
+            "Combustible": {
+                "type": "sap.ui.model.json.JSONModel",
+                "preload": true
+            },
+            "EstadoGrilla": {
+                "type": "sap.ui.model.json.JSONModel",
+                "preload": true
+            },
+            "Qlik": {
+                "type": "sap.ui.model.json.JSONModel",
+                "preload": true
+            },
+            "ConsumoTwo": {
+                "type": "sap.ui.model.json.JSONModel",
+                "preload": true
+            }
+            ,
+            "Analisis": {
+                "type": "sap.ui.model.json.JSONModel",
+                "preload": true
+            }
+            ,
+            "Reporte": {
+                "type": "sap.ui.model.json.JSONModel",
+                "preload": true
             }
             
         },
