@@ -1,0 +1,19 @@
+{
+  "index.html": 1634565200499,
+  "manifest.json": 1635515076647,
+  "model/models.js": 1634565200503,
+  "controller/BaseController.js": 1634565443347,
+  "controller/App.controller.js": 1635224065842,
+  "Component.js": 1634565200493,
+  "manifest-bundle.zip": 1635515076673,
+  "Component-preload.js": 1635515077225,
+  "Component-dbg.js": 1634565200493,
+  "controller/BaseController-dbg.js": 1634565443347,
+  "controller/App-dbg.controller.js": 1635224065842,
+  "model/models-dbg.js": 1634565200503,
+  "view/DlgEmbarcacion.fragment.xml": 1635193780769,
+  "view/DlgArmador.fragment.xml": 1635166977806,
+  "view/App.view.xml": 1635223239885,
+  "css/style.css": 1634565200496,
+  "i18n/i18n.properties": 1634567669304
+}

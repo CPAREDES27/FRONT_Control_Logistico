@@ -117,7 +117,7 @@
                                         <Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                     </form:label>
                                     <form:fields>
-                                        <Button text="Buscar" type="Default" icon="sap-icon://search" iconFirst="true" width="50%" enabled="true" visible="true" iconDensityAware="false" press="searchPlanta"/>
+                                        <Button text="Buscar" type="Default" icon="sap-icon://search" iconFirst="true" width="50%" enabled="true" visible="true" iconDensityAware="false" press="_onPlantaButtonPress"/>
                                     </form:fields>
                             </form:FormElement>
                         </form:formElements>
@@ -198,109 +198,21 @@
                         </header>
                         <footer/>
                     </Column>
-                    
                 </columns>
-                    
+                
                 <items>
                     <ColumnListItem type="Active">
                         <cells>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
+                            <Link text="{modelValeViveres>CDPTA}" press="_onpress_plantalink" ></Link>
+                            <Text text="{modelValeViveres>WERKS}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                            <Text text="{modelValeViveres>DESCR}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                            <Text text="{modelValeViveres>STCD1}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                            <Text text="{modelValeViveres>NAME1}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                            <Text text="{modelValeViveres>INPRP}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                            <Text text="{modelValeViveres>CDPTO}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                            <Text text="{modelValeViveres>DSPTO}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                         </cells>
                     </ColumnListItem>
-                    <ColumnListItem type="Active">
-                        <cells>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                        </cells>
-                    </ColumnListItem>
-                    <ColumnListItem type="Active">
-                        <cells>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                            <layout:HorizontalLayout>
-                                <layout:content/>
-                            </layout:HorizontalLayout>
-                        </cells>
-                    </ColumnListItem>
-                  
-                        <ColumnListItem type="Active">
-                            <cells>
-                                
-                                <Link text="{modelValeViveres>CDPTA}" press="_onpress_plantalink" ></Link>
-                                <Text text="{modelValeViveres>WERKS}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                <Text text="{modelValeViveres>DESCR}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                <Text text="{modelValeViveres>STCD1}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                <Text text="{modelValeViveres>NAME1}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                <Text text="{modelValeViveres>INPRP}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                <Text text="{modelValeViveres>CDPTO}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                <Text text="{modelValeViveres>DSPTO}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            </cells>
-                        </ColumnListItem>
-                    
                 </items>
             </Table>
             <form:Form width="67%" editable="true" visible="true">
