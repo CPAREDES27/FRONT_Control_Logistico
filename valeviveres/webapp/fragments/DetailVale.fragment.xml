@@ -36,22 +36,6 @@
                                                 </form:fields>
                                             </form:FormElement> -->
 
-                                            <!-- <form:FormElement>
-                                                <form:label>
-                                                    <Label text="Estado de impresión"/>
-                                                </form:label>
-                                                <form:fields>
-                                                    <Select
-                                                        selectedKey="{ESIMP}"
-                                                        forceSelection="false"
-                                                        items="{ path: '/ESIMP' }">
-                                                        <core:Item
-                                                            key="{id}"
-                                                            text="{descripcion}"/>
-                                                    </Select>
-                                                </form:fields>
-                                            </form:FormElement> -->
-
                                             <form:FormElement>
                                                 <form:label>
                                                     <Label text="Temporada"/>
