@@ -1,7 +1,15 @@
 # yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
 specVersion: '2.4'
 metadata:
+<<<<<<< HEAD
+<<<<<<< HEAD:logregistrocomb/ui5-deploy.yaml
   name: com.tasa.logregistrocomb
+=======
+  name: com.tasa.valeviveres
+>>>>>>> master:valeviveres/ui5-deploy.yaml
+=======
+  name: com.tasa.logregistrocomb
+>>>>>>> master
 type: application
 resources:
   configuration:
@@ -20,6 +28,16 @@ builder:
   - name: ui5-task-zipper
     afterTask: generateCachebusterInfo
     configuration:
+<<<<<<< HEAD
+<<<<<<< HEAD:logregistrocomb/ui5-deploy.yaml
+      archiveName: comtasalogregistrocomb
+=======
+      archiveName: comtasavaleviveres
+>>>>>>> master:valeviveres/ui5-deploy.yaml
+      additionalFiles:
+      - xs-app.json
+=======
       archiveName: comtasalogregistrocomb
       additionalFiles:
       - xs-app.json
+>>>>>>> master

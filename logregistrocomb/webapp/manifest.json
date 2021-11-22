@@ -19,6 +19,21 @@
                     "localUri": "localService/metadata.xml"
                 }
             }
+        },
+        "crossNavigation": {
+            "inbounds": {
+                "com-tasa-logregistrocomb-inbound": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "logRegistroComb",
+                    "action": "display",
+                    "title": "{{flpTitle}}",
+                    "subTitle": "{{flpSubtitle}}",
+                    "icon": ""
+                }
+            }
         }
     },
     "sap.ui": {
