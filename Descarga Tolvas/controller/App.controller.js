@@ -1,1 +1,0 @@
-sap.ui.define(["sap/ui/model/json/JSONModel","sap/ui/core/mvc/Controller"],function(o,e){"use strict";return e.extend("com.tasa.tolvas.descargatolvas.controller.App",{onInit:function(){}})});
