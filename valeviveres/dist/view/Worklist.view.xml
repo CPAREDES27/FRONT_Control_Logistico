@@ -1,0 +1,252 @@
+<mvc:View xmlns:core="sap.ui.core"
+	controllerName="com.tasa.valeviveres.controller.Worklist"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:semantic="sap.f.semantic">
+
+	<semantic:SemanticPage
+		id="page">
+
+		<semantic:titleHeading>
+			<Title
+				text="{i18n>worklistTitle}"
+				level="H2"/>
+		</semantic:titleHeading>
+
+		<semantic:headerContent>
+			<form:Form 
+				title="Datos de selección"
+				editable="true">
+				<form:formContainers>
+					<form:FormContainer>
+						<form:formElements>
+							<form:FormElement label="Vale">
+								<form:fields>
+									<Input 
+										value="{}"
+										placeholder="Ingrese vale desde"/>
+									<Input
+										value="{}"
+										placeholder="Ingrese vale hasta" />
+								</form:fields>
+							</form:FormElement>
+							<form:FormElement label="Fecha">
+								<form:fields>
+									<DateRangeSelection />
+								</form:fields>
+							</form:FormElement>
+							<form:FormElement label="Armador comercial">
+								<form:fields>
+									<Input 
+										value="{}"
+										placeholder="Ingrese Armador comercial"
+										showValueHelp="true"/>
+									<Input />
+								</form:fields>
+							</form:FormElement>
+							<form:FormElement label="Embarcación">
+								<form:fields>
+									<Input
+										value="{}"
+										placeholder="Ingrese Embarcación"
+										showValueHelp="true" />
+								</form:fields>
+							</form:FormElement>
+							<form:FormElement label="Planta">
+								<form:fields>
+									<Input 
+										placeholder="Ingrese Planta"/>
+								</form:fields>
+							</form:FormElement>
+							<form:FormElement label="Centro">
+								<form:fields>
+									<Input 
+										value="{}"
+										editable="false"/>
+								</form:fields>
+							</form:FormElement>
+						</form:formElements>
+					</form:FormContainer>
+				</form:formContainers>
+
+				<form:formContainers>
+					<form:FormContainer>
+						<form:formElements>
+							<form:FormElement label="Alamcén">
+								<form:fields>
+									<Input 
+										value="{}"
+										placeholder="Ingrese Alamcén"
+										showValueHelp="true"/>
+								</form:fields>
+							</form:FormElement>
+							<form:FormElement label="Alamcén externo">
+								<form:fields>
+									<Input 
+										value="{}"
+										editable="false"/>
+								</form:fields>
+							</form:FormElement>
+							<form:FormElement label="Temporada">
+								<form:fields>
+									<Select items="{}">
+										<core:Item key="{}" text="{}"/>
+									</Select>
+								</form:fields>
+							</form:FormElement>
+							<form:FormElement label="Indicador de propiedad">
+								<form:fields>
+									<Select items="{}">
+										<core:Item key="{}" text="{}"/>
+									</Select>
+								</form:fields>
+							</form:FormElement>
+							<form:FormElement label="Cantidad de aciertos">
+								<form:fields>
+									<Input 
+										value="200"
+										placeholder="Ingrese Cantidad de aciertos"/>
+								</form:fields>
+							</form:FormElement>
+							<form:FormElement label="">
+								<form:fields>
+									<Button text="Buscar" icon="sap-icon://search" press="" type="Emphasized" />
+									<Button text="Limpiar" icon="sap-icon://clear-filter" press="" type="Ghost" />
+								</form:fields>
+							</form:FormElement>
+						</form:formElements>
+					</form:FormContainer>
+				</form:formContainers>
+				<form:layout>
+					<form:ResponsiveGridLayout
+						adjustLabelSpan="true"
+						breakpointL="1024"
+						breakpointM="600"
+						breakpointXL="1440"
+						columnsL="2"
+						columnsM="1"
+						columnsXL="-1"
+						emptySpanL="0"
+						emptySpanM="0"
+						emptySpanS="0"
+						emptySpanXL="-1"
+						labelSpanL="4"
+						labelSpanM="2"
+						labelSpanS="12"
+						labelSpanXL="-1"
+						singleContainerFullSize="true"/>
+				</form:layout>
+			</form:Form>
+		</semantic:headerContent>
+		<semantic:content>
+			<Table
+				id="table"
+				width="auto"
+				mode="SingleSelectLeft"
+				items="{
+					path: '/data',
+					sorter: {
+						path: 'vale',
+						descending: false
+					}
+				}"
+				noDataText="{worklistView>/tableNoDataText}"
+				busyIndicatorDelay="{worklistView>/tableBusyDelay}"
+				growing="true"
+				growingScrollToLoad="true"
+				updateFinished=".onUpdateFinished">
+
+				<headerToolbar>
+					<OverflowToolbar>
+						<Title
+							id="tableHeader"
+							text="{worklistView>/worklistTableTitle}"
+							level="H3"/>
+						<ToolbarSpacer />
+						<Button text="Imprimir" icon="sap-icon://print" type="Ghost" press="onPrintVale" />
+						<Button text="Anular" icon="sap-icon://decline" type="Reject" press="onAnularVale" />
+						<Button text="Exportar" icon="sap-icon://excel-attachment" type="Ghost" press="onExportTable" />
+						<Button text="Nuevo" icon="sap-icon://add" type="Emphasized" press="onNewVale" />
+						<SearchField
+							id="searchField"
+							tooltip="{i18n>worklistSearchTooltip}"
+							liveChange=".onSearch">
+							<layoutData>
+								<OverflowToolbarLayoutData
+									maxWidth="200px"
+									priority="NeverOverflow"/>
+							</layoutData>
+						</SearchField>
+					</OverflowToolbar>
+				</headerToolbar>
+
+				<columns>
+					<Column>
+						<Text text="Vale"/>
+					</Column>
+					<Column >
+						<Text text="Embarcación"/>
+					</Column>
+					<Column>
+						<Text text="Armador"/>
+					</Column>
+					<Column >
+						<Text text="Almacén"/>
+					</Column>
+					<Column>
+						<Text text="Ind. propiedad"/>
+					</Column>
+					<Column >
+						<Text text="Temporada"/>
+					</Column>
+					<Column>
+						<Text text="Fecha"/>
+					</Column>
+					<Column >
+						<Text text="Estado"/>
+					</Column>
+					<Column>
+						<Text text="Orden extracción"/>
+					</Column>
+					<Column >
+						<Text text="Planta"/>
+					</Column>
+					<Column >
+						<Text text="Centro costo"/>
+					</Column>
+					<Column hAlign="Center">
+						<Text text="Ver detalle"/>
+					</Column>
+				</columns>
+
+				<items>
+					<ColumnListItem
+						press=".onPress">
+						<cells>
+							<ObjectStatus
+								text="{vale}"
+								state="Information" />
+							<Text text="{emb}"/>
+							<Text text="{armd}"/>
+							<Text text="{almc}"/>
+							<Text text="{}"/>
+							<Text text="{}"/>
+							<Text text="{}"/>
+							<ObjectStatus
+								text="{estado}"
+								icon="sap-icon://validate"
+								state="Success"/>
+							<Text text="{}"/>
+							<Text text="{}"/>
+							<Text text="{}"/>
+							<Button icon="sap-icon://show" press="onPress" type="Ghost" />
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</semantic:content>
+
+	</semantic:SemanticPage>
+
+</mvc:View>
