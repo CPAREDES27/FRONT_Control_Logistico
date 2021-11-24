@@ -1,7 +1,7 @@
 {
     "_version": "1.32.0",
     "sap.app": {
-        "id": "com.tasa.logregistrocomb",
+        "id": "com.tasa.logregcomb",
         "type": "application",
         "i18n": "i18n/i18n.properties",
         "title": "{{appTitle}}",
@@ -12,13 +12,13 @@
         "resources": "resources.json",
         "crossNavigation": {
             "inbounds": {
-                "com-tasa-logregistrocomb-inbound": {
+                "com-tasa-logregcomb-inbound": {
                     "signature": {
                         "parameters": {},
                         "additionalParameters": "allowed"
                     },
-                    "semanticObject": "logRegistroComb",
-                    "action": "display",
+                    "semanticObject": "LogRegistroCombustible",
+                    "action": "Display",
                     "title": "{{flpTitle}}",
                     "subTitle": "{{flpSubtitle}}",
                     "icon": ""
@@ -44,13 +44,13 @@
     },
     "sap.ui5": {
         "rootView": {
-            "viewName": "com.tasa.logregistrocomb.view.App",
+            "viewName": "com.tasa.logregcomb.view.App",
             "type": "XML",
             "async": true,
             "id": "app"
         },
         "dependencies": {
-            "minUI5Version": "1.95.0",
+            "minUI5Version": "1.96.0",
             "libs": {
                 "sap.ui.core": {},
                 "sap.m": {},
@@ -65,7 +65,7 @@
             "i18n": {
                 "type": "sap.ui.model.resource.ResourceModel",
                 "settings": {
-                    "bundleName": "com.tasa.logregistrocomb.i18n.i18n"
+                    "bundleName": "com.tasa.logregcomb.i18n.i18n"
                 }
             },
             "": {
@@ -102,7 +102,7 @@
             "config": {
                 "routerClass": "sap.m.routing.Router",
                 "viewType": "XML",
-                "viewPath": "com.tasa.logregistrocomb.view",
+                "viewPath": "com.tasa.logregcomb.view",
                 "controlId": "app",
                 "controlAggregation": "pages",
                 "bypassed": {
@@ -121,7 +121,7 @@
                     ]
                 },
                 {
-                    "pattern": "Customers/{objectId}",
+                    "pattern": "Categories/{objectId}",
                     "name": "object",
                     "target": [
                         "object"

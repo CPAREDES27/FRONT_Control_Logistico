@@ -43,10 +43,6 @@ modules:
     build-result: resources
     requires:
     - artifacts:
-      - comtasalogregistrocomb.zip
-      name: comtasalogregistrocomb
-      target-path: resources/
-    - artifacts:
       - comtasareportemdatcomb.zip
       name: comtasareportemdatcomb
       target-path: resources/
@@ -66,16 +62,10 @@ modules:
       - comtasavaleviveres.zip
       name: comtasavaleviveres
       target-path: resources/
-- name: comtasalogregistrocomb
-  type: html5
-  path: logregistrocomb
-  build-parameters:
-    build-result: dist
-    builder: custom
-    commands:
-    - npm install
-    - npm run build:cf
-    supported-platforms: []
+    - artifacts:
+      - comtasalogregcomb.zip
+      name: comtasalogregcomb
+      target-path: resources/
 - name: comtasareportemdatcomb
   type: html5
   path: reportemdatcomb
@@ -119,6 +109,16 @@ modules:
 - name: comtasavaleviveres
   type: html5
   path: valeviveres
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comtasalogregcomb
+  type: html5
+  path: logregcomb
   build-parameters:
     build-result: dist
     builder: custom

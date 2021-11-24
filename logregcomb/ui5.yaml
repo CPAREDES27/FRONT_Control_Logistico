@@ -1,6 +1,6 @@
 specVersion: '2.4'
 metadata:
-  name: 'logregistrocomb'
+  name: 'logregcomb'
 type: application
 server:
   customMiddleware:
@@ -8,6 +8,9 @@ server:
     afterMiddleware: compression
     configuration:
       ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
+      backend:
+      - path: /sap/opu/odata
+        url: http://localhost
       ui5:
         path: 
         - /resources

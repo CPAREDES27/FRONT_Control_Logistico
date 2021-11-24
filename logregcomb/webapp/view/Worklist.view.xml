@@ -1,10 +1,11 @@
 <mvc:View
-	controllerName="com.tasa.logregistrocomb.controller.Worklist"
-	xmlns="sap.ui.table" xmlns:m="sap.m"
+	controllerName="com.tasa.logregcomb.controller.Worklist"
+	xmlns="sap.ui.table" 
+	xmlns:m="sap.m"
+	xmlns:f="sap.ui.layout.form"
 	xmlns:core="sap.ui.core"
 	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:semantic="sap.f.semantic"
-	xmlns:f="sap.ui.layout.form">
+	xmlns:semantic="sap.f.semantic">
 
 	<semantic:SemanticPage
 		id="page"
@@ -107,17 +108,16 @@
 
 		<semantic:content>
 			<Table
-                            id="table"
-                            rows="{Combustible>/listaCombustible}"
-							selectionMode="MultiToggle"
-                            visibleRowCount="7"
-                            showColumnVisibilityMenu="{ui>/showVisibilityMenuEntry}"
-                            enableColumnFreeze="{ui>/showFreezeMenuEntry}"
-                            enableCellFilter="{ui>/enableCellFilter}"
-                            columnSelect="onColumnSelect"
-                            cellContextmenu="onProductIdCellContextMenu"
-                            ariaLabelledBy="title"
-							>
+				id="table"
+				rows="{Combustible>/listaCombustible}"
+				selectionMode="MultiToggle"
+				visibleRowCount="7"
+				showColumnVisibilityMenu="{ui>/showVisibilityMenuEntry}"
+				enableColumnFreeze="{ui>/showFreezeMenuEntry}"
+				enableCellFilter="{ui>/enableCellFilter}"
+				columnSelect="onColumnSelect"
+				cellContextmenu="onProductIdCellContextMenu"
+				ariaLabelledBy="title">
 				<extension>
 					<m:OverflowToolbar style="Clear">
 						<m:Title id="title" text="Lista de registros:" />
@@ -133,7 +133,7 @@
 				</extension>
 				<columns>
 					
-					<Column
+					<!-- <Column
 						id="iconEstado"
 						width="11rem"
 						sortProperty="semana"
@@ -152,7 +152,7 @@
 							state="{Combustible>color}"
 							icon="{Combustible>estado}" />
 						</template>
-					</Column>
+					</Column> -->
 
                 	<Column
 						id="fecha"
@@ -278,7 +278,11 @@
 						>
                         <m:Label text="Estado" textAlign="Center" width="100%"/>
 						<template>
-							<m:Text  text="{path:'Combustible>desc_ESPRO'}" wrapping="false" />
+							<m:ObjectStatus
+								state="{Combustible>color}"
+								text="{path:'Combustible>desc_ESPRO'}"
+								icon="sap-icon://complete" /> <!-- asignar iconos de acuerdo a estado-->
+							<!-- <m:Text  text="{path:'Combustible>desc_ESPRO'}" wrapping="false" /> -->
 						</template>
 					</Column>
 					 
@@ -292,6 +296,11 @@
 
                     </m:OverflowToolbar>
 				</footer>
+				<rowSettingsTemplate>
+					<RowSettings
+						highlight="{Combustible>color}"/>
+					<!-- </table:RowSettings> -->
+				</rowSettingsTemplate>
 			</Table>
 		</semantic:content>
 

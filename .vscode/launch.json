@@ -687,6 +687,107 @@
       "internalConsoleOptions": "neverOpen",
       "port": 9229,
       "env": {}
+    },
+    {
+      "name": "Start logregcomb",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "npm",
+      "cwd": "${workspaceFolder}/logregcomb",
+      "windows": {
+        "runtimeExecutable": "npm.cmd"
+      },
+      "runtimeArgs": [
+        "run-script",
+        "start"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "port": 9229,
+      "env": {
+        "DEBUG": "--inspect"
+      }
+    },
+    {
+      "name": "Start logregcomb with UI5 Version",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "npm",
+      "cwd": "${workspaceFolder}/logregcomb",
+      "windows": {
+        "runtimeExecutable": "npm.cmd"
+      },
+      "runtimeArgs": [
+        "run-script",
+        "start"
+      ],
+      "args": [
+        "--",
+        "${input:UI5Version}"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "port": 9229,
+      "env": {
+        "DEBUG": "--inspect"
+      }
+    },
+    {
+      "name": "Start logregcomb Mock",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/logregcomb",
+      "runtimeExecutable": "npm",
+      "windows": {
+        "runtimeExecutable": "npm.cmd"
+      },
+      "runtimeArgs": [
+        "run-script",
+        "start-mock"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "port": 9229,
+      "env": {}
+    },
+    {
+      "name": "Start logregcomb Mock with UI5 Version",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/logregcomb",
+      "runtimeExecutable": "npm",
+      "windows": {
+        "runtimeExecutable": "npm.cmd"
+      },
+      "runtimeArgs": [
+        "run-script",
+        "start-mock"
+      ],
+      "args": [
+        "--",
+        "${input:UI5Version}"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "port": 9229
+    },
+    {
+      "name": "Start logregcomb Local",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/logregcomb",
+      "runtimeExecutable": "npm",
+      "windows": {
+        "runtimeExecutable": "npm.cmd"
+      },
+      "runtimeArgs": [
+        "run-script",
+        "start-local"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "port": 9229,
+      "env": {}
     }
   ],
   "compounds": [],
