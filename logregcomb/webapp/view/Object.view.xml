@@ -2,7 +2,9 @@
 	controllerName="com.tasa.logregcomb.controller.Object"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:semantic="sap.f.semantic">
+	xmlns:semantic="sap.f.semantic"
+	xmlns:table="sap.ui.table"
+	xmlns:layout="sap.ui.layout">
 
 	<semantic:SemanticPage
 		id="page"
@@ -13,24 +15,18 @@
 
 		<semantic:titleHeading>
 			<Title
-				text="{CategoryID}"
+				text="{CompanyName}"
 				level="H2"/>
 		</semantic:titleHeading>
 
 		<semantic:headerContent>
 			<ObjectNumber
-				number="{
-					path: 'CategoryID',
-					formatter: '.formatter.numberUnit'
-				}"
-				unit="{CategoryName}"
 			/>
 		</semantic:headerContent>
-
-		<semantic:sendEmailAction>
-			<semantic:SendEmailAction id="shareEmail" press=".onShareEmailPress"/>
-		</semantic:sendEmailAction>
-
+		
+		<semantic:content>
+			
+		</semantic:content>
 
 	</semantic:SemanticPage>
 

@@ -1,11 +1,10 @@
 <mvc:View
 	controllerName="com.tasa.logregcomb.controller.Worklist"
-	xmlns="sap.ui.table" 
-	xmlns:m="sap.m"
-	xmlns:f="sap.ui.layout.form"
+	xmlns="sap.ui.table" xmlns:m="sap.m"
 	xmlns:core="sap.ui.core"
 	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:semantic="sap.f.semantic">
+	xmlns:semantic="sap.f.semantic"
+	xmlns:f="sap.ui.layout.form">
 
 	<semantic:SemanticPage
 		id="page"
@@ -18,7 +17,7 @@
 		</semantic:titleHeading>
 
 		<semantic:headerContent>
-			<f:Form id="idFormHeader" editable="true">
+			<f:Form id="idFormHeader" >
 				<f:title>
 					<core:Title text="Datos de Selección" />
 				</f:title>
@@ -37,7 +36,7 @@
 							<f:FormElement label="Fecha de contabilización">
 								<f:fields>
 									<m:DateRangeSelection id="idFecha"
-										placeholder="Ingrese rango de fecha"/>
+										 displayFormat="dd/MM/yyyy"/>
 								</f:fields>
 							</f:FormElement>
 							
@@ -48,20 +47,15 @@
                                         </m:items>
                                 </m:ComboBox>
 							</f:FormElement>
-							<f:FormElement label="Embarcación">
-								<f:fields>
-									<m:Input 
-										type="Text" 
-										id="idEmbarcacion"
-										description="{}"
-										showValueHelp="true" 
-										valueHelpRequest="_onOpenDialogEmbarcacion"/>
-								</f:fields>
-							</f:FormElement>
 						</f:formElements>
 					</f:FormContainer>
 					<f:FormContainer >
 						<f:formElements>
+							<f:FormElement label="Embarcación">
+								<f:fields>
+									<m:Input type="Text" id="idEmbarcacion" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="onOpenEmba"/>
+								</f:fields>
+							</f:FormElement>
 							<f:FormElement label="Tipo de imputación">
 								<f:fields>
 									<m:ComboBox editable="true"  id="idImputacion" items="{Imputacion>/ZD_TPIMPU}" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%">
@@ -78,10 +72,14 @@
 										type="Number"/>
 								</f:fields>
 							</f:FormElement>
-							<f:FormElement label="">
+						</f:formElements>
+					</f:FormContainer>
+					<f:FormContainer >
+						<f:formElements>
+							<f:FormElement >
 								<f:fields>
-									<m:Button text="Buscar" icon="sap-icon://search" type="Emphasized" press="onBusqueda" />
-									<m:Button text="Limpiar" icon="sap-icon://clear-filter" type="Ghost" press="onCleanFilter" />
+									<m:Button text="Buscar" type="Emphasized" press="onBusqueda" />
+									<m:Button text="Limpiar" type="Emphasized" press="onLimpiar" />
 								</f:fields>
 							</f:FormElement>
 						</f:formElements>
@@ -108,32 +106,33 @@
 
 		<semantic:content>
 			<Table
-				id="table"
-				rows="{Combustible>/listaCombustible}"
-				selectionMode="MultiToggle"
-				visibleRowCount="7"
-				showColumnVisibilityMenu="{ui>/showVisibilityMenuEntry}"
-				enableColumnFreeze="{ui>/showFreezeMenuEntry}"
-				enableCellFilter="{ui>/enableCellFilter}"
-				columnSelect="onColumnSelect"
-				cellContextmenu="onProductIdCellContextMenu"
-				ariaLabelledBy="title">
+                            id="table"
+                            rows="{Combustible>/listaCombustible}"
+							selectionMode="MultiToggle"
+                            visibleRowCount="7"
+                            showColumnVisibilityMenu="{ui>/showVisibilityMenuEntry}"
+                            enableColumnFreeze="{ui>/showFreezeMenuEntry}"
+                            enableCellFilter="{ui>/enableCellFilter}"
+                            columnSelect="onColumnSelect"
+                            cellContextmenu="onProductIdCellContextMenu"
+                            ariaLabelledBy="title"
+							>
 				<extension>
 					<m:OverflowToolbar style="Clear">
 						<m:Title id="title" text="Lista de registros:" />
 						<m:ToolbarSpacer/>
 						<m:ToolbarSeparator/>
-                        <m:Button icon="sap-icon://excel-attachment" press="onDataExport" text="Exportar" tooltip="Exportar Excel"/>
+                        <m:Button icon="sap-icon://excel-attachment" press="onExportarExcelData" text="Exportar" tooltip="Exportar Excel"/>
 						<m:SearchField
 							placeholder="Búsqueda rápida"
 							value="{ui>/globalFilter}"
-							search="filterGlobally"
+							liveChange="onSearch"
 							width="15rem"/>
 					</m:OverflowToolbar>
 				</extension>
 				<columns>
 					
-					<!-- <Column
+					<Column
 						id="iconEstado"
 						width="11rem"
 						sortProperty="semana"
@@ -152,7 +151,7 @@
 							state="{Combustible>color}"
 							icon="{Combustible>estado}" />
 						</template>
-					</Column> -->
+					</Column>
 
                 	<Column
 						id="fecha"
@@ -278,11 +277,7 @@
 						>
                         <m:Label text="Estado" textAlign="Center" width="100%"/>
 						<template>
-							<m:ObjectStatus
-								state="{Combustible>color}"
-								text="{path:'Combustible>desc_ESPRO'}"
-								icon="sap-icon://complete" /> <!-- asignar iconos de acuerdo a estado-->
-							<!-- <m:Text  text="{path:'Combustible>desc_ESPRO'}" wrapping="false" /> -->
+							<m:Text  text="{path:'Combustible>desc_ESPRO'}" wrapping="false" />
 						</template>
 					</Column>
 					 
@@ -296,11 +291,6 @@
 
                     </m:OverflowToolbar>
 				</footer>
-				<rowSettingsTemplate>
-					<RowSettings
-						highlight="{Combustible>color}"/>
-					<!-- </table:RowSettings> -->
-				</rowSettingsTemplate>
 			</Table>
 		</semantic:content>
 

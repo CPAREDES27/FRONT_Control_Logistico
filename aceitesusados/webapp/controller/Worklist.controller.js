@@ -8,7 +8,10 @@ sap.ui.define([
 	"sap/m/MessageBox",
 	"sap/ui/core/util/ExportTypeCSV",
     "sap/ui/core/util/Export",
-	"sap/m/MessageToast"
+	'sap/ui/export/library',
+	'sap/ui/export/Spreadsheet',
+	"sap/m/MessageToast",
+	"sap/ui/core/BusyIndicator"
 ], function (BaseController,
 	JSONModel,
 	formatter,
@@ -18,17 +21,31 @@ sap.ui.define([
 	MessageBox,
 	ExportTypeCSV,
 	Export,
-	MessageToast) {
+	exportLibrary,
+	Spreadsheet,
+	MessageToast,
+	BusyIndicator) {
 	"use strict";
 	const mainUrlServices = 'https://cf-nodejs-qas.cfapps.us10.hana.ondemand.com/api/';
 	var oGlobalBusyDialog = new sap.m.BusyDialog();
+	var EdmType = exportLibrary.EdmType;
 	var centro=null;
 	var codEmbarca=false;
 	var planta="";
+	var exportarExcel=false;
 	return BaseController.extend("com.tasa.aceitesusados.controller.Worklist", {
 
 		formatter: formatter,
 		onInit : async function () {
+			let ViewModel= new JSONModel(
+				{}
+				);
+				this.setModel(ViewModel, "consultaMareas");
+		this.currentInputEmba = "";
+			this.primerOption = [];
+			this.segundoOption = [];
+			this.currentPage = "";
+			this.lastPage = "";
 			try{
 				await this.loadCombos();
 				this.planta=await this.llenarPlanta(this.centro);
@@ -262,7 +279,12 @@ sap.ui.define([
 				console.log(this.byId("idFecha"));
 				var error="";
 				var valido=true;
+				if(idEstado==="" || idEstado===null){
+					MessageBox.error("El campo Estados de la Reserva no debe estar vacío");
+					oGlobalBusyDialog.close();
+					return false;
 				
+				}
 				if(!this.byId("idFecha").mProperties.dateValue){
 					error+="Debe ingresar una fecha de reserva"
 					
@@ -326,8 +348,19 @@ sap.ui.define([
 						  body: JSON.stringify(body)
 					  })
 					  .then(resp => resp.json()).then(data => {
+						var dataAceite = data;
+						for(var i=0;i<data.t_rpn.length;i++){
+							data.t_rpn[i].NRTGA=String(data.t_rpn[i].NRTGA)
+							data.t_rpn[i].CNSUM=String(data.t_rpn[i].CNSUM)
+							
+						}
 						  console.log(data.t_rpn);
+						  dataAceite.t_rpn.total=dataAceite.t_rpn.length;
+						  if(data.t_rpn){
+							exportarExcel=true;
+						  }
 						  this.getView().getModel("Aceite").setProperty("/listaAceite",data.t_rpn);
+						  this.byId("title").setText("Lista de registros: "+dataAceite.t_rpn.total);
 						oGlobalBusyDialog.close();
 					  }).catch(error => console.log(error)
 				);
@@ -341,78 +374,102 @@ sap.ui.define([
 				}
 				return number + ""; // siempre devuelve tipo cadena
 			},
-			onDataExport:  function() {
-				var oExport = new Export({
-					exportType: new ExportTypeCSV({ // required from "sap/ui/core/util/ExportTypeCSV"
-					  separatorChar: ";",
-					  charset: "utf-8"
-					}),
-					//PoliticaPrecio>/listaPolitica
-					models: this.getView().getModel("Aceite"),
-					rows:{path:""},
-					rows: { path: "/listaAceite" },
-					columns: [
-					  {
-						name: "Reserva",
-						template: {
-						  content: "{NRRNV}"
+			
+				createColumnConfig5: function() {
+					return [
+						{
+							label: 'Reserva',
+							property: 'NRRNV' ,
+							type: EdmType.String,
+							scale: 2
+						},
+						{
+							label: 'Embarcación',
+							property: 'NMEMB' ,
+							type: EdmType.String,
+							scale: 2
+						},
+						{
+							label: 'Material',
+							property: 'CDSUM' ,
+							type: EdmType.String,
+							scale: 2
+						},
+						{
+							label: 'Almacén',
+							property: 'CDALM' ,
+							type: EdmType.String,
+							scale: 2
+						},
+						{
+							label: 'Fecha de reserva',
+							property: 'FHCRN' ,
+							type: EdmType.String,
+							scale: 2
+						},
+						{
+							label: 'Total peso Kg',
+							property: 'CNSUM' ,
+							type: EdmType.String,
+							scale: 2
+						},
+						{
+							label: 'Cant. galones',
+							property: 'NRTGA' ,
+							type: EdmType.String,
+							scale: 2
+						},
+						{
+							label: 'UM',
+							property: 'MSEHL' ,
+							type: EdmType.String,
+							scale: 2
+						},
+						{
+							label: 'Estado',
+							property: 'DESC_ESRNV' ,
+							type: EdmType.String,
+							scale: 2
 						}
-					  },
-					  {
-						name: "Embarcación",
-						template: {
-						  content: "{NMEMB}"
-						}
-					  },
-					  {
-						name: "Material",
-						template: {
-						  content: "{CDSUM}"
-						}
-					  },
-					  {
-						name: "Almacén",
-						template: {
-						  content: "{CDALM}"
-						}
-					  },
-					  {
-						name: "Fecha de reserva",
-						template: {
-						  content: "{FHCRN}"
-						}
-					  },
-					  {
-						name: "Total peso Kg",
-						template: {
-						  content: "{CNSUM}"
-						}
-					  },
-					  {
-						name: "Cant. galones",
-						template: {
-						  content: "{NRTGA}"
-						}
-					  },
-					  {
-						name: "UM",
-						template: {
-						  content: "{MSEHL}"
-						}
-					  },
-					  {
-						name: "Estado",
-						template: {
-						  content: "{DESC_ESRNV}"
-						}
-					  }
-					]
-				  });
-				  oExport.saveFile("Politica de Precios").catch(function(oError) {
-					MessageBox.error("Error when downloading data. ..." + oError);
-				  }).then(function() {
-					oExport.destroy();
-				  });
+						];
+				},
+				onDataExport: function() {
+					oGlobalBusyDialog.open();
+					if(!exportarExcel){
+						MessageBox.error("Porfavor, realizar una búsqueda antes de exportar");
+						oGlobalBusyDialog.close();
+						return false;
+					}
+					var aCols, aProducts, oSettings, oSheet;
+		
+					aCols = this.createColumnConfig5();
+					console.log(this.getView().getModel("Aceite"));
+					aProducts = this.getView().getModel("Aceite").getProperty('/listaAceite');
+		
+					oSettings = {
+						
+						workbook: { 
+							columns: aCols,
+							context: {
+								application: 'Debug Test Application',
+								version: '1.95.0',
+								title: 'Some random title',
+								modifiedBy: 'John Doe',
+								metaSheetName: 'Custom metadata'
+							}
+							
+						},
+						dataSource: aProducts,
+						fileName:"Reporte de Aceites Usados"
+					};
+		
+					oSheet = new Spreadsheet(oSettings);
+					oSheet.build()
+						.then( function() {
+							MessageToast.show('El Archivo ha sido exportado correctamente');
+						})
+						.finally(oSheet.destroy);
+						oGlobalBusyDialog.close();
 				},
 				filterGlobally : function(oEvent) {
 					var sQuery = oEvent.getParameter("query");
@@ -795,6 +852,309 @@ sap.ui.define([
 								);
 								
 								return planta;
+							},
+							onSelectEmba: function(evt){
+								var objeto = evt.getParameter("rowContext").getObject();
+								if (objeto) {
+									var cdemb = objeto.CDEMB;
+									if (this.currentInputEmba.includes("embarcacionLow")) {
+										this.byId("embarcacionLow").setValue(cdemb);
+									}else if(this.currentInputEmba.includes("embarcacionHigh")){
+										this.byId("embarcacionHigh").setValue(cdemb);
+									}
+									this.getDialog().close();
+								}
+							},
+					
+							onSearchEmbarcacion: function(evt){
+								BusyIndicator.show(0);
+								var idEmbarcacion = sap.ui.getCore().byId("idEmba").getValue();
+								var idEmbarcacionDesc = sap.ui.getCore().byId("idNombEmba").getValue();
+								var idMatricula = sap.ui.getCore().byId("idMatricula").getValue();
+								var idRuc = sap.ui.getCore().byId("idRucArmador").getValue();
+								var idArmador = sap.ui.getCore().byId("idDescArmador").getValue();
+								var idPropiedad = sap.ui.getCore().byId("indicadorPropiedad").getSelectedKey();
+								var options = [];
+								var options2 = [];
+								let embarcaciones = [];
+								options.push({
+									"cantidad": "20",
+									"control": "COMBOBOX",
+									"key": "ESEMB",
+									"valueHigh": "",
+									"valueLow": "O"
+								})
+								if (idEmbarcacion) {
+									options.push({
+										"cantidad": "20",
+										"control": "INPUT",
+										"key": "CDEMB",
+										"valueHigh": "",
+										"valueLow": idEmbarcacion
+					
+									});
+								}
+								if (idEmbarcacionDesc) {
+									options.push({
+										"cantidad": "20",
+										"control": "INPUT",
+										"key": "NMEMB",
+										"valueHigh": "",
+										"valueLow": idEmbarcacionDesc.toUpperCase()
+					
+									});
+								}
+								if (idMatricula) {
+									options.push({
+										"cantidad": "20",
+										"control": "INPUT",
+										"key": "MREMB",
+										"valueHigh": "",
+										"valueLow": idMatricula
+									});
+								}
+								if (idPropiedad) {
+									options.push({
+										"cantidad": "20",
+										"control": "COMBOBOX",
+										"key": "INPRP",
+										"valueHigh": "",
+										"valueLow": idPropiedad
+									});
+								}
+								if (idRuc) {
+									options2.push({
+										"cantidad": "20",
+										"control": "INPUT",
+										"key": "STCD1",
+										"valueHigh": "",
+										"valueLow": idRuc
+									});
+								}
+								if (idArmador) {
+									options2.push({
+										"cantidad": "20",
+										"control": "INPUT",
+										"key": "NAME1",
+										"valueHigh": "",
+										"valueLow": idArmador.toUpperCase()
+									});
+								}
+					
+								this.primerOption = options;
+								this.segundoOption = options2;
+					
+								var body = {
+									"option": [
+					
+									],
+									"option2": [
+					
+									],
+									"options": options,
+									"options2": options2,
+									"p_user": "BUSQEMB",
+									//"p_pag": "1" //por defecto la primera parte
+								};
+					
+								fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+									{
+										method: 'POST',
+										body: JSON.stringify(body)
+									})
+									.then(resp => resp.json()).then(data => {
+										console.log("Emba: ", data);
+										embarcaciones = data.data;
+					
+										this.getModel("consultaMareas").setProperty("/embarcaciones", embarcaciones);
+										this.getModel("consultaMareas").refresh();
+					
+										if (!isNaN(data.p_totalpag)) {
+											if (Number(data.p_totalpag) > 0) {
+												sap.ui.getCore().byId("goFirstPag").setEnabled(true);
+												sap.ui.getCore().byId("goPreviousPag").setEnabled(true);
+												sap.ui.getCore().byId("comboPaginacion").setEnabled(true);
+												sap.ui.getCore().byId("goLastPag").setEnabled(true);
+												sap.ui.getCore().byId("goNextPag").setEnabled(true);
+												var tituloTablaEmba = "Página 1/" + Number(data.p_totalpag);
+												this.getModel("consultaMareas").setProperty("/TituloEmba", tituloTablaEmba);
+												var numPag = Number(data.p_totalpag) + 1;
+												var paginas = [];
+												for (let index = 1; index < numPag; index++) {
+													paginas.push({
+														numero: index
+													});
+												}
+												this.getModel("consultaMareas").setProperty("/NumerosPaginacion", paginas);
+												sap.ui.getCore().byId("comboPaginacion").setSelectedKey("1");
+												this.currentPage = "1";
+												this.lastPage = data.p_totalpag;
+											} else {
+												var tituloTablaEmba = "Página 1/1";
+												this.getModel("consultaMareas").setProperty("/TituloEmba", tituloTablaEmba);
+												this.getModel("consultaMareas").setProperty("/NumerosPaginacion", []);
+												sap.ui.getCore().byId("goFirstPag").setEnabled(false);
+												sap.ui.getCore().byId("goPreviousPag").setEnabled(false);
+												sap.ui.getCore().byId("comboPaginacion").setEnabled(false);
+												sap.ui.getCore().byId("goLastPag").setEnabled(false);
+												sap.ui.getCore().byId("goNextPag").setEnabled(false);
+												this.currentPage = "1";
+												this.lastPage = data.p_totalpag;
+											}
+										}
+					
+					
+										//sap.ui.getCore().byId("comboPaginacion").setVisible(true);
+					
+										BusyIndicator.hide();
+									}).catch(error => console.log(error));
+							},
+					
+					
+							onChangePag: function (evt) {
+								var id = evt.getSource().getId();
+								var oControl = sap.ui.getCore().byId(id);
+								var pagina = oControl.getSelectedKey();
+								this.currentPage = pagina;
+								this.onNavPage();
+							},
+					
+							onSetCurrentPage: function (evt) {
+								var id = evt.getSource().getId();
+								if (id == "goFirstPag") {
+									this.currentPage = "1";
+								} else if (id == "goPreviousPag") {
+									if (!isNaN(this.currentPage)) {
+										if (this.currentPage != "1") {
+											var previousPage = Number(this.currentPage) - 1;
+											this.currentPage = previousPage.toString();
+										}
+									}
+								} else if (id == "goNextPag") {
+									if (!isNaN(this.currentPage)) {
+										if (this.currentPage != this.lastPage) {
+											var nextPage = Number(this.currentPage) + 1;
+											this.currentPage = nextPage.toString();
+										}
+									}
+								} else if (id == "goLastPag") {
+									this.currentPage = this.lastPage;
+								}
+								this.onNavPage();
+							},
+					
+							onNavPage: function () {
+								BusyIndicator.show(0);
+								let embarcaciones = [];
+								var body = {
+									"option": [
+					
+									],
+									"option2": [
+					
+									],
+									"options": this.primerOption,
+									"options2": this.segundoOption,
+									"p_user": "BUSQEMB",
+									"p_pag": this.currentPage
+								};
+					
+								fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+									{
+										method: 'POST',
+										body: JSON.stringify(body)
+									})
+									.then(resp => resp.json()).then(data => {
+										console.log("Emba: ", data);
+										embarcaciones = data.data;
+					
+										this.getModel("consultaMareas").setProperty("/embarcaciones", embarcaciones);
+										this.getModel("consultaMareas").refresh();
+										var tituloTablaEmba = "Página " + this.currentPage + "/" + Number(data.p_totalpag);
+										this.getModel("consultaMareas").setProperty("/TituloEmba", tituloTablaEmba);
+										sap.ui.getCore().byId("comboPaginacion").setSelectedKey(this.currentPage);
+										BusyIndicator.hide();
+									}).catch(error => console.log(error));
+							},
+							getDialog: function(){
+								if (!this.oDialog) {
+									this.oDialog = sap.ui.xmlfragment("com.tasa.aceitesusados.view.Embarcacion", this);
+									this.getView().addDependent(this.oDialog);
+								}
+								return this.oDialog;
+							},
+							onOpenEmba: function(evt){
+								this.currentInputEmba = evt.getSource().getId();
+								this.getDialog().open();
+							},
+					
+							
+							buscarEmbarca: function(evt){
+								console.log(evt);
+								var indices = evt.mParameters.listItem.oBindingContexts.consultaMareas.sPath.split("/")[2];
+								console.log(indices);
+							
+								var data = this.getView().getModel("consultaMareas").oData.embarcaciones[indices].CDEMB;
+								var detail = this.getView().getModel("consultaMareas").oData.embarcaciones[indices].NMEMB;
+								if (this.currentInputEmba.includes("idEmbarcacion2")) {
+									this.byId("idEmbarcacion2").setValue(data);
+								}else if(this.currentInputEmba.includes("idEmbarcacionNew")){
+									sap.ui.getCore().byId("idEmbarcacionNew").setValue(data);
+									sap.ui.getCore().byId("txtEmbarcaNew").setText(detail);
+								}
+								this.onCerrarEmba();
+								
+							},
+							
+							onCerrarEmba: function(){
+								this.clearFilterEmba();
+								this.getDialog().close();
+								this.getModel("consultaMareas").setProperty("/embarcaciones", "");
+								this.getModel("consultaMareas").setProperty("/TituloEmba", "");
+								sap.ui.getCore().byId("comboPaginacion").setEnabled(false);
+								sap.ui.getCore().byId("goFirstPag").setEnabled(false);
+								sap.ui.getCore().byId("goPreviousPag").setEnabled(false);
+								sap.ui.getCore().byId("comboPaginacion").setEnabled(false);
+								sap.ui.getCore().byId("goLastPag").setEnabled(false);
+								sap.ui.getCore().byId("goNextPag").setEnabled(false);
+								sap.ui.getCore().byId("comboPaginacion").setSelectedKey("1");
+							},
+							clearFilterEmba: function(){
+								sap.ui.getCore().byId("idEmba").setValue("");
+								sap.ui.getCore().byId("idNombEmba").setValue("");
+								sap.ui.getCore().byId("idRucArmador").setValue("");
+								sap.ui.getCore().byId("idMatricula").setValue("");
+								sap.ui.getCore().byId("indicadorPropiedad").setValue("");
+								sap.ui.getCore().byId("idDescArmador").setValue("");
+								this.getModel("consultaMareas").setProperty("/embarcaciones","");
+							},		
+							onSearch: function (oEvent) {
+								// add filter for search
+								var aFilters = [];
+								var sQuery = oEvent.getSource().getValue();
+								if (sQuery && sQuery.length > 0) {
+									var filter = new Filter([
+										new Filter("NRRNV", FilterOperator.Contains, sQuery),
+										new Filter("NMEMB", FilterOperator.Contains, sQuery),
+										new Filter("CDSUM", FilterOperator.Contains, sQuery),
+										new Filter("CDALM", FilterOperator.Contains, sQuery),
+										new Filter("FHCRN", FilterOperator.Contains, sQuery),
+										new Filter("MSEHL", FilterOperator.Contains, sQuery),
+										new Filter("ESRNV", FilterOperator.Contains, sQuery),
+										new Filter("NRTGA", FilterOperator.Contains, sQuery),
+										new Filter("CNSUM", FilterOperator.Contains, sQuery),
+										new Filter("DESC_ESRNV", FilterOperator.Contains, sQuery)
+										
+										  
+									
+									]);
+									aFilters.push(filter);
+								}
+					
+								// update list binding
+								var oList = this.byId("table");
+								var oBinding = oList.getBinding("rows");
+								oBinding.filter(aFilters, "Application");
 							}
 
 	});

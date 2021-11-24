@@ -16,7 +16,7 @@
 		</semantic:titleHeading>
 
 		<semantic:headerContent>
-			<f:Form id="idFormHeader" >
+			<f:Form id="idFormHeader" editable="true" >
 				<f:title>
 					<core:Title text="Datos de Selección" />
 				</f:title>
@@ -25,7 +25,8 @@
 						<f:formElements>
 							<f:FormElement label="Embarcación">
 								<f:fields>
-								<m:Input type="Text" id="idEmbarcacion" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogEmbarcacion"/>			
+								<m:Input type="Text" id="idEmbarcacion" showValueHelp="true" enabled="true" visible="true" width="100%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="onOpenEmba"/>			
+								<m:Text id="idText" text=""/>
 								</f:fields>
 							</f:FormElement>
 						</f:formElements>
@@ -35,7 +36,7 @@
 							<f:FormElement label="Fechas ">
 								<f:fields>
 									<m:DateRangeSelection id="idFecha"
-										placeholder="Ingrese rango de fecha"/>
+										displayFormat="dd/MM/yyyy"/>
 								</f:fields>
 							</f:FormElement>
 						</f:formElements>
@@ -44,8 +45,8 @@
 						<f:formElements>
 							<f:FormElement >
 								<f:fields>
-									<m:Button text="buscar" type="Emphasized" press="onBusqueda" tooltip="Busqueda"/>
-									<m:Button text="limpiar" type="Emphasized" press="onLimpiar" tooltip="Limpiar Datos de búsqueda"/>
+									<m:Button text="Buscar" type="Emphasized" press="onBusqueda" tooltip="Busqueda"/>
+									<m:Button text="Limpiar" type="Emphasized" press="onLimpiar" tooltip="Limpiar Datos de búsqueda"/>
 								</f:fields>
 							</f:FormElement>
 						</f:formElements>
@@ -85,20 +86,35 @@
 							>
 				<extension>
 					<m:OverflowToolbar style="Clear">
-						<m:Title id="title" text="Lista de precios: {dataPrecio.str_ppc.total}" />
+						<m:Title id="title" text="Lista de registros: {dataPrecio.str_ppc.total}" />
 						<m:ToolbarSpacer/>
 						<m:ToolbarSeparator/>
-                        <m:Button icon="sap-icon://excel-attachment" press="onDataExport" text="Exportar" tooltip="Exportar Excel"/>
-						<m:Button icon="sap-icon://excel-attachment" press="onDataExport2" text="Exportar Embarcacion" tooltip="Exportar"/>
+                        <m:Button icon="sap-icon://excel-attachment" press="onExportarExcelData" text="Exportar" tooltip="Exportar Excel"/>
+						<m:Button icon="sap-icon://excel-attachment" press="onDataExport2" text="Exportar Embarcacion" tooltip="Exportar Excel"/>
 						<m:SearchField
 							placeholder="Búsqueda rápida"
 							value="{ui>/globalFilter}"
-							search="filterGlobally"
+							liveChange="onSearch"
 							width="15rem"/>
 					</m:OverflowToolbar>
 				</extension>
 				<columns>
-               
+               <Column
+						id="NRO"
+						width="5rem"
+						sortProperty="NRO"
+						filterProperty="NRO"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+						hAlign="End">
+                       
+                            <m:Label text="No." />
+                       
+						
+						<template>
+							<m:Text text="{Horometro>NRO}" wrapping="false" />
+						</template>
+					</Column>
                 	<Column
 						id="fecha"
 						width="11rem"
@@ -128,7 +144,7 @@
                        
 						
 						<template>
-							<m:Text text="{path:'Horometro>motorPrincipal',type:'sap.ui.model.type.Float'}" wrapping="false" />
+							<m:Text text="{Horometro>motorPrincipal}" wrapping="false" />
 						</template>
 					</Column>
                     <Column
@@ -144,7 +160,7 @@
                     
 						
 						<template>
-							<m:Text text="{path:'Horometro>motorAuxiliar',type:'sap.ui.model.type.Float'}" wrapping="false" />
+							<m:Text text="{Horometro>motorAuxiliar}" wrapping="false" />
 						</template>
 					</Column>
                     <Column
@@ -160,7 +176,7 @@
                      
 						
 						<template>
-							<m:Text text="{path:'Horometro>motorAuxiliar2',type:'sap.ui.model.type.Float'}"  />
+							<m:Text text="{Horometro>motorAuxiliar2}"  />
 						</template>
 					</Column>
                     <Column
@@ -176,7 +192,7 @@
                         
 						
 						<template>
-							<m:Text text="{path:'Horometro>motorAuxiliar3',type:'sap.ui.model.type.Float'}" wrapping="false" />
+							<m:Text text="{Horometro>motorAuxiliar3}" wrapping="false" />
 						</template>
 					</Column>
                     <Column
@@ -192,7 +208,7 @@
                  
 						
 						<template>
-							<m:Text text="{path:'Horometro>motorAuxiliar4',type:'sap.ui.model.type.Float'}" wrapping="false" />
+							<m:Text text="{Horometro>motorAuxiliar4}" wrapping="false" />
 						</template>
 					</Column>
                     <Column
@@ -208,7 +224,7 @@
                    
 						
 						<template>
-							<m:Text text="{path:'Horometro>motorAuxiliar5',type:'sap.ui.model.type.Float'}" wrapping="false" />
+							<m:Text text="{Horometro>motorAuxiliar5}" wrapping="false" />
 						</template>
 					</Column>
                     <Column
@@ -218,12 +234,12 @@
 						filterProperty="panga"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
-                        headerSpan="2,1"
+                       
 						hAlign="End"
 						>
                         <m:Label text="Panga" textAlign="Center" width="100%"/>
 						<template>
-							<m:Text  text="{path:'Horometro>panga',type:'sap.ui.model.type.Float'}" wrapping="false" />
+							<m:Text  text="{Horometro>panga}" wrapping="false" />
 						</template>
 					</Column>
 					 <Column
@@ -233,12 +249,11 @@
 						filterProperty="flujometro"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
-                        headerSpan="2,1"
-						hAlign="Flujómetro de panga"
+						hAlign="End"
 						>
-                        <m:Label text="Max" textAlign="Center" width="100%"/>
+                        <m:Label text="Flujómetro de Panga" textAlign="Center" width="100%"/>
 						<template>
-							<m:Text  text="{path:'Horometro>flujometro',type:'sap.ui.model.type.Float'}" wrapping="false" />
+							<m:Text  text="{Horometro>flujometro}" wrapping="false" />
 						</template>
 					</Column>
                     

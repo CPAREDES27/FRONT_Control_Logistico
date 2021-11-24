@@ -17,7 +17,7 @@
 		</semantic:titleHeading>
 		
 		<semantic:headerContent>
-			<f:Form id="idFormHeader" >
+			<f:Form id="idFormHeader" editable="true" >
 				<f:title>
 					<core:Title text="Datos de Selección" />
 				</f:title>
@@ -26,14 +26,14 @@
 						<f:formElements>
 							<f:FormElement label="Embarcación">
 								<f:fields>
-									<Input type="Text" id="idEmbarcacion" showValueHelp="true" enabled="true" visible="true" width="91%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogEmbarcacion"/>
+									<Input type="Text" id="embarcacionLow" showValueHelp="true" enabled="true" visible="true" width="91%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="onOpenEmba"/>
 									<Text text="" id="txtEmbarca" width="50%" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 								</f:fields>
 							</f:FormElement>
 							
-							<f:FormElement label="Fecha de Inicio">
+							<f:FormElement label="Fecha de Arribo">
 								<f:fields>
-									<DateRangeSelection width="50%" displayFormat="dd/MM/yyyy" id="idFechaInicio" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd"/>
+									<DateRangeSelection  width="50%" displayFormat="dd/MM/yyyy" id="idFechaInicio" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd"/>
 								</f:fields>
 							</f:FormElement>
 						</f:formElements>
@@ -52,7 +52,7 @@
 							</f:FormElement>
 							<f:FormElement label="Cantidad de aciertos">
 								<f:fields>
-									<Input id="idCant" value="5"
+									<Input id="idCant" value="200"
 										placeholder="Ingrese número de registros"
 										type="Number"/>
 								</f:fields>
@@ -63,7 +63,8 @@
 						<f:formElements>
 							<f:FormElement >
 								<f:fields>
-									<Button text="Buscar" type="Emphasized" press="onBusqueda" />
+									<Button text="Buscar" type="Emphasized" icon="sap-icon://search" iconFirst="true" width="100%" enabled="true" visible="true" iconDensityAware="false" press="onBusqueda"/>
+                                    <Button press="onLimpiar" text="Limpiar" type="Emphasized" icon="sap-icon://clear-filter" iconFirst="true" width="100%" enabled="true" visible="true" iconDensityAware="false"/>
 								</f:fields>
 							</f:FormElement>
 						</f:formElements>
@@ -92,7 +93,7 @@
 			<table:Table
 				id="table"
                             rows="{Combustible>/listaCombustible}"
-							selectionMode="MultiToggle"
+							selectionMode="None"
                             visibleRowCount="7"
                             showColumnVisibilityMenu="{ui>/showVisibilityMenuEntry}"
                             enableColumnFreeze="{ui>/showFreezeMenuEntry}"
@@ -103,15 +104,16 @@
 							>
 				<table:extension>
 					<OverflowToolbar style="Clear">
-						<Button text="Cuadro de consumo" press="_onOpenDialogArmador"/>
+						<Button text="Cuadro de consumo" press="onCuadroConsumo"/>
 						<Button text="QlikView" press="onExporQlikView"/>
 						<Button text="Carga Consumo" press="onCargarConsumo"/>
 						<ToolbarSpacer/>
-						<Button icon="sap-icon://excel-attachment" type="Emphasized" press="onExportar" />
+						<Button icon="sap-icon://excel-attachment" text="Exportar" press="onExportarExcelData"/>
 						<SearchField
 							id="searchField"
+							placeholder="Busqueda rápida"
 							tooltip="{i18n>worklistSearchTooltip}"
-							search="filterGlobally">
+							liveChange="onSearch">
 							<layoutData>
 								<OverflowToolbarLayoutData
 									maxWidth="200px"
@@ -187,18 +189,18 @@
 					</table:Column>
 					<table:Column hAlign="End" width="8rem">
 						<table:label>
-							<Label text="Cant. desc.(TN)"/>
-						</table:label>
-						<table:template>
-							<Text text="{Combustible>CNPDS}"/>
-						</table:template>
-					</table:Column>
-					<table:Column hAlign="End" width="8rem">
-						<table:label>
 							<Label text="Stock Inicial"/>
 						</table:label>
 						<table:template>
 							<Text text="{Combustible>STCMB}"/>
+						</table:template>
+					</table:Column>
+					<table:Column hAlign="End" width="8rem">
+						<table:label>
+							<Label text="Cant. desc.(TN)"/>
+						</table:label>
+						<table:template>
+							<Text text="{Combustible>CNPDS}"/>
 						</table:template>
 					</table:Column>
 					<table:Column hAlign="End" width="8rem">
@@ -286,6 +288,54 @@
 							<Input value="{Combustible>DSOBS}" editable="{Combustible>SoloLecturaAjustComb}"/>
 						</table:template>
 					</table:Column>
+
+					<!--EMBARCACION-->
+					<table:Column width="5rem" visible="{Embarca>/valida}">
+						<table:label>
+							<Label text="Selec."/>
+						</table:label>
+						<table:template>
+							<CheckBox selected="{Combustible>estadoCheckReg}" />
+						</table:template>
+					</table:Column >
+					<table:Column hAlign="End" width="8rem" visible="{Embarca>/valida}">
+						<table:label>
+							<Label text="Cant. Combus. Regularizar"></Label>
+						</table:label>
+						<table:template>
+							<Text  text="{Combustible>CANTIDAD}"/>
+						</table:template>
+					</table:Column>
+					<table:Column width="15rem" visible="{Embarca>/valida}">
+						<table:label>
+							<Label text="Imputación"></Label>
+						</table:label>
+						<table:template>
+								<ComboBox editable="true" selectedKey="{Combustible>CDIM2}"  id="idEstadoEmbarca" items="{path:'EstadoGrilla>/ZD_TPIMPU',sorter:{path:'id'}}"  visible="true" width="auto" valueState="None" maxWidth="100%">
+                                        <items>
+                                                <core:Item text="{EstadoGrilla>descripcion}" enabled="true" key="{EstadoGrilla>id}"/>
+                                        </items>
+                                </ComboBox>
+						
+						</table:template>
+					</table:Column>
+					<table:Column width="8rem" visible="{Embarca>/valida}">
+						<table:label>
+							<Label text="Fecha contable"></Label>
+						</table:label>
+						<table:template>
+							<Text text="{Combustible>FECCONMO2}"/>
+						</table:template>
+					</table:Column>
+					<table:Column width="20rem" visible="{Embarca>/valida}">
+						<table:label>
+							<Label text="Comentario"></Label>
+						</table:label>
+						<table:template>
+							<Input value="{Combustible>DSOB2}" />
+						</table:template>
+					</table:Column>
+					<!--EMBACACION-->
 				</table:columns>
 
 			</table:Table>

@@ -17,16 +17,16 @@
 		</semantic:titleHeading>
 
 		<semantic:headerContent>
-			<f:Form id="idFormHeader" >
+			<f:Form id="idFormHeader" editable="true" >
 				<f:title>
 					<core:Title text="Datos de Selección" />
 				</f:title>
 				<f:formContainers>
 					<f:FormContainer >
 						<f:formElements>
-							<f:FormElement label="Embarcación">
+							<f:FormElement  label="Embarcación" >
 								<f:fields>
-									<m:Input type="Text" id="idEmbarcacion" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogEmbarcacion"/>
+									<m:Input type="Text" id="idEmbarcacion" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="onOpenEmba"/>
 								</f:fields>
 							</f:FormElement>
 							
@@ -41,7 +41,7 @@
 					</f:FormContainer>
 					<f:FormContainer >
 						<f:formElements>
-							<f:FormElement label="Motivo">
+							<f:FormElement label="Fase">
 								<f:fields>
 									<m:ComboBox editable="true"  id="idFase" items="{Fase>/FASE}" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%">
                                         <m:items>
@@ -50,7 +50,7 @@
                                 </m:ComboBox>
 								</f:fields>
 							</f:FormElement>
-							<f:FormElement label="Fase">
+							<f:FormElement label="Motivo">
 								<f:fields>
 									<m:ComboBox editable="true"  id="idMotivo" items="{Motivo>/ZCDMMA}" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%">
                                         <m:items>
@@ -72,7 +72,8 @@
 						<f:formElements>
 							<f:FormElement >
 								<f:fields>
-									<m:Button text="Buscar" type="Emphasized" press="loadTabla" />
+									<m:Button text="Buscar" type="Emphasized" icon="sap-icon://search" iconFirst="true" width="100%" enabled="true" visible="true" iconDensityAware="false" press="loadTabla"/>
+                                    <m:Button press="onLimpiar" text="Limpiar" type="Emphasized" icon="sap-icon://clear-filter" iconFirst="true" width="100%" enabled="true" visible="true" iconDensityAware="false"/>
 								</f:fields>
 							</f:FormElement>
 						</f:formElements>
@@ -105,8 +106,9 @@
                             visibleRowCount="7"
                             showColumnVisibilityMenu="{ui>/showVisibilityMenuEntry}"
                             enableColumnFreeze="{ui>/showFreezeMenuEntry}"
-                            enableCellFilter="{ui>/enableCellFilter}"
+                            enableCellFilter="{ui>/cellFilterOn}"
                             columnSelect="onColumnSelect"
+							filter="filterPrice"
                             cellContextmenu="onProductIdCellContextMenu"
                             ariaLabelledBy="title"
 							>
@@ -115,11 +117,11 @@
 						<m:Title id="title" text="Indicador de modificación: " />
 						<m:ToolbarSpacer/>
 						<m:ToolbarSeparator/>
-                        <m:Button icon="sap-icon://excel-attachment" press="onDataExport" text="Exportar" tooltip="Exportar Excel"/>
+                        <m:Button icon="sap-icon://excel-attachment" press="onExportarExcelData" text="Exportar" tooltip="Exportar Excel"/>
 						<m:SearchField
 							placeholder="Búsqueda rápida"
 							value="{ui>/globalFilter}"
-							search="filterGlobally"
+							liveChange="onSearch"
 							width="15rem"/>
 					</m:OverflowToolbar>
 				</extension>
@@ -173,10 +175,10 @@
 						</template>
 					</Column>
                     <Column
-						id="motorAuxiliar2"
+						id="DESC_CDMMA"
 						width="22rem"
-						sortProperty="motorAuxiliar2"
-						filterProperty="motorAuxiliar2"
+						sortProperty="DESC_CDMMA"
+						filterProperty="DESC_CDMMA"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						>
@@ -253,7 +255,7 @@
 					</Column>
 					<Column
 						id="OBCOM"
-						width="11rem"
+						width="15rem"
 						sortProperty="OBCOM"						
 						filterProperty="OBCOM"
 						showFilterMenuEntry="true"

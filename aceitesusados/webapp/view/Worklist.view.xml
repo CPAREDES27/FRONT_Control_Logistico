@@ -36,7 +36,7 @@
 							<f:FormElement label="Fecha de reserva">
 								<f:fields>
 									<m:DateRangeSelection id="idFecha"
-										placeholder="Ingrese rango de fecha"/>
+										displayFormat="dd/MM/yyyy"/>
 								</f:fields>
 							</f:FormElement>
 							
@@ -62,7 +62,7 @@
 						<f:formElements>
 							<f:FormElement label="Embarcación">
 								<f:fields>
-									<m:Input type="Text" id="idEmbarcacion2" showValueHelp="true" enabled="true" visible="true" width="91%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogEmbarcacion"/>
+									<m:Input type="Text" id="idEmbarcacion2" showValueHelp="true" enabled="true" visible="true" width="91%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="onOpenEmba"/>
 									<m:Text text="" id="txtEmbarca" width="50%" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 								</f:fields>
 							</f:FormElement>
@@ -81,8 +81,8 @@
 						<f:formElements>
 							<f:FormElement>
 								<f:fields>
-									<m:Button  text="Buscar" type="Emphasized" press="onBusqueda" />
-									<m:Button  text="Limpiar" type="Emphasized" press="onLimpiar" />
+									<m:Button text="Buscar" type="Emphasized" icon="sap-icon://search" iconFirst="true" width="100%" enabled="true" visible="true" iconDensityAware="false" press="onBusqueda"/>
+                                    <m:Button press="onLimpiar" text="Limpiar" type="Emphasized" icon="sap-icon://clear-filter" iconFirst="true" width="100%" enabled="true" visible="true" iconDensityAware="false"/>
 								</f:fields>
 							</f:FormElement>
 						</f:formElements>
@@ -122,7 +122,7 @@
 							>
 				<extension>
 					<m:OverflowToolbar style="Clear">
-						<m:Title id="title" text="Lista de precios: {dataPrecio.str_ppc.total}" />
+						<m:Title id="title" text="Lista de registros: {dataPrecio.str_ppc.total}" />
 						<m:ToolbarSpacer/>
 						<m:ToolbarSeparator/>
 						<m:Button icon="sap-icon://add" press="onNuevo" text="Nuevo" tooltip="Nuevo"/>
@@ -131,7 +131,7 @@
 						<m:SearchField
 							placeholder="Búsqueda rápida"
 							value="{ui>/globalFilter}"
-							search="filterGlobally"
+							liveChange="onSearch"
 							width="15rem"/>
 					</m:OverflowToolbar>
 				</extension>
@@ -210,10 +210,10 @@
 						</template>
 					</Column>
 					<Column
-						id="fecha"
+						id="NRTGA"
 						width="11rem"
-						sortProperty="fecha"
-						filterProperty="fecha"
+						sortProperty="NRTGA"
+						filterProperty="NRTGA"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 							<m:Label text="Cant. galones" />
@@ -254,7 +254,8 @@
 						showSortMenuEntry="true">
 							<m:Label text="Detalle" />
 						<template>
-							<m:Button icon="sap-icon://show" press="onDetail" />
+						<!-- sap-icon://show -->
+							<m:Button icon="" text="Detalle" press="onDetail" />
 						</template>
 					</Column>
                    

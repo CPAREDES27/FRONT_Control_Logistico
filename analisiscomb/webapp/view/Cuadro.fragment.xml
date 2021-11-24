@@ -1,0 +1,429 @@
+
+<core:FragmentDefinition xmlns:core="sap.ui.core"   xmlns="sap.m" xmlns:t="sap.ui.table" xmlns:form="sap.ui.layout.form" xmlns:layout="sap.ui.layout">
+    <Dialog horizontalScrolling="true" showHeader="true" state="None" stretch="false" title="Análisis de combustible" type="Standard" verticalScrolling="true">
+        <content>
+    
+
+            <form:Form width="100%" editable="true" visible="true">
+                <form:title/>
+                <form:formContainers>
+                    <form:FormContainer visible="true">
+                        <form:formElements>
+                            <form:FormElement visible="true">
+                                    <Text text="CUADRO DE ANALISIS DE COMBUSTIBLE" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit" visible="true"/>
+                            </form:FormElement>
+                          
+                             <form:FormElement visible="true">
+                                    <Text text="Fecha" id="idFecha" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit" visible="true"/>
+                            </form:FormElement>
+                            
+                            </form:formElements>
+					</form:FormContainer>
+                </form:formContainers>
+                
+                <form:layout>
+					<form:ResponsiveGridLayout
+						labelSpanXL="6"
+						labelSpanL="6"
+						labelSpanM="6"
+						labelSpanS="12"
+						adjustLabelSpan="false"
+						emptySpanXL="0"
+						emptySpanL="0"
+						emptySpanM="0"
+						emptySpanS="0"
+						columnsXL="1"
+						columnsL="1"
+						columnsM="1"
+						singleContainerFullSize="false" />
+				</form:layout>
+            </form:Form>
+    
+    
+    <Panel height="auto" width="100%" headerText="Cuadro de Análisis" expandable="true" expanded="true" expandAnimation="true" backgroundDesign="Solid">
+        
+    
+		<t:Table
+				id="table"
+				rows="{path:'AnalisisCombustible>/listaAnalisisCombustible'}"
+				visibleRowCount="7"
+                selectionMode="None"
+				showColumnVisibilityMenu="{ui>/showVisibilityMenuEntry}"
+				enableColumnFreeze="{ui>/showFreezeMenuEntry}"
+				enableCellFilter="{ui>/enableCellFilter}"
+				columnSelect="onColumnSelect"
+				cellContextmenu="onProductIdCellContextMenu"
+				ariaLabelledBy="title">
+			
+			    <t:columns>
+
+
+                	<t:Column
+						id="NRMAR"
+						width="11rem"
+						sortProperty="NRMAR"
+						filterProperty="NRMAR"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
+						<t:multiLabels>
+							<Label visible="false" />
+                            <Label text="Embarcación" />
+                        </t:multiLabels>
+					
+						<t:template>
+							<Text text="{AnalisisCombustible>CDEMB}" wrapping="false" />
+						</t:template>
+					</t:Column>
+                    <t:Column
+						id="NRDES"
+						width="11rem"
+						sortProperty="NRDES"
+						filterProperty="NRDES"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
+						<t:multiLabels>
+							<Label visible="false" />
+                            <Label text="Nombre emb." />
+                        </t:multiLabels>
+						
+						<t:template>
+							<Text text="{AnalisisCombustible>NMEMB}" wrapping="false" />
+						</t:template>
+					</t:Column>
+                    <t:Column
+						id="DESCR"
+						width="11rem"
+						sortProperty="DESCR"
+						filterProperty="DESCR"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
+						<t:multiLabels>
+							<Label visible="false" />
+                            <Label text="Mot. marea" />
+                        </t:multiLabels>
+						
+						<t:template>
+							<Text text="{AnalisisCombustible>DSMMA}" wrapping="false" />
+						</t:template>
+					</t:Column>
+                    <t:Column
+						id="HORPR"
+						width="11rem"
+						sortProperty="HORPR"
+						filterProperty="HORPR"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+						headerSpan="4,1"
+                        visible="true"
+						hAlign="End">
+						<t:multiLabels>
+							<Label text="Horas" textAlign="Center" width="100%"/>
+                            <Label text="Nav." />
+						</t:multiLabels>
+					
+						<t:template>
+							<Text text="{AnalisisCombustible>HONAV}" wrapping="false" />
+						</t:template>
+					</t:Column>
+                    
+                    <t:Column
+						id="FIDES"
+						width="11rem"
+						sortProperty="FIDES"
+						filterProperty="FIDES"
+						showFilterMenuEntry="true"
+						headerSpan="4,1"
+						showSortMenuEntry="true"
+						hAlign="End">
+						<t:multiLabels>
+							<Label text="Horas" textAlign="Center" width="100%"/>
+                            <Label text="Des" />
+						</t:multiLabels>
+						
+						<t:template>
+							<Text text="{AnalisisCombustible>HODES} " wrapping="false" />
+						</t:template>
+					</t:Column>
+                    <t:Column
+						id="FFDES"
+						width="11rem"
+						sortProperty="FFDES"
+						filterProperty="FFDES"
+						showFilterMenuEntry="true"
+						headerSpan="4,1"
+						showSortMenuEntry="true"
+						hAlign="End">
+						<t:multiLabels>
+							<Label text="Horas" textAlign="Center" width="100%"/>
+                            <Label text="Pue" />
+						</t:multiLabels>
+						
+						<t:template>
+							<Text text="{AnalisisCombustible>HOPUE}" wrapping="false" />
+						</t:template>
+					</t:Column>
+                    <t:Column
+						id="CNPDS"
+						width="11rem"
+						sortProperty="CNPDS"
+						filterProperty="CNPDS"
+						showFilterMenuEntry="true"
+						headerSpan="4,1"
+						showSortMenuEntry="true"
+						hAlign="End">
+						<t:multiLabels>
+							<Label text="Horas" textAlign="Center" width="100%"/>
+                            <Label text="Mar" />
+						</t:multiLabels>
+						
+						<t:template>
+							<Text text="{AnalisisCombustible>HOMAR}" wrapping="false" />
+						</t:template>
+					</t:Column>
+                    <t:Column
+						id=""
+						width="11rem"
+						sortProperty="FECCONMOV"
+						filterProperty="FECCONMOV"
+						showFilterMenuEntry="true"
+						headerSpan="4,1"
+						showSortMenuEntry="true"
+						hAlign="End">
+						<t:multiLabels>
+							<Label text="Consumo" textAlign="Center" width="100%"/>
+                            <Label text="Nav" />
+						</t:multiLabels>
+					
+						<t:template>
+							<Text text="{AnalisisCombustible>CONAV}" wrapping="false" />
+						</t:template>
+					</t:Column>
+                    <t:Column
+						id=""
+						width="11rem"
+						sortProperty="NMEMB"
+						filterProperty="NMEMB"
+						showFilterMenuEntry="true"
+						headerSpan="4,1"
+						showSortMenuEntry="true"
+						hAlign="End">
+						<t:multiLabels>
+							<Label text="Consumo" textAlign="Center" width="100%"/>
+                           	<Label text="Des" />
+						</t:multiLabels>
+						
+						<t:template>
+							<Text text="{AnalisisCombustible>CODES}" wrapping="false" />
+						</t:template>
+					</t:Column>
+                    <t:Column
+						id=""
+						width="11rem"
+						sortProperty="NAME1"
+						filterProperty="NAME1"
+						showFilterMenuEntry="true"
+						headerSpan="4,1"
+						showSortMenuEntry="true"
+						hAlign="End">
+						<t:multiLabels>
+							<Label text="Consumo" textAlign="Center" width="100%"/>
+                           	<Label text="Pue." />
+						</t:multiLabels>
+						
+						<t:template>
+							<Text text="{AnalisisCombustible>COPUE}" wrapping="false" />
+						</t:template>
+					</t:Column>
+                    <t:Column
+						id=""
+						width="11rem"
+						sortProperty="PRCTP"
+						filterProperty="PRCTP"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+						headerSpan="4,1"
+						hAlign="End">
+						<t:multiLabels>
+							<Label text="Consumo" textAlign="Center" width="100%"/>
+                           	<Label text="Mar" />
+						</t:multiLabels>
+						
+						<t:template>
+							<Text text="{AnalisisCombustible>COMAR}" wrapping="false" />
+						</t:template>
+					</t:Column>
+					 <t:Column
+						id=""
+						width="11rem"
+						sortProperty="FECCONMOV"
+						filterProperty="FECCONMOV"
+						showFilterMenuEntry="true"
+						headerSpan="4,1"
+						showSortMenuEntry="true"
+						hAlign="End">
+						<t:multiLabels>
+							<Label text="Ratio real" textAlign="Center" width="100%"/>
+                           	<Label text="Nav" />
+						</t:multiLabels>
+						
+						<t:template>
+							<Text text="{AnalisisCombustible>RRNAV}" wrapping="false" />
+						</t:template>
+					</t:Column>
+                    <t:Column
+						id=""
+						width="11rem"
+						sortProperty="NMEMB"
+						filterProperty="NMEMB"
+						showFilterMenuEntry="true"
+						headerSpan="4,1"
+						showSortMenuEntry="true"
+						hAlign="End">
+						<t:multiLabels>
+							<Label text="Ratio real" textAlign="Center" width="100%"/>
+                           	<Label text="Des" />
+						</t:multiLabels>
+						
+						<t:template>
+							<Text text="{AnalisisCombustible>RRDES}" wrapping="false" />
+						</t:template>
+					</t:Column>
+                    <t:Column
+						id=""
+						width="11rem"
+						sortProperty="NAME1"
+						filterProperty="NAME1"
+						showFilterMenuEntry="true"
+						headerSpan="4,1"
+						showSortMenuEntry="true"
+						hAlign="End">
+						<t:multiLabels>
+							<Label text="Ratio real" textAlign="Center" width="100%"/>
+                           	<Label text="Pue." />
+						</t:multiLabels>
+						
+						<t:template>
+							<Text text="{AnalisisCombustible>RRPUE}" wrapping="false" />
+						</t:template>
+					</t:Column>
+                    <t:Column
+						id=""
+						width="11rem"
+						sortProperty="PRCTP"
+						filterProperty="PRCTP"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+						headerSpan="4,1"
+						hAlign="End">
+						<t:multiLabels>
+							<Label text="Ratio real" textAlign="Center" width="100%"/>
+                           	<Label text="Mar" />
+						</t:multiLabels>
+						
+						<t:template>
+							<Text text="{AnalisisCombustible>RRMAR}" wrapping="false" />
+						</t:template>
+					</t:Column>
+					 <t:Column
+						id=""
+						width="11rem"
+						sortProperty="PRCTP"
+						filterProperty="PRCTP"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+						headerSpan="4,1"
+						hAlign="End">
+						<t:multiLabels>
+							<Label text="Ratio presupuestado" textAlign="Center" width="100%"/>
+                           	<Label text="Nav" />
+						</t:multiLabels>
+					
+						<t:template>
+							<Text text="{AnalisisCombustible>RPNAV}" wrapping="false" />
+						</t:template>
+					</t:Column>
+					 <t:Column
+						id=""
+						width="11rem"
+						sortProperty="PRCTP"
+						filterProperty="PRCTP"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+						headerSpan="4,1"
+						hAlign="End">
+						<t:multiLabels>
+							<Label text="Ratio presupuestado" textAlign="Center" width="100%"/>
+                           	<Label text="Des" />
+						</t:multiLabels>
+						<t:template>
+							<Text text="{AnalisisCombustible>RPDES}" wrapping="false" />
+						</t:template>
+					</t:Column>
+					 <t:Column
+						id=""
+						width="11rem"
+						sortProperty="PRCTP"
+						filterProperty="PRCTP"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+						headerSpan="4,1"
+						hAlign="End">
+						<t:multiLabels>
+							<Label text="Ratio presupuestado" textAlign="Center" width="100%"/>
+                           	<Label text="Pue" />
+						</t:multiLabels>
+						<t:template>
+							<Text text="{AnalisisCombustible>RPPUE}" wrapping="false" />
+						</t:template>
+					</t:Column>
+					 <t:Column
+						id=""
+						width="11rem"
+						sortProperty="PRCTP"
+						filterProperty="PRCTP"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+						headerSpan="4,1"
+						hAlign="End">
+						<t:multiLabels>
+							<Label text="Ratio presupuestado" textAlign="Center" width="100%"/>
+                           	<Label text="Mar" />
+						</t:multiLabels>
+						<t:template>
+							<Text text="{AnalisisCombustible>RPMAR}" wrapping="false" />
+						</t:template>
+					</t:Column>
+                    
+					<!--Columnas-->
+
+				</t:columns>
+				
+			</t:Table>
+    </Panel>
+ 
+            <form:Form width="67%" editable="true" visible="true">
+                <form:title/>
+                <form:formContainers>
+                    <form:FormContainer visible="true">
+                        <form:formElements>
+                           
+                        </form:formElements>
+                        <form:title/>
+                    </form:FormContainer>
+                </form:formContainers>
+                <form:layout>
+                    <form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>
+                </form:layout>
+            </form:Form>
+        </content>
+        <beginButton/>
+        <buttons>
+		<Button icon="sap-icon://excel-attachment" type="Emphasized" text="Exportar" press="onExportAnalisisCombustible" />
+            <Button text="Cerrar"
+             type="Reject" icon="sap-icon://decline" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="_onCloseDialogArmador4"/>
+        </buttons>
+        <customHeader/>
+        <endButton/>
+        <subHeader/>
+    </Dialog>
+</core:FragmentDefinition>

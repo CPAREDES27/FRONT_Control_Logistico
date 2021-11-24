@@ -1,0 +1,169 @@
+
+<core:FragmentDefinition xmlns:core="sap.ui.core"   xmlns="sap.m" xmlns:t="sap.ui.table" xmlns:form="sap.ui.layout.form" xmlns:layout="sap.ui.layout">
+    <Dialog horizontalScrolling="true" showHeader="true" state="None" stretch="false" title="Análisis de combustible" type="Standard" verticalScrolling="true">
+        <content>
+    
+
+            <form:Form width="100%" editable="true" visible="true">
+                <form:title/>
+                <form:formContainers>
+                    <form:FormContainer visible="true">
+                        <form:formElements>
+                            <form:FormElement visible="true">
+                                    <Text text="CUADRO DE ANALISIS DE COMBUSTIBLE" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit" visible="true"/>
+                            </form:FormElement>
+                          
+                             <form:FormElement visible="true">
+                                    <Text text="Fecha" id="fechaEmbarca" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit" visible="true"/>
+                            </form:FormElement>
+                            
+                            </form:formElements>
+					</form:FormContainer>
+                </form:formContainers>
+                
+                <form:layout>
+					<form:ResponsiveGridLayout
+						labelSpanXL="6"
+						labelSpanL="6"
+						labelSpanM="6"
+						labelSpanS="12"
+						adjustLabelSpan="false"
+						emptySpanXL="0"
+						emptySpanL="0"
+						emptySpanM="0"
+						emptySpanS="0"
+						columnsXL="1"
+						columnsL="1"
+						columnsM="1"
+						singleContainerFullSize="false" />
+				</form:layout>
+            </form:Form>
+    
+    
+    <Panel height="auto" width="100%" headerText="Cuadro de Análisis" expandable="true" expanded="true" expandAnimation="true" backgroundDesign="Solid">
+        
+    
+		<t:Table
+				id="table"
+				rows="{path:'AnalisisComb>/listaAnalisisComb'}"
+				visibleRowCount="7"
+                selectionMode="None"
+				showColumnVisibilityMenu="{ui>/showVisibilityMenuEntry}"
+				enableColumnFreeze="{ui>/showFreezeMenuEntry}"
+				enableCellFilter="{ui>/enableCellFilter}"
+				columnSelect="onColumnSelect"
+				cellContextmenu="onProductIdCellContextMenu"
+				ariaLabelledBy="title">
+			
+			    <t:columns>
+
+                	<t:Column
+						id=""
+						width="11rem"
+						sortProperty="NRMAR"
+						filterProperty="NRMAR"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
+						<Label text="Fecha/hora zarpe" />
+						<t:template>
+							<Text text="{AnalisisComb>FECZA} {Combustible>HIZAR}" wrapping="false" />
+						</t:template>
+					</t:Column>
+                    <t:Column
+						id=""
+						width="11rem"
+						sortProperty="NRDES"
+						filterProperty="NRDES"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
+						<Label text="Fecha/hora arribo" />
+						<t:template>
+							<Text text="{AnalisisComb>FECAR} {AnalisisComb>HIARR}" wrapping="false" />
+						</t:template>
+					</t:Column>
+                    <t:Column
+						id=""
+						width="11rem"
+						sortProperty="DESCR"
+						filterProperty="DESCR"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
+						<Label text="ME" />
+						<t:template>
+							<CheckBox selected="{AnalisisComb>FlagPesca}" visible="{AnalisisComb>Enable}" editable="false"/>
+						</t:template>
+					</t:Column>
+                    <t:Column
+						id=""
+						width="11rem"
+						sortProperty="HORPR"
+						filterProperty="HORPR"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+                        visible="true">
+						<Label text="MP" />
+						<t:template>
+							<CheckBox selected="{AnalisisComb>FlagNoPesca}" visible="{AnalisisComb>Enable}" editable="false"/>
+						</t:template>
+					</t:Column>
+                    <t:Column
+						id=""
+						width="11rem"
+						sortProperty="HORPR"
+						filterProperty="HORPR"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+                        visible="true">
+						<Label text="Cant. desc. (Tn)" />
+						<t:template>
+							<Text text="{AnalisisComb>CNPDS}" wrapping="false" />
+						</t:template>
+					</t:Column>
+					<t:Column
+						id=""
+						width="11rem"
+						sortProperty="HORPR"
+						filterProperty="HORPR"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
+                        visible="true">
+						<Label text="Consumo (Gln)" />
+						<t:template>
+							<Text text="{AnalisisComb>CONSU}" wrapping="false" />
+						</t:template>
+					</t:Column>
+                   
+                    
+					<!--Columnas-->
+
+				</t:columns>
+				
+			</t:Table>
+    </Panel>
+ 
+            <form:Form width="67%" editable="true" visible="true">
+                <form:title/>
+                <form:formContainers>
+                    <form:FormContainer visible="true">
+                        <form:formElements>
+                           
+                        </form:formElements>
+                        <form:title/>
+                    </form:FormContainer>
+                </form:formContainers>
+                <form:layout>
+                    <form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>
+                </form:layout>
+            </form:Form>
+        </content>
+        <beginButton/>
+        <buttons>
+			<Button icon="sap-icon://excel-attachment" type="Emphasized" press="onExportCombustible" />
+            <Button text="Cerrar"
+             type="Reject" icon="sap-icon://decline" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="_onCloseDialogArmador5"/>
+        </buttons>
+        <customHeader/>
+        <endButton/>
+        <subHeader/>
+    </Dialog>
+</core:FragmentDefinition>

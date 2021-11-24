@@ -108,7 +108,24 @@
                 "preload": true
             }
             ,
+            "AnalisisComb": {
+                "type": "sap.ui.model.json.JSONModel",
+                "preload": true
+            }
+            ,
             "Reporte": {
+                "type": "sap.ui.model.json.JSONModel",
+                "preload": true
+            },
+            "AnalisisCombustible": {
+                "type": "sap.ui.model.json.JSONModel",
+                "preload": true
+            },
+            "Propiedad": {
+                "type": "sap.ui.model.json.JSONModel",
+                "preload": true
+            },
+            "Embarca": {
                 "type": "sap.ui.model.json.JSONModel",
                 "preload": true
             }
