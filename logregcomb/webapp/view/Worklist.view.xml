@@ -17,7 +17,7 @@
 		</semantic:titleHeading>
 
 		<semantic:headerContent>
-			<f:Form id="idFormHeader" >
+			<f:Form id="idFormHeader"  editable="true">
 				<f:title>
 					<core:Title text="Datos de Selección" />
 				</f:title>
@@ -53,7 +53,8 @@
 						<f:formElements>
 							<f:FormElement label="Embarcación">
 								<f:fields>
-									<m:Input type="Text" id="idEmbarcacion" showValueHelp="true" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="onOpenEmba"/>
+								<m:Input id="inputId_W" description="{/help/NMEMB}"  placeholder="Seleccione embarcación" showValueHelp="true"  valueHelpRequest="onSearchHelp"/>
+								
 								</f:fields>
 							</f:FormElement>
 							<f:FormElement label="Tipo de imputación">
@@ -73,17 +74,16 @@
 								</f:fields>
 							</f:FormElement>
 						</f:formElements>
-					</f:FormContainer>
-					<f:FormContainer >
 						<f:formElements>
 							<f:FormElement >
 								<f:fields>
-									<m:Button text="Buscar" type="Emphasized" press="onBusqueda" />
-									<m:Button text="Limpiar" type="Emphasized" press="onLimpiar" />
+									<m:Button text="Buscar" icon="sap-icon://search" type="Emphasized" press="onBusqueda" />
+									<m:Button text="Limpiar" icon="sap-icon://clear-filter" type="Ghost" press="onLimpiar" />
 								</f:fields>
 							</f:FormElement>
 						</f:formElements>
 					</f:FormContainer>
+					
 				</f:formContainers>
 				<f:layout>
 					<f:ResponsiveGridLayout

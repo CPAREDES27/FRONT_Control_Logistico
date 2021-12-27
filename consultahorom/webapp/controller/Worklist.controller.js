@@ -481,6 +481,7 @@ sap.ui.define([
 					  },
 					  onLimpiar: function(){
 						  this.byId("idEmbarcacion").setValue("");
+						  this.byId("idEmbarcacion").setDescription("");
 						  this.byId("idFecha").setValue("");
 					  },
 					  _onOpenDialogEmbarcacion: function() {

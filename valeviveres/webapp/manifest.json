@@ -81,6 +81,59 @@
             "": {
                 "type": "sap.ui.model.json.JSONModel",
                 "preload": true
+            },
+            "Armador": {
+                "type": "sap.ui.model.json.JSONModel",
+                "preload": true
+            },
+            "Planta": {
+                "type": "sap.ui.model.json.JSONModel",
+                "preload": true
+            },
+            "Almacen": {
+                "type": "sap.ui.model.json.JSONModel",
+                "preload": true
+            },
+            "Temporada": {
+                "type": "sap.ui.model.json.JSONModel",
+                "preload": true
+            },
+            "Propia": {
+                "type": "sap.ui.model.json.JSONModel",
+                "preload": true
+            },
+            "Vivere": {
+                "type": "sap.ui.model.json.JSONModel",
+                "preload": true
+            }
+            ,
+            "Suministro": {
+                "type": "sap.ui.model.json.JSONModel",
+                "preload": true
+            },
+            "Proveedor": {
+                "type": "sap.ui.model.json.JSONModel",
+                "preload": true
+            },
+            "Cocinero": {
+                "type": "sap.ui.model.json.JSONModel",
+                "preload": true
+            },
+            "ModelGeneral": {
+                "type": "sap.ui.model.json.JSONModel",
+                "preload": true
+            },
+            "Propiedad": {
+                "type": "sap.ui.model.json.JSONModel",
+                "preload": true
+            },
+            "Suministros": {
+                "type": "sap.ui.model.json.JSONModel",
+                "preload": true
+            },
+            "ComboSuministro": {
+                "type": "sap.ui.model.json.JSONModel",
+                "preload": true
             }
         },
         "routing": {
@@ -111,6 +164,13 @@
                     "target": [
                         "object"
                     ]
+                },
+                {
+                    "pattern": "Nuevo}",
+                    "name": "Nuevo",
+                    "target": [
+                        "Nuevo"
+                    ]
                 }
             ],
             "targets": {
@@ -133,6 +193,11 @@
                 "notFound": {
                     "viewName": "NotFound",
                     "viewId": "notFound"
+                }
+                ,
+                "Nuevo": {
+                    "viewName": "Nuevo",
+                    "viewId": "Nuevo"
                 }
             }
         }

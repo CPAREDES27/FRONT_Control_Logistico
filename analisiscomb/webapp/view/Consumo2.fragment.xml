@@ -150,7 +150,24 @@
 						showSortMenuEntry="true">
 						<Label text="Stock Combustible" />
 						<t:template>
-							<Text text="{ConsumoTwo>STCMB}" wrapping="false" />
+						
+								<Text text="{path:'ConsumoTwo>STCMB', type:'sap.ui.model.type.Float',
+
+                                                formatOptions:{
+
+                                                    minIntegerDigits:1,
+
+                                                    minFractionDigits:3,
+
+                                                    maxFractionDigits:3,
+
+                                                    groupingEnabled:true,
+
+                                                    groupingSeparator: ',',
+
+                                                    decimalSeparator: '.'
+
+                                                }}"/>
 						</t:template>
 					</t:Column>
                     <t:Column

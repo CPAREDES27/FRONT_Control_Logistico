@@ -33,8 +33,10 @@ sap.ui.define([
 	var codEmbarca=false;
 	var planta="";
 	var exportarExcel=false;
+	var materialDesc=[];
+	var almacenDesc=[];
 	return BaseController.extend("com.tasa.aceitesusados.controller.Worklist", {
-
+		
 		formatter: formatter,
 		onInit : async function () {
 			let ViewModel= new JSONModel(
@@ -55,7 +57,23 @@ sap.ui.define([
 				MessageBox.error("Ocurrió un error en la carga, actualice el navegador");
 
 			}
+			var fecha=this.getFechaActual();
+			var fechaActual = fecha+" - "+fecha;
+			this.byId("idFecha").setValue(fechaActual);
 			
+		},
+		getFechaActual:function(){
+			var fecha=new Date();
+			var dia = fecha.getDate();
+			var mes = fecha.getMonth()+1;
+			var anio= fecha.getFullYear();
+			if(dia<10){
+				dia=this.zeroFill(dia,2);
+			}
+			if(mes<10){
+				mes=this.zeroFill(mes,2);
+			}
+			return anio+""+mes+""+dia;
 		},
 
 		loadCombos:async function(){
@@ -103,10 +121,14 @@ sap.ui.define([
 				  .then(resp => resp.json()).then(data => {
 					var dataPuerto=data;
 					console.log(dataPuerto);
+					console.log(data);
 					ZD_FLESRNV= data.data.find(d => d.dominio == "ZD_FLESRNV").data;
 					ZINPRP= data.data.find(d => d.dominio == "ZINPRP").data;
 					ALMACEN= data.data.find(d => d.dominio == "ALMACEN").data;
 					MATERIAL= data.data.find(d => d.dominio == "MATERIAL").data;
+					this.materialDesc=data.data.find(d => d.dominio == "MATERIAL").data;
+					this.almacenDesc= data.data.find(d => d.dominio == "ALMACEN").data;
+					console.log(this.materialDesc);
 					TIPOMATERIAL = data.data.find(d=>d.dominio=="TIPOMATERIAL").data;
 					this.getModel("Estado").setProperty("/ZD_FLESRNV", ZD_FLESRNV);
 					this.getModel("Propiedad").setProperty("/ZINPRP", ZINPRP);
@@ -280,14 +302,13 @@ sap.ui.define([
 				var error="";
 				var valido=true;
 				if(idEstado==="" || idEstado===null){
-					MessageBox.error("El campo Estados de la Reserva no debe estar vacío");
+					error+="El campo Estados de la Reserva no debe estar vacío\n";
 					oGlobalBusyDialog.close();
-					return false;
+					valido=false;
 				
 				}
 				if(!this.byId("idFecha").mProperties.dateValue){
 					error+="Debe ingresar una fecha de reserva"
-					
 					oGlobalBusyDialog.close();
 					valido= false;
 				}
@@ -352,6 +373,9 @@ sap.ui.define([
 						for(var i=0;i<data.t_rpn.length;i++){
 							data.t_rpn[i].NRTGA=String(data.t_rpn[i].NRTGA)
 							data.t_rpn[i].CNSUM=String(data.t_rpn[i].CNSUM)
+							console.log(data.t_rpn[i].CDSUM);
+							data.t_rpn[i].CDSUMDESC=this.traeMaterial(data.t_rpn[i].CDSUM);
+							data.t_rpn[i].CDALMDESC=this.traeAlmacen(data.t_rpn[i].CDALM);
 							
 						}
 						  console.log(data.t_rpn);
@@ -364,6 +388,26 @@ sap.ui.define([
 						oGlobalBusyDialog.close();
 					  }).catch(error => console.log(error)
 				);
+			},
+			traeAlmacen: function(almacen){
+				var almacenD="";
+				for(var i=0;i<this.almacenDesc.length;i++){
+					if(this.almacenDesc[i].id===almacen)
+					{
+						almacenD=this.almacenDesc[i].descripcion;
+					}
+				}
+				return almacenD;
+			},
+			traeMaterial: function(material){
+				var materialD="";
+				for(var i=0;i<this.materialDesc.length;i++){
+					if(this.materialDesc[i].id===material)
+					{
+						materialD=this.materialDesc[i].descripcion;
+					}
+				}
+				return materialD;
 			},
 			zeroFill: function( number, width )
 			{
@@ -552,6 +596,7 @@ sap.ui.define([
 								this.byId("idEmbarcacion2").setValue("");
 								this.byId("idFecha").setValue("");
 								this.byId("txtEmbarca").setText("");
+								this.getView().getModel("Aceite").setProperty("/listaAceite","");
 							},
 							castFecha: function(fecha){
 								if(fecha==="null" || fecha===""){
@@ -683,6 +728,8 @@ sap.ui.define([
 							onNuevo: function(){
 								
 								this._openNuevoAceite();
+								var fecha=this.getFechaActual();
+								sap.ui.getCore().byId("idFechaReservaNew").setValue(fecha);
 							},
 							onLimpiarNuevo: function(){
 								sap.ui.getCore().byId("idFechaReservaNew").setValue("");

@@ -37,7 +37,7 @@
                                     <Label text="Material" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input type="Text" showValueHelp="false"  value="{Aceite>CDSUM}"  id="idMaterial" enabled="false" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    <Input type="Text" showValueHelp="false"  value="{Aceite>CDSUMDESC}"  id="idMaterial" enabled="false" visible="true" width="100%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -53,7 +53,7 @@
                                     <Label text="Almacén" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input type="Text" showValueHelp="false"  value="{Aceite>CDALM}"  id="idAlmacen" enabled="false" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    <Input type="Text" showValueHelp="false"  value="{Aceite>CDALMDESC}"  id="idAlmacen" enabled="false" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
                             </form:FormElement>
                             

@@ -67,16 +67,17 @@
 								</f:fields>
 							</f:FormElement>
 						</f:formElements>
-					</f:FormContainer>
-					<f:FormContainer >
 						<f:formElements>
 							<f:FormElement >
 								<f:fields>
 									<m:Button text="Buscar" type="Emphasized" icon="sap-icon://search" iconFirst="true" width="100%" enabled="true" visible="true" iconDensityAware="false" press="loadTabla"/>
-                                    <m:Button press="onLimpiar" text="Limpiar" type="Emphasized" icon="sap-icon://clear-filter" iconFirst="true" width="100%" enabled="true" visible="true" iconDensityAware="false"/>
+                                    <m:Button press="onLimpiar" text="Limpiar" type="ghost" icon="sap-icon://clear-filter" iconFirst="true" width="100%" enabled="true" visible="true" iconDensityAware="false"/>
 								</f:fields>
 							</f:FormElement>
 						</f:formElements>
+					</f:FormContainer>
+					<f:FormContainer >
+						
 					</f:FormContainer>
 				</f:formContainers>
 				<f:layout>

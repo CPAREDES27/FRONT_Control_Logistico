@@ -163,7 +163,23 @@
 						showSortMenuEntry="true">
 						<Label text="Stock Combustible" />
 						<t:template>
-							<Text text="{Analisis>STCMB}" wrapping="false" />
+								<Text text="{path:'Analisis>STCMB', type:'sap.ui.model.type.Float',
+
+                                                formatOptions:{
+
+                                                    minIntegerDigits:1,
+
+                                                    minFractionDigits:3,
+
+                                                    maxFractionDigits:3,
+
+                                                    groupingEnabled:true,
+
+                                                    groupingSeparator: ',',
+
+                                                    decimalSeparator: '.'
+
+                                                }}"/>
 						</t:template>
 					</t:Column>
                     <t:Column
@@ -263,7 +279,25 @@
 						hAlign="End">
 						<Label text="Suministros" />
 						<t:template>
-							<Text text="{Analisis>CNSUM}" wrapping="false" />
+							
+								<Text text="{path:'Analisis>CNSUM', type:'sap.ui.model.type.Float',
+
+                                                formatOptions:{
+
+                                                    minIntegerDigits:1,
+
+                                                    minFractionDigits:3,
+
+                                                    maxFractionDigits:3,
+
+                                                    groupingEnabled:true,
+
+                                                    groupingSeparator: ',',
+
+                                                    decimalSeparator: '.'
+
+                                                }}"/>
+							
 						</t:template>
 					</t:Column>
                     
@@ -310,9 +344,26 @@
 						filterProperty="NRDES"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
-						<Label text="Fecha/hora Inicio" />
+						<Label text="Horas Ope. (Hr)" />
 						<t:template>
-							<Text text="{Reporte>HOROP}" wrapping="false" />
+					
+							<Text text="{path:'Reporte>HOROP', type:'sap.ui.model.type.Float',
+
+                                                formatOptions:{
+
+                                                    minIntegerDigits:1,
+
+                                                    minFractionDigits:3,
+
+                                                    maxFractionDigits:3,
+
+                                                    groupingEnabled:true,
+
+                                                    groupingSeparator: ',',
+
+                                                    decimalSeparator: '.'
+
+                                                }}"/>
 						</t:template>
 					</t:Column>
                     <t:Column
@@ -324,7 +375,23 @@
 						showSortMenuEntry="true">
 						<Label text="Stock Combustible" />
 						<t:template>
-							<Text text="{Reporte>CHMAR}" wrapping="false" />
+							<Text text="{path:'Reporte>CHMAR', type:'sap.ui.model.type.Float',
+
+                                                formatOptions:{
+
+                                                    minIntegerDigits:1,
+
+                                                    minFractionDigits:3,
+
+                                                    maxFractionDigits:3,
+
+                                                    groupingEnabled:true,
+
+                                                    groupingSeparator: ',',
+
+                                                    decimalSeparator: '.'
+
+                                                }}"/>
 						</t:template>
 					</t:Column>
                     <t:Column
@@ -335,6 +402,7 @@
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
                         visible="true">
+						
 						<Label text="MP" />
 						<t:template>
 							<Text text="{Reporte>HORPR}" wrapping="false" />

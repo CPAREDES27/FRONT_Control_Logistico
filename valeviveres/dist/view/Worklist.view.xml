@@ -3,7 +3,8 @@
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:form="sap.ui.layout.form"
-	xmlns:semantic="sap.f.semantic">
+	xmlns:semantic="sap.f.semantic"
+	xmlns:table="sap.ui.table">
 
 	<semantic:SemanticPage
 		id="page">
@@ -23,46 +24,88 @@
 						<form:formElements>
 							<form:FormElement label="Vale">
 								<form:fields>
-									<Input 
-										value="{}"
-										placeholder="Ingrese vale desde"/>
-									<Input
-										value="{}"
+									<Input type="Number"
+										id="idValeIni"
+										placeholder="Ingrese vale desde"
+										/>
+									<Input type="Text" maxLength="10"
+										id="idValeFin" 
 										placeholder="Ingrese vale hasta" />
 								</form:fields>
 							</form:FormElement>
 							<form:FormElement label="Fecha">
 								<form:fields>
-									<DateRangeSelection />
+									<DateRangeSelection id="idFechaVivere" displayFormat="dd/MM/yyyy" valueFormat="yyyyMMdd"/>
 								</form:fields>
 							</form:FormElement>
 							<form:FormElement label="Armador comercial">
 								<form:fields>
-									<Input 
-										value="{}"
-										placeholder="Ingrese Armador comercial"
-										showValueHelp="true"/>
-									<Input />
+									<Input type="Text" id="idArmadorIni"  showValueHelp="true" enabled="true" visible="true" width="100%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogArmador('popOne')"/>			
 								</form:fields>
 							</form:FormElement>
 							<form:FormElement label="Embarcación">
 								<form:fields>
-									<Input
-										value="{}"
-										placeholder="Ingrese Embarcación"
-										showValueHelp="true" />
+									<Input type="Text" value="{/help/CDEMB}"  id="idEmbarcacion"  showValueHelp="true" enabled="true" visible="true" width="276px" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="onSearchHelp"/>									
+									
 								</form:fields>
 							</form:FormElement>
 							<form:FormElement label="Planta">
 								<form:fields>
-									<Input 
-										placeholder="Ingrese Planta"/>
+									<Input  change="setCentro" class="sapUiSmallMarginBottom"
+												id="idPlantaIni"
+												width="100%"
+												description=""
+												placeholder="Ingresar Planta..."
+												showSuggestion="true"
+												showValueHelp="false"
+												valueState="Information"
+												valueStateText="Ingrese un texto"
+												suggestionRows="{Planta>/listaPlanta}">
+												<suggestionColumns>
+													
+													<Column
+														hAlign="Begin"
+														popinDisplay="Inline"
+														demandPopin="true"
+														minScreenWidth="Tablet">
+														<Label text="Planta"/>
+													</Column>
+													<Column
+														hAlign="Begin"
+														popinDisplay="Inline"
+														demandPopin="true"
+														minScreenWidth="Tablet">
+														<Label text="Centro"/>
+													</Column>
+													<Column
+														hAlign="End"
+														popinDisplay="Inline"
+														demandPopin="true"
+														minScreenWidth="Tablet">
+														<Label text="Descripción"/>
+													</Column>
+												</suggestionColumns>
+												<suggestionRows>
+													<ColumnListItem>
+													<cells>
+														<Label text="{Planta>CDPTA}"/>
+														<Label text="{Planta>WERKS}"/>
+														<Label text="{Planta>DESCR}"/>
+														<Label text="{
+																parts:[{path:'Planta'},{path:'Centro'}],
+																type: 'sap.ui.model.type.Currency',
+																formatOptions: {showMeasure: true}
+																}"/>
+													</cells>
+													</ColumnListItem>
+												</suggestionRows>
+											</Input>
 								</form:fields>
 							</form:FormElement>
 							<form:FormElement label="Centro">
 								<form:fields>
-									<Input 
-										value="{}"
+									<Input id="idCentro"
+										
 										editable="false"/>
 								</form:fields>
 							</form:FormElement>
@@ -73,46 +116,103 @@
 				<form:formContainers>
 					<form:FormContainer>
 						<form:formElements>
-							<form:FormElement label="Alamcén">
+							<form:FormElement label="Almacén">
 								<form:fields>
-									<Input 
-										value="{}"
-										placeholder="Ingrese Alamcén"
-										showValueHelp="true"/>
+									<Input   class="sapUiSmallMarginBottom"
+												id="idAlmacenIni"
+												description=""
+												width="100%"
+												change="onChangeAlmacen"
+												placeholder="Ingresar Almacén..."
+												showSuggestion="true"
+												showValueHelp="false"
+												valueState="Information"
+												valueStateText="Ingrese un texto"
+												suggestionRows="{Almacen>/listaAlmacen}">
+												<suggestionColumns>
+													<Column
+														hAlign="Begin"
+														popinDisplay="Inline"
+														demandPopin="true"
+														minScreenWidth="Tablet">
+														<Label text="Código"/>
+													</Column>
+													<Column
+														hAlign="Begin"
+														popinDisplay="Inline"
+														demandPopin="true"
+														minScreenWidth="Tablet">
+														<Label text="Planta"/>
+													</Column>
+													<Column
+														hAlign="Begin"
+														popinDisplay="Inline"
+														demandPopin="true"
+														minScreenWidth="Tablet">
+														<Label text="Descripción"/>
+													</Column>
+													<Column
+														hAlign="End"
+														popinDisplay="Inline"
+														demandPopin="true"
+														minScreenWidth="Tablet">
+														<Label text="Almacén Externo"/>
+													</Column>
+												</suggestionColumns>
+												<suggestionRows>
+													<ColumnListItem>
+													<cells>
+														<Label text="{Almacen>CDALM}"/>
+														<Label text="{Almacen>CDPTA}"/>
+														<Label text="{Almacen>DSALM}"/>
+														<Label text="{Almacen>CDALE}"/>
+														<Label text="{
+																parts:[{path:'Código'},{path:'Centro'}],
+																type: 'sap.ui.model.type.Currency',
+																formatOptions: {showMeasure: true}
+																}"/>
+													</cells>
+													</ColumnListItem>
+												</suggestionRows>
+											</Input>
 								</form:fields>
 							</form:FormElement>
-							<form:FormElement label="Alamcén externo">
+							<form:FormElement label="Almacén externo">
 								<form:fields>
-									<Input 
-										value="{}"
+									<Input id="idAlmacenExterno"
+										value=""
 										editable="false"/>
 								</form:fields>
 							</form:FormElement>
 							<form:FormElement label="Temporada">
 								<form:fields>
-									<Select items="{}">
-										<core:Item key="{}" text="{}"/>
-									</Select>
+									<ComboBox id="cboTemporada"  items="{Temporada>/listaTemporada}" editable="true" enabled="true" visible="true" width="377.609375px" valueState="None" maxWidth="100%">
+                                            <items>
+                                                <core:Item text="{Temporada>descripcion}" enabled="true" key="{Temporada>id}"/>
+                                            </items>
+                                    </ComboBox>  
 								</form:fields>
 							</form:FormElement>
 							<form:FormElement label="Indicador de propiedad">
 								<form:fields>
-									<Select items="{}">
-										<core:Item key="{}" text="{}"/>
-									</Select>
+									<ComboBox id="cboIndicador"  items="{Propia>/listaPropia}" editable="true" enabled="true" visible="true" width="377.609375px" valueState="None" maxWidth="100%">
+                                            <items>
+                                                <core:Item text="{Propia>descripcion}" enabled="true" key="{Propia>id}"/>
+                                            </items>
+                                    </ComboBox>  
 								</form:fields>
 							</form:FormElement>
 							<form:FormElement label="Cantidad de aciertos">
 								<form:fields>
-									<Input 
+									<Input id="idCantidad"
 										value="200"
 										placeholder="Ingrese Cantidad de aciertos"/>
 								</form:fields>
 							</form:FormElement>
 							<form:FormElement label="">
 								<form:fields>
-									<Button text="Buscar" icon="sap-icon://search" press="" type="Emphasized" />
-									<Button text="Limpiar" icon="sap-icon://clear-filter" press="" type="Ghost" />
+									<Button text="Buscar" icon="sap-icon://search" press="onBusqueda" type="Emphasized" />
+									<Button text="Limpiar" icon="sap-icon://clear-filter"  type="Ghost" press="onLimpiar"/>
 								</form:fields>
 							</form:FormElement>
 						</form:formElements>
@@ -135,116 +235,152 @@
 						labelSpanM="2"
 						labelSpanS="12"
 						labelSpanXL="-1"
-						singleContainerFullSize="true"/>
+						/>
 				</form:layout>
 			</form:Form>
 		</semantic:headerContent>
 		<semantic:content>
-			<Table
+		<table:Table
 				id="table"
-				width="auto"
-				mode="SingleSelectLeft"
-				items="{
-					path: '/data',
-					sorter: {
-						path: 'vale',
-						descending: false
-					}
-				}"
-				noDataText="{worklistView>/tableNoDataText}"
-				busyIndicatorDelay="{worklistView>/tableBusyDelay}"
-				growing="true"
-				growingScrollToLoad="true"
-				updateFinished=".onUpdateFinished">
-
-				<headerToolbar>
-					<OverflowToolbar>
+				 
+                            rows="{Vivere>/listaVivere}"
+							selectionMode="Single"
+							rowSelectionChange="buscardd"	
+                            visibleRowCount="6"
+                            showColumnVisibilityMenu="{ui>/showVisibilityMenuEntry}"
+                            enableColumnFreeze="{ui>/showFreezeMenuEntry}"
+                            enableCellFilter="{ui>/enableCellFilter}"
+                            columnSelect="onColumnSelect"
+                            cellContextmenu="onProductIdCellContextMenu"
+                            ariaLabelledBy="title"
+							liveChange="onSearch"
+							>
+				<table:extension>
+					<OverflowToolbar style="Clear">
 						<Title
 							id="tableHeader"
 							text="{worklistView>/worklistTableTitle}"
 							level="H3"/>
 						<ToolbarSpacer />
-						<Button text="Imprimir" icon="sap-icon://print" type="Ghost" press="onPrintVale" />
-						<Button text="Anular" icon="sap-icon://decline" type="Reject" press="onAnularVale" />
-						<Button text="Exportar" icon="sap-icon://excel-attachment" type="Ghost" press="onExportTable" />
-						<Button text="Nuevo" icon="sap-icon://add" type="Emphasized" press="onNewVale" />
+						<Button text="Nuevo" icon="sap-icon://add" type="Emphasized" press="goNuevo" />
+						<Button text="Imprimir" id="idImprmir" enabled="false" icon="sap-icon://print" type="Ghost" press="onImprimir('lista')" />
+						<Button text="Anular" id="idAnular" enabled="false" icon="sap-icon://decline" type="Reject" press="onAnularVale" />
+						<Button text="Exportar" icon="sap-icon://excel-attachment" type="Ghost" press="onExport" />
 						<SearchField
 							id="searchField"
+							placeholder="Busqueda rápida"
 							tooltip="{i18n>worklistSearchTooltip}"
-							liveChange=".onSearch">
+							liveChange="onSearch">
 							<layoutData>
 								<OverflowToolbarLayoutData
 									maxWidth="200px"
 									priority="NeverOverflow"/>
 							</layoutData>
-						</SearchField>
+						</SearchField>	
 					</OverflowToolbar>
-				</headerToolbar>
+				</table:extension>
+				<table:columns editable="false">
+					<table:Column width="8rem">
+						<table:label>
+							<Label text="Vale"/>
+						</table:label>
+						<table:template>
+							<Text text="{Vivere>NRVVI}"/>
+						</table:template>
+					</table:Column>
+					<table:Column width="8rem">
+						<table:label>
+							<Label text="Embarcación"/>
+						</table:label>
+						<table:template>
+							<Text text="{Vivere>NMEMB}"/>
+						</table:template>
+					</table:Column>
+					<table:Column width="8rem">
+						<table:label>
+							<Label text="Armador"/>
+						</table:label>
+						<table:template>
+							<Text text="{Vivere>NAME1}"/>
+						</table:template>
+					</table:Column>
+					<table:Column width="8rem">
+						<table:label>
+							<Label text="Almacén"/>
+						</table:label>
+						<table:template>
+							<Text text="{Vivere>DSALM}"/>
+						</table:template>
+					</table:Column>
+					<table:Column width="8rem">
+						<table:label>
+							<Label text="Ind. propiedad"/>
+						</table:label>
+						<table:template>
+							<Text text="{Vivere>DESC_INPRP}"/>
+						</table:template>
+					</table:Column>
+					<table:Column width="8rem">
+						<table:label>
+							<Label text="Temporada"/>
+						</table:label>
+						<table:template>
+							<Text text="{Vivere>DSTPO}"/>
+						</table:template>
+					</table:Column>
+					<table:Column width="8rem">
+						<table:label>
+							<Label text="Fecha"/>
+						</table:label>
+						<table:template>
+							<Text text="{Vivere>FCVVI}"/>
+						</table:template>
+					</table:Column>
+					<table:Column width="8rem">
+						<table:label>
+							<Label text="Estado"/>
+						</table:label>
+						<table:template>
+							<Text text="{Vivere>DESC_ESVVI}"/>
+						</table:template>
+					</table:Column>
+					<table:Column width="8rem">
+						<table:label>
+							<Label text="Orden extracción"/>
+						</table:label>
+						<table:template>
+							<Text text="{Vivere>AUFNR}"/>
+						</table:template>
+					</table:Column>
+					<table:Column width="8rem">
+						<table:label>
+							<Label text="Planta"/>
+						</table:label>
+						<table:template>
+							<Text text="{Vivere>DESCR}"/>
+						</table:template>
+					</table:Column>
+					<table:Column width="8rem">
+						<table:label>
+							<Label text="Centro costo"/>
+						</table:label>
+						<table:template>
+							<Text text="{Vivere>KOSTL}"/>
+						</table:template>
+					</table:Column>
+					<table:Column width="8rem">
+						<table:label>
+							<Label text=""/>
+						</table:label>
+						<table:template>
+							<Button text="Detalle" type="Emphasized" press="onOpenDialogs" />
+						</table:template>
+					</table:Column>
+					
+					<!--EMBACACION-->
+				</table:columns>
 
-				<columns>
-					<Column>
-						<Text text="Vale"/>
-					</Column>
-					<Column >
-						<Text text="Embarcación"/>
-					</Column>
-					<Column>
-						<Text text="Armador"/>
-					</Column>
-					<Column >
-						<Text text="Almacén"/>
-					</Column>
-					<Column>
-						<Text text="Ind. propiedad"/>
-					</Column>
-					<Column >
-						<Text text="Temporada"/>
-					</Column>
-					<Column>
-						<Text text="Fecha"/>
-					</Column>
-					<Column >
-						<Text text="Estado"/>
-					</Column>
-					<Column>
-						<Text text="Orden extracción"/>
-					</Column>
-					<Column >
-						<Text text="Planta"/>
-					</Column>
-					<Column >
-						<Text text="Centro costo"/>
-					</Column>
-					<Column hAlign="Center">
-						<Text text="Ver detalle"/>
-					</Column>
-				</columns>
-
-				<items>
-					<ColumnListItem
-						press=".onPress">
-						<cells>
-							<ObjectStatus
-								text="{vale}"
-								state="Information" />
-							<Text text="{emb}"/>
-							<Text text="{armd}"/>
-							<Text text="{almc}"/>
-							<Text text="{}"/>
-							<Text text="{}"/>
-							<Text text="{}"/>
-							<ObjectStatus
-								text="{estado}"
-								icon="sap-icon://validate"
-								state="Success"/>
-							<Text text="{}"/>
-							<Text text="{}"/>
-							<Text text="{}"/>
-							<Button icon="sap-icon://show" press="onPress" type="Ghost" />
-						</cells>
-					</ColumnListItem>
-				</items>
-			</Table>
+			</table:Table>
 		</semantic:content>
 
 	</semantic:SemanticPage>

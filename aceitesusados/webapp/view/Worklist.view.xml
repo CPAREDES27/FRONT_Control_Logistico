@@ -42,11 +42,13 @@
 							
 							<f:FormElement label="Estado">
 								<f:fields>
-									<m:ComboBox editable="true"  id="idEstado" items="{path:'Estado>/ZD_FLESRNV',sorter:{path:'id'}}" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%">
-                                        <m:items>
-                                                <core:Item text="{Estado>descripcion}" enabled="true" key="{Estado>id}"/>
-                                        </m:items>
-                                </m:ComboBox>
+									<m:Select  id="idEstado"
+										forceSelection="false"
+										selectedKey="V"
+										 items="{path:'Estado>/ZD_FLESRNV',sorter:{path:'id'}}">
+										<core:Item key="{Estado>id}" text="{Estado>descripcion}" />
+									</m:Select>
+									
 								</f:fields>
 							</f:FormElement>
 							<!-- <f:FormElement label="Cantidad de aciertos">
@@ -76,17 +78,16 @@
 								</f:fields>
 							</f:FormElement>
 						</f:formElements>
-					</f:FormContainer>
-					<f:FormContainer >
 						<f:formElements>
 							<f:FormElement>
 								<f:fields>
 									<m:Button text="Buscar" type="Emphasized" icon="sap-icon://search" iconFirst="true" width="100%" enabled="true" visible="true" iconDensityAware="false" press="onBusqueda"/>
-                                    <m:Button press="onLimpiar" text="Limpiar" type="Emphasized" icon="sap-icon://clear-filter" iconFirst="true" width="100%" enabled="true" visible="true" iconDensityAware="false"/>
+                                    <m:Button press="onLimpiar" text="Limpiar" type="ghost" icon="sap-icon://clear-filter" iconFirst="true" width="100%" enabled="true" visible="true" iconDensityAware="false"/>
 								</f:fields>
 							</f:FormElement>
 						</f:formElements>
 					</f:FormContainer>
+					
 				</f:formContainers>
 				<f:layout>
 					<f:ResponsiveGridLayout
@@ -203,7 +204,8 @@
 						sortProperty="CNSUM"
 						filterProperty="CNSUM"
 						showFilterMenuEntry="true"
-						showSortMenuEntry="true">
+						showSortMenuEntry="true"
+						hAlign="End">
 							<m:Label text="Total peso Kg" />
 						<template>
 							<m:Text text="{Aceite>CNSUM}" wrapping="false" />
@@ -215,7 +217,8 @@
 						sortProperty="NRTGA"
 						filterProperty="NRTGA"
 						showFilterMenuEntry="true"
-						showSortMenuEntry="true">
+						showSortMenuEntry="true"
+						hAlign="End">
 							<m:Label text="Cant. galones" />
 						<template>
 							<m:Text text="{Aceite>NRTGA}" wrapping="false" />

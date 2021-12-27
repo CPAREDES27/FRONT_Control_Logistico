@@ -38,9 +38,7 @@ sap.ui.define([
             ],
 
 			onInit: function () {
-                //this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                this.oRouter = this.getRouter();
-                this.oRouter.getTarget("Main").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
+                this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 
             },
 
@@ -230,7 +228,7 @@ sap.ui.define([
  
                 self.generarBase64ImpresionVVI(numVale, user, function(callback){
                     var base64EncodedPDF = callback.base64; //"JVBERi0xLjcNCiW..."; // the encoded string
-                    var decodedPdfContent = atob(base64EncodedPDF);
+                    var decodedPdfContent = atob(base64EncodedPDF);s
                     var byteArray = new Uint8Array(decodedPdfContent.length)
                     for(var i=0; i<decodedPdfContent.length; i++){
                         byteArray[i] = decodedPdfContent.charCodeAt(i);

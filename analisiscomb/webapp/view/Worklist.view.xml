@@ -64,7 +64,7 @@
 							<f:FormElement >
 								<f:fields>
 									<Button text="Buscar" type="Emphasized" icon="sap-icon://search" iconFirst="true" width="100%" enabled="true" visible="true" iconDensityAware="false" press="onBusqueda"/>
-                                    <Button press="onLimpiar" text="Limpiar" type="Emphasized" icon="sap-icon://clear-filter" iconFirst="true" width="100%" enabled="true" visible="true" iconDensityAware="false"/>
+                                    <Button press="onLimpiar" text="Limpiar" type="ghost" icon="sap-icon://clear-filter" iconFirst="true" width="100%" enabled="true" visible="true" iconDensityAware="false"/>
 								</f:fields>
 							</f:FormElement>
 						</f:formElements>
@@ -192,23 +192,49 @@
 							<Label text="Stock Inicial"/>
 						</table:label>
 						<table:template>
-							<Text text="{Combustible>STCMB}"/>
+							<Text text="{path:'Combustible>STCMB', type:'sap.ui.model.type.Float',
+
+                                                formatOptions:{
+
+                                                    minIntegerDigits:1,
+
+                                                    minFractionDigits:3,
+
+                                                    maxFractionDigits:3,
+
+                                                    groupingEnabled:true,
+
+                                                    groupingSeparator: ',',
+
+                                                    decimalSeparator: '.'
+
+                                                }}"/>
 						</table:template>
 					</table:Column>
-					<table:Column hAlign="End" width="8rem">
-						<table:label>
-							<Label text="Cant. desc.(TN)"/>
-						</table:label>
-						<table:template>
-							<Text text="{Combustible>CNPDS}"/>
-						</table:template>
-					</table:Column>
+					
 					<table:Column hAlign="End" width="8rem">
 						<table:label>
 							<Label text="Sumn. "/>
 						</table:label>
 						<table:template>
-							<Text text="{Combustible>CNSUM}"/>
+					
+								<Text text="{path:'Combustible>CNSUM', type:'sap.ui.model.type.Float',
+
+                                                formatOptions:{
+
+                                                    minIntegerDigits:1,
+
+                                                    minFractionDigits:3,
+
+                                                    maxFractionDigits:3,
+
+                                                    groupingEnabled:true,
+
+                                                    groupingSeparator: ',',
+
+                                                    decimalSeparator: '.'
+
+                                                }}"/>
 						</table:template>
 					</table:Column>
 					<table:Column hAlign="End" width="8rem">
@@ -216,7 +242,25 @@
 							<Label text="Cons. (Gln)"/>
 						</table:label>
 						<table:template>
-							<Text text="{Combustible>CONSU}"/>
+					
+							
+								<Text text="{path:'Combustible>CONSU', type:'sap.ui.model.type.Float',
+
+                                                formatOptions:{
+
+                                                    minIntegerDigits:1,
+
+                                                    minFractionDigits:3,
+
+                                                    maxFractionDigits:3,
+
+                                                    groupingEnabled:true,
+
+                                                    groupingSeparator: ',',
+
+                                                    decimalSeparator: '.'
+
+                                                }}"/>
 						</table:template>
 					</table:Column>
 					<table:Column hAlign="End" width="8rem">
@@ -224,7 +268,24 @@
 							<Label text="Stock. final"/>
 						</table:label>
 						<table:template>
-							<Text text="{Combustible>STFIN}"/>
+							
+								<Text text="{path:'Combustible>STFIN', type:'sap.ui.model.type.Float',
+
+                                                formatOptions:{
+
+                                                    minIntegerDigits:1,
+
+                                                    minFractionDigits:3,
+
+                                                    maxFractionDigits:3,
+
+                                                    groupingEnabled:true,
+
+                                                    groupingSeparator: ',',
+
+                                                    decimalSeparator: '.'
+
+                                                }}"/>
 						</table:template>
 					</table:Column>
 					<table:Column width="6rem">
@@ -233,6 +294,31 @@
 						</table:label>
 						<table:template>
 							<Button   visible="{Combustible>estado}" icon="sap-icon://document-text" />
+						</table:template>
+					</table:Column>
+					<table:Column hAlign="End" width="8rem">
+						<table:label>
+							<Label text="Cant. desc.(TN)"/>
+						</table:label>
+						<table:template>
+				
+								<Text text="{path:'Combustible>CNPDS', type:'sap.ui.model.type.Float',
+
+                                                formatOptions:{
+
+                                                    minIntegerDigits:1,
+
+                                                    minFractionDigits:3,
+
+                                                    maxFractionDigits:3,
+
+                                                    groupingEnabled:true,
+
+                                                    groupingSeparator: ',',
+
+                                                    decimalSeparator: '.'
+
+                                                }}"/>
 						</table:template>
 					</table:Column>
 					<table:Column width="6rem" hAlign="Center">

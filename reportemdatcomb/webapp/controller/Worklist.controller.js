@@ -340,11 +340,13 @@ sap.ui.define([
 								data.t_flocc[i].NRMAR=this.zeroFill(data.t_flocc[i].NRMAR,10);
 								if(data.t_flocc[i].FECCONMOV===null || data.t_flocc[i].FECCONMOV==="null"){
 									data.t_flocc[i].FECCONMOV="";
+									
 								}
-								data.t_flocc[i].CNPDS = String(data.t_flocc[i].CNPDS);
+					
+								data.t_flocc[i].CNPDS = String(data.t_flocc[i].CNPDS.toFixed(2));
 							}
 							this.getModel("Lista").setProperty("/listaLista", data.t_flocc);
-							this.byId("title").setText("Indicador de modificación: "+data.indicadorPorc+"%");
+							this.byId("title").setText("Indicador de modificación: "+data.indicadorPorc.toFixed(0)+"%");
 							oGlobalBusyDialog.close();
 					   }).catch(error => console.log(error)
 					   );
@@ -451,7 +453,7 @@ sap.ui.define([
 						},
 						{
 							label: 'Fase',
-							property: 'Descarga' ,
+							property: 'DESC_CDFAS' ,
 							type: EdmType.String,
 							scale: 2
 						},
@@ -796,7 +798,7 @@ sap.ui.define([
 					var indices = evt.mParameters.listItem.oBindingContexts.consultaMareas.sPath.split("/")[2];
 					console.log(indices);
 				
-					var data = this.getView().getModel("consultaMareas").oData.embarcaciones[indices].CDEMB;
+					var data = this.getView().getModel("consultaMareas").oData.embarcaciones[indices].WERKS;
 					if (this.currentInputEmba.includes("idEmbarcacion")) {
 						this.byId("idEmbarcacion").setValue(data);
 					}else if(this.currentInputEmba.includes("idEmbarcacion")){

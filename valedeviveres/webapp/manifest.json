@@ -13,16 +13,12 @@
         "ach": "ach",
         "crossNavigation": {
             "inbounds": {
-<<<<<<< HEAD
+
                 "tasa-com-valedeviveres-inbound": {
-=======
+
                 "com-tasa-valedeviveres-inbound": {
->>>>>>> master
-                    "signature": {
-                        "parameters": {},
-                        "additionalParameters": "allowed"
-                    },
-<<<<<<< HEAD
+
+
                     "semanticObject": "ValedeViveres",
                     "action": "display",
                     "title": "{{flpTitle}}",
@@ -31,16 +27,7 @@
                 }
             }
         }        
-=======
-                    "semanticObject": "valedeviveres",
-                    "action": "display",
-                    "title": "{{flpTitle}}",
-                    "subTitle": "{{flpSubtitle}}",
-                    "icon": ""
-                }
-            }
-        }
->>>>>>> master
+
     },
     "sap.ui": {
         "technology": "UI5",
@@ -168,6 +155,7 @@
     },
     "sap.cloud": {
         "public": true,
-        "service": "ControlLogisticoQAS"
+        "service": "ControlLogistico"
     }
+}
 }

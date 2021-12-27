@@ -432,7 +432,7 @@ sap.ui.define([
 					options.push({
 						cantidad: "10",
 						control:"COMBOBOX",
-						key:"WERKS",
+						key:"EMB~WERKS",
 						valueHigh: "",
 						valueLow:idEmbarcacion
 					});
