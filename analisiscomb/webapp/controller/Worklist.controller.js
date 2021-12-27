@@ -1084,6 +1084,7 @@ sap.ui.define([
 
 		onDetail: async function(oEvent){
 			oGlobalBusyDialog.open();
+			console.log();
 			var cadena=oEvent.getSource().getBindingContext("Combustible").getPath().split("/")[2];
 			var array=this.getView().getModel("Combustible").oData.listaCombustible[cadena];
 			console.log(array.CDMMA);
@@ -1828,5 +1829,48 @@ sap.ui.define([
 		// 	this.byId("idFechaInicio").setValue("");
 		// 	this.byId("idEstado").setValue("");
 		// }
+
+		_onOpenDialogComentario: function() {
+				
+			this._getDialogComentario().open();
+		},
+
+		_onCloseDialogComentario: function() {
+
+			this._getDialogComentario().close();
+				oGlobalBusyDialog.close();
+
+			
+		},
+		_getDialogComentario : function () {
+			if (!this._oDialogArmador) {
+				this._oDialogArmador = sap.ui.xmlfragment("com.tasa.analisiscomb.view.Comentario", this.getView().getController());
+				this.getView().addDependent(this._oDialogArmador);
+				
+			}
+			
+			return this._oDialogArmador;
+		},
+		onObtenerComentario:function(){
+			var comentario="Hola";
+			sap.ui.getCore().byId("idLabelCom").setText("comentario");
+			sap.ui.getCore().byId("idComentario").setValue("comentario");
+		},
+		onComentario: async function(oEvent){
+			oGlobalBusyDialog.open();
+			console.log(oEvent);
+			var cadena=oEvent.getSource().getBindingContext("Reporte").getPath().split("/")[2];
+			var array=this.getView().getModel("Reporte").oData.listaReporte[cadena];
+			console.log(array.OBCOM);
+			console.log(array.DESC_CDFAS);
+
+		
+				this._onOpenDialogComentario();
+				sap.ui.getCore().byId("idComentario").setValue(array.OBCOM);
+				sap.ui.getCore().byId("idLabelCom").setText(array.DESC_CDFAS);
+
+			
+			
+		},
 	});
 });

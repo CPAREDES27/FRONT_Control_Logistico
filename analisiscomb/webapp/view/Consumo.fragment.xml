@@ -513,7 +513,16 @@
 							<Text text="{Reporte>CHTER}" wrapping="false" />
 						</t:template>
 					</t:Column>
-                    
+                    <t:Column width="6rem" hAlign="Center">
+						<t:label>
+							<Label text=""/>
+						</t:label>
+						<t:template>
+							<Button  icon="sap-icon://request"  press="onComentario" visible="{Reporte>request}" />	
+							<Button  icon="sap-icon://detail-view"  press="onComentario" visible="{Reporte>detail}" />
+
+						</t:template>
+					</t:Column>
 					<!--Columnas-->
 
 				</t:columns>
