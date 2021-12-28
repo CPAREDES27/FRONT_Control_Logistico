@@ -31,6 +31,7 @@ sap.ui.define([
 	var listaAnalisis=false;
 	var fechaInicio="";
 	var fechaFin="";
+	var codFase="";
 	var exportarExcel=false;
 	return BaseController.extend("com.tasa.analisiscomb.controller.Worklist", {
 
@@ -55,6 +56,7 @@ sap.ui.define([
 			this.currentPage = "";
 			this.lastPage = "";
 			this.loadCombos();	
+
 
 		},
 
@@ -95,6 +97,7 @@ sap.ui.define([
 				this.getModel("Propiedad").setProperty("/ZINPRP", ZINPRP);
 				this.getModel("Estado").setProperty("/ZCDMMACOM", ZCDMMACOM);
 				this.getModel("EstadoGrilla").setProperty("/ZD_TPIMPU", ZD_TPIMPU);
+				console.log(ZCDMMACOM);
 				oGlobalBusyDialog.close();
 			  }).catch(error => console.log(error)
 			);
@@ -1858,6 +1861,11 @@ sap.ui.define([
 		},
 		onComentario: async function(oEvent){
 			oGlobalBusyDialog.open();
+
+			//var nrmar=sap.ui.getCore().byId("idMarea2").getText();
+			//this.getCuadroAnalisis2(nrmar);
+
+
 			console.log(oEvent);
 			var cadena=oEvent.getSource().getBindingContext("Reporte").getPath().split("/")[2];
 			var array=this.getView().getModel("Reporte").oData.listaReporte[cadena];
@@ -1868,9 +1876,123 @@ sap.ui.define([
 				this._onOpenDialogComentario();
 				sap.ui.getCore().byId("idComentario").setValue(array.OBCOM);
 				sap.ui.getCore().byId("idLabelCom").setText(array.DESC_CDFAS);
+				this.codFase= array.CDFAS;
+
+
+		},
+
+		onActualizarComentario: async  function(){
+
+			var nrmar=sap.ui.getCore().byId("idMarea2").getText();
+			var obcom=sap.ui.getCore().byId("idComentario").getValue();
+			var p_case="E";
+			var flag="X";
 
 			
+
+				var existe= await this.onValidarComentario(nrmar, this.codFase);
+
+				if(!existe){
+					p_case="N";
+					flag="";
+				}
+				this.onInsertarComentario(nrmar, obcom, p_case, flag);
 			
+
+			
+			this.getCuadroAnalisis2(nrmar);
+			this.codFase="";
+			this._onCloseDialogComentario();
+
 		},
+		onInsertarComentario: function(nrmar, obcom, p_case, flag){
+
+			oGlobalBusyDialog.open();
+			var body={
+				"data": "",
+				"fieldWhere": "NRMAR",
+				"flag": flag,
+				"keyWhere": nrmar,
+			//	"keyWhere": "164378",
+				"opcion": [
+				{
+					"field": "OBCOM",
+					"valor": obcom					
+				},
+				{
+					"field": "CDFAS",
+					"valor": this.codFase					
+				}
+				],
+				"p_case": p_case,
+				"p_user": "FGARCIA",
+				"tabla": "ZFLOCC"
+			}
+			
+			console.log(body);
+			 fetch(`${mainUrlServices}General/Update_Table2`,
+			{
+				method: 'POST',
+				body: JSON.stringify(body)
+			})
+			.then(resp => resp.json()).then(data => {
+				console.log(data);
+				this.getView().getModel("EstadoComentario").setProperty("/listaMensajes",data.t_mensaje);
+
+				MessageBox.success(data.t_mensaje[0].DSMIN);
+				this._onCloseDialogComentario();
+				oGlobalBusyDialog.close();
+			}).catch(error => console.log(error)
+
+			);
+		},
+
+		onValidarComentario: async function(nrmar, cdfas)
+		{
+			
+			var existe=true;
+
+			oGlobalBusyDialog.open();
+			var body={
+				"delimitador": "|",
+				"fields": [
+				],
+				"no_data": "",
+				"option": [
+				 
+				 {"wa":"NRMAR = '"+nrmar+"' AND CDFAS = '"+cdfas+"'"}
+			   ],
+				"options": [
+				 
+				],
+				"order": "",
+				"p_pag": "",
+				"p_user": "FGARCIA",
+				"rowcount": 0,
+				"rowskips": 0,
+				"tabla": "ZFLOCC"
+			  }
+			
+			await fetch(`${mainUrlServices}General/Read_Table`,
+			  {
+				  method: 'POST',
+				  body: JSON.stringify(body)
+			  })
+			  .then(resp => resp.json()).then(data => {
+				console.log(data.data.length);
+
+				var tamaño=data.data.length;
+				if(tamaño===0){
+					existe=false;
+				}
+
+			
+				oGlobalBusyDialog.close();
+			  }).catch(error => console.log(error)
+
+			);
+			
+			return existe;
+		}
 	});
 });

@@ -518,8 +518,8 @@
 							<Label text=""/>
 						</t:label>
 						<t:template>
-							<Button  icon="sap-icon://request"  press="onComentario" visible="{Reporte>request}" />	
-							<Button  icon="sap-icon://detail-view"  press="onComentario" visible="{Reporte>detail}" />
+							<Button id="idBtnRequest"  icon="{Reporte>request}"  press="onComentario" />	
+							<!--<Button id="idBtnDetail"  icon="sap-icon://detail-view"  press="onComentario" visible="{Reporte>detail}" />-->
 
 						</t:template>
 					</t:Column>

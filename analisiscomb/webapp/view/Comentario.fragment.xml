@@ -38,7 +38,7 @@
 		<buttons>
         	<Button type="Accept"
 						text="Aceptar"
-						press="onPress"
+						press="onActualizarComentario"
 						ariaDescribedBy="acceptButtonDescription genericButtonDescription"/>
 			<Button text="Cerrar"
              type="Reject" icon="sap-icon://decline" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="_onCloseDialogComentario"/>
