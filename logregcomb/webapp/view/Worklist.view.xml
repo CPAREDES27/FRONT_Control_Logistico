@@ -8,7 +8,7 @@
 
 	<semantic:SemanticPage
 		id="page"
-		showFooter="true">
+		showFooter="false">
 
 		<semantic:titleHeading>
 			<m:Title
@@ -294,9 +294,9 @@
 			</Table>
 		</semantic:content>
 
-		<semantic:positiveAction>
+		<!-- <semantic:positiveAction>
 			<semantic:PositiveAction text="Anular consumo" press="onAnularConsumo" />
-		</semantic:positiveAction>
+		</semantic:positiveAction> -->
 
 	</semantic:SemanticPage>
 
