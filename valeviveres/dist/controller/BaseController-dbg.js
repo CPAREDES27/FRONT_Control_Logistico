@@ -7,7 +7,7 @@ sap.ui.define([
 
 	// shortcut for sap.m.URLHelper
 	var URLHelper = mobileLibrary.URLHelper;
-
+	
 	return Controller.extend("com.tasa.valeviveres.controller.BaseController", {
 		/**
 		 * Convenience method for accessing the router.
@@ -38,7 +38,7 @@ sap.ui.define([
 		setModel : function (oModel, sName) {
 			return this.getView().setModel(oModel, sName);
 		},
-
+		
 		/**
 		 * Getter for the resource bundle.
 		 * @public
@@ -47,6 +47,7 @@ sap.ui.define([
 		getResourceBundle : function () {
 			return this.getOwnerComponent().getModel("i18n").getResourceBundle();
 		},
+
 
 		/**
 		 * Event handler when the share by E-Mail button has been clicked

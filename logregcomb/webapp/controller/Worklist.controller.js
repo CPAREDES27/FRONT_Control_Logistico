@@ -44,6 +44,7 @@ sap.ui.define([
 		},
 
 		callConstantes: function(){
+			oGlobalBusyDialog.open();
 			var body={
 				"nombreConsulta": "CONSGENCONST",
 				"p_user": "FGARCIA",

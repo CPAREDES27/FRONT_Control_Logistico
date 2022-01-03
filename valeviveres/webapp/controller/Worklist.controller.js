@@ -186,7 +186,7 @@ sap.ui.define([
 			this.byId("idValeFin").setValue("");
 			this.byId("idFechaVivere").setValue("");
 			this.byId("idArmadorIni").setValue("");
-			this.byId("idEmbarcacion").setValue("");
+			this.byId("inputId0_R").setValue("");
 			this.byId("idPlantaIni").setValue("");
 			this.byId("idAlmacenIni").setValue("");
 			this.byId("idAlmacenIni").setDescription("");
@@ -407,7 +407,7 @@ sap.ui.define([
 			var idFechaInicio=this.byId("idFechaVivere").mProperties.dateValue;
 			var idFechaFin= this.byId("idFechaVivere").mProperties.secondDateValue;
 			var idArmadorIni = this.byId("idArmadorIni").getValue();
-			var idEmbarcacion = this.byId("idEmbarcacion").getValue();
+			var idEmbarcacion = this.byId("inputId0_R").getValue();
 			var idPlantaIni = this.byId("idPlantaIni").getValue();
 			var idAlmacenIni = this.byId("idAlmacenIni").getValue();
 			var cboTemporada = this.byId("cboTemporada").getSelectedKey();
@@ -1240,7 +1240,7 @@ sap.ui.define([
 		
 			var data = this.getView().getModel("consultaMareas").oData.embarcaciones[indices].CDEMB;
 			
-				this.byId("idEmbarcacion").setValue(data);
+				this.byId("inputId0_R").setValue(data);
 				
 				
 			this.onCerrarEmba();
@@ -1270,7 +1270,7 @@ sap.ui.define([
 			this.getModel("consultaMareas").setProperty("/TituloEmba", "");
 			this.getModel("consultaMareas").setProperty("/embarcaciones","");
 		},		
-		onSearchHelp:function(oEvent){
+		onSearchHelp:async function(oEvent){
 			let sIdInput = oEvent.getSource().getId(),
 			oModel = this.getModel(),
 			nameComponent="busqembarcaciones",
@@ -1282,28 +1282,18 @@ sap.ui.define([
 			oModel.setProperty("/help",{});
 
 			if(!this.DialogComponent){
-				this.DialogComponent = new sap.m.Dialog({
-					title:"Búsqueda de embarcaciones",
-					icon:"sap-icon://search",
-					state:"Information",
-					endButton:new sap.m.Button({
-						icon:"sap-icon://decline",
-						text:"Cerrar",
-						type:"Reject",
-						press:function(oEvent){
-							this.onCloseDialog(oEvent);
-						}.bind(this)
-					})
+				this.DialogComponent = await Fragment.load({
+					name:"com.tasa.valeviveres.view.fragments.BusqEmbarcacion",
+					controller:this
 				});
 				oView.addDependent(this.DialogComponent);
-				oModel.setProperty("/idDialogComp",this.DialogComponent.getId());
 			}
+			oModel.setProperty("/idDialogComp",this.DialogComponent.getId());
 
 			let comCreateOk = function(oEvent){
 				BusyIndicator.hide();
 			};
 
-			
 			if(this.DialogComponent.getContent().length===0){
 				BusyIndicator.show(0);
 				let oComponent = new sap.ui.core.ComponentContainer({
@@ -1318,10 +1308,8 @@ sap.ui.define([
 					// manifest:true,
 					async:false
 				});
-
 				this.DialogComponent.addContent(oComponent);
 			}
-			
 			this.DialogComponent.open();
 		},
 		onCloseDialog:function(oEvent){

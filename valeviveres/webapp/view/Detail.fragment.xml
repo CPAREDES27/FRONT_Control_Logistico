@@ -118,7 +118,7 @@
                                                 <Label text="Proveedor" design="Standard" width="100%"  required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Text text="{Vivere>NAME2}" visible="true" width="auto"/>
+                                                <Text text="{Vivere>CDPVE}" visible="true" width="auto"/>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -283,7 +283,7 @@
                                     <Text text="{Suministro>DSSUM}" width="auto" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </t:template>
                             </t:Column>
-                            <t:Column width="auto">
+                            <t:Column width="auto" hAlign="End">
                                 <Label text="Ración"/>
                                 <t:template>
                                     <Text text="{Suministro>CNRAC}" width="auto" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
@@ -295,13 +295,13 @@
                                     <Text text="{Suministro>DSUMD}" width="auto" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </t:template>
                             </t:Column>
-                            <t:Column width="auto">
+                            <t:Column width="auto" hAlign="End">
                                 <Label text="Costo unitario"/>
                                 <t:template>
                                     <Text text="{Suministro>CUSUM}" width="auto" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </t:template>
                             </t:Column>
-                            <t:Column width="auto">
+                            <t:Column width="auto" hAlign="End">
                                 <Label text="Costo total"/>
                                 <t:template>
                                     <Text text="{Suministro>QTSUM}" width="auto" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>

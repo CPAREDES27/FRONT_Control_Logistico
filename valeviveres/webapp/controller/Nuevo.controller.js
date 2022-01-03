@@ -18,6 +18,7 @@ sap.ui.define([
 	var oGlobalBusyDialog = new sap.m.BusyDialog();
 	const mainUrlServices = 'https://cf-nodejs-qas.cfapps.us10.hana.ondemand.com/api/';
 	var valeVivere=null;
+	const HOST = "https://tasaqas.launchpad.cfapps.us10.hana.ondemand.com";
 	return BaseController.extend("com.tasa.valeviveres.controller.Nuevo", {
 
 		formatter: formatter,
@@ -138,9 +139,9 @@ sap.ui.define([
 				this.byId("idCostoVivere").setValue("");
 				this.byId("cboProveedor").setValue("");
 				this.byId("idObserva").setValue("");
-				this.byId("idCentroText").setText("");
-				this.byId("idAlmacenExterno").setText("");
-				this.byId("idIndicador").setText("");
+				this.byId("idCentroText").setValue("");
+				this.byId("idAlmacenExterno").setValue("");
+				this.byId("idIndicador").setValue("");
 				this.byId("idRucArmador").setValue("");
 				this.byId("idDuracionTr").setValue("");
 			}else{
@@ -166,9 +167,9 @@ sap.ui.define([
 			this.byId("idCostoVivere").setValue("");
 			this.byId("cboProveedor").setValue("");
 			this.byId("idObserva").setValue("");
-			this.byId("idCentroText").setText("");
-			this.byId("idAlmacenExterno").setText("");
-			this.byId("idIndicador").setText("");
+			this.byId("idCentroText").setValue("");
+			this.byId("idAlmacenExterno").setValue("");
+			this.byId("idIndicador").setValue("");
 			this.byId("idRucArmador").setValue("");
 			this.byId("idDuracionTr").setValue("");
 			}
@@ -359,7 +360,7 @@ sap.ui.define([
 				if(array[i].CDALM===idAlmacen){
 				
 					this.byId("idAlmacenIni").setDescription(array[i].DSALM);
-					this.byId("idAlmacenExterno").setText(array[i].CDALE);
+					this.byId("idAlmacenExterno").setValue(array[i].CDALE);
 				}
 			}
 			if(idPlantaIni && idAlmacen){
@@ -400,7 +401,7 @@ sap.ui.define([
 			var array=this.getView().getModel("Planta").getProperty("/listaPlanta");
 			for(var i=0;i<array.length;i++){
 				if(array[i].CDPTA===codPlanta){
-					this.byId("idCentroText").setText(array[i].WERKS);
+					this.byId("idCentroText").setValue(array[i].WERKS);
 					this.byId("idPlantaIni").setDescription(array[i].DESCR);
 				}
 			}
@@ -640,7 +641,9 @@ sap.ui.define([
 			this.currentInputEmba = evt.getSource().getId();
 			this.getDialog().open();
 		},
-
+		onFormat: function(){
+			console.log("hola");
+		},
 		
 		buscarEmbarca: function(evt){
 			console.log(evt);
@@ -656,7 +659,7 @@ sap.ui.define([
 			var indicadorP =this.getView().getModel("consultaMareas").oData.embarcaciones[indices].DESC_INPRP; 
 			this.byId("idRucArmador").setValue(ruc);
 			if(indicadorP==="Propia"){
-				this.byId("idIndicador").setVisible(false);
+				this.byId("idIndicador").setVisible(true);
 				this.byId("idFormCocinero").setVisible(true);
 				this.byId("idFormTripulante").setVisible(true);
 				this.byId("idFormCostoVivere").setVisible(false);
@@ -669,7 +672,8 @@ sap.ui.define([
 				this.byId("idEmbarcacion").setValue(data);
 				this.byId("idNroTripu").setValue(nroTRIP);
 				this.byId("idMatricula").setValue(matricula);
-				this.byId("idIndicador").setText(indicadorP);
+				this.byId("idIndicador").setValue(indicadorP);
+				
 				if(ruc!=""){
 					this.byId("idArmadorIni").setValue(ruc);
 					this.byId("idArmadorIni").setEnabled(false);
@@ -766,7 +770,7 @@ sap.ui.define([
 			if(valida){
 				MessageBox.error(cadena);
 			}else{
-				var indicador = this.byId("idIndicador").getText();
+				var indicador = this.byId("idIndicador").getValue();
 				console.log(indicador);
 				if(indicador==="Tercera"){
 					this.generaTablaTercera();
@@ -879,7 +883,7 @@ sap.ui.define([
 				return false;
 			}
 			console.log(numeroDias);
-			var idCentroText = this.byId("idCentroText").getText();
+			var idCentroText = this.byId("idCentroText").getValue();
 			var idRucProveedor = this.byId("idRucProveedor").getValue();
 			var idFechaTravesiaIni= this.byId("idFechaTravesiaIni").getValue();
 			var idFechaTravesiaFin= this.byId("idFechaTravesiaFin").getValue();
@@ -1107,7 +1111,7 @@ sap.ui.define([
 			this.getView().getModel("Suministros").refresh(true);
 		},
 		onGuardar: function(){
-			var idIndicador = this.byId("idIndicador").getText();
+			var idIndicador = this.byId("idIndicador").getValue();
 			if(idIndicador==="Tercera"){
 				this.onGuardarTercero();
 			}else{
@@ -1398,7 +1402,7 @@ sap.ui.define([
 			return anio+""+mes+""+dia;
 		},
 		reload: function(){
-			var idIndicador = this.byId("idIndicador").getText();
+			var idIndicador = this.byId("idIndicador").getValue();
 
 			if(idIndicador==="Tercera"){
 				var array = this.getView().getModel("Suministros").getProperty("/listaSuministros");
@@ -1428,6 +1432,54 @@ sap.ui.define([
 					}
 				}
 			}
+		},
+		
+		onSearchHelp:async function(oEvent){
+			let sIdInput = oEvent.getSource().getId(),
+			oModel = this.getModel(),
+			nameComponent="busqembarcaciones",
+			idComponent="busqembarcaciones",
+			urlComponent=HOST+"/9acc820a-22dc-4d66-8d69-bed5b2789d3c.AyudasBusqueda.busqembarcaciones-1.0.0",
+			oView = this.getView(),
+			oInput = this.getView().byId(sIdInput);
+			oModel.setProperty("/input",oInput);
+			oModel.setProperty("/help",{});
+
+			if(!this.DialogComponent){
+				this.DialogComponent = await Fragment.load({
+					name:"com.tasa.valeviveres.view.fragments.BusqEmbarcacion",
+					controller:this
+				});
+				oView.addDependent(this.DialogComponent);
+			}
+			oModel.setProperty("/idDialogComp",this.DialogComponent.getId());
+
+			let comCreateOk = function(oEvent){
+				BusyIndicator.hide();
+			};
+
+			if(this.DialogComponent.getContent().length===0){
+				BusyIndicator.show(0);
+				let oComponent = new sap.ui.core.ComponentContainer({
+					id:idComponent,
+					name:nameComponent,
+					url:urlComponent,
+					settings:{},
+					componentData:{},
+					propagateModel:true,
+					componentCreated:comCreateOk,
+					height:'100%',
+					// manifest:true,
+					async:false
+				});
+
+				this.DialogComponent.addContent(oComponent);
+			}
+			
+			this.DialogComponent.open();
+		},
+		onCloseDialog:function(oEvent){
+			oEvent.getSource().getParent().close();
 		}
 	});
 });

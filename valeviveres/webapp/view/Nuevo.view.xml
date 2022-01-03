@@ -161,6 +161,7 @@
                                             <form:fields>
                                                 <HBox width="auto">
                                                     <Input type="Text" id="idEmbarcacion"  showValueHelp="true" enabled="true" visible="true" width="276px" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="onOpenEmba"/>
+                                                    <!-- <Input id="inputId1_R" description="{/help/NMEMB}" placeholder="Seleccione embarcación" showValueHelp="true"  valueHelpRequest="onSearchHelp"/> -->
                                                 </HBox>
                                             </form:fields>
                                         </form:FormElement>
@@ -332,7 +333,8 @@
                                                 <Label text="Centro" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Text id="idCentroText" text=""/>
+                                                <Input type="Text" id="idCentroText" showValueHelp="false"  enabled="false" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                                <!-- <Text id="idCentroText" text=""/> -->
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -340,7 +342,7 @@
                                                 <Label text="Almacén externo" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Text id="idAlmacenExterno"/>
+                                                <Input type="Text" id="idAlmacenExterno" showValueHelp="false"  enabled="false" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -356,7 +358,8 @@
                                                 <Label text="Indicador de propiedad" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Text text="" id="idIndicador"/>
+                                                <Input type="Text" id="idIndicador" showValueHelp="false"  enabled="false" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                                <!-- <Text text="" id="idIndicador"/> -->
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">

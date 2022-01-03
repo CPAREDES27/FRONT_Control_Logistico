@@ -45,8 +45,8 @@
 							</form:FormElement>
 							<form:FormElement label="Embarcación">
 								<form:fields>
-									<Input type="Text" value="{/help/CDEMB}"  id="idEmbarcacion"  showValueHelp="true" enabled="true" visible="true" width="276px" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="onSearchHelp"/>									
-									
+									<!-- <Input type="Text" value="{/help/CDEMB}"  id="idEmbarcacion"  showValueHelp="true" enabled="true" visible="true" width="276px" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="onSearchHelp"/> -->
+									<Input id="inputId0_R" placeholder="Seleccione embarcación" showValueHelp="true"  valueHelpRequest="onSearchHelp"/>
 								</form:fields>
 							</form:FormElement>
 							<form:FormElement label="Planta">

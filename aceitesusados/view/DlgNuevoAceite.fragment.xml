@@ -20,8 +20,7 @@
                                     <Label text="Embarcacion" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                <Input type="Text" id="idEmbarcacionNew" showValueHelp="true" enabled="true" visible="true" width="92%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogEmbarcacion('hola')"/>
-                                    <Text text="" id="txtEmbarcaNew" width="50%" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <m:Input id="inputId1_R" description="{/help/NMEMB}" placeholder="Seleccione embarcación" showValueHelp="true"  valueHelpRequest="onSearchHelp"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">

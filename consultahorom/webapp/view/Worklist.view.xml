@@ -25,8 +25,9 @@
 						<f:formElements>
 							<f:FormElement label="Embarcación">
 								<f:fields>
-								<m:Input type="Text" id="idEmbarcacion" showValueHelp="true" enabled="true" visible="true" width="100%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="onOpenEmba"/>			
-								<m:Text id="idText" text=""/>
+								<!-- <m:Input type="Text" id="idEmbarcacion" showValueHelp="true" enabled="true" visible="true" width="100%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="onOpenEmba"/>			
+								<m:Text id="idText" text=""/> -->
+								<m:Input id="inputId0_R" description="{/help/NMEMB}" placeholder="Seleccione embarcación" showValueHelp="true"  valueHelpRequest="onSearchHelp"/>
 								</f:fields>
 							</f:FormElement>
 						</f:formElements>

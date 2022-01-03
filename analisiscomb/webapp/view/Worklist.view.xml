@@ -26,8 +26,7 @@
 						<f:formElements>
 							<f:FormElement label="Embarcación">
 								<f:fields>
-									<Input type="Text" id="embarcacionLow" showValueHelp="true" enabled="true" visible="true" width="91%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="onOpenEmba"/>
-									<Text text="" id="txtEmbarca" width="50%" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input id="inputId0_R" placeholder="Seleccione embarcación" showValueHelp="true"  valueHelpRequest="onSearchHelp"/>
 								</f:fields>
 							</f:FormElement>
 							
