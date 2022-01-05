@@ -62,7 +62,10 @@ sap.ui.define([
 
 
 		},
-
+		onAfterRendering: async function(){
+			this.userOperation =await this._getCurrentUser();
+			console.log(this.userOperation);
+		},
 		loadCombos: function(){
 			oGlobalBusyDialog.open();
 			var ZCDMMACOM=null;
@@ -153,7 +156,7 @@ sap.ui.define([
 				"fechaIni": idFechaIni,
 				"motivoIni": idEstado,
 				"p_row": idCant,
-				"p_user": "FGARCIA"
+				"p_user": this.userOperation
 			}
 			console.log(body);
 		
@@ -693,7 +696,7 @@ sap.ui.define([
 				"p_canti": "0",
 				"p_lcco": "",
 				"p_tope": "N",
-				"p_user": "FGARCIA",
+				"p_user": this.userOperation,
 				"str_csmar": arraySend,
 				"str_lgcco": [
 				 
@@ -1129,7 +1132,7 @@ sap.ui.define([
 				  
 				],
 				"p_nrmar": idMarea,
-				"p_user": "FGARCIA"
+				"p_user": this.userOperation
 			}
 
 			await fetch(`${Utilities.onLocation()}analisiscombustible/Detalle`,
@@ -1152,7 +1155,7 @@ sap.ui.define([
 				  
 				],
 				"p_nrmar": idMarea,
-				"p_user": "FGARCIA"
+				"p_user": this.userOperation
 			}
 
 			await fetch(`${Utilities.onLocation()}analisiscombustible/Detalles`,
@@ -1932,7 +1935,7 @@ sap.ui.define([
 				}
 				],
 				"p_case": p_case,
-				"p_user": "FGARCIA",
+				"p_user": this.userOperation,
 				"tabla": "ZFLOCC"
 			}
 			
@@ -1974,7 +1977,7 @@ sap.ui.define([
 				],
 				"order": "",
 				"p_pag": "",
-				"p_user": "FGARCIA",
+				"p_user": this.userOperation,
 				"rowcount": 0,
 				"rowskips": 0,
 				"tabla": "ZFLOCC"

@@ -49,7 +49,7 @@ sap.ui.define([
 			this.loadIndicadorP();
 			this.byId("idAciertos").setValue("200");
 		},
-
+		
 		_onOpenDialogEmbarcacion: function() {
 			this._getDialogEmbarcacion().open();
 			},

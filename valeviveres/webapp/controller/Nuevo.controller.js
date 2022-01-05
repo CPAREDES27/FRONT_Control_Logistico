@@ -24,7 +24,7 @@ sap.ui.define([
 		formatter: formatter,
 
 	
-		onInit : function () {
+		onInit : async function () {
 			let ViewModel= new JSONModel(
 				{}
 				);
@@ -42,6 +42,11 @@ sap.ui.define([
             this.listaCocinero();
 			this.poblarCocinero();
 			this.loadCombos();
+			this.userOperation = await this._getCurrentUser();
+			console.log(this.userOperation);
+			
+		},
+		onAfterRendering: async function(){
 			
 		},
 		setCentro:function(){
@@ -116,7 +121,9 @@ sap.ui.define([
 				  );
 		},
 		clean: function(valor){
+			console.log(this.userOperation);
 			if(valor==='combo'){
+
 				this.byId('cboTemporada').setValueState(); 
 				this.byId('idPlantaIni').setValueState(); 
 				this.byId('idAlmacenIni').setValueState(); 
@@ -269,7 +276,7 @@ sap.ui.define([
 				  
 				],
 				"order": "",
-				"p_user": "FGARCIA",
+				"p_user": this.userOperation,
 				"rowcount": idAciertos,
 				"rowskips": 0,
 				"tabla": "KNA1"
@@ -323,7 +330,7 @@ sap.ui.define([
 		poblarCocinero: function(){
 			var body={
 				"nombreAyuda": "BSQCOCINERO",
-				"p_user": "FGARCIA"
+				"p_user": this.userOperation
 			}
 			oGlobalBusyDialog.open();
 			fetch(`${mainUrlServices}General/AyudasBusqueda/`,
@@ -366,7 +373,7 @@ sap.ui.define([
 			if(idPlantaIni && idAlmacen){
 				var body={
 					"nombreConsulta": "CONSGENPROVEEDORES",
-					"p_user": "FGARCIA",
+					"p_user": this.userOperation,
 					"parametro1": idPlantaIni,
 					"parametro2": idAlmacen,
 					"parametro3": "",
@@ -895,7 +902,7 @@ sap.ui.define([
 				"p_centro": idCentroText,
 				"p_code": "",
 				"p_proveedor": idRucProveedor,
-				"p_user": "FGARCIA"
+				"p_user": this.userOperation
 			}
 			oGlobalBusyDialog.open();
 			fetch(`${mainUrlServices}valeviveres/CostoRacionValev/`,
@@ -1181,7 +1188,7 @@ sap.ui.define([
 					"fieldsT_mensaje": [
 					  
 					],
-					"p_user": "FGARCIA",
+					"p_user": this.userOperation,
 					"st_pva": ST_PVA,
 					"st_vvi": ST_VVI
 				}
@@ -1216,7 +1223,7 @@ sap.ui.define([
 			oGlobalBusyDialog.open();
 			var body={
 				"numValeVivere": codigo,
-				"p_user": "FGARCIA"
+				"p_user": this.userOperation
 			}
 			fetch(`${mainUrlServices}tripulantes/PDFValeViveres`,
 			  {
@@ -1244,7 +1251,7 @@ sap.ui.define([
 				this._PDFViewer2 = new sap.m.PDFViewer({
 					width:"auto",
 					source:_pdfurl, // my blob url
-					title: "Vale de Vívere",
+					title: "Vale de Víveres",
 					showDownloadButton:false
 				});
 				jQuery.sap.addUrlWhitelist("blob"); // register blob url as whitelist
@@ -1332,7 +1339,7 @@ sap.ui.define([
 				ESIMP:"I",
 				FCVVI:this.getFechaActual(),
 				HCVVI:this.getHoraActual(),
-				ACVVI:"FGARCIA",
+				ACVVI:this.userOperation,
 				FMVVI:"",
 				HMVVI:"000000",
 				AMVVI:"",
@@ -1346,7 +1353,7 @@ sap.ui.define([
 				"fieldsT_mensaje": [
 				  
 				],
-				"p_user": "FGARCIA",
+				"p_user": this.userOperation,
 				"st_pva": ST_PVA,
 				"st_vvi": ST_VVI
 			}

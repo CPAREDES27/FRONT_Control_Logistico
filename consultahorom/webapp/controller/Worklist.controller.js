@@ -47,6 +47,10 @@ sap.ui.define([
 			this.loadCombos();
 			
 		},
+		onAfterRendering: async function(){
+			this.userOperation =await this._getCurrentUser();
+			console.log(this.userOperation);
+		},
 		loadCombos: function(){
 			oGlobalBusyDialog.open();
 			var ZCDMMACOM=null;
@@ -280,7 +284,7 @@ sap.ui.define([
 				"p_cdemb": idEmbarcacion,
 				"p_ffevn": fechaFin,
 				"p_fievn": fechaIni,
-				"p_user": "FGARCIA"
+				"p_user": this.userOperation
 			  }
 			  console.log(body);
 			fetch(`${Utilities.onLocation()}consultahorometro/Listar/`,
@@ -688,7 +692,7 @@ sap.ui.define([
 								"p_cdemb": "",
 								"p_ffevn": fechaFin,
 								"p_fievn": fechaIni,
-								"p_user": "FGARCIA"
+								"p_user": this.userOperation
 							  }
 							  console.log(body);
 							fetch(`${Utilities.onLocation()}consultahorometro/Listar/`,

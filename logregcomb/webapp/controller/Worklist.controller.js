@@ -40,15 +40,16 @@ sap.ui.define([
 			this.byId("idAciertos").setValue("200");
 			
 		},
-		onAfterRendering: function(){
-			//this.callConstantes();
+		onAfterRendering: async function(){
+			this.userOperation =await this._getCurrentUser();
+			console.log(this.userOperation);
 		},
 
 		callConstantes: function(){
 			oGlobalBusyDialog.open();
 			var body={
 				"nombreConsulta": "CONSGENCONST",
-				"p_user": "FGARCIA",
+				"p_user": this.userOperation,
 				"parametro1": "IDCOMPH4",
 				"parametro2": "",
 				"parametro3": "",
@@ -516,7 +517,7 @@ sap.ui.define([
 					"p_canti": idAciertos,
 					"p_lcco": "X",
 					"p_tope": "L",
-					"p_user": "FGARCIA"
+					"p_user": this.userOperation
 				  }
 				  console.log(body);
 				fetch(`${Utilities.onLocation()}logregistrocombustible/Listar`,
@@ -729,7 +730,7 @@ sap.ui.define([
 				"p_canti": "0",
 				"p_lcco": "X",
 				"p_tope": "A",
-				"p_user": "FGARCIA",
+				"p_user": this.userOperation,
 				"str_lgcco": array
 			 };
 		  

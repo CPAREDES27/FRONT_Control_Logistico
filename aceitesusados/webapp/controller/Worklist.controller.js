@@ -65,6 +65,10 @@ sap.ui.define([
 			this.byId("idFecha").setValue(fechaActual);
 			
 		},
+		onAfterRendering: async function(){
+			this.userOperation =await this._getCurrentUser();
+			console.log(this.userOperation);
+		},
 		getFechaActual:function(){
 			var fecha=new Date();
 			var dia = fecha.getDate();
@@ -177,7 +181,7 @@ sap.ui.define([
 				var data = this.getView().getModel("Embarcacion").oData.listaEmbarcacion[indices].CDEMB;
 				var detail = this.getView().getModel("Embarcacion").oData.listaEmbarcacion[indices].NMEMB;
 				if(this.codEmbarca){
-					sap.ui.getCore().byId("idEmbarcacionNew").setValue(data);	
+					sap.ui.getCore().byId("inputId1_R").setValue(data);	
 					sap.ui.getCore().byId("txtEmbarcaNew").setText(detail);
 				}else{
 					this.byId("idEmbarcacion2").setValue(data);
@@ -736,7 +740,7 @@ sap.ui.define([
 							},
 							onLimpiarNuevo: function(){
 								sap.ui.getCore().byId("idFechaReservaNew").setValue("");
-								sap.ui.getCore().byId("idEmbarcacionNew").setValue("");
+								sap.ui.getCore().byId("inputId1_R").setValue("");
 								sap.ui.getCore().byId("idMaterialNew").setValue("");
 								sap.ui.getCore().byId("idAlmacenNew").setValue("");
 								sap.ui.getCore().byId("idGalonesNew").setValue("");
@@ -750,7 +754,7 @@ sap.ui.define([
 							onGuardar:  function(){
 								oGlobalBusyDialog.open();
 								var idFechaReservaNew=sap.ui.getCore().byId("idFechaReservaNew").getValue();
-								var idEmbarcacionNew=sap.ui.getCore().byId("idEmbarcacionNew").getValue();
+								var idEmbarcacionNew=sap.ui.getCore().byId("inputId1_R").getValue();
 								var idMaterialNew=sap.ui.getCore().byId("idMaterialNew").getSelectedKey();
 								var idCentroNew=sap.ui.getCore().byId("idCentroNew").getValue();
 								var idAlmacenNew=sap.ui.getCore().byId("idAlmacenNew").getSelectedKey();
@@ -772,7 +776,33 @@ sap.ui.define([
 								console.log(idNroTicketNew);
 								console.log(idRemisionNew);
 								console.log(idKilosNew);
-							
+								var message ="";
+								var estado=false;
+								if(!idEmbarcacionNew){
+									estado =true;
+									message+="El campo Embarcación no debe estar vacio\n"
+								}
+								if(!idMaterialNew){
+									estado=true;
+									message+="El campo no debe estar vacio\n";
+								}
+								if(!idAlmacenNew){
+									estado=true;
+									message+="El campo Embarcación no debe estar vacio\n";
+								}
+								if(!idKilosNew){
+									estado=true;
+									message+="El campo Total Peso en Kilos no debe estar vacio\n"
+								}
+								if(!idTipoMaterialNew){
+									estado=true;
+									message+="El campo Tipo Material no debe estar vacío\n"
+								}
+								if(estado){
+									MessageBox.error(message);
+									oGlobalBusyDialog.close();
+									return false;
+								}
 							
 								var body={
 									"fhrnv": idFechaReservaNew,
@@ -794,7 +824,7 @@ sap.ui.define([
 									"ip_tope": "NR",
 									"t_rpn": [
 									  {
-										"atcrn": "FGARCIA",
+										"atcrn": this.userOperation,
 										"atmfn": "",
 										"cdalm": idAlmacenNew,
 										"cdemb": idEmbarcacionNew,
@@ -880,7 +910,7 @@ sap.ui.define([
 										}
 									],
 									"order": "",
-									"p_user": "FGARCIA",
+									"p_user": this.userOperation,
 									"rowcount": 0,
 									"rowskips": 0,
 									"tabla": "ZFLPTA"
@@ -1148,8 +1178,8 @@ sap.ui.define([
 								var detail = this.getView().getModel("consultaMareas").oData.embarcaciones[indices].NMEMB;
 								if (this.currentInputEmba.includes("idEmbarcacion2")) {
 									this.byId("idEmbarcacion2").setValue(data);
-								}else if(this.currentInputEmba.includes("idEmbarcacionNew")){
-									sap.ui.getCore().byId("idEmbarcacionNew").setValue(data);
+								}else if(this.currentInputEmba.includes("inputId1_R")){
+									sap.ui.getCore().byId("inputId1_R").setValue(data);
 									sap.ui.getCore().byId("txtEmbarcaNew").setText(detail);
 								}
 								this.onCerrarEmba();
