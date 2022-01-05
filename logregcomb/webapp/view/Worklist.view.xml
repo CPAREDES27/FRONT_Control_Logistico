@@ -134,7 +134,7 @@
 					
 					<Column
 						id="iconEstado"
-						width="11rem"
+						width="7rem"
 						sortProperty="semana"
 						filterProperty="semana"
 						showFilterMenuEntry="true"
@@ -155,11 +155,12 @@
 
                 	<Column
 						id="fecha"
-						width="11rem"
-						sortProperty="fecha"
-						filterProperty="fecha"
+						width="9rem"
+						sortProperty="nrmar"
+						filterProperty="nrmar"
 						showFilterMenuEntry="true"
-						showSortMenuEntry="true">
+						showSortMenuEntry="true"
+						hAlign="End">
                        
 							<m:Label text="Marea" />
 						
@@ -171,11 +172,12 @@
                    
                     <Column
 						id="motorPrincipal"
-						width="11rem"
-						sortProperty="motorPrincipal"
-						filterProperty="motorPrincipal"
+						width="9rem"
+						sortProperty="werks"
+						filterProperty="werks"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
+						hAlign="End"
 						>
                        
                             <m:Label text="Embarcación" />
@@ -188,10 +190,11 @@
                     <Column
 						id="motorAuxiliar"
 						width="11rem"
-						sortProperty="motorAuxiliar"
-						filterProperty="motorAuxiliar"
+						sortProperty="fecon"
+						filterProperty="fecon"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
+						hAlign="End"
 						>
                         
                             <m:Label text="Fecha Contabilización" />
@@ -203,11 +206,12 @@
 					</Column>
                     <Column
 						id="motorAuxiliar2"
-						width="22rem"
-						sortProperty="motorAuxiliar2"
-						filterProperty="motorAuxiliar2"
+						width="12rem"
+						sortProperty="nrdco"
+						filterProperty="nrdco"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
+						hAlign="End"
 						>
                       
                             <m:Label text="Documento SAP Generado" />
@@ -219,11 +223,12 @@
 					</Column>
                     <Column
 						id="motorAuxiliar3"
-						width="11rem"
-						sortProperty="motorAuxiliar3"
-						filterProperty="motorAuxiliar3"
+						width="10rem"
+						sortProperty="dsimp"
+						filterProperty="dsimp"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
+						hAlign="End"
 						>
                          
                             <m:Label text="Tipo	Imputación" />
@@ -235,9 +240,9 @@
 					</Column>
                     <Column
 						id="motorAuxiliar4"
-						width="11rem"
-						sortProperty="motorAuxiliar4"
-						filterProperty="motorAuxiliar4"
+						width="10rem"
+						sortProperty="cncon"
+						filterProperty="cncon"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						hAlign="End">
@@ -251,11 +256,13 @@
 					</Column>
                     <Column
 						id="motorAuxiliar5"
-						width="11rem"
-						sortProperty="motorAuxiliar5"
-						filterProperty="motorAuxiliar5"
+						width="15rem"
+						sortProperty="dsobs"
+						filterProperty="dsobs"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
+						hAlign="End"
+
 						>
                          
                             <m:Label text="Observaciones" />
@@ -267,13 +274,13 @@
 					</Column>
                     <Column
 						id="panga"
-						width="11rem"
-						sortProperty="panga"						
-						filterProperty="panga"
+						width="9rem"
+						sortProperty="desc_ESPRO"						
+						filterProperty="desc_ESPRO"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
                         headerSpan="2,1"
-						
+						hAlign="End"
 						>
                         <m:Label text="Estado" textAlign="Center" width="100%"/>
 						<template>
