@@ -309,32 +309,37 @@ sap.ui.define([
 				{
 					label: 'Canti. desc. (Tn)',
 					property: 'CNPDS' ,
-					type: EdmType.String,
-					scale: 2
+					type: EdmType.Number,
+					scale: 3,
+					delimiter: true
 				},
 				{
 					label: 'Stock Inicial',
 					property: 'STCMB' ,
-					type: EdmType.String,
-					scale: 2
+					type: EdmType.Number,
+					scale: 3,
+					delimiter: true
 				},
 				{
 					label: 'Suministro',
 					property: 'CNSUM' ,
-					type: EdmType.String,
-					scale: 2
+					type: EdmType.Number,
+					scale: 3,
+					delimiter: true
 				},
 				{
 					label: 'Consumo',
 					property: 'CONSU' ,
-					type: EdmType.String,
-					scale: 2
+					type: EdmType.Number,
+					scale: 3,
+					delimiter: true
 				},
 				{
 					label: 'Stock Final',
 					property: 'STFIN' ,
-					type: EdmType.String,
-					scale: 2
+					type: EdmType.Number,
+					scale: 3,
+					delimiter: true
 				},
 				{
 					label: 'Zarpe MP',
