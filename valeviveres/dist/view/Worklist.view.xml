@@ -280,7 +280,11 @@
 					</OverflowToolbar>
 				</table:extension>
 				<table:columns editable="false">
-					<table:Column width="8rem">
+					<table:Column width="8rem"
+						sortProperty="NRVVI"
+						filterProperty="NRVVI"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
 						<table:label>
 							<Label text="Vale"/>
 						</table:label>
@@ -288,7 +292,11 @@
 							<Text text="{Vivere>NRVVI}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="8rem">
+					<table:Column width="8rem"
+						sortProperty="NMEMB"
+						filterProperty="NMEMB"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
 						<table:label>
 							<Label text="Embarcación"/>
 						</table:label>
@@ -296,7 +304,11 @@
 							<Text text="{Vivere>NMEMB}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="8rem">
+					<table:Column width="8rem"
+						sortProperty="NAME1"
+						filterProperty="NAME1"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
 						<table:label>
 							<Label text="Armador"/>
 						</table:label>
@@ -304,7 +316,11 @@
 							<Text text="{Vivere>NAME1}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="8rem">
+					<table:Column width="8rem"
+						sortProperty="DSALM"
+						filterProperty="DSALM"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
 						<table:label>
 							<Label text="Almacén"/>
 						</table:label>
@@ -312,7 +328,11 @@
 							<Text text="{Vivere>DSALM}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="8rem">
+					<table:Column width="8rem"
+						sortProperty="DESC_INPRP"
+						filterProperty="DESC_INPRP"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
 						<table:label>
 							<Label text="Ind. propiedad"/>
 						</table:label>
@@ -320,7 +340,11 @@
 							<Text text="{Vivere>DESC_INPRP}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="8rem">
+					<table:Column width="8rem"
+						sortProperty="DSTPO"
+						filterProperty="DSTPO"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
 						<table:label>
 							<Label text="Temporada"/>
 						</table:label>
@@ -328,7 +352,11 @@
 							<Text text="{Vivere>DSTPO}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="8rem">
+					<table:Column width="8rem"
+						sortProperty="FCVVI"
+						filterProperty="FCVVI"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
 						<table:label>
 							<Label text="Fecha"/>
 						</table:label>
@@ -336,7 +364,11 @@
 							<Text text="{Vivere>FCVVI}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="8rem">
+					<table:Column width="8rem"
+						sortProperty="DESC_ESVVI"
+						filterProperty="DESC_ESVVI"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
 						<table:label>
 							<Label text="Estado"/>
 						</table:label>
@@ -344,7 +376,11 @@
 							<Text text="{Vivere>DESC_ESVVI}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="8rem">
+					<table:Column width="8rem"
+						sortProperty="AUFNR"
+						filterProperty="AUFNR"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
 						<table:label>
 							<Label text="Orden extracción"/>
 						</table:label>
@@ -352,7 +388,11 @@
 							<Text text="{Vivere>AUFNR}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="8rem">
+					<table:Column width="8rem"
+						sortProperty="DESCR"
+						filterProperty="DESCR"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
 						<table:label>
 							<Label text="Planta"/>
 						</table:label>
@@ -360,7 +400,11 @@
 							<Text text="{Vivere>DESCR}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="8rem">
+					<table:Column width="8rem"
+						sortProperty="KOSTL"
+						filterProperty="KOSTL"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
 						<table:label>
 							<Label text="Centro costo"/>
 						</table:label>

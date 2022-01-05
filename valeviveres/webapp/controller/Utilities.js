@@ -1,5 +1,5 @@
 sap.ui.define([
-	"./utilities",
+	"./Utilities",
 ], function () {
 	"use strict";
 
