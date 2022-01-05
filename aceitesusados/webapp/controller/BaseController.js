@@ -47,6 +47,7 @@ sap.ui.define([
 		getResourceBundle : function () {
 			return this.getOwnerComponent().getModel("i18n").getResourceBundle();
 		},
+		
 		_getCurrentUser: async function(){
 
 			let oUshell = sap.ushell,

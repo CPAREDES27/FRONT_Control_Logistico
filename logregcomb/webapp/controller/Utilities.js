@@ -23,7 +23,7 @@ sap.ui.define([
 			}
 			console.log(service);
 			return service;
-		},
+		}
     }
 	
 });
