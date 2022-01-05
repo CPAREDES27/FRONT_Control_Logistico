@@ -119,7 +119,7 @@
 					</Column>
                 	<Column
 						id="fecha"
-						width="11rem"
+						width="8rem"
 						sortProperty="fecha"
 						filterProperty="fecha"
 						showFilterMenuEntry="true"
@@ -135,7 +135,7 @@
                    
                     <Column
 						id="motorPrincipal"
-						width="11rem"
+						width="8rem"
 						sortProperty="motorPrincipal"
 						filterProperty="motorPrincipal"
 						showFilterMenuEntry="true"
@@ -151,24 +151,19 @@
 
                                                 formatOptions:{
 
-                                                    minIntegerDigits:1,
-
-                                                    minFractionDigits:3,
-
-                                                    maxFractionDigits:3,
-
+                                                   
                                                     groupingEnabled:true,
 
                                                     groupingSeparator: ',',
 
-                                                    decimalSeparator: '.'
+                                                    decimalSeparator: ','
 
                                                 }}"/>
 						</template>
 					</Column>
                     <Column
 						id="motorAuxiliar"
-						width="11rem"
+						width="8rem"
 						sortProperty="motorAuxiliar"
 						filterProperty="motorAuxiliar"
 						showFilterMenuEntry="true"
@@ -179,12 +174,24 @@
                     
 						
 						<template>
-							<m:Text text="{Horometro>motorAuxiliar}" wrapping="false" />
+							<!--<m:Text text="{Horometro>motorAuxiliar}" wrapping="false" />-->
+							<m:Text text="{path:'Horometro>motorAuxiliar', type:'sap.ui.model.type.Float',
+
+                                                formatOptions:{
+
+                                                   
+                                                    groupingEnabled:true,
+
+                                                    groupingSeparator: ',',
+
+                                                    decimalSeparator: ','
+
+                                                }}" wrapping="false"/>
 						</template>
 					</Column>
                     <Column
 						id="motorAuxiliar2"
-						width="22rem"
+						width="8rem"
 						sortProperty="motorAuxiliar2"
 						filterProperty="motorAuxiliar2"
 						showFilterMenuEntry="true"
@@ -195,12 +202,24 @@
                      
 						
 						<template>
-							<m:Text text="{Horometro>motorAuxiliar2}"  />
+							<!--<m:Text text="{Horometro>motorAuxiliar2}"  />-->
+							<m:Text text="{path:'Horometro>motorAuxiliar2', type:'sap.ui.model.type.Float',
+
+                                                formatOptions:{
+
+                                                   
+                                                    groupingEnabled:true,
+
+                                                    groupingSeparator: ',',
+
+                                                    decimalSeparator: ','
+
+                                                }}" wrapping="false"/>
 						</template>
 					</Column>
                     <Column
 						id="motorAuxiliar3"
-						width="11rem"
+						width="8rem"
 						sortProperty="motorAuxiliar3"
 						filterProperty="motorAuxiliar3"
 						showFilterMenuEntry="true"
@@ -208,15 +227,27 @@
 						hAlign="End">
                          
                             <m:Label text="Motor Auxiliar 3" />
+							
                         
 						
 						<template>
-							<m:Text text="{Horometro>motorAuxiliar3}" wrapping="false" />
+							<!--<m:Text text="{Horometro>motorAuxiliar3}" wrapping="false" />-->
+							<m:Text text="{path:'Horometro>motorAuxiliar3', type:'sap.ui.model.type.Float',
+
+                                                formatOptions:{
+
+                                                   
+                                                    groupingEnabled:true,
+
+                                                    groupingSeparator: ',',
+
+                                                    decimalSeparator: ','
+                                                }}" wrapping="false"/>
 						</template>
 					</Column>
                     <Column
 						id="motorAuxiliar4"
-						width="11rem"
+						width="8rem"
 						sortProperty="motorAuxiliar4"
 						filterProperty="motorAuxiliar4"
 						showFilterMenuEntry="true"
@@ -227,12 +258,24 @@
                  
 						
 						<template>
-							<m:Text text="{Horometro>motorAuxiliar4}" wrapping="false" />
+							<!--<m:Text text="{Horometro>motorAuxiliar4}" wrapping="false" />-->
+							<m:Text text="{path:'Horometro>motorAuxiliar4', type:'sap.ui.model.type.Float',
+
+                                                formatOptions:{
+
+                                                   
+                                                    groupingEnabled:true,
+
+                                                    groupingSeparator: ',',
+
+                                                    decimalSeparator: ','
+
+                                                }}" wrapping="false"/>
 						</template>
 					</Column>
                     <Column
 						id="motorAuxiliar5"
-						width="11rem"
+						width="8rem"
 						sortProperty="motorAuxiliar5"
 						filterProperty="motorAuxiliar5"
 						showFilterMenuEntry="true"
@@ -243,12 +286,24 @@
                    
 						
 						<template>
-							<m:Text text="{Horometro>motorAuxiliar5}" wrapping="false" />
+							<!--<m:Text text="{Horometro>motorAuxiliar5}" wrapping="false" />-->
+							<m:Text text="{path:'Horometro>motorAuxiliar5', type:'sap.ui.model.type.Float',
+
+                                                formatOptions:{
+
+                                                   
+                                                    groupingEnabled:true,
+
+                                                    groupingSeparator: ',',
+
+                                                    decimalSeparator: ','
+
+                                                }}" wrapping="false"/>
 						</template>
 					</Column>
                     <Column
 						id="panga"
-						width="11rem"
+						width="8rem"
 						sortProperty="panga"						
 						filterProperty="panga"
 						showFilterMenuEntry="true"
@@ -272,7 +327,19 @@
 						>
                         <m:Label text="Flujómetro de Panga" textAlign="Center" width="100%"/>
 						<template>
-							<m:Text  text="{Horometro>flujometro}" wrapping="false" />
+							<!--<m:Text  text="{Horometro>flujometro}" wrapping="false" />-->
+							<m:Text text="{path:'Horometro>flujometro', type:'sap.ui.model.type.Float',
+
+                                                formatOptions:{
+
+                                                   
+                                                    groupingEnabled:true,
+
+                                                    groupingSeparator: ',',
+
+                                                    decimalSeparator: ','
+
+                                                }}" wrapping="false"/>
 						</template>
 					</Column>
                     
