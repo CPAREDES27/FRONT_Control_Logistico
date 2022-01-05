@@ -186,7 +186,7 @@
                                                 <Label text="Inicio travesía" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <DatePicker id="idFechaTravesiaIni" change="setValue" width="auto" displayFormat="dd/MM/yyyy"  required="false" valueStateText="Invalid entry" enabled="true" visible="true" />
+                                                <DatePicker id="idFechaTravesiaIni" change="setValue" width="auto" displayFormat="dd/MM/yyyy" valueFormat="dd/MM/yyyy"  required="false" valueStateText="Invalid entry" enabled="true" visible="true" />
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -194,7 +194,7 @@
                                                 <Label text="Fin de travesía" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <DatePicker width="auto" change="setValue" id="idFechaTravesiaFin" displayFormat="dd/MM/yyyy"  required="false" valueStateText="Invalid entry" enabled="true" visible="true" />
+                                                <DatePicker width="auto" change="setValue" id="idFechaTravesiaFin" displayFormat="dd/MM/yyyy" valueFormat="dd/MM/yyyy"   required="false" valueStateText="Invalid entry" enabled="true" visible="true" />
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true" id="idFormTripulante">

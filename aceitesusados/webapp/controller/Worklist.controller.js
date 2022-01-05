@@ -11,7 +11,8 @@ sap.ui.define([
 	'sap/ui/export/library',
 	'sap/ui/export/Spreadsheet',
 	"sap/m/MessageToast",
-	"sap/ui/core/BusyIndicator"
+	"sap/ui/core/BusyIndicator",
+	"./Utilities",
 ], function (BaseController,
 	JSONModel,
 	formatter,
@@ -24,7 +25,8 @@ sap.ui.define([
 	exportLibrary,
 	Spreadsheet,
 	MessageToast,
-	BusyIndicator) {
+	BusyIndicator,
+	Utilities) {
 	"use strict";
 	const mainUrlServices = 'https://cf-nodejs-qas.cfapps.us10.hana.ondemand.com/api/';
 	var oGlobalBusyDialog = new sap.m.BusyDialog();
@@ -114,7 +116,7 @@ sap.ui.define([
 				  
 				]
 			};
-			await fetch(`${mainUrlServices}dominios/Listar`,
+			await fetch(`${Utilities.onLocation()}dominios/Listar`,
 				  {
 					  method: 'POST',
 					  body: JSON.stringify(body)
@@ -272,7 +274,7 @@ sap.ui.define([
 					"p_user": "BUSQEMB"
 				  }
 				  console.log(body);
-				fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+				fetch(`${Utilities.onLocation()}embarcacion/ConsultarEmbarcacion/`,
 					  {
 						  method: 'POST',
 						  body: JSON.stringify(body)
@@ -364,7 +366,7 @@ sap.ui.define([
 					"ip_tope": "FR"
 				};
 				console.log(body);
-				fetch(`${mainUrlServices}aceitesusados/Listar`,
+				fetch(`${Utilities.onLocation()}aceitesusados/Listar`,
 					  {
 						  method: 'POST',
 						  body: JSON.stringify(body)
@@ -705,7 +707,7 @@ sap.ui.define([
 								}
 								console.log(bodyGuardar);
 							 
-								 fetch(`${mainUrlServices}aceitesusados/Anular`,
+								 fetch(`${Utilities.onLocation()}aceitesusados/Anular`,
 									{
 										method: 'POST',
 										body: JSON.stringify(bodyGuardar)
@@ -823,7 +825,7 @@ sap.ui.define([
 									]
 								  };
 								  console.log(body);
-								  fetch(`${mainUrlServices}aceitesusados/Nuevo`,
+								  fetch(`${Utilities.onLocation()}aceitesusados/Nuevo`,
 									{
 										method: 'POST',
 										body: JSON.stringify(body)
@@ -883,7 +885,7 @@ sap.ui.define([
 									"rowskips": 0,
 									"tabla": "ZFLPTA"
 								  }
-								  await	 fetch(`${mainUrlServices}General/Read_Table/`,
+								  await	 fetch(`${Utilities.onLocation()}General/Read_Table/`,
 									{
 										method: 'POST',
 										body: JSON.stringify(body)
@@ -1005,7 +1007,7 @@ sap.ui.define([
 									//"p_pag": "1" //por defecto la primera parte
 								};
 					
-								fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+								fetch(`${Utilities.onLocation()}embarcacion/ConsultarEmbarcacion/`,
 									{
 										method: 'POST',
 										body: JSON.stringify(body)
@@ -1107,7 +1109,7 @@ sap.ui.define([
 									"p_pag": this.currentPage
 								};
 					
-								fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+								fetch(`${Utilities.onLocation()}embarcacion/ConsultarEmbarcacion/`,
 									{
 										method: 'POST',
 										body: JSON.stringify(body)

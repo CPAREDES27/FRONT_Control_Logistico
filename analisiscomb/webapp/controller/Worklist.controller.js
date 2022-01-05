@@ -10,7 +10,8 @@ sap.ui.define([
     "sap/ui/core/util/Export",
 	'sap/ui/export/library',
 	'sap/ui/export/Spreadsheet',
-	"sap/ui/core/BusyIndicator"
+	"sap/ui/core/BusyIndicator",
+	"./Utilities",
 ], function (BaseController,
 	JSONModel,
 	formatter,
@@ -22,7 +23,8 @@ sap.ui.define([
 	Export,
 	exportLibrary,
 	Spreadsheet,
-	BusyIndicator) {
+	BusyIndicator,
+	Utilities) {
 	"use strict";
 	const mainUrlServices = 'https://cf-nodejs-qas.cfapps.us10.hana.ondemand.com/api/';
 	var oGlobalBusyDialog = new sap.m.BusyDialog();
@@ -83,7 +85,7 @@ sap.ui.define([
 				]
 			  }
 
-			  fetch(`${mainUrlServices}dominios/Listar`,
+			  fetch(`${Utilities.onLocation()}dominios/Listar`,
 			  {
 				  method: 'POST',
 				  body: JSON.stringify(body)
@@ -155,7 +157,7 @@ sap.ui.define([
 			}
 			console.log(body);
 		
-			fetch(`${mainUrlServices}analisiscombustible/Listar`,
+			fetch(`${Utilities.onLocation()}analisiscombustible/Listar`,
 			  {
 				  method: 'POST',
 				  body: JSON.stringify(body)
@@ -694,7 +696,7 @@ sap.ui.define([
 			}
 
 			console.log(body);
-			fetch(`${mainUrlServices}logregistrocombustible/Nuevo`,
+			fetch(`${Utilities.onLocation()}logregistrocombustible/Nuevo`,
 			  {
 				  method: 'POST',
 				  body: JSON.stringify(body)
@@ -753,7 +755,7 @@ sap.ui.define([
 				"pRow": idCant
 			}
 			console.log(body);
-			fetch(`${mainUrlServices}analisiscombustible/QlikView`,
+			fetch(`${Utilities.onLocation()}analisiscombustible/QlikView`,
 			{
 				method: 'POST',
 				body: JSON.stringify(body)
@@ -1125,7 +1127,7 @@ sap.ui.define([
 				"p_user": "FGARCIA"
 			}
 
-			await fetch(`${mainUrlServices}analisiscombustible/Detalle`,
+			await fetch(`${Utilities.onLocation()}analisiscombustible/Detalle`,
 			  {
 				  method: 'POST',
 				  body: JSON.stringify(body)
@@ -1148,7 +1150,7 @@ sap.ui.define([
 				"p_user": "FGARCIA"
 			}
 
-			await fetch(`${mainUrlServices}analisiscombustible/Detalles`,
+			await fetch(`${Utilities.onLocation()}analisiscombustible/Detalles`,
 			  {
 				  method: 'POST',
 				  body: JSON.stringify(body)
@@ -1280,7 +1282,7 @@ sap.ui.define([
 				"fechaFin": this.fechaFin,
 				"fechaIni": this.fechaInicio
 			};
-			await fetch(`${mainUrlServices}analisiscombustible/AnalisisCombu`,
+			await fetch(`${Utilities.onLocation()}analisiscombustible/AnalisisCombu`,
 			{
 				method: 'POST',
 				body: JSON.stringify(body)
@@ -1413,7 +1415,7 @@ sap.ui.define([
 				//"p_pag": "1" //por defecto la primera parte
 			};
 
-			fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+			fetch(`${Utilities.onLocation()}embarcacion/ConsultarEmbarcacion/`,
 				{
 					method: 'POST',
 					body: JSON.stringify(body)
@@ -1515,7 +1517,7 @@ sap.ui.define([
 				"p_pag": this.currentPage
 			};
 
-			fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+			fetch(`${Utilities.onLocation()}embarcacion/ConsultarEmbarcacion/`,
 				{
 					method: 'POST',
 					body: JSON.stringify(body)
@@ -1930,7 +1932,7 @@ sap.ui.define([
 			}
 			
 			console.log(body);
-			 fetch(`${mainUrlServices}General/Update_Table2`,
+			 fetch(`${Utilities.onLocation()}General/Update_Table2`,
 			{
 				method: 'POST',
 				body: JSON.stringify(body)
@@ -1973,7 +1975,7 @@ sap.ui.define([
 				"tabla": "ZFLOCC"
 			  }
 			
-			await fetch(`${mainUrlServices}General/Read_Table`,
+			await fetch(`${Utilities.onLocation()}General/Read_Table`,
 			  {
 				  method: 'POST',
 				  body: JSON.stringify(body)

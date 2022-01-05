@@ -15,8 +15,9 @@ sap.ui.define([
     "sap/ui/core/util/Export",
 	'sap/ui/export/library',
 	'sap/ui/export/Spreadsheet',
-	"sap/ui/core/BusyIndicator"
-], function (BaseController, JSONModel, formatter, Filter, FilterOperator,Fragment,MessageBox,MessageToast,ValidateException,Core,Popup,PDFViewer,ExportTypeCSV,Export,exportLibrary,Spreadsheet,BusyIndicator) {
+	"sap/ui/core/BusyIndicator",
+	"./Utilities"
+], function (BaseController, JSONModel, formatter, Filter, FilterOperator,Fragment,MessageBox,MessageToast,ValidateException,Core,Popup,PDFViewer,ExportTypeCSV,Export,exportLibrary,Spreadsheet,BusyIndicator,Utilities) {
 	"use strict";
 	var oGlobalBusyDialog = new sap.m.BusyDialog();
 	const mainUrlServices = 'https://cf-nodejs-qas.cfapps.us10.hana.ondemand.com/api/';
@@ -61,7 +62,7 @@ sap.ui.define([
 				  }
 				]
 			}
-			fetch(`${mainUrlServices}dominios/Listar`,
+			fetch(`${Utilities.onLocation()}dominios/Listar`,
 			  {
 				  method: 'POST',
 				  body: JSON.stringify(body)
@@ -195,6 +196,7 @@ sap.ui.define([
 			this.byId("idCentro").setValue("");
 			this.byId("cboTemporada").setValue("");
 			this.byId("idCantidad").setValue("200");
+			this.byId("idPlantaIni").setDescription("");
 			this.getView().getModel("Vivere").setProperty("/listaVivere","");
 			
 		},
@@ -271,7 +273,7 @@ sap.ui.define([
 				"rowskips": 0,
 				"tabla": "KNA1"
 			  }
-			  fetch(`${mainUrlServices}General/Read_table/`,
+			  fetch(`${Utilities.onLocation()}General/Read_table/`,
 				  {
 					  method: 'POST',
 					  body: JSON.stringify(body)
@@ -298,7 +300,7 @@ sap.ui.define([
 				"nombreAyuda": "BSQPLANTAS",
 				"p_user": "FGARCIA"
 			  }
-			  fetch(`${mainUrlServices}General/AyudasBusqueda`,
+			  fetch(`${Utilities.onLocation()}General/AyudasBusqueda`,
 			  {
 				  method: 'POST',
 				  body: JSON.stringify(dataPlantas)
@@ -320,7 +322,7 @@ sap.ui.define([
 				"nombreAyuda": "BSQALMACEN",
 				"p_user": "FGARCIA"
 			  }
-			  fetch(`${mainUrlServices}General/AyudasBusqueda`,
+			  fetch(`${Utilities.onLocation()}General/AyudasBusqueda`,
 			  {
 				  method: 'POST',
 				  body: JSON.stringify(dataPlantas)
@@ -532,7 +534,7 @@ sap.ui.define([
 				"rowcount": idCantidad
 			};
 			oGlobalBusyDialog.open();
-			fetch(`${mainUrlServices}valeviveres/Listar/`,
+			fetch(`${Utilities.onLocation()}valeviveres/Listar/`,
 			  {
 				  method: 'POST',
 				  body: JSON.stringify(body)
@@ -568,6 +570,7 @@ sap.ui.define([
 			sap.ui.getCore().byId("idVale").setValue(this.valeVivere.NRVVI);
 		},
 		onImprimir: function(detail){
+			oGlobalBusyDialog.open();
 			var codigo="";
 			if(detail==="detail"){
 				
@@ -580,7 +583,7 @@ sap.ui.define([
 				"numValeVivere": codigo,
 				"p_user": "FGARCIA"
 			}
-			fetch(`${mainUrlServices}tripulantes/PDFValeViveres`,
+			fetch(`${Utilities.onLocation()}tripulantes/PDFValeViveres`,
 			  {
 				  method: 'POST',
 				  body: JSON.stringify(body)
@@ -588,7 +591,7 @@ sap.ui.define([
 			  .then(resp => resp.json()).then(data => {
 				
 				this.showPDF(data.base64);
-				
+				oGlobalBusyDialog.close();
 			  }).catch(error => console.log(error)
 			  );
 		},
@@ -605,7 +608,9 @@ sap.ui.define([
 			if(!this._PDFViewer2){
 				this._PDFViewer2 = new sap.m.PDFViewer({
 					width:"auto",
-					source:_pdfurl // my blob url
+					source:_pdfurl, // my blob url
+					title: "Vale de Víveres",
+					showDownloadButton:false
 				});
 				jQuery.sap.addUrlWhitelist("blob"); // register blob url as whitelist
 		   }
@@ -632,7 +637,7 @@ sap.ui.define([
 				"p_vale": codeVive
 			}
 			oGlobalBusyDialog.open();
-			fetch(`${mainUrlServices}valeviveres/AnularValev`,
+			fetch(`${Utilities.onLocation()}valeviveres/AnularValev`,
 			  {
 				  method: 'POST',
 				  body: JSON.stringify(body)
@@ -701,7 +706,7 @@ sap.ui.define([
 				"p_code": array,
 				"p_user": "FGARCIA"
 			}
-			await fetch(`${mainUrlServices}valeviveres/DetalleImpresionViveres`,
+			await fetch(`${Utilities.onLocation()}valeviveres/DetalleImpresionViveres`,
 			  {
 				  method: 'POST',
 				  body: JSON.stringify(body)
@@ -1101,7 +1106,7 @@ sap.ui.define([
 				"p_user": "BUSQEMB",
 			};
 
-			fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+			fetch(`${Utilities.onLocation()}embarcacion/ConsultarEmbarcacion/`,
 				{
 					method: 'POST',
 					body: JSON.stringify(body)
@@ -1203,7 +1208,7 @@ sap.ui.define([
 				"p_pag": this.currentPage
 			};
 
-			fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+			fetch(`${Utilities.onLocation()}embarcacion/ConsultarEmbarcacion/`,
 				{
 					method: 'POST',
 					body: JSON.stringify(body)

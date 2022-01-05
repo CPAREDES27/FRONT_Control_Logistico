@@ -10,9 +10,10 @@ sap.ui.define([
 	'sap/ui/export/library',
 	'sap/ui/export/Spreadsheet',	
 	"sap/ui/core/BusyIndicator",
-	"sap/ui/core/Fragment"
+	"sap/ui/core/Fragment",
+	"./Utilities"
 ], function (BaseController, JSONModel, formatter, Filter, FilterOperator,MessageBox,ExportTypeCSV,Export,exportLibrary,
-	Spreadsheet,BusyIndicator,Fragment) {
+	Spreadsheet,BusyIndicator,Fragment,Utilities) {
 	"use strict";
 	const mainUrlServices = 'https://cf-nodejs-qas.cfapps.us10.hana.ondemand.com/api/';
 	var oGlobalBusyDialog = new sap.m.BusyDialog();
@@ -54,7 +55,7 @@ sap.ui.define([
 				"parametro4": "",
 				"parametro5": ""
 			}
-			fetch(`${mainUrlServices}General/ConsultaGeneral/`,
+			fetch(`${Utilities.onLocation()}General/ConsultaGeneral/`,
 				  {
 					  method: 'POST',
 					  body: JSON.stringify(body)
@@ -156,7 +157,7 @@ sap.ui.define([
 				"p_user": "BUSQEMB"
 			  }
 			  console.log(body);
-			fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+			fetch(`${Utilities.onLocation()}embarcacion/ConsultarEmbarcacion/`,
 				  {
 					  method: 'POST',
 					  body: JSON.stringify(body)
@@ -206,7 +207,7 @@ sap.ui.define([
 					  }				  
 				]
 			  }
-			fetch(`${mainUrlServices}dominios/Listar`,
+			fetch(`${Utilities.onLocation()}dominios/Listar`,
 				  {
 					  method: 'POST',
 					  body: JSON.stringify(body)
@@ -351,7 +352,7 @@ sap.ui.define([
 					"p_user": "BUSQEMB"
 				  }
 				  console.log(body);
-				fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+				fetch(`${Utilities.onLocation()}embarcacion/ConsultarEmbarcacion/`,
 					  {
 						  method: 'POST',
 						  body: JSON.stringify(body)
@@ -518,7 +519,7 @@ sap.ui.define([
 					"p_user": "FGARCIA"
 				  }
 				  console.log(body);
-				fetch(`${mainUrlServices}logregistrocombustible/Listar`,
+				fetch(`${Utilities.onLocation()}logregistrocombustible/Listar`,
 				  {
 					  method: 'POST',
 					  body: JSON.stringify(body)
@@ -734,7 +735,7 @@ sap.ui.define([
 		  
 			console.log(bodyGuardar);
 		 
-			 fetch(`${mainUrlServices}logregistrocombustible/Listar`,
+			 fetch(`${Utilities.onLocation()}logregistrocombustible/Listar`,
 				{
 					method: 'POST',
 					body: JSON.stringify(bodyGuardar)
@@ -980,7 +981,7 @@ sap.ui.define([
 				//"p_pag": "1" //por defecto la primera parte
 			};
 
-			fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+			fetch(`${Utilities.onLocation()}embarcacion/ConsultarEmbarcacion/`,
 				{
 					method: 'POST',
 					body: JSON.stringify(body)
@@ -1082,7 +1083,7 @@ sap.ui.define([
 				"p_pag": this.currentPage
 			};
 
-			fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+			fetch(`${Utilities.onLocation()}embarcacion/ConsultarEmbarcacion/`,
 				{
 					method: 'POST',
 					body: JSON.stringify(body)

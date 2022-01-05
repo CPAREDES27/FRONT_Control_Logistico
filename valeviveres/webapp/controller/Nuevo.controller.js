@@ -806,7 +806,7 @@ sap.ui.define([
 				m=this.zeroFill(m,2);
 			}
 			var numeroDias=this.generaFechas();
-			if(numeroDias+1>=7){
+			if(numeroDias+1>7){
 				MessageBox.error(" La duración de la travesía no debe ser mayor a la permitida: 7 día(s) ");
 				oGlobalBusyDialog.close();
 				return false;
@@ -877,7 +877,7 @@ sap.ui.define([
 		
 			console.log(cantidad);
 			var numeroDias=this.generaFechas();
-			if(numeroDias+1>=7){
+			if(numeroDias+1>7){
 				MessageBox.error(" La duración de la travesía no debe ser mayor a la permitida: 7 día(s) ");
 				oGlobalBusyDialog.close();
 				return false;
@@ -1243,7 +1243,9 @@ sap.ui.define([
 			if(!this._PDFViewer2){
 				this._PDFViewer2 = new sap.m.PDFViewer({
 					width:"auto",
-					source:_pdfurl // my blob url
+					source:_pdfurl, // my blob url
+					title: "Vale de Vívere",
+					showDownloadButton:false
 				});
 				jQuery.sap.addUrlWhitelist("blob"); // register blob url as whitelist
 		   }
