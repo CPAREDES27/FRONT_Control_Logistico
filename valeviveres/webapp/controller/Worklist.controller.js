@@ -44,6 +44,7 @@ sap.ui.define([
 			this.listPlanta();	
 			this.listAlmacen();
 			this.listaCombos();
+			this.UserOperation = _getCurrentUser();
 			
 		},
 		listaCombos: function(){
