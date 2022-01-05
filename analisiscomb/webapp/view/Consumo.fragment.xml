@@ -130,7 +130,7 @@
 			    <t:columns>
 
 
-                	<t:Column
+                	<t:Column hAlign="End"
 						id="NRMAR"
 						width="11rem"
 						sortProperty="NRMAR"
@@ -142,7 +142,7 @@
 							<Text text="{Analisis>DESC_CDTEV}" wrapping="false" />
 						</t:template>
 					</t:Column>
-                    <t:Column
+                    <t:Column hAlign="End"
 						id="NRDES"
 						width="11rem"
 						sortProperty="NRDES"
@@ -154,7 +154,7 @@
 							<Text text="{Analisis>FIEVN} {ConsumoTwo>HIEVN}" wrapping="false" />
 						</t:template>
 					</t:Column>
-                    <t:Column
+                    <t:Column hAlign="End"
 						id="DESCR"
 						width="11rem"
 						sortProperty="DESCR"
@@ -182,7 +182,7 @@
                                                 }}"/>
 						</t:template>
 					</t:Column>
-                    <t:Column
+                    <t:Column hAlign="End"
 						id="HORPR"
 						width="11rem"
 						sortProperty="HORPR"
@@ -192,11 +192,21 @@
                         visible="true">
 						<Label text="MP" />
 						<t:template>
-							<Text text="{Analisis>HORPR}" wrapping="false" />
+							<Text text="{path:'Analisis>HORPR', type:'sap.ui.model.type.Float',
+
+                                                formatOptions:{
+                                                  
+                                                    groupingEnabled:true,
+
+                                                    groupingSeparator: ',',
+
+                                                    decimalSeparator: '.'
+
+                                                }}"/>
 						</t:template>
 					</t:Column>
                     
-                    <t:Column
+                    <t:Column hAlign="End"
 						id="FIDES"
 						width="11rem"
 						sortProperty="FIDES"
@@ -205,10 +215,21 @@
 						showSortMenuEntry="true">
 						<Label text="A1" />
 						<t:template>
-							<Text text="{Analisis>HORA1} {ConsumoTwo>HIDES}" wrapping="false" />
+							<!--<Text text="{Analisis>HORA1} {ConsumoTwo>HIDES}" wrapping="false" />-->
+							<Text text="{path:'Analisis>HORA1', type:'sap.ui.model.type.Float',
+
+                                                formatOptions:{
+                                                  
+                                                    groupingEnabled:true,
+
+                                                    groupingSeparator: ',',
+
+                                                    decimalSeparator: '.'
+
+                                                }}{ConsumoTwo>HIDES}"/>
 						</t:template>
 					</t:Column>
-                    <t:Column
+                    <t:Column hAlign="End"
 						id="FFDES"
 						width="11rem"
 						sortProperty="FFDES"
@@ -217,7 +238,17 @@
 						showSortMenuEntry="true">
 						<Label text="A2" />
 						<t:template>
-							<Text text="{Analisis>HORA2}" wrapping="false" />
+							<Text text="{path:'Analisis>HORA2', type:'sap.ui.model.type.Float',
+
+                                                formatOptions:{
+                                                  
+                                                    groupingEnabled:true,
+
+                                                    groupingSeparator: ',',
+
+                                                    decimalSeparator: '.'
+
+                                                }}"/>
 						</t:template>
 					</t:Column>
                     <t:Column
@@ -230,10 +261,20 @@
 						hAlign="End">
 						<Label text="A3" />
 						<t:template>
-							<Text text="{Analisis>HORA3}" wrapping="false" />
+							<Text text="{path:'Analisis>HORA3', type:'sap.ui.model.type.Float',
+
+                                                formatOptions:{
+                                                  
+                                                    groupingEnabled:true,
+
+                                                    groupingSeparator: ',',
+
+                                                    decimalSeparator: '.'
+
+                                                }}"/>
 						</t:template>
 					</t:Column>
-                    <t:Column
+                    <t:Column hAlign="End"
 						id="FECCONMOV"
 						width="11rem"
 						sortProperty="FECCONMOV"
@@ -242,10 +283,20 @@
 						showSortMenuEntry="true">
 						<Label text="A4" />
 						<t:template>
-							<Text text="{Analisis>HORA4}" wrapping="false" />
+							<Text text="{path:'Analisis>HORA4', type:'sap.ui.model.type.Float',
+
+                                                formatOptions:{
+                                                  
+                                                    groupingEnabled:true,
+
+                                                    groupingSeparator: ',',
+
+                                                    decimalSeparator: '.'
+
+                                                }}"/>
 						</t:template>
 					</t:Column>
-                    <t:Column
+                    <t:Column hAlign="End"
 						id="NMEMB"
 						width="11rem"
 						sortProperty="NMEMB"
@@ -254,10 +305,20 @@
 						showSortMenuEntry="true">
 						<Label text="Panga" />
 						<t:template>
-							<Text text="{Analisis>HORPA}" wrapping="false" />
+							<Text text="{path:'Analisis>HORPA', type:'sap.ui.model.type.Float',
+
+                                                formatOptions:{
+                                                  
+                                                    groupingEnabled:true,
+
+                                                    groupingSeparator: ',',
+
+                                                    decimalSeparator: '.'
+
+                                                }}"/>
 						</t:template>
 					</t:Column>
-                    <t:Column
+                    <t:Column hAlign="End"
 						id="NAME1"
 						width="11rem"
 						sortProperty="NAME1"
@@ -266,11 +327,21 @@
 						showSortMenuEntry="true">
 						<Label text="Fluj." />
 						<t:template>
-							<Text text="{Analisis>HORFL}" wrapping="false" />
+							<Text text="{path:'Analisis>HORFL', type:'sap.ui.model.type.Float',
+
+                                                formatOptions:{
+                                                  
+                                                    groupingEnabled:true,
+
+                                                    groupingSeparator: ',',
+
+                                                    decimalSeparator: '.'
+
+                                                }}"/>
 						</t:template>
 					</t:Column>
-                    <t:Column
-						id="PRCTP"
+                    <t:Column 
+						id="PRCTP" 
 						width="11rem"
 						sortProperty="PRCTP"
 						filterProperty="PRCTP"
@@ -394,7 +465,7 @@
                                                 }}"/>
 						</t:template>
 					</t:Column>
-                    <t:Column
+                    <t:Column hAlign="End"
 						id=""
 						width="11rem"
 						sortProperty="HORPR"
@@ -405,7 +476,17 @@
 						
 						<Label text="MP" />
 						<t:template>
-							<Text text="{Reporte>HORPR}" wrapping="false" />
+							<Text text="{path:'Reporte>HORPR', type:'sap.ui.model.type.Float',
+
+                                                formatOptions:{
+                                                  
+                                                    groupingEnabled:true,
+
+                                                    groupingSeparator: ',',
+
+                                                    decimalSeparator: '.'
+
+                                                }}"/>
 						</t:template>
 					</t:Column>
                     
@@ -419,7 +500,7 @@
 						hAlign="End">
 						<Label text="A1" />
 						<t:template>
-							<Text text="{Reporte>HORA1} {ConsumoTwo>HIDES}" wrapping="false" />
+							<Text text="{Reporte>HORA1} {ConsumoTwo>HIDES}" wrapping="false" />								
 						</t:template>
 					</t:Column>
                     <t:Column
@@ -432,7 +513,7 @@
 						hAlign="End">
 						<Label text="A2" />
 						<t:template>
-							<Text text="{Reporte>HORA2}" wrapping="false" />
+							<Text text="{Reporte>HORA2}" wrapping="false"/>							
 						</t:template>
 					</t:Column>
                     <t:Column
@@ -445,7 +526,7 @@
 						hAlign="End">
 						<Label text="A3" />
 						<t:template>
-							<Text text="{Reporte>HORA3}" wrapping="false" />
+							<Text text="{Reporte>HORA3}" wrapping="false"/>							
 						</t:template>
 					</t:Column>
                     <t:Column
@@ -458,7 +539,7 @@
 						hAlign="End">
 						<Label text="A4" />
 						<t:template>
-							<Text text="{Reporte>HORA4}" wrapping="false" />
+							<Text text="{Reporte>HORPA}" wrapping="false"/>
 						</t:template>
 					</t:Column>
                     <t:Column
@@ -471,7 +552,7 @@
 						hAlign="End">
 						<Label text="Panga" />
 						<t:template>
-							<Text text="{Reporte>HORPA}" wrapping="false" />
+							<Text text="{Reporte>HORPA}" wrapping="false"/>
 						</t:template>
 					</t:Column>
                     <t:Column
@@ -484,7 +565,7 @@
 						hAlign="End">
 						<Label text="Fluj." />
 						<t:template>
-							<Text text="{Reporte>HORFL}" wrapping="false" />
+							<Text text="{Reporte>HORFL}" wrapping="false"/>
 						</t:template>
 					</t:Column>
 					<t:Column
@@ -497,7 +578,14 @@
 						hAlign="End">
 						<Label text="Real" />
 						<t:template>
-							<Text text="{Reporte>CNSRE}" wrapping="false" />
+								<Text text="{path:'Reporte>CNSRE', type:'sap.ui.model.type.Float',
+												formatOptions:{
+													style: 'short',
+													decimals: 2,
+													shortDecimals: 2,
+													groupingSeparator: ',',
+													decimalSeparator: '.'
+												}}" wrapping="false"/>
 						</t:template>
 					</t:Column>
                     <t:Column
@@ -510,7 +598,14 @@
 						hAlign="End">
 						<Label text="Teórico" />
 						<t:template>
-							<Text text="{Reporte>CHTER}" wrapping="false" />
+							<Text text="{path:'Reporte>CHTER', type:'sap.ui.model.type.Float',
+												formatOptions:{
+													style: 'short',
+													decimals: 2,
+													shortDecimals: 2,
+													groupingSeparator: ',',
+													decimalSeparator: '.'
+												}}" wrapping="false"/>
 						</t:template>
 					</t:Column>
                     <t:Column width="6rem" hAlign="Center">
