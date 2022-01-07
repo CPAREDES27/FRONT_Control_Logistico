@@ -63,7 +63,6 @@ sap.ui.define([
 			var fecha=this.getFechaActual();
 			var fechaActual = fecha+" - "+fecha;
 			this.byId("idFecha").setValue(fechaActual);
-			
 		},
 		onAfterRendering: async function(){
 			this.userOperation =await this._getCurrentUser();

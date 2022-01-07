@@ -38,6 +38,45 @@ sap.ui.define([
 		setModel : function (oModel, sName) {
 			return this.getView().setModel(oModel, sName);
 		},
+		_getCurrentUser: async function(){
+
+			let oUshell = sap.ushell,
+
+			oUser={};
+
+			if(oUshell){
+
+				let oUserInfo =await sap.ushell.Container.getServiceAsync("UserInfo");
+
+				let sEmail = oUserInfo.getEmail().toUpperCase(),
+
+				sName = sEmail.split("@")[0],
+
+				sDominio= sEmail.split("@")[1];
+
+				if(sDominio === "XTERNAL.BIZ") sName = "FGARCIA";
+
+				oUser = {
+
+					name:sName
+
+				}
+
+			}else{
+
+				oUser = {
+
+					name: "FGARCIA"
+
+				}
+
+			}
+
+			this.usuario=oUser.name;
+			console.log(this.usuario);
+			return this.usuario;
+
+		},
 		
 		/**
 		 * Getter for the resource bundle.

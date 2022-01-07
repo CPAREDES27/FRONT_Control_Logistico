@@ -432,6 +432,7 @@
                                 <OverflowToolbar style="Clear">
                                     <ToolbarSpacer/>
                                     <ToggleButton text="Generar Sumninistros" type="Emphasized" iconFirst="false" width="auto" enabled="true" visible="true" iconDensityAware="false" press="validarCabecera"/>
+                                    <!-- <ToggleButton text="Generar Sumninistros" type="Emphasized" iconFirst="false" width="auto" enabled="true" visible="true" iconDensityAware="false" press="validaFecha"/> -->
                                     <ToggleButton text="Agregar" id="idAgregar" type="Emphasized" iconFirst="false" width="auto" enabled="true" visible="true" iconDensityAware="false" press="agregarSuministro"/>
                                     <ToggleButton text="Eliminar" id="idEliminar" type="Emphasized" iconFirst="false" width="auto" enabled="true" visible="true" iconDensityAware="false" press="onEliminar"/>
                                     <ToggleButton text="TestModel" type="Default" iconFirst="false" width="auto" enabled="true" visible="false" iconDensityAware="false" press="testModel"/>

@@ -83,7 +83,6 @@ sap.ui.define([
 			}
 
 			this.usuario=oUser.name;
-			console.log(this.usuario);
 			return this.usuario;
 
 		},

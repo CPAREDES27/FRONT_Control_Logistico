@@ -716,7 +716,26 @@ sap.ui.define([
 			sap.ui.getCore().byId("indicadorPropiedad").setValue("");
 			sap.ui.getCore().byId("idDescArmador").setValue("");
 			this.getModel("consultaMareas").setProperty("/embarcaciones","");
-		},		
+		},	
+		validaFecha:function(){
+			var idFechaTravesiaIni=this.byId("idFechaTravesiaIni").getValue();
+		
+			var dia =idFechaTravesiaIni.split("/")[0];
+			var mes =idFechaTravesiaIni.split("/")[1];
+			var anio =idFechaTravesiaIni.split("/")[2];
+			var fechaInicio = anio+"/"+mes+"/"+dia;
+				let fecha2 = new Date()
+				let fecha1 = new Date(fechaInicio);
+			var resta=fecha2-fecha1;
+			var dias=Math.round(resta/ (1000*60*60*24));
+			console.log(dias);
+			
+			var estado=false;
+			if(dias===1){
+				estado=true;
+			}
+			return estado;			
+		},
 		validarCabecera: function(){
 			var cboTemporada=this.byId("cboTemporada").getSelectedKey();
 			var idPlantaIni=this.byId("idPlantaIni").getValue();
@@ -728,6 +747,21 @@ sap.ui.define([
 			var cboProveedor=this.byId("cboProveedor").getSelectedKey();
 			var cadena="";
 			var valida=false;
+			if(!this.validaFecha()){
+				var fechaAc = new Date();
+				var annio = fechaAc.getFullYear();
+				var month = fechaAc.getMonth();
+				var day  = fechaAc.getDate();
+				if(month<10){
+					month=this.zeroFill(month+1,2);
+				}
+				if(day<10){
+					day = this.zeroFill(day-1,2);
+				}
+				var FechaVale=day+"/"+month+"/"+annio;
+				MessageBox.error("Solo puede generar vales a partir de la siguiente fecha: " +FechaVale)
+				return true;
+			}
 			if(!cboTemporada){
 				this.byId('cboTemporada').setValueState(sap.ui.core.ValueState.Error); 
 				cadena+="El campo Temporada es obligatorio\n";

@@ -44,7 +44,13 @@ sap.ui.define([
 			this.listPlanta();	
 			this.listAlmacen();
 			this.listaCombos();
+		
 			
+			
+		},
+		onAfterRendering: async function(){
+			this.userOperation = await this._getCurrentUser();
+			console.log(this.userOperation);
 		},
 		listaCombos: function(){
 			
@@ -268,7 +274,7 @@ sap.ui.define([
 				  
 				],
 				"order": "",
-				"p_user": "FGARCIA",
+				"p_user": this.userOperation,
 				"rowcount": idAciertos,
 				"rowskips": 0,
 				"tabla": "KNA1"
@@ -298,7 +304,7 @@ sap.ui.define([
 			oGlobalBusyDialog.open();
 			var dataPlantas={
 				"nombreAyuda": "BSQPLANTAS",
-				"p_user": "FGARCIA"
+				"p_user": this.userOperation
 			  }
 			  fetch(`${Utilities.onLocation()}General/AyudasBusqueda`,
 			  {
@@ -320,7 +326,7 @@ sap.ui.define([
 			oGlobalBusyDialog.open();
 			var dataPlantas={
 				"nombreAyuda": "BSQALMACEN",
-				"p_user": "FGARCIA"
+				"p_user": this.userOperation
 			  }
 			  fetch(`${Utilities.onLocation()}General/AyudasBusqueda`,
 			  {
@@ -530,7 +536,7 @@ sap.ui.define([
 				  
 				],
 				"options2": options,
-				"p_user": "FGARCIA",
+				"p_user": this.userOperation,
 				"rowcount": idCantidad
 			};
 			oGlobalBusyDialog.open();
@@ -581,7 +587,7 @@ sap.ui.define([
 			}
 			var body={
 				"numValeVivere": codigo,
-				"p_user": "FGARCIA"
+				"p_user": this.userOperation
 			}
 			fetch(`${Utilities.onLocation()}tripulantes/PDFValeViveres`,
 			  {
@@ -704,7 +710,7 @@ sap.ui.define([
 				  
 				],
 				"p_code": array,
-				"p_user": "FGARCIA"
+				"p_user": this.userOperation
 			}
 			await fetch(`${Utilities.onLocation()}valeviveres/DetalleImpresionViveres`,
 			  {
