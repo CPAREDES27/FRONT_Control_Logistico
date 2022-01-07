@@ -134,7 +134,7 @@
 					
 					<Column
 						id="iconEstado"
-						width="7rem"
+						width="3rem"
 						sortProperty="semana"
 						filterProperty="semana"
 						showFilterMenuEntry="true"
@@ -155,7 +155,7 @@
 
                 	<Column
 						id="fecha"
-						width="9rem"
+						width="7rem"
 						sortProperty="nrmar"
 						filterProperty="nrmar"
 						showFilterMenuEntry="true"
@@ -172,7 +172,7 @@
                    
                     <Column
 						id="motorPrincipal"
-						width="9rem"
+						width="7rem"
 						sortProperty="werks"
 						filterProperty="werks"
 						showFilterMenuEntry="true"
@@ -189,7 +189,7 @@
 					</Column>
                     <Column
 						id="motorAuxiliar"
-						width="11rem"
+						width="10rem"
 						sortProperty="fecon"
 						filterProperty="fecon"
 						showFilterMenuEntry="true"
@@ -256,7 +256,7 @@
 					</Column>
                     <Column
 						id="motorAuxiliar5"
-						width="15rem"
+						width="17rem"
 						sortProperty="dsobs"
 						filterProperty="dsobs"
 						showFilterMenuEntry="true"
@@ -274,7 +274,7 @@
 					</Column>
                     <Column
 						id="panga"
-						width="9rem"
+						width="7rem"
 						sortProperty="desc_ESPRO"						
 						filterProperty="desc_ESPRO"
 						showFilterMenuEntry="true"

@@ -122,7 +122,7 @@
 					</OverflowToolbar>
 				</table:extension>
 				<table:columns editable="false">
-					<table:Column width="8rem"
+					<table:Column width="7rem"
 						 sortProperty="NRMAR"
 						filterProperty="NRMAR"
 						showFilterMenuEntry="true"
@@ -170,7 +170,7 @@
 							<Text text="{Combustible>PTOZA}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="10rem"
+					<table:Column width="9rem"
 						sortProperty="FECZA"
 						filterProperty="FECZA"
 						showFilterMenuEntry="true"
@@ -194,7 +194,7 @@
 							<Text text="{Combustible>PTOAR}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="10rem"
+					<table:Column width="9rem"
 						sortProperty="FECAR"
 						filterProperty="FECAR"
 						showFilterMenuEntry="true"
@@ -206,7 +206,7 @@
 							<Text text="{Combustible>FECAR} {Combustible>HIARR}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="8rem"
+					<table:Column width="7rem"
 						sortProperty="FECCONMOV"
 						filterProperty="FECCONMOV"
 						showFilterMenuEntry="true"
@@ -218,7 +218,7 @@
 							<Text text="{Combustible>FECCONMOV}"/>
 						</table:template>
 					</table:Column>
-					<table:Column hAlign="End" width="8rem"
+					<table:Column hAlign="End" width="7rem"
 						sortProperty="STCMB"
 						filterProperty="STCMB"
 						showFilterMenuEntry="true"
@@ -247,7 +247,7 @@
 						</table:template>
 					</table:Column>
 					
-					<table:Column hAlign="End" width="8rem"
+					<table:Column hAlign="End" width="7rem"
 						sortProperty="CNSUM"
 						filterProperty="CNSUM"
 						showFilterMenuEntry="true"
@@ -276,7 +276,7 @@
                                                 }}"/>
 						</table:template>
 					</table:Column>
-					<table:Column hAlign="End" width="8rem"
+					<table:Column hAlign="End" width="7rem"
 						sortProperty="CONSU"
 						filterProperty="CONSU"
 						showFilterMenuEntry="true"
@@ -306,7 +306,7 @@
                                                 }}"/>
 						</table:template>
 					</table:Column>
-					<table:Column hAlign="End" width="8rem"
+					<table:Column hAlign="End" width="7rem"
 						sortProperty="STFIN"
 						filterProperty="STFIN"
 						showFilterMenuEntry="true"
@@ -335,7 +335,7 @@
                                                 }}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="6rem"
+					<table:Column width="4rem"
 						sortProperty="estado"
 						filterProperty="estado"
 						showFilterMenuEntry="true"
@@ -376,7 +376,7 @@
                                                 }}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="6rem" hAlign="Center">
+					<table:Column width="4rem" hAlign="Center">
 						<table:label>
 							<Label text=""/>
 						</table:label>
@@ -384,7 +384,7 @@
 							<Button icon="sap-icon://show" type="Emphasized" press="onDetail" />
 						</table:template>
 					</table:Column>
-					<table:Column width="5rem">
+					<table:Column width="4rem">
 						<table:label>
 							<Label text="Selec."/>
 						</table:label>

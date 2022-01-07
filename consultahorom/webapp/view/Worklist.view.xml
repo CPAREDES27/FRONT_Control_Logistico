@@ -103,7 +103,7 @@
 				<columns>
                <Column
 						id="NRO"
-						width="5rem"
+						width="3rem"
 						sortProperty="NRO"
 						filterProperty="NRO"
 						showFilterMenuEntry="true"
@@ -119,7 +119,7 @@
 					</Column>
                 	<Column
 						id="fecha"
-						width="8rem"
+						width="6rem"
 						sortProperty="fecha"
 						filterProperty="fecha"
 						showFilterMenuEntry="true"
@@ -303,7 +303,7 @@
 					</Column>
                     <Column
 						id="panga"
-						width="8rem"
+						width="6rem"
 						sortProperty="panga"						
 						filterProperty="panga"
 						showFilterMenuEntry="true"

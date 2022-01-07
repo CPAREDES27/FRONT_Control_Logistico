@@ -130,7 +130,7 @@
 				<columns>
                 	<Column
 						id="fecha"
-						width="11rem"
+						width="9rem"
 						sortProperty="fecha"
 						filterProperty="fecha"
 						showFilterMenuEntry="true"
@@ -146,7 +146,7 @@
                    
                     <Column
 						id="NRMAR"
-						width="11rem"
+						width="8rem"
 						sortProperty="NRMAR"
 						filterProperty="NRMAR"
 						showFilterMenuEntry="true"
@@ -162,7 +162,7 @@
 					</Column>
                     <Column
 						id="DESC_CDFAS"
-						width="11rem"
+						width="8rem"
 						sortProperty="DESC_CDFAS"
 						filterProperty="DESC_CDFAS"
 						showFilterMenuEntry="true"
@@ -178,7 +178,7 @@
 					</Column>
                     <Column
 						id="DESC_CDMMA"
-						width="22rem"
+						width="9rem"
 						sortProperty="DESC_CDMMA"
 						filterProperty="DESC_CDMMA"
 						showFilterMenuEntry="true"
@@ -194,7 +194,7 @@
 					</Column>
                     <Column
 						id="FECCONMOV"
-						width="11rem"
+						width="9rem"
 						sortProperty="FECCONMOV"
 						filterProperty="FECCONMOV"
 						showFilterMenuEntry="true"
@@ -210,12 +210,12 @@
 					</Column>
                     <Column
 						id="FCMOD"
-						width="11rem"
+						width="9rem"
 						sortProperty="FCMOD"
 						filterProperty="FCMOD"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
-						hAlign="End">
+						>
                       
                             <m:Label text="Fec. modificación" />
                  
@@ -226,7 +226,7 @@
 					</Column>
                     <Column
 						id="ATMOD"
-						width="11rem"
+						width="9rem"
 						sortProperty="ATMOD"
 						filterProperty="ATMOD"
 						showFilterMenuEntry="true"
@@ -242,7 +242,7 @@
 					</Column>
                     <Column
 						id="CNPDS"
-						width="11rem"
+						width="8rem"
 						sortProperty="CNPDS"						
 						filterProperty="CNPDS"
 						showFilterMenuEntry="true"

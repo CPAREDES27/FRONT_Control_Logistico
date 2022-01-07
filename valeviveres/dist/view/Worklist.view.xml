@@ -280,7 +280,7 @@
 					</OverflowToolbar>
 				</table:extension>
 				<table:columns editable="false">
-					<table:Column width="8rem"
+					<table:Column width="6rem"
 						sortProperty="NRVVI"
 						filterProperty="NRVVI"
 						showFilterMenuEntry="true"
@@ -292,7 +292,7 @@
 							<Text text="{Vivere>NRVVI}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="8rem"
+					<table:Column width="7rem"
 						sortProperty="NMEMB"
 						filterProperty="NMEMB"
 						showFilterMenuEntry="true"
@@ -304,7 +304,7 @@
 							<Text text="{Vivere>NMEMB}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="8rem"
+					<table:Column width="11rem"
 						sortProperty="NAME1"
 						filterProperty="NAME1"
 						showFilterMenuEntry="true"
@@ -316,7 +316,7 @@
 							<Text text="{Vivere>NAME1}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="8rem"
+					<table:Column width="7rem"
 						sortProperty="DSALM"
 						filterProperty="DSALM"
 						showFilterMenuEntry="true"
@@ -328,7 +328,7 @@
 							<Text text="{Vivere>DSALM}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="8rem"
+					<table:Column width="7rem"
 						sortProperty="DESC_INPRP"
 						filterProperty="DESC_INPRP"
 						showFilterMenuEntry="true"
@@ -340,7 +340,7 @@
 							<Text text="{Vivere>DESC_INPRP}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="8rem"
+					<table:Column width="7rem"
 						sortProperty="DSTPO"
 						filterProperty="DSTPO"
 						showFilterMenuEntry="true"
@@ -352,7 +352,7 @@
 							<Text text="{Vivere>DSTPO}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="8rem"
+					<table:Column width="6rem"
 						sortProperty="FCVVI"
 						filterProperty="FCVVI"
 						showFilterMenuEntry="true"
@@ -364,7 +364,7 @@
 							<Text text="{Vivere>FCVVI}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="8rem"
+					<table:Column width="6rem"
 						sortProperty="DESC_ESVVI"
 						filterProperty="DESC_ESVVI"
 						showFilterMenuEntry="true"
@@ -412,7 +412,7 @@
 							<Text text="{Vivere>KOSTL}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="8rem">
+					<table:Column width="5rem">
 						<table:label>
 							<Label text=""/>
 						</table:label>
