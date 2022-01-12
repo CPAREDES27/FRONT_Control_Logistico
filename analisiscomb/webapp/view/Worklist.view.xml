@@ -57,8 +57,6 @@
 								</f:fields>
 							</f:FormElement>
 						</f:formElements>
-					</f:FormContainer>
-					<f:FormContainer >
 						<f:formElements>
 							<f:FormElement >
 								<f:fields>
@@ -68,6 +66,7 @@
 							</f:FormElement>
 						</f:formElements>
 					</f:FormContainer>
+						
 				</f:formContainers>
 				<f:layout>
 					<f:ResponsiveGridLayout
