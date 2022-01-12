@@ -350,6 +350,9 @@ sap.ui.define([
 							this.getModel("Lista").setProperty("/listaLista", data.t_flocc);
 							this.byId("title").setText("Indicador de modificación: "+data.indicadorPorc.toFixed(0)+"%");
 							oGlobalBusyDialog.close();
+
+							var cantidadRegistros="Lista de registros ("+data.t_flocc.length+")";
+							this.byId("idListaReg").setText(cantidadRegistros);
 					   }).catch(error => console.log(error)
 					   );
 
