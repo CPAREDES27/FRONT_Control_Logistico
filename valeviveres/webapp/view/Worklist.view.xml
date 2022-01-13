@@ -260,10 +260,7 @@
 							>
 				<table:extension>
 					<OverflowToolbar style="Clear">
-						<Title
-							id="tableHeader"
-							text="{worklistView>/worklistTableTitle}"
-							level="H3"/>
+						<Title text="Lista de registros" id="idListaReg"/>
 						<ToolbarSpacer />
 						<Button text="Nuevo" icon="sap-icon://add" type="Emphasized" press="goNuevo" />
 						<Button text="Imprimir" id="idImprmir" enabled="false" icon="sap-icon://print" type="Ghost" press="onImprimir('lista')" />

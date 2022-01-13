@@ -244,6 +244,9 @@ sap.ui.define([
 			
 				this.getView().getModel("Combustible").setProperty("/listaCombustible",data.str_csmar);
 				
+				var cantidadRegistros="Lista de registros ("+data.str_csmar.length+")";
+				this.byId("idListaReg").setText(cantidadRegistros);
+
 				oGlobalBusyDialog.close();
 			  }).catch(error => console.log(error)
 			);
@@ -1296,6 +1299,10 @@ sap.ui.define([
 				body: JSON.stringify(body)
 			})
 			.then(resp => resp.json()).then(data => {
+
+				var cantidadRegistros="Lista de registros ("+data.str_cef.length+")";
+				this.byId("idListaReg").setText(cantidadRegistros);
+
 				console.log(data.str_cef);
 				var totalCONAV=0;
 				var totalCODES=0;
@@ -1316,6 +1323,8 @@ sap.ui.define([
 				})
 				this.getView().getModel("AnalisisCombustible").setProperty("/listaAnalisisCombustible",data.str_cef);
 				console.log(this.getView().getModel("AnalisisCombustible"));
+
+				
 			}).catch(error => console.log(error)
 		  );
 		},
