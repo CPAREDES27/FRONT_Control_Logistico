@@ -40,6 +40,9 @@
 							</form:FormElement>
 							<form:FormElement label="Armador comercial">
 								<form:fields>
+								<!-- <Input id="idArmadorIni_R" 
+											showValueHelp="true"
+											valueHelpRequest="onShowSearchTrip"/>	 -->
 									<Input type="Text" id="idArmadorIni"  showValueHelp="true" enabled="true" visible="true" width="100%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="_onOpenDialogArmador('popOne')"/>			
 								</form:fields>
 							</form:FormElement>
