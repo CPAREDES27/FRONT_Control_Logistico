@@ -66,8 +66,41 @@ sap.ui.define([
 		},
 		onAfterRendering: async function(){
 			this.userOperation =await this._getCurrentUser();
-			console.log(this.userOperation);
+			this.objetoHelp =  this._getHelpSearch();
+			this.parameter= this.objetoHelp[0].parameter;
+			this.url= this.objetoHelp[0].url;
+			console.log(this.parameter)
+			console.log(this.url)
+			this.callConstantes();
 		},
+		callConstantes: function(){
+			oGlobalBusyDialog.open();
+			var body={
+				"nombreConsulta": "CONSGENCONST",
+				"p_user": this.userOperation,
+				"parametro1": this.parameter,
+				"parametro2": "",
+				"parametro3": "",
+				"parametro4": "",
+				"parametro5": ""
+			}
+			fetch(`${this.onLocation()}General/ConsultaGeneral/`,
+				  {
+					  method: 'POST',
+					  body: JSON.stringify(body)
+				  })
+				  .then(resp => resp.json()).then(data => {
+					
+					console.log(data.data);
+					this.HOST_HELP=this.url+data.data[0].LOW;
+					console.log(this.HOST_HELP);
+
+				var oModel = new JSONModel();
+
+				this.getView().setModel(oModel);
+
+				  })
+			},
 		getFechaActual:function(){
 			var fecha=new Date();
 			var dia = fecha.getDate();
@@ -597,7 +630,7 @@ sap.ui.define([
 							},
 							onLimpiar: function(){
 								this.byId("idReserva").setValue("");
-								this.byId("idEstado").setValue("");
+								this.byId("idEstado").setSelectedKey("");
 								this.byId("idAlmacen").setValue("");
 								this.byId("idEmbarcacion2").setValue("");
 								this.byId("idFecha").setValue("");
@@ -623,8 +656,12 @@ sap.ui.define([
 							onAnular: function(){
 								
 								var indice = this.byId("table").getSelectedIndices();
+								if(indice.length===0){
+									MessageBox.error("Debe seleccionar un elemento");
+									return false;
+								}
 								var data ;
-								console.log(indice);
+								console.log(indice.length);
 								var arreglo=this.getView().byId("table").getModel("Aceite").oData.listaAceite;
 								for(var i=0;i<indice.length;i++){
 									if(arreglo[i].ESRNV==="A"){
@@ -738,7 +775,7 @@ sap.ui.define([
 								sap.ui.getCore().byId("idFechaReservaNew").setValue(fecha);
 							},
 							onLimpiarNuevo: function(){
-								sap.ui.getCore().byId("idFechaReservaNew").setValue("");
+								
 								sap.ui.getCore().byId("inputId1_R").setValue("");
 								sap.ui.getCore().byId("idMaterialNew").setValue("");
 								sap.ui.getCore().byId("idAlmacenNew").setValue("");
@@ -748,7 +785,7 @@ sap.ui.define([
 								sap.ui.getCore().byId("idNroTicketNew").setValue("");
 								sap.ui.getCore().byId("idRemisionNew").setValue("");
 								sap.ui.getCore().byId("idKilosNew").setValue("");
-								sap.ui.getCore().byId("txtEmbarcaNew").setText("");
+								this.getView().getModel().setProperty("/help",{});
 							},
 							onGuardar:  function(){
 								oGlobalBusyDialog.open();
@@ -1222,7 +1259,8 @@ sap.ui.define([
 										new Filter("ESRNV", FilterOperator.Contains, sQuery),
 										new Filter("NRTGA", FilterOperator.Contains, sQuery),
 										new Filter("CNSUM", FilterOperator.Contains, sQuery),
-										new Filter("DESC_ESRNV", FilterOperator.Contains, sQuery)
+										new Filter("DESC_ESRNV", FilterOperator.Contains, sQuery),
+										new Filter("CDALMDESC", FilterOperator.Contains, sQuery),
 										
 										  
 									
@@ -1235,57 +1273,57 @@ sap.ui.define([
 								var oBinding = oList.getBinding("rows");
 								oBinding.filter(aFilters, "Application");
 							},
-						onSearchHelp:function(oEvent){
+							onSearchHelp: function (oEvent) {
 								let sIdInput = oEvent.getSource().getId(),
-								oModel = this.getModel(),
-								nameComponent="busqembarcaciones",
-								idComponent="busqembarcaciones",
-								urlComponent=HOST+"/9acc820a-22dc-4d66-8d69-bed5b2789d3c.AyudasBusqueda.busqembarcaciones-1.0.0",
-								oView = this.getView(),
-								oInput = sap.ui.getCore().byId(sIdInput);
-								oModel.setProperty("/input",oInput);
-					
-								if(!this.DialogComponent){
+									oModel = this.getModel(),
+									nameComponent = "busqembarcaciones",
+									idComponent = "busqembarcaciones",
+									urlComponent = this.HOST_HELP + ".AyudasBusqueda.busqembarcaciones-1.0.0",
+									oView = this.getView(),
+									oInput = sap.ui.getCore().byId(sIdInput);
+									oModel.setProperty("/input", oInput);
+				
+								if (!this.DialogComponent) {
 									this.DialogComponent = new sap.m.Dialog({
-										title:"Búsqueda de embarcaciones",
-										icon:"sap-icon://search",
-										state:"Information",
-										endButton:new sap.m.Button({
-											icon:"sap-icon://decline",
-											text:"Cerrar",
-											type:"Reject",
-											press:function(oEvent){
+										title: "Búsqueda de embarcaciones",
+										icon: "sap-icon://search",
+										state: "Information",
+										endButton: new sap.m.Button({
+											icon: "sap-icon://decline",
+											text: "Cerrar",
+											type: "Reject",
+											press: function (oEvent) {
 												this.onCloseDialog(oEvent);
 											}.bind(this)
 										})
 									});
 									oView.addDependent(this.DialogComponent);
-									oModel.setProperty("/idDialogComp",this.DialogComponent.getId());
+									oModel.setProperty("/idDialogComp", this.DialogComponent.getId());
 								}
-					
-								let comCreateOk = function(oEvent){
+				
+								let comCreateOk = function (oEvent) {
 									BusyIndicator.hide();
 								};
-					
-								
-								if(this.DialogComponent.getContent().length===0){
+				
+				
+								if (this.DialogComponent.getContent().length === 0) {
 									BusyIndicator.show(0);
 									let oComponent = new sap.ui.core.ComponentContainer({
-										id:idComponent,
-										name:nameComponent,
-										url:urlComponent,
-										settings:{},
-										componentData:{},
-										propagateModel:true,
-										componentCreated:comCreateOk,
-										height:'100%',
+										id: idComponent,
+										name: nameComponent,
+										url: urlComponent,
+										settings: {},
+										componentData: {},
+										propagateModel: true,
+										componentCreated: comCreateOk,
+										height: '100%',
 										// manifest:true,
-										async:false
+										async: false
 									});
-					
+				
 									this.DialogComponent.addContent(oComponent);
 								}
-								
+				
 								this.DialogComponent.open();
 							},
 							onCloseDialog:function(oEvent){

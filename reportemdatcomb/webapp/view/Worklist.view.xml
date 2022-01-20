@@ -116,7 +116,7 @@
 							>
 				<extension>
 					<m:OverflowToolbar style="Clear">
-						<m:Title id="idListaReg" text="Lista de registros" />
+						<m:Title id="idListaReg" text="Lista de registros:" />
 						<m:Title id="title" text="Indicador de modificación: " />
 						<m:ToolbarSpacer/>
 						<m:ToolbarSeparator/>

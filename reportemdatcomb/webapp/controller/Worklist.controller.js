@@ -256,6 +256,10 @@ sap.ui.define([
 				this.byId("idFechaIniVigencia").setValue("");
 				this.byId("idMotivo").setValue("");
 				this.byId("idFase").setValue("");
+				this.byId("idAciertos").setValue("200");
+				this.byId("idListaReg").setText("Lista de registros:")
+				this.byId("title").setText("");
+				this.getView().getModel("Lista").setProperty("/listaLista",{});
 			},
 			
 			loadTabla: function(){
@@ -268,16 +272,21 @@ sap.ui.define([
 				var error=""
 				var options=[];
 				var estado=true;
-				if(!fechaIni){
-				 error="Debe ingresar una fecha de inicio de vigencia\n";
-				 estado=false;
+				if(idEmbarcacion || idFase ||idMotivo){
+					
+				}else{
+					if(!fechaIni){
+						error="Debe ingresar una fecha de inicio de vigencia\n";
+						estado=false;
+					   }
+					   
+					   if(!estado){
+						   MessageBox.error(error);
+						   oGlobalBusyDialog.close()
+						   return false;
+					   }
 				}
 				
-				if(!estado){
-					MessageBox.error(error);
-					oGlobalBusyDialog.close()
-					return false;
-				}
 				var feccc =[];
 				feccc= fechaIni.trim().split("-");
 				for(var i=0;i<feccc.length;i++){

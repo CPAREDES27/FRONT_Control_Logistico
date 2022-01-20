@@ -77,6 +77,35 @@ sap.ui.define([
 			return this.usuario;
 
 		},
+		_getHelpSearch: async function(){
+			var oRouter = window.location.origin;
+			var service=[];
+			if(oRouter.indexOf("localhost") !== -1){
+				service.push({
+					url:"https://tasaqas.launchpad.cfapps.us10.hana.ondemand.com/",
+					parameter:"IDH4_QAS"
+				})
+			}
+			if(oRouter.indexOf("tasadev")!== -1){
+				service.push({
+					url:"https://tasadev.launchpad.cfapps.us10.hana.ondemand.com/",
+					parameter:"IDH4_DEV"
+				})
+			}
+			if(oRouter.indexOf("tasaprd")!==-1){
+				service.push({
+					url:"https://tasaprd.launchpad.cfapps.us10.hana.ondemand.com/",
+					parameter:"IDH4_PRD"
+				})
+			}
+			if(oRouter.indexOf("tasaqas")!==-1){
+				service.push({
+					url:"https://tasaqas.launchpad.cfapps.us10.hana.ondemand.com/",
+					parameter:"IDH4_QAS"
+				})
+			}
+			return service;
+		},
 		/**
 		 * Getter for the resource bundle.
 		 * @public

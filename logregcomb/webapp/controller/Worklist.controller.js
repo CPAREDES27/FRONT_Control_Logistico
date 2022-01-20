@@ -764,9 +764,11 @@ sap.ui.define([
 			this.byId("idMareaIni").setValue("");
 			this.byId("idMareaFin").setValue("");
 			this.byId("idFecha").setValue("");
-			this.byId("idEstado").setValue("");
+			this.byId("idEstado").setSelectedKey("");
 			this.byId("inputId_W").setValue("");
 			this.byId("idImputacion").setValue("");
+			this.byId("idAciertos").setValue("200");
+			this.getView().getModel("Combustible").setProperty("/listaCombustible",{});
 			
 		},
 		createColumnConfig5: function() {

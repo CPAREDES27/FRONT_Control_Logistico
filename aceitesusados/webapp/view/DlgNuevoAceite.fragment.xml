@@ -96,7 +96,7 @@
                                     <Label text="Nro. Ticket" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input type="Text" showValueHelp="false"    id="idNroTicketNew" enabled="true" visible="true"  valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    <Input type="Number" showValueHelp="false"    id="idNroTicketNew" enabled="true" visible="true"  valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">

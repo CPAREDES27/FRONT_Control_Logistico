@@ -19,7 +19,7 @@
 		</semantic:titleHeading>
 
 		<semantic:headerContent>
-			<f:Form >
+			<f:Form editable="true">
 				<f:title>
 					<core:Title text="Datos de Selección" />
 				</f:title>

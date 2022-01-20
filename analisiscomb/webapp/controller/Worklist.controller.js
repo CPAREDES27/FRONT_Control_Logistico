@@ -116,6 +116,8 @@ sap.ui.define([
 			this.byId("inputId0_R").setValue("");
 			this.byId("idFechaInicio").setValue("");
 			this.byId("idEstado").setValue("");
+			this.byId("idCant").setValue("200");
+			this.getView().getModel("Combustible").setProperty("/listaCombustible",{});
 		},
 		parseMil: function(price){
 			var num = price;
@@ -177,8 +179,14 @@ sap.ui.define([
 					exportarExcel=true;
 				}
 				for(var i=0;i<data.str_csmar.length;i++){
-					
+					data.str_csmar[i].STCMB=String(data.str_csmar[i].STCMB);
 					data.str_csmar[i].CNPDS=String(this.parseMil(data.str_csmar[i].CNPDS));
+					data.str_csmar[i].CNSUM=String(this.parseMil(data.str_csmar[i].CNSUM));
+					data.str_csmar[i].STFIN=String(this.parseMil(data.str_csmar[i].STFIN));
+					data.str_csmar[i].CONSU=String(this.parseMil(data.str_csmar[i].CONSU));
+					data.str_csmar[i].CNPDS=String(this.parseMil(data.str_csmar[i].CNPDS));
+					
+					
 					data.str_csmar[i].Enable=true;
 					data.str_csmar[i].NRMAR=this.zeroFill(data.str_csmar[i].NRMAR,10);
 					if(data.str_csmar[i].CNPDS != null && data.str_csmar[i].CNPDS > 0)	{
@@ -268,7 +276,7 @@ sap.ui.define([
 				},
 				{
 					label: 'Nombre deEmbarcación',
-					property: 'WERKS' ,
+					property: 'NMEMB' ,
 					type: EdmType.String,
 					scale: 2
 				},
@@ -718,7 +726,6 @@ sap.ui.define([
 				for(var i=0;i<data.t_mensaje.length;i++){
 					mensaje +=data.t_mensaje[i].DSMIN+"\n";
 				}
-				
 				MessageBox.alert(mensaje,{
 					title: "Información",
 				});
@@ -1837,6 +1844,22 @@ sap.ui.define([
 					new Filter("DSMMA", FilterOperator.Contains, sQuery),
 					new Filter("FECZA", FilterOperator.Contains, sQuery),
 					new Filter("HIZAR", FilterOperator.Contains, sQuery),
+					new Filter("PTOZA", FilterOperator.Contains, sQuery),
+					new Filter("PTOAR", FilterOperator.Contains, sQuery),
+					new Filter("STCMB", FilterOperator.Contains, sQuery),
+					new Filter("CNSUM", FilterOperator.Contains, sQuery),
+					new Filter("CONSU", FilterOperator.Contains, sQuery),
+					new Filter("STFIN", FilterOperator.Contains, sQuery),
+					new Filter("FECCONMOV", FilterOperator.Contains, sQuery),
+					new Filter("CNPDS", FilterOperator.Contains, sQuery)
+					
+					
+					
+					
+					
+					
+					
+					
 				]);
 				aFilters.push(filter);
 			}
