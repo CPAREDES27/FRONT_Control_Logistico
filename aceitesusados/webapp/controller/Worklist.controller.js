@@ -84,7 +84,7 @@ sap.ui.define([
 				"parametro4": "",
 				"parametro5": ""
 			}
-			fetch(`${this.onLocation()}General/ConsultaGeneral/`,
+			fetch(`${Utilities.onLocation()}General/ConsultaGeneral/`,
 				  {
 					  method: 'POST',
 					  body: JSON.stringify(body)
