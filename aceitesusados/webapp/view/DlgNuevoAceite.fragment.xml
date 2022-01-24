@@ -20,7 +20,7 @@
                                     <Label text="Embarcacion" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input id="inputId1_R" description="{/help/NMEMB}" placeholder="Seleccione embarcación" showValueHelp="true"  valueHelpRequest="onSearchHelp"/>
+                                    <Input id="inputId1_R" description="{/help/NMEMB}" placeholder="Seleccione embarcación" showValueHelp="true"  valueHelpOnly="true" valueHelpRequest="onSearchHelp"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
