@@ -758,7 +758,7 @@ sap.ui.define([
 				if(day<10){
 					day = this.zeroFill(day-1,2);
 				}
-				var FechaVale=day+"/"+month+"/"+annio;
+				var FechaVale=day-1+"/"+month+"/"+annio;
 				MessageBox.error("Solo puede generar vales a partir de la siguiente fecha: " +FechaVale)
 				return true;
 			}

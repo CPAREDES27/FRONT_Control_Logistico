@@ -49,9 +49,42 @@ sap.ui.define([
 			
 		},
 		onAfterRendering: async function(){
-			this.userOperation = await this._getCurrentUser();
-			console.log(this.userOperation);
+			this.userOperation =await this._getCurrentUser();
+			this.objetoHelp =  this._getHelpSearch();
+			this.parameter= this.objetoHelp[0].parameter;
+			this.url= this.objetoHelp[0].url;
+			console.log(this.parameter)
+			console.log(this.url)
+			this.callConstantes();
 		},
+		callConstantes: function(){
+			oGlobalBusyDialog.open();
+			var body={
+				"nombreConsulta": "CONSGENCONST",
+				"p_user": this.userOperation,
+				"parametro1": this.parameter,
+				"parametro2": "",
+				"parametro3": "",
+				"parametro4": "",
+				"parametro5": ""
+			}
+			fetch(`${this.onLocation()}General/ConsultaGeneral/`,
+				  {
+					  method: 'POST',
+					  body: JSON.stringify(body)
+				  })
+				  .then(resp => resp.json()).then(data => {
+					
+					console.log(data.data);
+					this.HOST_HELP=this.url+data.data[0].LOW;
+					console.log(this.HOST_HELP);
+
+				var oModel = new JSONModel();
+
+				this.getView().setModel(oModel);
+
+				  })
+			},
 		listaCombos: function(){
 			
 			var temporada=null;
@@ -1285,44 +1318,68 @@ sap.ui.define([
 			this.getModel("consultaMareas").setProperty("/TituloEmba", "");
 			this.getModel("consultaMareas").setProperty("/embarcaciones","");
 		},		
-		onSearchHelp:async function(oEvent){
+		// onSearchHelp:async function(oEvent){
+		// 	let sIdInput = oEvent.getSource().getId(),
+		// 	oModel = this.getModel(),
+		// 	nameComponent="busqembarcaciones",
+		// 	idComponent="busqembarcaciones",
+		// 	urlComponent=HOST+"/9acc820a-22dc-4d66-8d69-bed5b2789d3c.AyudasBusqueda.busqembarcaciones-1.0.0",
+		// 	oView = this.getView(),
+		// 	oInput = this.getView().byId(sIdInput);
+		// 	oModel.setProperty("/input",oInput);
+		// 	oModel.setProperty("/help",{});
+
+		// 	if(!this.DialogComponent){
+		// 		this.DialogComponent = await Fragment.load({
+		// 			name:"com.tasa.valeviveres.view.fragments.BusqEmbarcacion",
+		// 			controller:this
+		// 		});
+		// 		oView.addDependent(this.DialogComponent);
+		// 	}
+		// 	oModel.setProperty("/idDialogComp",this.DialogComponent.getId());
+
+		// 	let comCreateOk = function(oEvent){
+		// 		BusyIndicator.hide();
+		// 	};
+
+		// 	if(this.DialogComponent.getContent().length===0){
+		// 		BusyIndicator.show(0);
+		// 		let oComponent = new sap.ui.core.ComponentContainer({
+		// 			id:idComponent,
+		// 			name:nameComponent,
+		// 			url:urlComponent,
+		// 			settings:{},
+		// 			componentData:{},
+		// 			propagateModel:true,
+		// 			componentCreated:comCreateOk,
+		// 			height:'100%',
+		// 			// manifest:true,
+		// 			async:false
+		// 		});
+		// 		this.DialogComponent.addContent(oComponent);
+		// 	}
+		// 	this.DialogComponent.open();
+		// },
+		onSearchHelp: async function(oEvent){
+			this.getModel().setProperty("/input",{});
 			let sIdInput = oEvent.getSource().getId(),
 			oModel = this.getModel(),
-			nameComponent="busqembarcaciones",
-			idComponent="busqembarcaciones",
-			urlComponent=HOST+"/9acc820a-22dc-4d66-8d69-bed5b2789d3c.AyudasBusqueda.busqembarcaciones-1.0.0",
+			oComponent = oModel.getProperty("/busqembarcaciones"),
 			oView = this.getView(),
 			oInput = this.getView().byId(sIdInput);
 			oModel.setProperty("/input",oInput);
-			oModel.setProperty("/help",{});
-
+			oModel.setProperty("/inputId",sIdInput);
+			
 			if(!this.DialogComponent){
 				this.DialogComponent = await Fragment.load({
-					name:"com.tasa.valeviveres.view.fragments.BusqEmbarcacion",
+					name:"com.tasa.valeviveres.view.fragments.BusqEmbarcacionLista",
 					controller:this
 				});
 				oView.addDependent(this.DialogComponent);
+				oModel.setProperty("/idDialogComp",this.DialogComponent.getId());
 			}
-			oModel.setProperty("/idDialogComp",this.DialogComponent.getId());
 
-			let comCreateOk = function(oEvent){
-				BusyIndicator.hide();
-			};
-
-			if(this.DialogComponent.getContent().length===0){
-				BusyIndicator.show(0);
-				let oComponent = new sap.ui.core.ComponentContainer({
-					id:idComponent,
-					name:nameComponent,
-					url:urlComponent,
-					settings:{},
-					componentData:{},
-					propagateModel:true,
-					componentCreated:comCreateOk,
-					height:'100%',
-					// manifest:true,
-					async:false
-				});
+			if(this.DialogComponent.getContent().length === 0){
 				this.DialogComponent.addContent(oComponent);
 			}
 			this.DialogComponent.open();

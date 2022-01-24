@@ -123,6 +123,7 @@ sap.ui.define([
 			return service;
 	
 		},
+		
 		_getHelpSearch:  function(){
 			var oRouter = window.location.origin;
 			var service=[];

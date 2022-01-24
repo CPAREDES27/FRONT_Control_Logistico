@@ -69,7 +69,7 @@ sap.ui.define([
 			console.log(this.usuario);
 		},
 		onAfterRendering: async function(){
-			await this._getCurrentUser();
+			this.userOperation =await this._getCurrentUser();
 			this.objetoHelp =  await this._getHelpSearch();
 			this.parameter= this.objetoHelp[0].parameter;
 			this.url= this.objetoHelp[0].url;
@@ -81,7 +81,7 @@ sap.ui.define([
 			oGlobalBusyDialog.open();
 			var body={
 				"nombreConsulta": "CONSGENCONST",
-				"p_user": this.usuario,
+				"p_user": this.userOperation,
 				"parametro1": this.parameter,
 				"parametro2": "",
 				"parametro3": "",

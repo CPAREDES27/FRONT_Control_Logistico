@@ -62,9 +62,41 @@ sap.ui.define([
 
 
 		},
+		
+		
 		onAfterRendering: async function(){
 			this.userOperation =await this._getCurrentUser();
-			console.log(this.userOperation);
+			this.objetoHelp =  await this._getHelpSearch();
+			this.parameter= this.objetoHelp[0].parameter;
+			this.url= this.objetoHelp[0].url;
+			console.log(this.parameter)
+			console.log(this.url)
+			this.callConstantes();
+		},
+		callConstantes: function(){
+			oGlobalBusyDialog.open();
+			var body={
+				"nombreConsulta": "CONSGENCONST",
+				"p_user": this.userOperation,
+				"parametro1": this.parameter,
+				"parametro2": "",
+				"parametro3": "",
+				"parametro4": "",
+				"parametro5": ""
+			}
+			fetch(`${Utilities.onLocation()}General/ConsultaGeneral/`,
+				  {
+					  method: 'POST',
+					  body: JSON.stringify(body)
+				  })
+				  .then(resp => resp.json()).then(data => {
+					
+					console.log(data.data);
+					this.HOST_HELP=this.url+data.data[0].LOW;
+					console.log(this.HOST_HELP);
+						oGlobalBusyDialog.close();
+				  }).catch(error => console.log(error)
+			);
 		},
 		loadCombos: function(){
 			oGlobalBusyDialog.open();
@@ -125,6 +157,16 @@ sap.ui.define([
 			num = num.split('').reverse().join('').replace(/^[\.]/,'');
 			return(num)
 		},
+		changeFechaReport: function(value){
+			
+			var fecha="";
+			if(value)
+			var fecha = value.split("/")[2]+"-"+value.split("/")[1]+"-"+value.split("/")[0];
+				
+			
+			
+			return fecha;
+		},
 		onBusqueda: function(){
 			oGlobalBusyDialog.open();
 			var idFechaInicio=this.byId("idFechaInicio").mProperties.dateValue;
@@ -132,6 +174,12 @@ sap.ui.define([
 			var idEmbarcacion=this.byId("inputId0_R").getValue();
 			var idEstado=this.byId("idEstado").getSelectedKey();
 			var idCant=this.byId("idCant").getValue();
+			if(idEmbarcacion && idFechaInicio){
+				this.embarcacionB = true;
+			}
+			if(!idEmbarcacion){
+				this.embarcacionB=false;
+			}
 			if(idEmbarcacion){
 				console.log("Hola");
 				bEmbarcacion=true;
@@ -179,14 +227,52 @@ sap.ui.define([
 					exportarExcel=true;
 				}
 				for(var i=0;i<data.str_csmar.length;i++){
+					
+					data.str_csmar[i].STCMB2 = data.str_csmar[i].STCMB;
+					data.str_csmar[i].STCMB3 = data.str_csmar[i].STCMB.toLocaleString()+".000";
+					data.str_csmar[i].CNSUM2 = data.str_csmar[i].CNSUM;
+					data.str_csmar[i].CNSUM3 = data.str_csmar[i].CNSUM !==0?data.str_csmar[i].CNSUM.toLocaleString()+"0.000":".000";
+					data.str_csmar[i].CONSU2 = data.str_csmar[i].CONSU.toLocaleString();
+					data.str_csmar[i].STFIN2 = data.str_csmar[i].STFIN.toLocaleString();
+					data.str_csmar[i].HOZMP2 = data.str_csmar[i].HOZMP.toLocaleString();
+					data.str_csmar[i].HOZA12 = data.str_csmar[i].HOZA1.toLocaleString();
+					data.str_csmar[i].HOZA22 = data.str_csmar[i].HOZA2.toLocaleString();
+					data.str_csmar[i].HOZA32 = data.str_csmar[i].HOZA3.toLocaleString();
+					data.str_csmar[i].HOZA42 = data.str_csmar[i].HOZA4.toLocaleString();
+					data.str_csmar[i].HOZA52 = data.str_csmar[i].HOZA5.toLocaleString();
+					data.str_csmar[i].HOZPA2 = data.str_csmar[i].HOZPA.toLocaleString();
+					data.str_csmar[i].HOZFP2 = data.str_csmar[i].HOZFP.toLocaleString();
+					data.str_csmar[i].HOAMP2 = data.str_csmar[i].HOAMP.toLocaleString();
+					data.str_csmar[i].HOAA12 = data.str_csmar[i].HOAA1.toLocaleString();
+					data.str_csmar[i].HOAA22 = data.str_csmar[i].HOAA2.toLocaleString();
+					data.str_csmar[i].HOAA32 = data.str_csmar[i].HOAA3.toLocaleString();
+					data.str_csmar[i].HOAA42 = data.str_csmar[i].HOAA4.toLocaleString();
+					data.str_csmar[i].HOAA52 = data.str_csmar[i].HOAA5.toLocaleString();
+					data.str_csmar[i].HOAPA2 = data.str_csmar[i].HOAPA.toLocaleString();
+					data.str_csmar[i].HOAFP2 = data.str_csmar[i].HOAFP.toLocaleString();
+					data.str_csmar[i].HODMP2 = data.str_csmar[i].HODMP.toLocaleString();
+					data.str_csmar[i].HODFP2 = data.str_csmar[i].HODFP.toLocaleString();
+					data.str_csmar[i].HOHMP2 = data.str_csmar[i].HOHMP.toLocaleString();
+					data.str_csmar[i].HOHA12 = data.str_csmar[i].HOHA1.toLocaleString();
+					data.str_csmar[i].HOHA22 = data.str_csmar[i].HOHA2.toLocaleString();
+					data.str_csmar[i].HOHA32 = data.str_csmar[i].HOHA3.toLocaleString();
+					data.str_csmar[i].HOHA42 = data.str_csmar[i].HOHA4.toLocaleString();
+					data.str_csmar[i].HOHA52 = data.str_csmar[i].HOHA5.toLocaleString();
+					data.str_csmar[i].HOHPA2 = data.str_csmar[i].HOHPA.toLocaleString();
+					data.str_csmar[i].HOHFP2 = data.str_csmar[i].HOHFP.toLocaleString();
+
+
+
 					data.str_csmar[i].STCMB=String(data.str_csmar[i].STCMB);
-					data.str_csmar[i].CNPDS=String(this.parseMil(data.str_csmar[i].CNPDS));
+					data.str_csmar[i].FECZA2= this.changeFechaReport(data.str_csmar[i].FECZA);
+					data.str_csmar[i].FECCONMOV2= this.changeFechaReport(data.str_csmar[i].FECCONMOV);
+					data.str_csmar[i].FECAR2= this.changeFechaReport(data.str_csmar[i].FECAR);
 					data.str_csmar[i].CNSUM=String(this.parseMil(data.str_csmar[i].CNSUM));
-					data.str_csmar[i].STFIN=String(this.parseMil(data.str_csmar[i].STFIN));
 					data.str_csmar[i].CONSU=String(this.parseMil(data.str_csmar[i].CONSU));
-					data.str_csmar[i].CNPDS=String(this.parseMil(data.str_csmar[i].CNPDS));
-					
-					
+					data.str_csmar[i].CNPDS=String(data.str_csmar[i].CNPDS);
+					data.str_csmar[i].STFIN=String(data.str_csmar[i].STFIN);
+					data.str_csmar[i].NRMAR2 = data.str_csmar[i].NRMAR.toLocaleString();	
+						
 					data.str_csmar[i].Enable=true;
 					data.str_csmar[i].NRMAR=this.zeroFill(data.str_csmar[i].NRMAR,10);
 					if(data.str_csmar[i].CNPDS != null && data.str_csmar[i].CNPDS > 0)	{
@@ -260,11 +346,11 @@ sap.ui.define([
 			);
 
 		},
-		createColumnConfig5: function() {
+		createColumnConfigEmba:function(){
 			return [
 				{
 					label: 'Num. Marea',
-					property: 'NRMAR' ,
+					property: 'NRMAR2' ,
 					type: EdmType.String,
 					scale: 2
 				},
@@ -282,7 +368,65 @@ sap.ui.define([
 				},
 				{
 					label: 'Motivo',
-					property: 'DESC_CDMMA' ,
+					property: 'DSMMA' ,
+					type: EdmType.String,
+					scale: 2
+				},
+				{
+					label: 'Puerto',
+					property: 'PTOZA' ,
+					type: EdmType.String,
+					scale: 2
+				},
+				{
+					label: 'Fecha de Inicio',
+					property: 'FECZA2' ,
+					type: EdmType.String,
+					scale: 2
+				},
+				{
+					label: 'Hora de Inicio',
+					property: 'HIZAR' ,
+					type: EdmType.String,
+					scale: 2
+				},
+				{
+					label: 'Stock',
+					property: 'STCMB3' ,
+					type: EdmType.String,
+					delimiter: true
+				},
+				{
+					label: 'Suministro',
+					property: 'CNSUM3' ,
+					type: EdmType.String,
+					delimiter: true
+				},
+			]
+		},
+		createColumnConfig5: function() {
+			return [
+				{
+					label: 'Num. Marea',
+					property: 'NRMAR2' ,
+					type: EdmType.String,
+					scale: 2
+				},
+				{
+					label: 'Cod. de Embarcación',
+					property: 'CDEMB' ,
+					type: EdmType.String,
+					scale: 2
+				},
+				{
+					label: 'Nombre de Embarcación',
+					property: 'NMEMB' ,
+					type: EdmType.String,
+					scale: 2
+				},
+				{
+					label: 'Motivo',
+					property: 'DSMMA' ,
 					type: EdmType.String,
 					scale: 2
 				},
@@ -294,7 +438,7 @@ sap.ui.define([
 				},
 				{
 					label: 'Fecha de Zarpe',
-					property: 'FECZA' ,
+					property: 'FECZA2' ,
 					type: EdmType.String,
 					scale: 2
 				},
@@ -311,6 +455,12 @@ sap.ui.define([
 					scale: 2
 				},
 				{
+					label: 'Fecha de Arribo',
+					property: 'FECAR2' ,
+					type: EdmType.String,
+					scale: 2
+				},
+				{
 					label: 'Hora de Arribo',
 					property: 'HIARR' ,
 					type: EdmType.String,
@@ -318,200 +468,193 @@ sap.ui.define([
 				},
 				{
 					label: 'Fecha de prod.',
-					property: 'FECCONMOV' ,
+					property: 'FECCONMOV2' ,
 					type: EdmType.String,
 					scale: 2
 				},
 				{
-					label: 'Canti. desc. (Tn)',
+					label: 'Cant. desc. (Tn)',
 					property: 'CNPDS' ,
 					type: EdmType.Number,
-					scale: 3,
 					delimiter: true
 				},
 				{
 					label: 'Stock Inicial',
-					property: 'STCMB' ,
+					property: 'STCMB2' ,
 					type: EdmType.Number,
-					scale: 3,
 					delimiter: true
 				},
 				{
 					label: 'Suministro',
-					property: 'CNSUM' ,
+					property: 'CNSUM2' ,
 					type: EdmType.Number,
-					scale: 3,
 					delimiter: true
 				},
 				{
 					label: 'Consumo',
-					property: 'CONSU' ,
+					property: 'CONSU2' ,
 					type: EdmType.Number,
-					scale: 3,
 					delimiter: true
 				},
 				{
 					label: 'Stock Final',
-					property: 'STFIN' ,
+					property: 'STFIN2' ,
 					type: EdmType.Number,
-					scale: 3,
 					delimiter: true
 				},
 				{
 					label: 'Zarpe MP',
-					property: 'HOZMP' ,
+					property: 'HOZMP2' ,
 					type: EdmType.String,
-					scale: 2
 				},
 				{
 					label: 'Zarpe A1',
-					property: 'HOZA1' ,
+					property: 'HOZA12' ,
 					type: EdmType.String,
-					scale: 2
 				},
 				{
 					label: 'Zarpe A2',
-					property: 'HOZA2' ,
+					property: 'HOZA22' ,
 					type: EdmType.String,
-					scale: 2
+	
 				},
 				{
 					label: 'Zarpe A3',
-					property: 'HOZA3' ,
+					property: 'HOZA32' ,
 					type: EdmType.String,
-					scale: 2
+			
 				},
 				{
 					label: 'Zarpe A4',
-					property: 'HOZA4' ,
+					property: 'HOZA42' ,
 					type: EdmType.String,
-					scale: 2
+				
 				},
 				{
 					label: 'Zarpe A5',
-					property: 'HOZA5' ,
+					property: 'HOZA52' ,
 					type: EdmType.String,
-					scale: 2
+				
 				},
 				{
 					label: 'Zarpe PA',
-					property: 'HOZPA' ,
+					property: 'HOZPA2' ,
 					type: EdmType.String,
-					scale: 2
+				
 				},
 				{
 					label: 'Zarpe FP',
-					property: 'HOZFP' ,
+					property: 'HOZFP2' ,
 					type: EdmType.String,
-					scale: 2
+				
 				},
 				{
 					label: 'Arribo MP',
-					property: 'HOAMP' ,
+					property: 'HOAMP2' ,
 					type: EdmType.String,
-					scale: 2
+			
 				},
 				{
 					label: 'Arribo A1',
-					property: 'HOAA1' ,
+					property: 'HOAA12' ,
 					type: EdmType.String,
-					scale: 2
+				
 				},
 				{
 					label: 'Arribo A2',
-					property: 'HOAA2' ,
+					property: 'HOAA22' ,
 					type: EdmType.String,
-					scale: 2
+				
 				},
 				{
 					label: 'Arribo A3',
-					property: 'HOAA3' ,
+					property: 'HOAA32' ,
 					type: EdmType.String,
-					scale: 2
+			
 				},
 				{
 					label: 'Arribo A4',
-					property: 'HOAA4' ,
+					property: 'HOAA42' ,
 					type: EdmType.String,
-					scale: 2
+				
 				},
 				{
 					label: 'Arribo A5',
-					property: 'HOAA5' ,
+					property: 'HOAA52' ,
 					type: EdmType.String,
-					scale: 2
+				
 				},
 				{
 					label: 'Arribo PA',
-					property: 'HOAPA' ,
+					property: 'HOAPA2' ,
 					type: EdmType.String,
-					scale: 2
+				
 				},
 				{
 					label: 'Arribo FP',
-					property: 'HOAFP' ,
+					property: 'HOAFP2' ,
 					type: EdmType.String,
-					scale: 2
+			
 				},
 				{
 					label: 'Descarga MP',
-					property: 'HODMP' ,
+					property: 'HODMP2' ,
 					type: EdmType.String,
-					scale: 2
+					
 				},
 				{
 					label: 'Descarga FP',
-					property: 'HODFP' ,
+					property: 'HODFP2' ,
 					type: EdmType.String,
-					scale: 2
+				
 				},
 				{
 					label: 'Horometro MP',
-					property: 'HOHMP' ,
+					property: 'HOHMP2' ,
 					type: EdmType.String,
-					scale: 2
+				
 				},
 				{
 					label: 'Horometro A1',
-					property: 'HOHA1' ,
+					property: 'HOHA12' ,
 					type: EdmType.String,
-					scale: 2
+				
 				},
 				{
 					label: 'Horometro A2',
-					property: 'HOHA2' ,
+					property: 'HOHA22' ,
 					type: EdmType.String,
-					scale: 2
+			
 				},
 				{
 					label: 'Horometro A3',
-					property: 'HOHA3' ,
+					property: 'HOHA32' ,
 					type: EdmType.String,
-					scale: 2
+				
 				},
 				{
 					label: 'Horometro A4',
-					property: 'HOHA4' ,
+					property: 'HOHA42' ,
 					type: EdmType.String,
-					scale: 2
+				
 				},
 				{
 					label: 'Horometro A5',
-					property: 'HOHA5' ,
+					property: 'HOHA52' ,
 					type: EdmType.String,
-					scale: 2
+					
 				},
 				{
 					label: 'Horometro PA',
-					property: 'HOHPA' ,
+					property: 'HOHPA2' ,
 					type: EdmType.String,
-					scale: 2
+					
 				},
 				{
 					label: 'Horometro FP',
-					property: 'HOHFP' ,
+					property: 'HOHFP2' ,
 					type: EdmType.String,
-					scale: 2
+				
 				}
 				
 				];
@@ -524,8 +667,10 @@ sap.ui.define([
 				return false;
 			}
 			var aCols, aProducts, oSettings, oSheet;
-
-			aCols = this.createColumnConfig5();
+			
+				aCols = this.createColumnConfig5();
+			
+			
 			console.log(this.getView().getModel("Combustible"));
 			aProducts = this.getView().getModel("Combustible").getProperty('/listaCombustible');
 
@@ -770,7 +915,7 @@ sap.ui.define([
 				"pCdmma": idEstado,
 				"pFfevn": idFechaF,
 				"pFievn": idFechaIni,
-				"pRow": idCant
+				"pRow": 0
 			}
 			console.log(body);
 			fetch(`${Utilities.onLocation()}analisiscombustible/QlikView`,
@@ -780,6 +925,26 @@ sap.ui.define([
 			})
 			.then(resp => resp.json()).then(data => {
 			  console.log(data);
+			  for(var i=0;i<data.str_cef.length;i++){
+				  data.str_cef[i].NRMAR2=data.str_cef[i].NRMAR.toLocaleString()+".000";
+				  data.str_cef[i].CNPDS2=data.str_cef[i].CNPDS===0?".000":data.str_cef[i].CNPDS.toFixed(3);
+				  data.str_cef[i].HONAV2=data.str_cef[i].HONAV===0?".000":data.str_cef[i].HONAV.toFixed(3);
+				  data.str_cef[i].HODES2=data.str_cef[i].HODES===0?".000":data.str_cef[i].HODES.toFixed(3);
+				  data.str_cef[i].HOPUE2=data.str_cef[i].HOPUE===0?".000":data.str_cef[i].HOPUE.toFixed(3);
+				  data.str_cef[i].HOMAR2=data.str_cef[i].HOMAR===0?".000":data.str_cef[i].HOMAR.toFixed(3);
+				  data.str_cef[i].CONAV2=data.str_cef[i].CONAV===0?".000":data.str_cef[i].CONAV.toFixed(3);
+				  data.str_cef[i].CODES2=data.str_cef[i].CODES===0?".000":data.str_cef[i].CODES.toFixed(3);
+				  data.str_cef[i].COPUE2=data.str_cef[i].COPUE===0?".000":data.str_cef[i].COPUE.toFixed(3);
+				  data.str_cef[i].COMAR2=data.str_cef[i].COMAR===0?".000":data.str_cef[i].COMAR.toFixed(3);
+				  data.str_cef[i].RRNAV2=data.str_cef[i].RRNAV===0?".000":data.str_cef[i].RRNAV.toFixed(3);
+				  data.str_cef[i].RRDES2=data.str_cef[i].RRDES===0?".000":data.str_cef[i].RRDES.toFixed(3);
+				  data.str_cef[i].RRPUE2=data.str_cef[i].RRPUE===0?".000":data.str_cef[i].RRPUE.toFixed(3);
+				  data.str_cef[i].RRMAR2=data.str_cef[i].RRMAR===0?".000":data.str_cef[i].RRMAR.toFixed(3);
+				  data.str_cef[i].RPNAV2=data.str_cef[i].RPNAV===0?".000":data.str_cef[i].RPNAV.toFixed(3);
+				  data.str_cef[i].RPDES2=data.str_cef[i].RPDES===0?".000":data.str_cef[i].RPDES.toFixed(3);
+				  data.str_cef[i].RPPUE2=data.str_cef[i].RPPUE===0?".000":data.str_cef[i].RPPUE.toFixed(3);
+				  data.str_cef[i].RPMAR2=data.str_cef[i].RPMAR===0?".000":data.str_cef[i].RPMAR.toFixed(3);
+			  }
 			  this.getView().getModel("Qlik").setProperty("/listaQlik",data.str_cef);
 			  console.log(this.getView().getModel("Qlik"));
 			  this.onExport();
@@ -949,126 +1114,124 @@ sap.ui.define([
 		createColumnConfig: function() {
 			return [
 				{
-					label: 'CDEMB',
+					label: 'Cdemb',
 					property: 'CDEMB',
 					type: EdmType.String,
 					scale: 0
 				},
 				{
-					label: 'NRMAR',
-					property: 'NRMAR',
+					label: 'Nrmar',
+					property: 'NRMAR2',
 					type: EdmType.String,
 					scale: 0
 				},
 				{
-					label: 'NMEMB',
+					label: 'Nmemb',
 					property: 'NMEMB',
 					type: EdmType.String,
 					scale: 0
 				},
 				{
-					label: 'CDMMA',
+					label: 'Cdmma',
 					property: 'CDMMA',
 					type: EdmType.String,
 					scale: 0
 				},
 				{
-					label: 'DSMMA',
+					label: 'Dsmma',
 					property: 'DSMMA',
 					type: EdmType.String,
 					scale: 0
 				},
 				{
-					label: 'CNPDS',
-					property: 'CNPDS',
-					type: EdmType.String,
-					scale: 0
+					label: 'Cnpds',
+					property: 'CNPDS2',
+					type: EdmType.String
+					
 				},
 				{
-					label: 'HONAV',
-					property: 'HONAV',
-					type: EdmType.String,
-					scale: 0
+					label: 'Honav',
+					property: 'HONAV2',
+					type: EdmType.String
+					
 				},
 				{
-					label: 'HODES',
-					property: 'HODES',
-					type: EdmType.String,
-					scale: 0
-				},
-				{
-					label: 'HOPUE',
-					property: 'HOPUE',
-					type: EdmType.String,
-					scale: 0
-				},
-				{
-					label: 'CONAV',
-					property: 'CONAV',
-					type: EdmType.String,
-					scale: 0
-				},
-				{
-					label: 'CODES',
-					property: 'CODES',
-					type: EdmType.String,
-					scale: 0
-				},
-				{
-					label: 'COPUS',
-					property: 'COPUS',
-					type: EdmType.String,
-					scale: 0
-				},
-				{
-					label: 'COMAR',
-					property: 'COMAR',
-					type: EdmType.String,
-					scale: 0
-				},
-				{
-					label: 'RRNAV',
-					property: 'RRNAV',
-					type: EdmType.String,
-					scale: 0
-				},
-				{
-					label: 'RRDES',
-					property: 'RRDES',
+					label: 'Hodes',
+					property: 'HODES2',
 					type: EdmType.String
 				},
 				{
-					label: 'RRPUE',
-					property: 'RRPUE',
+					label: 'Hopue',
+					property: 'HOPUE2',
 					type: EdmType.String
 				},
 				{
-					label: 'RRMAR',
-					property: 'RRMAR',
+					label: 'Homar',
+					property: 'HOMAR2',
 					type: EdmType.String
 				},
 				{
-					label: 'RPNAV',
-					property: 'RPNAV',
+					label: 'Conav',
+					property: 'CONAV2',
 					type: EdmType.String
 				},
 				{
-					label: 'RPDES',
-					property: 'RPDES',
+					label: 'Codes',
+					property: 'CODES2',
 					type: EdmType.String
 				},
 				{
-					label: 'RPPUE',
-					property: 'RPPUE',
+					label: 'Copue',
+					property: 'COPUE2',
 					type: EdmType.String
 				},
 				{
-					label: 'RPMAR',
-					property: 'RPMAR',
+					label: 'Comar',
+					property: 'COMAR2',
 					type: EdmType.String
 				},
 				{
-					label: 'FEPRD',
+					label: 'Rrnav',
+					property: 'RRNAV2',
+					type: EdmType.String
+				},
+				{
+					label: 'Rrdes',
+					property: 'RRDES2',
+					type: EdmType.String
+				},
+				{
+					label: 'Rrpue',
+					property: 'RRPUE2',
+					type: EdmType.String
+				},
+				{
+					label: 'Rrmar',
+					property: 'RRMAR2',
+					type: EdmType.String
+				},
+				{
+					label: 'Rpnav',
+					property: 'RPNAV2',
+					type: EdmType.String
+				},
+				{
+					label: 'Rpdes',
+					property: 'RPDES2',
+					type: EdmType.String
+				},
+				{
+					label: 'Rppue',
+					property: 'RPPUE2',
+					type: EdmType.String
+				},
+				{
+					label: 'Rpmar',
+					property: 'RPMAR2',
+					type: EdmType.String
+				},
+				{
+					label: 'Feprd',
 					property: 'FEPRD',
 					type: EdmType.String
 				}];
@@ -1701,7 +1864,7 @@ sap.ui.define([
 					label: 'Motivo',
 					property: 'DSMMA',
 					type: EdmType.String,
-					scale: 2
+				
 				},
 				{
 					label: 'Nav',
