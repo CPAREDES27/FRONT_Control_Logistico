@@ -8,11 +8,8 @@ sap.ui.define([
 	"sap/m/MessageBox",
 	"sap/ui/core/util/ExportTypeCSV",
     "sap/ui/core/util/Export",
-	'sap/ui/export/library',
-	'sap/ui/export/Spreadsheet',
 	"sap/m/MessageToast",
 	"sap/ui/core/BusyIndicator",
-	"./Utilities",
 ], function (BaseController,
 	JSONModel,
 	formatter,
@@ -22,97 +19,32 @@ sap.ui.define([
 	MessageBox,
 	ExportTypeCSV,
 	Export,
-	exportLibrary,
-	Spreadsheet,
 	MessageToast,
-	BusyIndicator,
-	Utilities) {
+	BusyIndicator) {
 	"use strict";
 	const mainUrlServices = 'https://cf-nodejs-qas.cfapps.us10.hana.ondemand.com/api/';
 	var oGlobalBusyDialog = new sap.m.BusyDialog();
-	var EdmType = exportLibrary.EdmType;
 	var centro=null;
 	var codEmbarca=false;
 	var planta="";
-	var exportarExcel=false;
-	var materialDesc=[];
-	var almacenDesc=[];
 	const HOST = "https://tasaqas.launchpad.cfapps.us10.hana.ondemand.com";
 	return BaseController.extend("com.tasa.aceitesusados.controller.Worklist", {
-		
+
 		formatter: formatter,
 		onInit : async function () {
-			let ViewModel= new JSONModel(
-				{}
-				);
-				this.setModel(ViewModel, "consultaMareas");
-		this.currentInputEmba = "";
-			this.primerOption = [];
-			this.segundoOption = [];
-			this.currentPage = "";
-			this.lastPage = "";
+	
 			try{
 				await this.loadCombos();
 				this.planta=await this.llenarPlanta(this.centro);
 				console.log(this.planta);
+				console.log("Hola");
+				console.log("Hola");
 				
 			}catch(error){
 				MessageBox.error("Ocurrió un error en la carga, actualice el navegador");
 
 			}
-			var fecha=this.getFechaActual();
-			var fechaActual = fecha+" - "+fecha;
-			this.byId("idFecha").setValue(fechaActual);
-		},
-		onAfterRendering: async function(){
-			this.userOperation =await this._getCurrentUser();
-			this.objetoHelp =  this._getHelpSearch();
-			this.parameter= this.objetoHelp[0].parameter;
-			this.url= this.objetoHelp[0].url;
-			console.log(this.parameter)
-			console.log(this.url)
-			this.callConstantes();
-		},
-		callConstantes: function(){
-			oGlobalBusyDialog.open();
-			var body={
-				"nombreConsulta": "CONSGENCONST",
-				"p_user": this.userOperation,
-				"parametro1": this.parameter,
-				"parametro2": "",
-				"parametro3": "",
-				"parametro4": "",
-				"parametro5": ""
-			}
-			fetch(`${this.onLocation()}General/ConsultaGeneral/`,
-				  {
-					  method: 'POST',
-					  body: JSON.stringify(body)
-				  })
-				  .then(resp => resp.json()).then(data => {
-					
-					console.log(data.data);
-					this.HOST_HELP=this.url+data.data[0].LOW;
-					console.log(this.HOST_HELP);
-
-				var oModel = new JSONModel();
-
-				this.getView().setModel(oModel);
-
-				  })
-			},
-		getFechaActual:function(){
-			var fecha=new Date();
-			var dia = fecha.getDate();
-			var mes = fecha.getMonth()+1;
-			var anio= fecha.getFullYear();
-			if(dia<10){
-				dia=this.zeroFill(dia,2);
-			}
-			if(mes<10){
-				mes=this.zeroFill(mes,2);
-			}
-			return anio+""+mes+""+dia;
+			
 		},
 
 		loadCombos:async function(){
@@ -152,7 +84,7 @@ sap.ui.define([
 				  
 				]
 			};
-			await fetch(`${Utilities.onLocation()}dominios/Listar`,
+			await fetch(`${mainUrlServices}dominios/Listar`,
 				  {
 					  method: 'POST',
 					  body: JSON.stringify(body)
@@ -160,14 +92,10 @@ sap.ui.define([
 				  .then(resp => resp.json()).then(data => {
 					var dataPuerto=data;
 					console.log(dataPuerto);
-					console.log(data);
 					ZD_FLESRNV= data.data.find(d => d.dominio == "ZD_FLESRNV").data;
 					ZINPRP= data.data.find(d => d.dominio == "ZINPRP").data;
 					ALMACEN= data.data.find(d => d.dominio == "ALMACEN").data;
 					MATERIAL= data.data.find(d => d.dominio == "MATERIAL").data;
-					this.materialDesc=data.data.find(d => d.dominio == "MATERIAL").data;
-					this.almacenDesc= data.data.find(d => d.dominio == "ALMACEN").data;
-					console.log(this.materialDesc);
 					TIPOMATERIAL = data.data.find(d=>d.dominio=="TIPOMATERIAL").data;
 					this.getModel("Estado").setProperty("/ZD_FLESRNV", ZD_FLESRNV);
 					this.getModel("Propiedad").setProperty("/ZINPRP", ZINPRP);
@@ -197,7 +125,7 @@ sap.ui.define([
 
 			_getDialogEmbarcacion : function () {
 				if (!this._oDialogEmbarcacion) {
-					this._oDialogEmbarcacion = sap.ui.xmlfragment("com.tasa.aceitesusados.view.Embarcacion", fthis.getView().getController());
+					this._oDialogEmbarcacion = sap.ui.xmlfragment("com.tasa.aceitesusados.view.DlgEmbarcacion", this.getView().getController());
 					this.getView().addDependent(this._oDialogEmbarcacion);
 				}
 				sap.ui.getCore().byId("idEmbarcacion").setValue("");
@@ -216,8 +144,8 @@ sap.ui.define([
 					sap.ui.getCore().byId("inputId1_R").setValue(data);	
 					sap.ui.getCore().byId("txtEmbarcaNew").setText(detail);
 				}else{
-					this.byId("idEmbarcacion2").setValue(data);
-					this.byId("txtEmbarca").setText(detail);
+					this.byId("inputId0_R").setValue(data);
+					
 				}
 				
 				this._onCloseDialogEmbarcacion();
@@ -310,7 +238,7 @@ sap.ui.define([
 					"p_user": "BUSQEMB"
 				  }
 				  console.log(body);
-				fetch(`${Utilities.onLocation()}embarcacion/ConsultarEmbarcacion/`,
+				fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
 					  {
 						  method: 'POST',
 						  body: JSON.stringify(body)
@@ -332,7 +260,7 @@ sap.ui.define([
 			onBusqueda: function(){
 				oGlobalBusyDialog.open();
 				var idAlmacen=this.byId("idAlmacen").getSelectedKey();
-				var idEmbarcacion= this.byId("idEmbarcacion2").getValue();
+				var idEmbarcacion= this.byId("inputId0_R").getValue();
 				var idEstado=this.byId("idEstado").getSelectedKey();
 				var idReserva=this.byId("idReserva").getValue();
 				var idFechaIni = this.byId("idFecha").mProperties.dateValue;
@@ -340,14 +268,10 @@ sap.ui.define([
 				console.log(this.byId("idFecha"));
 				var error="";
 				var valido=true;
-				if(idEstado==="" || idEstado===null){
-					error+="El campo Estados de la Reserva no debe estar vacío\n";
-					oGlobalBusyDialog.close();
-					valido=false;
 				
-				}
 				if(!this.byId("idFecha").mProperties.dateValue){
 					error+="Debe ingresar una fecha de reserva"
+					
 					oGlobalBusyDialog.close();
 					valido= false;
 				}
@@ -402,51 +326,17 @@ sap.ui.define([
 					"ip_tope": "FR"
 				};
 				console.log(body);
-				fetch(`${Utilities.onLocation()}aceitesusados/Listar`,
+				fetch(`${mainUrlServices}aceitesusados/Listar`,
 					  {
 						  method: 'POST',
 						  body: JSON.stringify(body)
 					  })
 					  .then(resp => resp.json()).then(data => {
-						var dataAceite = data;
-						for(var i=0;i<data.t_rpn.length;i++){
-							data.t_rpn[i].NRTGA=String(data.t_rpn[i].NRTGA)
-							data.t_rpn[i].CNSUM=String(data.t_rpn[i].CNSUM)
-							console.log(data.t_rpn[i].CDSUM);
-							data.t_rpn[i].CDSUMDESC=this.traeMaterial(data.t_rpn[i].CDSUM);
-							data.t_rpn[i].CDALMDESC=this.traeAlmacen(data.t_rpn[i].CDALM);
-							
-						}
 						  console.log(data.t_rpn);
-						  dataAceite.t_rpn.total=dataAceite.t_rpn.length;
-						  if(data.t_rpn){
-							exportarExcel=true;
-						  }
 						  this.getView().getModel("Aceite").setProperty("/listaAceite",data.t_rpn);
-						  this.byId("title").setText("Lista de registros: "+dataAceite.t_rpn.total);
 						oGlobalBusyDialog.close();
 					  }).catch(error => console.log(error)
 				);
-			},
-			traeAlmacen: function(almacen){
-				var almacenD="";
-				for(var i=0;i<this.almacenDesc.length;i++){
-					if(this.almacenDesc[i].id===almacen)
-					{
-						almacenD=this.almacenDesc[i].descripcion;
-					}
-				}
-				return almacenD;
-			},
-			traeMaterial: function(material){
-				var materialD="";
-				for(var i=0;i<this.materialDesc.length;i++){
-					if(this.materialDesc[i].id===material)
-					{
-						materialD=this.materialDesc[i].descripcion;
-					}
-				}
-				return materialD;
 			},
 			zeroFill: function( number, width )
 			{
@@ -457,102 +347,78 @@ sap.ui.define([
 				}
 				return number + ""; // siempre devuelve tipo cadena
 			},
-			
-				createColumnConfig5: function() {
-					return [
-						{
-							label: 'Reserva',
-							property: 'NRRNV' ,
-							type: EdmType.String,
-							scale: 2
-						},
-						{
-							label: 'Embarcación',
-							property: 'NMEMB' ,
-							type: EdmType.String,
-							scale: 2
-						},
-						{
-							label: 'Material',
-							property: 'CDSUM' ,
-							type: EdmType.String,
-							scale: 2
-						},
-						{
-							label: 'Almacén',
-							property: 'CDALM' ,
-							type: EdmType.String,
-							scale: 2
-						},
-						{
-							label: 'Fecha de reserva',
-							property: 'FHCRN' ,
-							type: EdmType.String,
-							scale: 2
-						},
-						{
-							label: 'Total peso Kg',
-							property: 'CNSUM' ,
-							type: EdmType.String,
-							scale: 2
-						},
-						{
-							label: 'Cant. galones',
-							property: 'NRTGA' ,
-							type: EdmType.String,
-							scale: 2
-						},
-						{
-							label: 'UM',
-							property: 'MSEHL' ,
-							type: EdmType.String,
-							scale: 2
-						},
-						{
-							label: 'Estado',
-							property: 'DESC_ESRNV' ,
-							type: EdmType.String,
-							scale: 2
+			onDataExport:  function() {
+				var oExport = new Export({
+					exportType: new ExportTypeCSV({ // required from "sap/ui/core/util/ExportTypeCSV"
+					  separatorChar: ";",
+					  charset: "utf-8"
+					}),
+					//PoliticaPrecio>/listaPolitica
+					models: this.getView().getModel("Aceite"),
+					rows:{path:""},
+					rows: { path: "/listaAceite" },
+					columns: [
+					  {
+						name: "Reserva",
+						template: {
+						  content: "{NRRNV}"
 						}
-						];
-				},
-				onDataExport: function() {
-					oGlobalBusyDialog.open();
-					if(!exportarExcel){
-						MessageBox.error("Porfavor, realizar una búsqueda antes de exportar");
-						oGlobalBusyDialog.close();
-						return false;
-					}
-					var aCols, aProducts, oSettings, oSheet;
-		
-					aCols = this.createColumnConfig5();
-					console.log(this.getView().getModel("Aceite"));
-					aProducts = this.getView().getModel("Aceite").getProperty('/listaAceite');
-		
-					oSettings = {
-						
-						workbook: { 
-							columns: aCols,
-							context: {
-								application: 'Debug Test Application',
-								version: '1.95.0',
-								title: 'Some random title',
-								modifiedBy: 'John Doe',
-								metaSheetName: 'Custom metadata'
-							}
-							
-						},
-						dataSource: aProducts,
-						fileName:"Reporte de Aceites Usados"
-					};
-		
-					oSheet = new Spreadsheet(oSettings);
-					oSheet.build()
-						.then( function() {
-							MessageToast.show('El Archivo ha sido exportado correctamente');
-						})
-						.finally(oSheet.destroy);
-						oGlobalBusyDialog.close();
+					  },
+					  {
+						name: "Embarcación",
+						template: {
+						  content: "{NMEMB}"
+						}
+					  },
+					  {
+						name: "Material",
+						template: {
+						  content: "{CDSUM}"
+						}
+					  },
+					  {
+						name: "Almacén",
+						template: {
+						  content: "{CDALM}"
+						}
+					  },
+					  {
+						name: "Fecha de reserva",
+						template: {
+						  content: "{FHCRN}"
+						}
+					  },
+					  {
+						name: "Total peso Kg",
+						template: {
+						  content: "{CNSUM}"
+						}
+					  },
+					  {
+						name: "Cant. galones",
+						template: {
+						  content: "{NRTGA}"
+						}
+					  },
+					  {
+						name: "UM",
+						template: {
+						  content: "{MSEHL}"
+						}
+					  },
+					  {
+						name: "Estado",
+						template: {
+						  content: "{ESRNV}"
+						}
+					  }
+					]
+				  });
+				  oExport.saveFile("Politica de Precios").catch(function(oError) {
+					MessageBox.error("Error when downloading data. ..." + oError);
+				  }).then(function() {
+					oExport.destroy();
+				  });
 				},
 				filterGlobally : function(oEvent) {
 					var sQuery = oEvent.getParameter("query");
@@ -630,12 +496,11 @@ sap.ui.define([
 							},
 							onLimpiar: function(){
 								this.byId("idReserva").setValue("");
-								this.byId("idEstado").setSelectedKey("");
+								this.byId("idEstado").setValue("");
 								this.byId("idAlmacen").setValue("");
-								this.byId("idEmbarcacion2").setValue("");
+								this.byId("inputId0_R").setValue("");
 								this.byId("idFecha").setValue("");
-								this.byId("txtEmbarca").setText("");
-								this.getView().getModel("Aceite").setProperty("/listaAceite","");
+								this.byId("inputId0_R").setDescription("");
 							},
 							castFecha: function(fecha){
 								if(fecha==="null" || fecha===""){
@@ -656,12 +521,8 @@ sap.ui.define([
 							onAnular: function(){
 								
 								var indice = this.byId("table").getSelectedIndices();
-								if(indice.length===0){
-									MessageBox.error("Debe seleccionar un elemento");
-									return false;
-								}
 								var data ;
-								console.log(indice.length);
+								console.log(indice);
 								var arreglo=this.getView().byId("table").getModel("Aceite").oData.listaAceite;
 								for(var i=0;i<indice.length;i++){
 									if(arreglo[i].ESRNV==="A"){
@@ -747,7 +608,7 @@ sap.ui.define([
 								}
 								console.log(bodyGuardar);
 							 
-								 fetch(`${Utilities.onLocation()}aceitesusados/Anular`,
+								 fetch(`${mainUrlServices}aceitesusados/Anular`,
 									{
 										method: 'POST',
 										body: JSON.stringify(bodyGuardar)
@@ -771,11 +632,9 @@ sap.ui.define([
 							onNuevo: function(){
 								
 								this._openNuevoAceite();
-								var fecha=this.getFechaActual();
-								sap.ui.getCore().byId("idFechaReservaNew").setValue(fecha);
 							},
 							onLimpiarNuevo: function(){
-								
+								sap.ui.getCore().byId("idFechaReservaNew").setValue("");
 								sap.ui.getCore().byId("inputId1_R").setValue("");
 								sap.ui.getCore().byId("idMaterialNew").setValue("");
 								sap.ui.getCore().byId("idAlmacenNew").setValue("");
@@ -785,12 +644,12 @@ sap.ui.define([
 								sap.ui.getCore().byId("idNroTicketNew").setValue("");
 								sap.ui.getCore().byId("idRemisionNew").setValue("");
 								sap.ui.getCore().byId("idKilosNew").setValue("");
-								this.getView().getModel().setProperty("/help",{});
+								sap.ui.getCore().byId("txtEmbarcaNew").setText("");
 							},
 							onGuardar:  function(){
 								oGlobalBusyDialog.open();
 								var idFechaReservaNew=sap.ui.getCore().byId("idFechaReservaNew").getValue();
-								var idEmbarcacionNew=sap.ui.getCore().byId("inputId1_R").getValue();
+								var inputId1_R=sap.ui.getCore().byId("inputId1_R").getValue();
 								var idMaterialNew=sap.ui.getCore().byId("idMaterialNew").getSelectedKey();
 								var idCentroNew=sap.ui.getCore().byId("idCentroNew").getValue();
 								var idAlmacenNew=sap.ui.getCore().byId("idAlmacenNew").getSelectedKey();
@@ -802,7 +661,7 @@ sap.ui.define([
 								var idKilosNew=sap.ui.getCore().byId("idKilosNew").getValue();
 								idNroTicketNew=this.zeroFill(idNroTicketNew,10);
 								console.log(idFechaReservaNew);
-								console.log(idEmbarcacionNew);
+								console.log(inputId1_R);
 								console.log(idMaterialNew);
 								console.log(idCentroNew);
 								console.log(idAlmacenNew);
@@ -812,33 +671,7 @@ sap.ui.define([
 								console.log(idNroTicketNew);
 								console.log(idRemisionNew);
 								console.log(idKilosNew);
-								var message ="";
-								var estado=false;
-								if(!idEmbarcacionNew){
-									estado =true;
-									message+="El campo Embarcación no debe estar vacio\n"
-								}
-								if(!idMaterialNew){
-									estado=true;
-									message+="El campo no debe estar vacio\n";
-								}
-								if(!idAlmacenNew){
-									estado=true;
-									message+="El campo Embarcación no debe estar vacio\n";
-								}
-								if(!idKilosNew){
-									estado=true;
-									message+="El campo Total Peso en Kilos no debe estar vacio\n"
-								}
-								if(!idTipoMaterialNew){
-									estado=true;
-									message+="El campo Tipo Material no debe estar vacío\n"
-								}
-								if(estado){
-									MessageBox.error(message);
-									oGlobalBusyDialog.close();
-									return false;
-								}
+							
 							
 								var body={
 									"fhrnv": idFechaReservaNew,
@@ -860,10 +693,10 @@ sap.ui.define([
 									"ip_tope": "NR",
 									"t_rpn": [
 									  {
-										"atcrn": this.userOperation,
+										"atcrn": "FGARCIA",
 										"atmfn": "",
 										"cdalm": idAlmacenNew,
-										"cdemb": idEmbarcacionNew,
+										"cdemb": inputId1_R,
 										"cdpta": this.planta,
 										"cdsum": idMaterialNew,
 										"cdumd": "",
@@ -891,7 +724,7 @@ sap.ui.define([
 									]
 								  };
 								  console.log(body);
-								  fetch(`${Utilities.onLocation()}aceitesusados/Nuevo`,
+								  fetch(`${mainUrlServices}aceitesusados/Nuevo`,
 									{
 										method: 'POST',
 										body: JSON.stringify(body)
@@ -946,12 +779,12 @@ sap.ui.define([
 										}
 									],
 									"order": "",
-									"p_user": this.userOperation,
+									"p_user": "FGARCIA",
 									"rowcount": 0,
 									"rowskips": 0,
 									"tabla": "ZFLPTA"
 								  }
-								  await	 fetch(`${Utilities.onLocation()}General/Read_Table/`,
+								  await	 fetch(`${mainUrlServices}General/Read_Table/`,
 									{
 										method: 'POST',
 										body: JSON.stringify(body)
@@ -969,361 +802,57 @@ sap.ui.define([
 								
 								return planta;
 							},
-							onSelectEmba: function(evt){
-								var objeto = evt.getParameter("rowContext").getObject();
-								if (objeto) {
-									var cdemb = objeto.CDEMB;
-									if (this.currentInputEmba.includes("embarcacionLow")) {
-										this.byId("embarcacionLow").setValue(cdemb);
-									}else if(this.currentInputEmba.includes("embarcacionHigh")){
-										this.byId("embarcacionHigh").setValue(cdemb);
-									}
-									this.getDialog().close();
-								}
-							},
-					
-							onSearchEmbarcacion: function(evt){
-								BusyIndicator.show(0);
-								var idEmbarcacion = sap.ui.getCore().byId("idEmba").getValue();
-								var idEmbarcacionDesc = sap.ui.getCore().byId("idNombEmba").getValue();
-								var idMatricula = sap.ui.getCore().byId("idMatricula").getValue();
-								var idRuc = sap.ui.getCore().byId("idRucArmador").getValue();
-								var idArmador = sap.ui.getCore().byId("idDescArmador").getValue();
-								var idPropiedad = sap.ui.getCore().byId("indicadorPropiedad").getSelectedKey();
-								var options = [];
-								var options2 = [];
-								let embarcaciones = [];
-								options.push({
-									"cantidad": "20",
-									"control": "COMBOBOX",
-									"key": "ESEMB",
-									"valueHigh": "",
-									"valueLow": "O"
-								})
-								if (idEmbarcacion) {
-									options.push({
-										"cantidad": "20",
-										"control": "INPUT",
-										"key": "CDEMB",
-										"valueHigh": "",
-										"valueLow": idEmbarcacion
-					
-									});
-								}
-								if (idEmbarcacionDesc) {
-									options.push({
-										"cantidad": "20",
-										"control": "INPUT",
-										"key": "NMEMB",
-										"valueHigh": "",
-										"valueLow": idEmbarcacionDesc.toUpperCase()
-					
-									});
-								}
-								if (idMatricula) {
-									options.push({
-										"cantidad": "20",
-										"control": "INPUT",
-										"key": "MREMB",
-										"valueHigh": "",
-										"valueLow": idMatricula
-									});
-								}
-								if (idPropiedad) {
-									options.push({
-										"cantidad": "20",
-										"control": "COMBOBOX",
-										"key": "INPRP",
-										"valueHigh": "",
-										"valueLow": idPropiedad
-									});
-								}
-								if (idRuc) {
-									options2.push({
-										"cantidad": "20",
-										"control": "INPUT",
-										"key": "STCD1",
-										"valueHigh": "",
-										"valueLow": idRuc
-									});
-								}
-								if (idArmador) {
-									options2.push({
-										"cantidad": "20",
-										"control": "INPUT",
-										"key": "NAME1",
-										"valueHigh": "",
-										"valueLow": idArmador.toUpperCase()
-									});
-								}
-					
-								this.primerOption = options;
-								this.segundoOption = options2;
-					
-								var body = {
-									"option": [
-					
-									],
-									"option2": [
-					
-									],
-									"options": options,
-									"options2": options2,
-									"p_user": "BUSQEMB",
-									//"p_pag": "1" //por defecto la primera parte
-								};
-					
-								fetch(`${Utilities.onLocation()}embarcacion/ConsultarEmbarcacion/`,
-									{
-										method: 'POST',
-										body: JSON.stringify(body)
-									})
-									.then(resp => resp.json()).then(data => {
-										console.log("Emba: ", data);
-										embarcaciones = data.data;
-					
-										this.getModel("consultaMareas").setProperty("/embarcaciones", embarcaciones);
-										this.getModel("consultaMareas").refresh();
-					
-										if (!isNaN(data.p_totalpag)) {
-											if (Number(data.p_totalpag) > 0) {
-												sap.ui.getCore().byId("goFirstPag").setEnabled(true);
-												sap.ui.getCore().byId("goPreviousPag").setEnabled(true);
-												sap.ui.getCore().byId("comboPaginacion").setEnabled(true);
-												sap.ui.getCore().byId("goLastPag").setEnabled(true);
-												sap.ui.getCore().byId("goNextPag").setEnabled(true);
-												var tituloTablaEmba = "Página 1/" + Number(data.p_totalpag);
-												this.getModel("consultaMareas").setProperty("/TituloEmba", tituloTablaEmba);
-												var numPag = Number(data.p_totalpag) + 1;
-												var paginas = [];
-												for (let index = 1; index < numPag; index++) {
-													paginas.push({
-														numero: index
-													});
-												}
-												this.getModel("consultaMareas").setProperty("/NumerosPaginacion", paginas);
-												sap.ui.getCore().byId("comboPaginacion").setSelectedKey("1");
-												this.currentPage = "1";
-												this.lastPage = data.p_totalpag;
-											} else {
-												var tituloTablaEmba = "Página 1/1";
-												this.getModel("consultaMareas").setProperty("/TituloEmba", tituloTablaEmba);
-												this.getModel("consultaMareas").setProperty("/NumerosPaginacion", []);
-												sap.ui.getCore().byId("goFirstPag").setEnabled(false);
-												sap.ui.getCore().byId("goPreviousPag").setEnabled(false);
-												sap.ui.getCore().byId("comboPaginacion").setEnabled(false);
-												sap.ui.getCore().byId("goLastPag").setEnabled(false);
-												sap.ui.getCore().byId("goNextPag").setEnabled(false);
-												this.currentPage = "1";
-												this.lastPage = data.p_totalpag;
-											}
-										}
-					
-					
-										//sap.ui.getCore().byId("comboPaginacion").setVisible(true);
-					
-										BusyIndicator.hide();
-									}).catch(error => console.log(error));
-							},
-					
-					
-							onChangePag: function (evt) {
-								var id = evt.getSource().getId();
-								var oControl = sap.ui.getCore().byId(id);
-								var pagina = oControl.getSelectedKey();
-								this.currentPage = pagina;
-								this.onNavPage();
-							},
-					
-							onSetCurrentPage: function (evt) {
-								var id = evt.getSource().getId();
-								if (id == "goFirstPag") {
-									this.currentPage = "1";
-								} else if (id == "goPreviousPag") {
-									if (!isNaN(this.currentPage)) {
-										if (this.currentPage != "1") {
-											var previousPage = Number(this.currentPage) - 1;
-											this.currentPage = previousPage.toString();
-										}
-									}
-								} else if (id == "goNextPag") {
-									if (!isNaN(this.currentPage)) {
-										if (this.currentPage != this.lastPage) {
-											var nextPage = Number(this.currentPage) + 1;
-											this.currentPage = nextPage.toString();
-										}
-									}
-								} else if (id == "goLastPag") {
-									this.currentPage = this.lastPage;
-								}
-								this.onNavPage();
-							},
-					
-							onNavPage: function () {
-								BusyIndicator.show(0);
-								let embarcaciones = [];
-								var body = {
-									"option": [
-					
-									],
-									"option2": [
-					
-									],
-									"options": this.primerOption,
-									"options2": this.segundoOption,
-									"p_user": "BUSQEMB",
-									"p_pag": this.currentPage
-								};
-					
-								fetch(`${Utilities.onLocation()}embarcacion/ConsultarEmbarcacion/`,
-									{
-										method: 'POST',
-										body: JSON.stringify(body)
-									})
-									.then(resp => resp.json()).then(data => {
-										console.log("Emba: ", data);
-										embarcaciones = data.data;
-					
-										this.getModel("consultaMareas").setProperty("/embarcaciones", embarcaciones);
-										this.getModel("consultaMareas").refresh();
-										var tituloTablaEmba = "Página " + this.currentPage + "/" + Number(data.p_totalpag);
-										this.getModel("consultaMareas").setProperty("/TituloEmba", tituloTablaEmba);
-										sap.ui.getCore().byId("comboPaginacion").setSelectedKey(this.currentPage);
-										BusyIndicator.hide();
-									}).catch(error => console.log(error));
-							},
-							getDialog: function(){
-								if (!this.oDialog) {
-									this.oDialog = sap.ui.xmlfragment("com.tasa.aceitesusados.view.Embarcacion", this);
-									this.getView().addDependent(this.oDialog);
-								}
-								return this.oDialog;
-							},
-							onOpenEmba: function(evt){
-								this.currentInputEmba = evt.getSource().getId();
-								this.getDialog().open();
-							},
-					
-							
-							buscarEmbarca: function(evt){
-								console.log(evt);
-								var indices = evt.mParameters.listItem.oBindingContexts.consultaMareas.sPath.split("/")[2];
-								console.log(indices);
-							
-								var data = this.getView().getModel("consultaMareas").oData.embarcaciones[indices].CDEMB;
-								var detail = this.getView().getModel("consultaMareas").oData.embarcaciones[indices].NMEMB;
-								if (this.currentInputEmba.includes("idEmbarcacion2")) {
-									this.byId("idEmbarcacion2").setValue(data);
-								}else if(this.currentInputEmba.includes("inputId1_R")){
-									sap.ui.getCore().byId("inputId1_R").setValue(data);
-									sap.ui.getCore().byId("txtEmbarcaNew").setText(detail);
-								}
-								this.onCerrarEmba();
-								
-							},
-							
-							onCerrarEmba: function(){
-								this.clearFilterEmba();
-								this.getDialog().close();
-								this.getModel("consultaMareas").setProperty("/embarcaciones", "");
-								this.getModel("consultaMareas").setProperty("/TituloEmba", "");
-								sap.ui.getCore().byId("comboPaginacion").setEnabled(false);
-								sap.ui.getCore().byId("goFirstPag").setEnabled(false);
-								sap.ui.getCore().byId("goPreviousPag").setEnabled(false);
-								sap.ui.getCore().byId("comboPaginacion").setEnabled(false);
-								sap.ui.getCore().byId("goLastPag").setEnabled(false);
-								sap.ui.getCore().byId("goNextPag").setEnabled(false);
-								sap.ui.getCore().byId("comboPaginacion").setSelectedKey("1");
-							},
-							clearFilterEmba: function(){
-								sap.ui.getCore().byId("idEmba").setValue("");
-								sap.ui.getCore().byId("idNombEmba").setValue("");
-								sap.ui.getCore().byId("idRucArmador").setValue("");
-								sap.ui.getCore().byId("idMatricula").setValue("");
-								sap.ui.getCore().byId("indicadorPropiedad").setValue("");
-								sap.ui.getCore().byId("idDescArmador").setValue("");
-								this.getModel("consultaMareas").setProperty("/embarcaciones","");
-							},		
-							onSearch: function (oEvent) {
-								// add filter for search
-								var aFilters = [];
-								var sQuery = oEvent.getSource().getValue();
-								if (sQuery && sQuery.length > 0) {
-									var filter = new Filter([
-										new Filter("NRRNV", FilterOperator.Contains, sQuery),
-										new Filter("NMEMB", FilterOperator.Contains, sQuery),
-										new Filter("CDSUM", FilterOperator.Contains, sQuery),
-										new Filter("CDALM", FilterOperator.Contains, sQuery),
-										new Filter("FHCRN", FilterOperator.Contains, sQuery),
-										new Filter("MSEHL", FilterOperator.Contains, sQuery),
-										new Filter("ESRNV", FilterOperator.Contains, sQuery),
-										new Filter("NRTGA", FilterOperator.Contains, sQuery),
-										new Filter("CNSUM", FilterOperator.Contains, sQuery),
-										new Filter("DESC_ESRNV", FilterOperator.Contains, sQuery),
-										new Filter("CDALMDESC", FilterOperator.Contains, sQuery),
-										
-										  
-									
-									]);
-									aFilters.push(filter);
-								}
-					
-								// update list binding
-								var oList = this.byId("table");
-								var oBinding = oList.getBinding("rows");
-								oBinding.filter(aFilters, "Application");
-							},
-							onSearchHelp: function (oEvent) {
+							onSearchHelp:function(oEvent){
 								let sIdInput = oEvent.getSource().getId(),
-									oModel = this.getModel(),
-									nameComponent = "busqembarcaciones",
-									idComponent = "busqembarcaciones",
-									urlComponent = this.HOST_HELP + ".AyudasBusqueda.busqembarcaciones-1.0.0",
-									oView = this.getView(),
-									oInput = sap.ui.getCore().byId(sIdInput);
-									oModel.setProperty("/input", oInput);
-				
-								if (!this.DialogComponent) {
+								oModel = this.getModel(),
+								nameComponent="busqembarcaciones",
+								idComponent="busqembarcaciones",
+								urlComponent=HOST+"/9acc820a-22dc-4d66-8d69-bed5b2789d3c.AyudasBusqueda.busqembarcaciones-1.0.0",
+								oView = this.getView(),
+								oInput = this.getView().byId(sIdInput);
+								oModel.setProperty("/input",oInput);
+					
+								if(!this.DialogComponent){
 									this.DialogComponent = new sap.m.Dialog({
-										title: "Búsqueda de embarcaciones",
-										icon: "sap-icon://search",
-										state: "Information",
-										endButton: new sap.m.Button({
-											icon: "sap-icon://decline",
-											text: "Cerrar",
-											type: "Reject",
-											press: function (oEvent) {
+										title:"Búsqueda de embarcaciones",
+										icon:"sap-icon://search",
+										state:"Information",
+										endButton:new sap.m.Button({
+											icon:"sap-icon://decline",
+											text:"Cerrar",
+											type:"Reject",
+											press:function(oEvent){
 												this.onCloseDialog(oEvent);
 											}.bind(this)
 										})
 									});
 									oView.addDependent(this.DialogComponent);
-									oModel.setProperty("/idDialogComp", this.DialogComponent.getId());
+									oModel.setProperty("/idDialogComp",this.DialogComponent.getId());
 								}
-				
-								let comCreateOk = function (oEvent) {
+					
+								let comCreateOk = function(oEvent){
 									BusyIndicator.hide();
 								};
-				
-				
-								if (this.DialogComponent.getContent().length === 0) {
+					
+								
+								if(this.DialogComponent.getContent().length===0){
 									BusyIndicator.show(0);
 									let oComponent = new sap.ui.core.ComponentContainer({
-										id: idComponent,
-										name: nameComponent,
-										url: urlComponent,
-										settings: {},
-										componentData: {},
-										propagateModel: true,
-										componentCreated: comCreateOk,
-										height: '100%',
+										id:idComponent,
+										name:nameComponent,
+										url:urlComponent,
+										settings:{},
+										componentData:{},
+										propagateModel:true,
+										componentCreated:comCreateOk,
+										height:'100%',
 										// manifest:true,
-										async: false
+										async:false
 									});
-				
+					
 									this.DialogComponent.addContent(oComponent);
 								}
-				
+								
 								this.DialogComponent.open();
 							},
 							onCloseDialog:function(oEvent){

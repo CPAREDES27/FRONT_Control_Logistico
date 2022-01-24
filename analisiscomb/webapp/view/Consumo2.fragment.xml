@@ -180,7 +180,16 @@
                         visible="true">
 						<Label text="MP" />
 						<t:template>
-							<Text text="{ConsumoTwo>HORPR}" wrapping="false" />
+							<!--<Text text="{ConsumoTwo>HORPR}" wrapping="false" />-->
+							<Text text="{path:'ConsumoTwo>HORPR', type:'sap.ui.model.type.Float',
+
+                                                formatOptions:{
+                                                  
+													groupingEnabled:true,
+													groupingSeparator: ',',
+													decimalSeparator: '.'                                               
+
+                                                }}"/>
 						</t:template>
 					</t:Column>
                     

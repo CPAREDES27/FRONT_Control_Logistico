@@ -19,7 +19,7 @@
 		</semantic:titleHeading>
 
 		<semantic:headerContent>
-			<f:Form >
+			<f:Form editable="true">
 				<f:title>
 					<core:Title text="Datos de Selección" />
 				</f:title>
@@ -140,7 +140,7 @@
                
                 	<Column
 						id="NRRNV"
-						width="11rem"
+						width="7rem"
 						sortProperty="NRRNV"
 						filterProperty="NRRNV"
 						showFilterMenuEntry="true"
@@ -152,7 +152,7 @@
 					</Column>
                    <Column
 						id="NMEMB"
-						width="11rem"
+						width="9rem"
 						sortProperty="NMEMB"
 						filterProperty="NMEMB"
 						showFilterMenuEntry="true"
@@ -164,7 +164,7 @@
 					</Column>
 					<Column
 						id="CDSUM"
-						width="11rem"
+						width="6rem"
 						sortProperty="CDSUM"
 						filterProperty="CDSUM"
 						showFilterMenuEntry="true"
@@ -176,19 +176,19 @@
 					</Column>
 					<Column
 						id="CDALM"
-						width="11rem"
-						sortProperty="CDALM"
-						filterProperty="CDALM"
+						width="9rem"
+						sortProperty="CDALMDESC"
+						filterProperty="CDALMDESC"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 							<m:Label text="Almacén" />
 						<template>
-							<m:Text text="{Aceite>CDALM}" wrapping="false" />
+							<m:Text text="{Aceite>CDALMDESC}" wrapping="false" />
 						</template>
 					</Column>
 					<Column
 						id="FHCRN"
-						width="11rem"
+						width="8rem"
 						sortProperty="FHCRN"
 						filterProperty="FHCRN"
 						showFilterMenuEntry="true"
@@ -200,7 +200,7 @@
 					</Column>
 					<Column
 						id="CNSUM"
-						width="11rem"
+						width="7rem"
 						sortProperty="CNSUM"
 						filterProperty="CNSUM"
 						showFilterMenuEntry="true"
@@ -213,7 +213,7 @@
 					</Column>
 					<Column
 						id="NRTGA"
-						width="11rem"
+						width="7rem"
 						sortProperty="NRTGA"
 						filterProperty="NRTGA"
 						showFilterMenuEntry="true"
@@ -226,7 +226,7 @@
 					</Column>
 					<Column
 						id="MSEHL"
-						width="11rem"
+						width="9rem"
 						sortProperty="MSEHL"
 						filterProperty="MSEHL"
 						showFilterMenuEntry="true"
@@ -238,7 +238,7 @@
 					</Column>
 					<Column
 						id="ESRNV"
-						width="11rem"
+						width="5rem"
 						sortProperty="ESRNV"
 						filterProperty="ESRNV"
 						showFilterMenuEntry="true"
@@ -250,7 +250,7 @@
 					</Column>
 					<Column
 						id="idDetalle"
-						width="11rem"
+						width="5rem"
 						sortProperty="ESRNV"
 						filterProperty="ESRNV"
 						showFilterMenuEntry="true"

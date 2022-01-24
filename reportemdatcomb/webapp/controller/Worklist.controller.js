@@ -9,9 +9,10 @@ sap.ui.define([
 	"sap/m/MessageBox",
 	'sap/ui/export/library',
 	'sap/ui/export/Spreadsheet',
-	"sap/ui/core/BusyIndicator"
+	"sap/ui/core/BusyIndicator",
+	"./Utilities"
 ], function (BaseController, JSONModel, formatter, Filter, FilterOperator,ExportTypeCSV,Export,MessageBox,exportLibrary,
-	Spreadsheet,BusyIndicator) {
+	Spreadsheet,BusyIndicator,Utilities) {
 	"use strict";
 	var oGlobalBusyDialog = new sap.m.BusyDialog();
 	const mainUrlServices = 'https://cf-nodejs-qas.cfapps.us10.hana.ondemand.com/api/';
@@ -20,6 +21,7 @@ sap.ui.define([
 	var fileDetails=null;
 	var EdmType = exportLibrary.EdmType;
 	var exportarExcel=false;
+	const HOST = "https://tasaqas.launchpad.cfapps.us10.hana.ondemand.com";
 	return BaseController.extend("com.tasa.reportemdatcomb.controller.Worklist", {
 
 		formatter: formatter,
@@ -47,7 +49,43 @@ sap.ui.define([
 			this.loadIndicadorP();
 			this.byId("idAciertos").setValue("200");
 		},
+		onAfterRendering: async function(){
+			this.userOperation =await this._getCurrentUser();
+			this.objetoHelp =  this._getHelpSearch();
+			this.parameter= this.objetoHelp[0].parameter;
+			this.url= this.objetoHelp[0].url;
+			console.log(this.parameter)
+			console.log(this.url)
+			this.callConstantes();
+		},
+		callConstantes: function(){
+			oGlobalBusyDialog.open();
+			var body={
+				"nombreConsulta": "CONSGENCONST",
+				"p_user": this.userOperation,
+				"parametro1": this.parameter,
+				"parametro2": "",
+				"parametro3": "",
+				"parametro4": "",
+				"parametro5": ""
+			}
+			fetch(`${Utilities.onLocation()}General/ConsultaGeneral/`,
+				  {
+					  method: 'POST',
+					  body: JSON.stringify(body)
+				  })
+				  .then(resp => resp.json()).then(data => {
+					
+					console.log(data.data);
+					this.HOST_HELP=this.url+data.data[0].LOW;
+					console.log(this.HOST_HELP);
 
+				var oModel = new JSONModel();
+
+				this.getView().setModel(oModel);
+
+				  })
+			},
 		_onOpenDialogEmbarcacion: function() {
 			this._getDialogEmbarcacion().open();
 			},
@@ -156,7 +194,7 @@ sap.ui.define([
 					"p_user": "BUSQEMB"
 				  }
 				  console.log(body);
-				fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+				fetch(`${Utilities.onLocation()}embarcacion/ConsultarEmbarcacion/`,
 					  {
 						  method: 'POST',
 						  body: JSON.stringify(body)
@@ -178,7 +216,7 @@ sap.ui.define([
 			buscar: function(evt){
 				var indices = evt.mParameters.listItem.oBindingContexts.Embarcacion.sPath.split("/")[2];
 				var data = this.getView().getModel("Embarcacion").oData.listaEmbarcacion[indices].WERKS;
-				this.byId("idEmbarcacion").setValue(data);
+				this.byId("inputId_W").setValue(data);
 				this._onCloseDialogEmbarcacion();
 			},
 			loadIndicadorP: function(){
@@ -192,7 +230,7 @@ sap.ui.define([
 					  }
 					]
 				}
-				fetch(`${mainUrlServices}dominios/Listar/`,
+				fetch(`${Utilities.onLocation()}dominios/Listar/`,
 					  {
 						  method: 'POST',
 						  body: JSON.stringify(body)
@@ -225,7 +263,7 @@ sap.ui.define([
 						  }				  
 					]
 				  }
-				fetch(`${mainUrlServices}dominios/Listar`,
+				fetch(`${Utilities.onLocation()}dominios/Listar`,
 					  {
 						  method: 'POST',
 						  body: JSON.stringify(body)
@@ -250,15 +288,19 @@ sap.ui.define([
 				return fechas;
 			},
 			onLimpiar:function(){
-				this.byId("idEmbarcacion").setValue("");
+				this.byId("inputId_W").setValue("");
 				this.byId("idFechaIniVigencia").setValue("");
 				this.byId("idMotivo").setValue("");
 				this.byId("idFase").setValue("");
+				this.byId("idAciertos").setValue("200");
+				this.byId("idListaReg").setText("Lista de registros:")
+				this.byId("title").setText("");
+				this.getView().getModel("Lista").setProperty("/listaLista",{});
 			},
 			
 			loadTabla: function(){
 				oGlobalBusyDialog.open();
-				var idEmbarcacion = this.byId("idEmbarcacion").getValue();
+				var idEmbarcacion = this.byId("inputId_W").getValue();
 				var fechaIni = this.byId("idFechaIniVigencia").getValue();
 				var idMotivo = this.byId("idMotivo").getSelectedKey();
 				var idFase = this.byId("idFase").getSelectedKey();
@@ -266,16 +308,21 @@ sap.ui.define([
 				var error=""
 				var options=[];
 				var estado=true;
-				if(!fechaIni){
-				 error="Debe ingresar una fecha de inicio de vigencia\n";
-				 estado=false;
+				if(idEmbarcacion || idFase ||idMotivo){
+					
+				}else{
+					if(!fechaIni){
+						error="Debe ingresar una fecha de inicio de vigencia\n";
+						estado=false;
+					   }
+					   
+					   if(!estado){
+						   MessageBox.error(error);
+						   oGlobalBusyDialog.close()
+						   return false;
+					   }
 				}
 				
-				if(!estado){
-					MessageBox.error(error);
-					oGlobalBusyDialog.close()
-					return false;
-				}
 				var feccc =[];
 				feccc= fechaIni.trim().split("-");
 				for(var i=0;i<feccc.length;i++){
@@ -326,7 +373,7 @@ sap.ui.define([
 					"p_fase": idFase
 				  }
 				  console.log(body);
-				  fetch(`${mainUrlServices}reportesmodifdatoscombustible/Listar/`,
+				  fetch(`${Utilities.onLocation()}reportesmodifdatoscombustible/Listar/`,
 					   {
 						   method: 'POST',
 						   body: JSON.stringify(body)
@@ -348,6 +395,9 @@ sap.ui.define([
 							this.getModel("Lista").setProperty("/listaLista", data.t_flocc);
 							this.byId("title").setText("Indicador de modificación: "+data.indicadorPorc.toFixed(0)+"%");
 							oGlobalBusyDialog.close();
+
+							var cantidadRegistros="Lista de registros ("+data.t_flocc.length+")";
+							this.byId("idListaReg").setText(cantidadRegistros);
 					   }).catch(error => console.log(error)
 					   );
 
@@ -661,7 +711,7 @@ sap.ui.define([
 						//"p_pag": "1" //por defecto la primera parte
 					};
 		
-					fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+					fetch(`${Utilities.onLocation()}embarcacion/ConsultarEmbarcacion/`,
 						{
 							method: 'POST',
 							body: JSON.stringify(body)
@@ -763,7 +813,7 @@ sap.ui.define([
 						"p_pag": this.currentPage
 					};
 		
-					fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+					fetch(`${Utilities.onLocation()}embarcacion/ConsultarEmbarcacion/`,
 						{
 							method: 'POST',
 							body: JSON.stringify(body)
@@ -800,9 +850,9 @@ sap.ui.define([
 				
 					var data = this.getView().getModel("consultaMareas").oData.embarcaciones[indices].WERKS;
 					if (this.currentInputEmba.includes("idEmbarcacion")) {
-						this.byId("idEmbarcacion").setValue(data);
+						this.byId("inputId_W").setValue(data);
 					}else if(this.currentInputEmba.includes("idEmbarcacion")){
-						this.byId("idEmbarcacion").setValue(data);
+						this.byId("inputId_W").setValue(data);
 					}
 					this.onCerrarEmba();
 					
@@ -830,6 +880,61 @@ sap.ui.define([
 					sap.ui.getCore().byId("idDescArmador").setValue("");
 					this.getModel("consultaMareas").setProperty("/embarcaciones","");
 				},		
-				
+				onSearchHelp:function(oEvent){
+					let sIdInput = oEvent.getSource().getId(),
+					oModel = this.getModel(),
+					nameComponent="busqembarcaciones",
+					idComponent="busqembarcaciones",
+					urlComponent=this.HOST_HELP+".AyudasBusqueda.busqembarcaciones-1.0.0",
+					oView = this.getView(),
+					oInput = this.getView().byId(sIdInput);
+					oModel.setProperty("/input",oInput);
+		
+					if(!this.DialogComponent){
+						this.DialogComponent = new sap.m.Dialog({
+							title:"Búsqueda de embarcaciones",
+							icon:"sap-icon://search",
+							state:"Information",
+							endButton:new sap.m.Button({
+								icon:"sap-icon://decline",
+								text:"Cerrar",
+								type:"Reject",
+								press:function(oEvent){
+									this.onCloseDialog(oEvent);
+								}.bind(this)
+							})
+						});
+						oView.addDependent(this.DialogComponent);
+						oModel.setProperty("/idDialogComp",this.DialogComponent.getId());
+					}
+		
+					let comCreateOk = function(oEvent){
+						BusyIndicator.hide();
+					};
+		
+					
+					if(this.DialogComponent.getContent().length===0){
+						BusyIndicator.show(0);
+						let oComponent = new sap.ui.core.ComponentContainer({
+							id:idComponent,
+							name:nameComponent,
+							url:urlComponent,
+							settings:{},
+							componentData:{},
+							propagateModel:true,
+							componentCreated:comCreateOk,
+							height:'100%',
+							// manifest:true,
+							async:false
+						});
+		
+						this.DialogComponent.addContent(oComponent);
+					}
+					
+					this.DialogComponent.open();
+				},
+				onCloseDialog:function(oEvent){
+					oEvent.getSource().getParent().close();
+				}
 	});
 });

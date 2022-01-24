@@ -7,7 +7,7 @@ sap.ui.define([
 
 	// shortcut for sap.m.URLHelper
 	var URLHelper = mobileLibrary.URLHelper;
-
+	
 	return Controller.extend("com.tasa.valeviveres.controller.BaseController", {
 		/**
 		 * Convenience method for accessing the router.
@@ -38,7 +38,75 @@ sap.ui.define([
 		setModel : function (oModel, sName) {
 			return this.getView().setModel(oModel, sName);
 		},
+		_getHelpSearch:  function(){
+			var oRouter = window.location.origin;
+			var service=[];
+			if(oRouter.indexOf("localhost") !== -1){
+				service.push({
+					url:"https://tasaqas.launchpad.cfapps.us10.hana.ondemand.com/",
+					parameter:"IDH4_QAS"
+				})
+			}
+			if(oRouter.indexOf("tasadev")!== -1){
+				service.push({
+					url:"https://tasadev.launchpad.cfapps.us10.hana.ondemand.com/",
+					parameter:"IDH4_DEV"
+				})
+			}
+			if(oRouter.indexOf("tasaprd")!==-1){
+				service.push({
+					url:"https://tasaprd.launchpad.cfapps.us10.hana.ondemand.com/",
+					parameter:"IDH4_PRD"
+				})
+			}
+			if(oRouter.indexOf("tasaqas")!==-1){
+				service.push({
+					url:"https://tasaqas.launchpad.cfapps.us10.hana.ondemand.com/",
+					parameter:"IDH4_QAS"
+				})
+			}
+			return service;
+		},
+		_getCurrentUser: async function(){
 
+			let oUshell = sap.ushell,
+
+			oUser={};
+
+			if(oUshell){
+
+				let oUserInfo =await sap.ushell.Container.getServiceAsync("UserInfo");
+
+				let sEmail = oUserInfo.getEmail().toUpperCase(),
+
+				sName = sEmail.split("@")[0],
+
+				sDominio= sEmail.split("@")[1];
+
+				if(sDominio === "XTERNAL.BIZ") sName = "FGARCIA";
+
+				oUser = {
+
+					name:sName
+
+				}
+
+			}else{
+
+				oUser = {
+
+					name: "FGARCIA"
+
+				}
+
+			}
+
+			this.usuario=oUser.name;
+			console.log(this.usuario);
+			return this.usuario;
+
+		},
+		
 		/**
 		 * Getter for the resource bundle.
 		 * @public
@@ -47,6 +115,7 @@ sap.ui.define([
 		getResourceBundle : function () {
 			return this.getOwnerComponent().getModel("i18n").getResourceBundle();
 		},
+
 
 		/**
 		 * Event handler when the share by E-Mail button has been clicked

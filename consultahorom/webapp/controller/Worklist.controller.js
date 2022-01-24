@@ -9,8 +9,9 @@ sap.ui.define([
 	"sap/m/MessageBox",
 	"sap/ui/core/BusyIndicator",
 	'sap/ui/export/library',
-	'sap/ui/export/Spreadsheet'
-], function (BaseController, JSONModel, formatter, Filter, FilterOperator,ExportTypeCSV,Export,MessageBox,BusyIndicator,exportLibrary,Spreadsheet) {
+	'sap/ui/export/Spreadsheet',
+	"./Utilities"
+], function (BaseController, JSONModel, formatter, Filter, FilterOperator,ExportTypeCSV,Export,MessageBox,BusyIndicator,exportLibrary,Spreadsheet,Utilities) {
 	"use strict";
 	const mainUrlServices = 'https://cf-nodejs-qas.cfapps.us10.hana.ondemand.com/api/';
 	var JsonFechaIni={
@@ -20,6 +21,7 @@ sap.ui.define([
 	var EdmType = exportLibrary.EdmType;
 	var exportarExcel=false;
 	var oGlobalBusyDialog = new sap.m.BusyDialog();
+	const HOST = "https://tasaqas.launchpad.cfapps.us10.hana.ondemand.com";
 	return BaseController.extend("com.tasa.consultahorom.controller.Worklist", {
 
 		formatter: formatter,
@@ -45,6 +47,61 @@ sap.ui.define([
 			this.loadCombos();
 			
 		},
+		_getCurrentUser: async function(oViewModel){
+			let oUshell = sap.ushell,
+			oUser={};
+			if(oUshell){
+				let oUserInfo =await sap.ushell.Container.getServiceAsync("UserInfo");
+				let sEmail = oUserInfo.getEmail().toUpperCase(),
+				sName = sEmail.split("@")[0],
+				sDominio= sEmail.split("@")[1];
+				if(sDominio === "XTERNAL.BIZ") sName = "FGARCIA";
+				oUser = {
+					name:sName
+				}
+			}else{
+				oUser = {
+					name: "FGARCIA"
+				}
+			}
+
+			this.usuario=oUser.name;
+			console.log(this.usuario);
+		},
+		onAfterRendering: async function(){
+			this.userOperation =await this._getCurrentUser();
+			this.objetoHelp =  await this._getHelpSearch();
+			this.parameter= this.objetoHelp[0].parameter;
+			this.url= this.objetoHelp[0].url;
+			console.log(this.parameter)
+			console.log(this.url)
+			this.callConstantes();
+		},
+		callConstantes: function(){
+			oGlobalBusyDialog.open();
+			var body={
+				"nombreConsulta": "CONSGENCONST",
+				"p_user": this.userOperation,
+				"parametro1": this.parameter,
+				"parametro2": "",
+				"parametro3": "",
+				"parametro4": "",
+				"parametro5": ""
+			}
+			fetch(`${Utilities.onLocation()}General/ConsultaGeneral/`,
+				  {
+					  method: 'POST',
+					  body: JSON.stringify(body)
+				  })
+				  .then(resp => resp.json()).then(data => {
+					
+					console.log(data.data);
+					this.HOST_HELP=this.url+data.data[0].LOW;
+					console.log(this.HOST_HELP);
+						oGlobalBusyDialog.close();
+				  }).catch(error => console.log(error)
+			);
+		},
 		loadCombos: function(){
 			oGlobalBusyDialog.open();
 			var ZCDMMACOM=null;
@@ -59,7 +116,7 @@ sap.ui.define([
 				]
 			  }
 
-			  fetch(`${mainUrlServices}dominios/Listar`,
+			  fetch(`${Utilities.onLocation()}dominios/Listar`,
 			  {
 				  method: 'POST',
 				  body: JSON.stringify(body)
@@ -77,7 +134,7 @@ sap.ui.define([
 		listaEmbarcacion: function(){
 			oGlobalBusyDialog.open();
 			console.log("BusquedaEmbarca");
-			var idEmbarcacion =sap.ui.getCore().byId("idEmbarcacion").getValue();
+			var idEmbarcacion =sap.ui.getCore().byId("inputId0_R").getValue();
 			var idEmbarcacionDesc =sap.ui.getCore().byId("idEmbarcacionDesc").getValue();
 			var idMatricula =sap.ui.getCore().byId("idMatricula").getValue();
 			var idRuc =sap.ui.getCore().byId("idRuc").getValue();
@@ -162,7 +219,7 @@ sap.ui.define([
 				"p_user": "BUSQEMB"
 			  }
 			  console.log(body);
-			fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+			fetch(`${Utilities.onLocation()}embarcacion/ConsultarEmbarcacion/`,
 				  {
 					  method: 'POST',
 					  body: JSON.stringify(body)
@@ -204,7 +261,7 @@ sap.ui.define([
 		// 		],
 		// 		"p_user": "BUSQEMB"
 		// 	  }
-		// 	fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+		// 	fetch(`${Utilities.onLocation()}embarcacion/ConsultarEmbarcacion/`,
 		// 		  {
 		// 			  method: 'POST',
 		// 			  body: JSON.stringify(body)
@@ -219,7 +276,7 @@ sap.ui.define([
 		onBusqueda: function(){
 			oGlobalBusyDialog.open();
 			
-			var idEmbarcacion = this.byId("idEmbarcacion").getValue();
+			var idEmbarcacion = this.byId("inputId0_R").getValue();
 			console.log(idEmbarcacion);
 			var idFechaIni = this.byId("idFecha").mProperties.dateValue;
 			var idFechaFin = this.byId("idFecha").mProperties.secondDateValue;
@@ -278,10 +335,10 @@ sap.ui.define([
 				"p_cdemb": idEmbarcacion,
 				"p_ffevn": fechaFin,
 				"p_fievn": fechaIni,
-				"p_user": "FGARCIA"
+				"p_user": this.userOperation
 			  }
 			  console.log(body);
-			fetch(`${mainUrlServices}consultahorometro/Listar/`,
+			fetch(`${Utilities.onLocation()}consultahorometro/Listar/`,
 					  {
 						  method: 'POST',
 						  body: JSON.stringify(body)
@@ -480,9 +537,11 @@ sap.ui.define([
 					this.byId("table").getBinding().filter(oFilter, "Application");
 					  },
 					  onLimpiar: function(){
-						  this.byId("idEmbarcacion").setValue("");
-						  this.byId("idEmbarcacion").setDescription("");
+						  this.byId("inputId0_R").setValue("");
+						  this.byId("inputId0_R").setDescription("");
 						  this.byId("idFecha").setValue("");
+						  this.byId("title").setText("Lista de registros:");
+						  this.getView().getModel("Horometro").setProperty("/listaHorometro",{});
 					  },
 					  _onOpenDialogEmbarcacion: function() {
 						
@@ -500,7 +559,7 @@ sap.ui.define([
 								this._oDialogEmbarcacion = sap.ui.xmlfragment("com.tasa.consultahorom.view.DlgEmbarcacion", this.getView().getController());
 								this.getView().addDependent(this._oDialogEmbarcacion);
 							}
-							sap.ui.getCore().byId("idEmbarcacion").setValue("");
+							sap.ui.getCore().byId("inputId0_R").setValue("");
 							sap.ui.getCore().byId("idEmbarcacionDesc").setValue("");
 							sap.ui.getCore().byId("idMatricula").setValue("");
 							sap.ui.getCore().byId("idRuc").setValue("");
@@ -508,7 +567,7 @@ sap.ui.define([
 							return this._oDialogEmbarcacion;
 						},
 						_onBuscarButtonPress: function(){
-							var idEmbarcacion =sap.ui.getCore().byId("idEmbarcacion").getValue();
+							var idEmbarcacion =sap.ui.getCore().byId("inputId0_R").getValue();
 							var idEmbarcacionDesc =sap.ui.getCore().byId("idEmbarcacionDesc").getValue();
 							var idMatricula =sap.ui.getCore().byId("idMatricula").getValue();
 							var idRuc =sap.ui.getCore().byId("idRuc").getValue();
@@ -598,7 +657,7 @@ sap.ui.define([
 						// 		],
 						// 		"p_user": "BUSQEMB"
 						// 	  }
-						// 	  fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+						// 	  fetch(`${Utilities.onLocation()}embarcacion/ConsultarEmbarcacion/`,
 						// 		  {
 						// 			  method: 'POST',
 						// 			  body: JSON.stringify(body)
@@ -621,7 +680,7 @@ sap.ui.define([
 							}else{
 								var data = this.getView().getModel("Embarcacion").oData.listaEmbarcacion[indices].CDEMB;
 								console.log(data);
-								this.byId("idEmbarcacion").setValue(data);
+								this.byId("inputId0_R").setValue(data);
 								this._onCloseDialogEmbarcacion();
 							}
 
@@ -629,7 +688,7 @@ sap.ui.define([
 						buscar: function(evt){
 							var indices = evt.mParameters.listItem.oBindingContexts.Embarcacion.sPath.split("/")[2];
 							var data = this.getView().getModel("Embarcacion").oData.listaEmbarcacion[indices].CDEMB;
-							this.byId("idEmbarcacion").setValue(data);
+							this.byId("inputId0_R").setValue(data);
 								this._onCloseDialogEmbarcacion();
 						},
 						onDataExport2: function(){
@@ -686,10 +745,10 @@ sap.ui.define([
 								"p_cdemb": "",
 								"p_ffevn": fechaFin,
 								"p_fievn": fechaIni,
-								"p_user": "FGARCIA"
+								"p_user": this.userOperation
 							  }
 							  console.log(body);
-							fetch(`${mainUrlServices}consultahorometro/Listar/`,
+							fetch(`${Utilities.onLocation()}consultahorometro/Listar/`,
 									  {
 										  method: 'POST',
 										  body: JSON.stringify(body)
@@ -808,7 +867,7 @@ sap.ui.define([
 							if (objeto) {
 								var cdemb = objeto.CDEMB;
 								if (this.currentInputEmba.includes("embarcacionLow")) {
-									this.byId("idEmbarcacion").setValue(cdemb);
+									this.byId("inputId0_R").setValue(cdemb);
 								}else if(this.currentInputEmba.includes("embarcacionHigh")){
 									this.byId("embarcacionHigh").setValue(cdemb);
 								}
@@ -907,7 +966,7 @@ sap.ui.define([
 								//"p_pag": "1" //por defecto la primera parte
 							};
 				
-							fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+							fetch(`${Utilities.onLocation()}embarcacion/ConsultarEmbarcacion/`,
 								{
 									method: 'POST',
 									body: JSON.stringify(body)
@@ -1009,7 +1068,7 @@ sap.ui.define([
 								"p_pag": this.currentPage
 							};
 				
-							fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+							fetch(`${Utilities.onLocation()}embarcacion/ConsultarEmbarcacion/`,
 								{
 									method: 'POST',
 									body: JSON.stringify(body)
@@ -1046,11 +1105,11 @@ sap.ui.define([
 						
 							var data = this.getView().getModel("consultaMareas").oData.embarcaciones[indices].CDEMB;
 							var detalle = this.getView().getModel("consultaMareas").oData.embarcaciones[indices].NMEMB;
-							if (this.currentInputEmba.includes("idEmbarcacion")) {
-								this.byId("idEmbarcacion").setValue(data);
-								this.byId("idText").setText(detalle);
-							}else if(this.currentInputEmba.includes("idEmbarcacion")){
-								this.byId("idEmbarcacion").setValue(data);
+							if (this.currentInputEmba.includes("inputId0_R")) {
+								this.byId("inputId0_R").setValue(data);
+								// this.byId("idText").setText(detalle);
+							}else if(this.currentInputEmba.includes("inputId0_R")){
+								this.byId("inputId0_R").setValue(data);
 							}
 							this.onCerrarEmba();
 							
@@ -1322,6 +1381,62 @@ sap.ui.define([
 								}
 								];
 						},
+						onSearchHelp:function(oEvent){
+							let sIdInput = oEvent.getSource().getId(),
+							oModel = this.getModel(),
+							nameComponent="busqembarcaciones",
+							idComponent="busqembarcaciones",
+							urlComponent=this.HOST_HELP+".AyudasBusqueda.busqembarcaciones-1.0.0",
+							oView = this.getView(),
+							oInput = this.getView().byId(sIdInput);
+							oModel.setProperty("/input",oInput);
+				
+							if(!this.DialogComponent){
+								this.DialogComponent = new sap.m.Dialog({
+									title:"Búsqueda de embarcaciones",
+									icon:"sap-icon://search",
+									state:"Information",
+									endButton:new sap.m.Button({
+										icon:"sap-icon://decline",
+										text:"Cerrar",
+										type:"Reject",
+										press:function(oEvent){
+											this.onCloseDialog(oEvent);
+										}.bind(this)
+									})
+								});
+								oView.addDependent(this.DialogComponent);
+								oModel.setProperty("/idDialogComp",this.DialogComponent.getId());
+							}
+				
+							let comCreateOk = function(oEvent){
+								BusyIndicator.hide();
+							};
+				
+							
+							if(this.DialogComponent.getContent().length===0){
+								BusyIndicator.show(0);
+								let oComponent = new sap.ui.core.ComponentContainer({
+									id:idComponent,
+									name:nameComponent,
+									url:urlComponent,
+									settings:{},
+									componentData:{},
+									propagateModel:true,
+									componentCreated:comCreateOk,
+									height:'100%',
+									// manifest:true,
+									async:false
+								});
+				
+								this.DialogComponent.addContent(oComponent);
+							}
+							
+							this.DialogComponent.open();
+						},
+						onCloseDialog:function(oEvent){
+							oEvent.getSource().getParent().close();
+						}
 
 	});
 });

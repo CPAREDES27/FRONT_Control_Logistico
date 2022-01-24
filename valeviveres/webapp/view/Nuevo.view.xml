@@ -161,6 +161,7 @@
                                             <form:fields>
                                                 <HBox width="auto">
                                                     <Input type="Text" id="idEmbarcacion"  showValueHelp="true" enabled="true" visible="true" width="276px" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="onOpenEmba"/>
+                                                    <!-- <Input id="inputId1_R" description="{/help/NMEMB}" placeholder="Seleccione embarcación" showValueHelp="true"  valueHelpRequest="onSearchHelp"/> -->
                                                 </HBox>
                                             </form:fields>
                                         </form:FormElement>
@@ -185,7 +186,7 @@
                                                 <Label text="Inicio travesía" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <DatePicker id="idFechaTravesiaIni" change="setValue" width="auto" displayFormat="dd/MM/yyyy"  required="false" valueStateText="Invalid entry" enabled="true" visible="true" />
+                                                <DatePicker id="idFechaTravesiaIni" change="setValue" width="auto" displayFormat="dd/MM/yyyy" valueFormat="dd/MM/yyyy"  required="false" valueStateText="Invalid entry" enabled="true" visible="true" />
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -193,7 +194,7 @@
                                                 <Label text="Fin de travesía" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <DatePicker width="auto" change="setValue" id="idFechaTravesiaFin" displayFormat="dd/MM/yyyy"  required="false" valueStateText="Invalid entry" enabled="true" visible="true" />
+                                                <DatePicker width="auto" change="setValue" id="idFechaTravesiaFin" displayFormat="dd/MM/yyyy" valueFormat="dd/MM/yyyy"   required="false" valueStateText="Invalid entry" enabled="true" visible="true" />
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true" id="idFormTripulante">
@@ -332,7 +333,8 @@
                                                 <Label text="Centro" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Text id="idCentroText" text=""/>
+                                                <Input type="Text" id="idCentroText" showValueHelp="false"  enabled="false" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                                <!-- <Text id="idCentroText" text=""/> -->
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -340,7 +342,7 @@
                                                 <Label text="Almacén externo" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Text id="idAlmacenExterno"/>
+                                                <Input type="Text" id="idAlmacenExterno" showValueHelp="false"  enabled="false" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -356,7 +358,8 @@
                                                 <Label text="Indicador de propiedad" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             </form:label>
                                             <form:fields>
-                                                <Text text="" id="idIndicador"/>
+                                                <Input type="Text" id="idIndicador" showValueHelp="false"  enabled="false" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                                <!-- <Text text="" id="idIndicador"/> -->
                                             </form:fields>
                                         </form:FormElement>
                                         <form:FormElement visible="true">
@@ -429,6 +432,7 @@
                                 <OverflowToolbar style="Clear">
                                     <ToolbarSpacer/>
                                     <ToggleButton text="Generar Sumninistros" type="Emphasized" iconFirst="false" width="auto" enabled="true" visible="true" iconDensityAware="false" press="validarCabecera"/>
+                                    <!-- <ToggleButton text="Generar Sumninistros" type="Emphasized" iconFirst="false" width="auto" enabled="true" visible="true" iconDensityAware="false" press="validaFecha"/> -->
                                     <ToggleButton text="Agregar" id="idAgregar" type="Emphasized" iconFirst="false" width="auto" enabled="true" visible="true" iconDensityAware="false" press="agregarSuministro"/>
                                     <ToggleButton text="Eliminar" id="idEliminar" type="Emphasized" iconFirst="false" width="auto" enabled="true" visible="true" iconDensityAware="false" press="onEliminar"/>
                                     <ToggleButton text="TestModel" type="Default" iconFirst="false" width="auto" enabled="true" visible="false" iconDensityAware="false" press="testModel"/>

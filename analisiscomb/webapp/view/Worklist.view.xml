@@ -26,8 +26,7 @@
 						<f:formElements>
 							<f:FormElement label="Embarcación">
 								<f:fields>
-									<Input type="Text" id="embarcacionLow" showValueHelp="true" enabled="true" visible="true" width="91%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="onOpenEmba"/>
-									<Text text="" id="txtEmbarca" width="50%" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input id="inputId0_R" placeholder="Seleccione embarcación" showValueHelp="true"  valueHelpRequest="onSearchHelp"/>
 								</f:fields>
 							</f:FormElement>
 							
@@ -58,8 +57,6 @@
 								</f:fields>
 							</f:FormElement>
 						</f:formElements>
-					</f:FormContainer>
-					<f:FormContainer >
 						<f:formElements>
 							<f:FormElement >
 								<f:fields>
@@ -69,6 +66,7 @@
 							</f:FormElement>
 						</f:formElements>
 					</f:FormContainer>
+						
 				</f:formContainers>
 				<f:layout>
 					<f:ResponsiveGridLayout
@@ -107,6 +105,9 @@
 						<Button text="Cuadro de consumo" press="onCuadroConsumo"/>
 						<Button text="QlikView" press="onExporQlikView"/>
 						<Button text="Carga Consumo" press="onCargarConsumo"/>
+						</OverflowToolbar>
+					<OverflowToolbar style="Clear">						
+						<Title text="Lista de registros {/dataCount}" id="idListaReg"/>
 						<ToolbarSpacer/>
 						<Button icon="sap-icon://excel-attachment" text="Exportar" press="onExportarExcelData"/>
 						<SearchField
@@ -123,7 +124,11 @@
 					</OverflowToolbar>
 				</table:extension>
 				<table:columns editable="false">
-					<table:Column width="8rem">
+					<table:Column width="7rem"
+						 sortProperty="NRMAR"
+						filterProperty="NRMAR"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
 						<table:label>
 							<Label text="Marea"/>
 						</table:label>
@@ -131,7 +136,11 @@
 							<Text text="{Combustible>NRMAR}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="6rem">
+					<table:Column width="6rem"
+						sortProperty="NMEMB"
+						filterProperty="NMEMB"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
 						<table:label>
 							<Label text="Nomb. Emb."/>
 						</table:label>
@@ -139,7 +148,11 @@
 							<Text text="{Combustible>NMEMB}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="8rem">
+					<table:Column width="8rem"
+						sortProperty="DSMMA"
+						filterProperty="DSMMA"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
 						<table:label>
 							<Label text="Mot. mar."/>
 						</table:label>
@@ -147,7 +160,11 @@
 							<Text text="{Combustible>DSMMA}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="6rem">
+					<table:Column width="6rem"
+						sortProperty="PTOZA"
+						filterProperty="PTOZA"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
 						<table:label>
 							<Label text="Puert. zarpe"/>
 						</table:label>
@@ -155,7 +172,11 @@
 							<Text text="{Combustible>PTOZA}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="10rem">
+					<table:Column width="9rem"
+						sortProperty="FECZA"
+						filterProperty="FECZA"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
 						<table:label>
 							<Label text="Fecha/hora zarpe"/>
 						</table:label>
@@ -163,7 +184,11 @@
 							<Text text="{Combustible>FECZA} {Combustible>HIZAR}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="6rem">
+					<table:Column width="6rem"
+						sortProperty="PTOAR"
+						filterProperty="PTOAR"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
 						<table:label>
 							<Label text="Puert. arribo"/>
 						</table:label>
@@ -171,7 +196,11 @@
 							<Text text="{Combustible>PTOAR}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="10rem">
+					<table:Column width="9rem"
+						sortProperty="FECAR"
+						filterProperty="FECAR"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
 						<table:label>
 							<Label text="Fecha/hora arribo"/>
 						</table:label>
@@ -179,7 +208,11 @@
 							<Text text="{Combustible>FECAR} {Combustible>HIARR}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="8rem">
+					<table:Column width="7rem"
+						sortProperty="FECCONMOV"
+						filterProperty="FECCONMOV"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
 						<table:label>
 							<Label text="Fecha prod."/>
 						</table:label>
@@ -187,7 +220,11 @@
 							<Text text="{Combustible>FECCONMOV}"/>
 						</table:template>
 					</table:Column>
-					<table:Column hAlign="End" width="8rem">
+					<table:Column hAlign="End" width="7rem"
+						sortProperty="STCMB"
+						filterProperty="STCMB"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
 						<table:label>
 							<Label text="Stock Inicial"/>
 						</table:label>
@@ -212,7 +249,11 @@
 						</table:template>
 					</table:Column>
 					
-					<table:Column hAlign="End" width="8rem">
+					<table:Column hAlign="End" width="7rem"
+						sortProperty="CNSUM"
+						filterProperty="CNSUM"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
 						<table:label>
 							<Label text="Sumn. "/>
 						</table:label>
@@ -237,7 +278,11 @@
                                                 }}"/>
 						</table:template>
 					</table:Column>
-					<table:Column hAlign="End" width="8rem">
+					<table:Column hAlign="End" width="7rem"
+						sortProperty="CONSU"
+						filterProperty="CONSU"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
 						<table:label>
 							<Label text="Cons. (Gln)"/>
 						</table:label>
@@ -263,7 +308,11 @@
                                                 }}"/>
 						</table:template>
 					</table:Column>
-					<table:Column hAlign="End" width="8rem">
+					<table:Column hAlign="End" width="7rem"
+						sortProperty="STFIN"
+						filterProperty="STFIN"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
 						<table:label>
 							<Label text="Stock. final"/>
 						</table:label>
@@ -288,7 +337,11 @@
                                                 }}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="6rem">
+					<table:Column width="4rem"
+						sortProperty="estado"
+						filterProperty="estado"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
 						<table:label>
 							<Label text="Obs."/>
 						</table:label>
@@ -296,7 +349,11 @@
 							<Button   visible="{Combustible>estado}" icon="sap-icon://document-text" />
 						</table:template>
 					</table:Column>
-					<table:Column hAlign="End" width="8rem">
+					<table:Column hAlign="End" width="8rem"
+						sortProperty="CNPDS"
+						filterProperty="CNPDS"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
 						<table:label>
 							<Label text="Cant. desc.(TN)"/>
 						</table:label>
@@ -321,7 +378,7 @@
                                                 }}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="6rem" hAlign="Center">
+					<table:Column width="4rem" hAlign="Center">
 						<table:label>
 							<Label text=""/>
 						</table:label>
@@ -329,7 +386,7 @@
 							<Button icon="sap-icon://show" type="Emphasized" press="onDetail" />
 						</table:template>
 					</table:Column>
-					<table:Column width="5rem">
+					<table:Column width="4rem">
 						<table:label>
 							<Label text="Selec."/>
 						</table:label>
@@ -337,7 +394,11 @@
 							<CheckBox selected="{Combustible>estadoCheck}" editable="{Combustible>SoloLecturaAjustComb}"/>
 						</table:template>
 					</table:Column >
-					<table:Column hAlign="End" width="8rem">
+					<table:Column hAlign="End" width="8rem"
+						sortProperty=""
+						filterProperty=""
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
 						<table:label>
 							<Label text="Cant. Combus. Regularizar"></Label>
 						</table:label>
@@ -345,7 +406,11 @@
 							<Text text="{}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="15rem">
+					<table:Column width="15rem"
+						sortProperty="descripcion"
+						filterProperty="descripcion"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
 						<table:label>
 							<Label text="Imputación"></Label>
 						</table:label>
@@ -358,7 +423,11 @@
 						
 						</table:template>
 					</table:Column>
-					<table:Column width="8rem">
+					<table:Column width="8rem"
+						sortProperty="FECCONMOV"
+						filterProperty="FECCONMOV"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
 						<table:label>
 							<Label text="Fecha contable"></Label>
 						</table:label>
@@ -366,7 +435,11 @@
 							<Text text="{Combustible>FECCONMOV}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="20rem">
+					<table:Column width="20rem"
+						sortProperty="DSOBS"
+						filterProperty="DSOBS"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true">
 						<table:label>
 							<Label text="Comentario"></Label>
 						</table:label>

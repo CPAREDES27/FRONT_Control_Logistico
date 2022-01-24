@@ -12,7 +12,7 @@
                                     <Label text="Fecha de Reserva" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <DatePicker width="50%" displayFormat="dd/MM/yyyy" id="idFechaReservaNew" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd"/>
+                                    <DatePicker  displayFormat="dd/MM/yyyy" id="idFechaReservaNew" required="false" valueStateText="Invalid entry" enabled="true" visible="true" valueFormat="yyyyMMdd"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -20,8 +20,7 @@
                                     <Label text="Embarcacion" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                <Input type="Text" id="idEmbarcacionNew" showValueHelp="true" enabled="true" visible="true" width="92%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="onOpenEmba"/>
-                                    <Text text="" id="txtEmbarcaNew" width="50%" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <Input id="inputId1_R" description="{/help/NMEMB}" placeholder="Seleccione embarcación" showValueHelp="true"  valueHelpRequest="onSearchHelp"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -29,7 +28,7 @@
                                     <Label text="Material" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <ComboBox editable="true"  id="idMaterialNew" items="{path:'Material>/MATERIAL',sorter:{path:'id'}}" enabled="true" visible="true" width="auto" valueState="None" maxWidth="50%">
+                                    <ComboBox editable="true"  id="idMaterialNew" items="{path:'Material>/MATERIAL',sorter:{path:'id'}}" enabled="true" visible="true"  valueState="None">
                                         <items>
                                                 <core:Item text="{Material>descripcion}" enabled="true" key="{Material>id}"/>
                                         </items>
@@ -41,7 +40,7 @@
                                     <Label text="Centro" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input type="Text" showValueHelp="false"    id="idCentroNew" enabled="false" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    <Input type="Text" showValueHelp="false"    id="idCentroNew" enabled="false" visible="true"  valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -49,7 +48,7 @@
                                     <Label text="Almacén" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <ComboBox editable="true"  id="idAlmacenNew" items="{Almacen>/ALMACEN}" enabled="true" visible="true" width="auto" valueState="None" maxWidth="50%">
+                                    <ComboBox editable="true"  id="idAlmacenNew" items="{Almacen>/ALMACEN}" enabled="true" visible="true" width="auto" valueState="None" >
                                         <items>
                                                 <core:Item text="{Almacen>descripcion}" enabled="true" key="{Almacen>id}"/>
                                         </items>
@@ -69,7 +68,7 @@
                                     <Label text="Cant. Galones" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input type="Number" showValueHelp="false"    id="idGalonesNew" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    <Input type="Number" showValueHelp="false"    id="idGalonesNew" enabled="true" visible="true"  valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -77,7 +76,7 @@
                                     <Label text="Cant Barriles" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input type="Number" showValueHelp="false"    id="idBarrilesNew" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    <Input type="Number" showValueHelp="false"    id="idBarrilesNew" enabled="true" visible="true"  valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -85,7 +84,7 @@
                                     <Label text="Tipo Material" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <ComboBox editable="true"  id="idTipoMaterialNew" items="{TipoMaterial>/TIPOMATERIAL}" enabled="true" visible="true" width="auto" valueState="None" maxWidth="50%">
+                                    <ComboBox editable="true"  id="idTipoMaterialNew" items="{TipoMaterial>/TIPOMATERIAL}" enabled="true" visible="true" width="auto" valueState="None">
                                         <items>
                                                 <core:Item text="{TipoMaterial>descripcion}" enabled="true" key="{TipoMaterial>id}"/>
                                         </items>
@@ -97,7 +96,7 @@
                                     <Label text="Nro. Ticket" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input type="Text" showValueHelp="false"    id="idNroTicketNew" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    <Input type="Number" showValueHelp="false"    id="idNroTicketNew" enabled="true" visible="true"  valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -105,7 +104,7 @@
                                     <Label text="Nro. Gía Remisión" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input type="Text" showValueHelp="false"    id="idRemisionNew" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    <Input type="Text" showValueHelp="false"    id="idRemisionNew" enabled="true" visible="true"  valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -113,7 +112,7 @@
                                     <Label text="Total Peso en Kilos" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input type="Number" showValueHelp="false"    id="idKilosNew" enabled="true" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    <Input type="Number" showValueHelp="false"    id="idKilosNew" enabled="true" visible="true"  valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
                             </form:FormElement>
                         </form:formElements>

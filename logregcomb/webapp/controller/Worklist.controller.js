@@ -10,9 +10,10 @@ sap.ui.define([
 	'sap/ui/export/library',
 	'sap/ui/export/Spreadsheet',	
 	"sap/ui/core/BusyIndicator",
-	"sap/ui/core/Fragment"
+	"sap/ui/core/Fragment",
+	"./Utilities"
 ], function (BaseController, JSONModel, formatter, Filter, FilterOperator,MessageBox,ExportTypeCSV,Export,exportLibrary,
-	Spreadsheet,BusyIndicator,Fragment) {
+	Spreadsheet,BusyIndicator,Fragment,Utilities) {
 	"use strict";
 	const mainUrlServices = 'https://cf-nodejs-qas.cfapps.us10.hana.ondemand.com/api/';
 	var oGlobalBusyDialog = new sap.m.BusyDialog();
@@ -39,21 +40,29 @@ sap.ui.define([
 			this.byId("idAciertos").setValue("200");
 			
 		},
-		onAfterRendering: function(){
-			//this.callConstantes();
+		onAfterRendering: async function(){
+			this.userOperation =await this._getCurrentUser();
+			this.objetoHelp =  this._getHelpSearch();
+			this.parameter= this.objetoHelp[0].parameter;
+			this.url= this.objetoHelp[0].url;
+			console.log(this.parameter)
+			console.log(this.url)
+			console.log(this.userOperation);
+			this.callConstantes();
 		},
 
 		callConstantes: function(){
+			oGlobalBusyDialog.open();
 			var body={
 				"nombreConsulta": "CONSGENCONST",
-				"p_user": "FGARCIA",
-				"parametro1": "IDCOMPH4",
+				"p_user": this.userOperation,
+				"parametro1": this.parameter,
 				"parametro2": "",
 				"parametro3": "",
 				"parametro4": "",
 				"parametro5": ""
 			}
-			fetch(`${mainUrlServices}General/ConsultaGeneral/`,
+			fetch(`${Utilities.onLocation()}General/ConsultaGeneral/`,
 				  {
 					  method: 'POST',
 					  body: JSON.stringify(body)
@@ -61,8 +70,8 @@ sap.ui.define([
 				  .then(resp => resp.json()).then(data => {
 					
 					console.log(data.data);
-					this.HOST=HOST1+data.data[0].LOW+HOST2;
-					console.log(this.HOST);
+					this.HOST_HELP=this.url+data.data[0].LOW;
+					console.log(this.HOST_HELP);
 						oGlobalBusyDialog.close();
 				  }).catch(error => console.log(error)
 			);
@@ -155,7 +164,7 @@ sap.ui.define([
 				"p_user": "BUSQEMB"
 			  }
 			  console.log(body);
-			fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+			fetch(`${Utilities.onLocation()}embarcacion/ConsultarEmbarcacion/`,
 				  {
 					  method: 'POST',
 					  body: JSON.stringify(body)
@@ -205,7 +214,7 @@ sap.ui.define([
 					  }				  
 				]
 			  }
-			fetch(`${mainUrlServices}dominios/Listar`,
+			fetch(`${Utilities.onLocation()}dominios/Listar`,
 				  {
 					  method: 'POST',
 					  body: JSON.stringify(body)
@@ -350,7 +359,7 @@ sap.ui.define([
 					"p_user": "BUSQEMB"
 				  }
 				  console.log(body);
-				fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+				fetch(`${Utilities.onLocation()}embarcacion/ConsultarEmbarcacion/`,
 					  {
 						  method: 'POST',
 						  body: JSON.stringify(body)
@@ -514,10 +523,10 @@ sap.ui.define([
 					"p_canti": idAciertos,
 					"p_lcco": "X",
 					"p_tope": "L",
-					"p_user": "FGARCIA"
+					"p_user": this.userOperation
 				  }
 				  console.log(body);
-				fetch(`${mainUrlServices}logregistrocombustible/Listar`,
+				fetch(`${Utilities.onLocation()}logregistrocombustible/Listar`,
 				  {
 					  method: 'POST',
 					  body: JSON.stringify(body)
@@ -727,13 +736,13 @@ sap.ui.define([
 				"p_canti": "0",
 				"p_lcco": "X",
 				"p_tope": "A",
-				"p_user": "FGARCIA",
+				"p_user": this.userOperation,
 				"str_lgcco": array
 			 };
 		  
 			console.log(bodyGuardar);
 		 
-			 fetch(`${mainUrlServices}logregistrocombustible/Listar`,
+			 fetch(`${Utilities.onLocation()}logregistrocombustible/Listar`,
 				{
 					method: 'POST',
 					body: JSON.stringify(bodyGuardar)
@@ -755,9 +764,11 @@ sap.ui.define([
 			this.byId("idMareaIni").setValue("");
 			this.byId("idMareaFin").setValue("");
 			this.byId("idFecha").setValue("");
-			this.byId("idEstado").setValue("");
+			this.byId("idEstado").setSelectedKey("");
 			this.byId("inputId_W").setValue("");
 			this.byId("idImputacion").setValue("");
+			this.byId("idAciertos").setValue("200");
+			this.getView().getModel("Combustible").setProperty("/listaCombustible",{});
 			
 		},
 		createColumnConfig5: function() {
@@ -979,7 +990,7 @@ sap.ui.define([
 				//"p_pag": "1" //por defecto la primera parte
 			};
 
-			fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+			fetch(`${Utilities.onLocation()}embarcacion/ConsultarEmbarcacion/`,
 				{
 					method: 'POST',
 					body: JSON.stringify(body)
@@ -1081,7 +1092,7 @@ sap.ui.define([
 				"p_pag": this.currentPage
 			};
 
-			fetch(`${mainUrlServices}embarcacion/ConsultarEmbarcacion/`,
+			fetch(`${Utilities.onLocation()}embarcacion/ConsultarEmbarcacion/`,
 				{
 					method: 'POST',
 					body: JSON.stringify(body)
@@ -1151,7 +1162,7 @@ sap.ui.define([
 			oModel = this.getModel(),
 			nameComponent="busqembarcaciones",
 			idComponent="busqembarcaciones",
-			urlComponent=HOST+"/9acc820a-22dc-4d66-8d69-bed5b2789d3c.AyudasBusqueda.busqembarcaciones-1.0.0",
+			urlComponent=this.HOST_HELP+".AyudasBusqueda.busqembarcaciones-1.0.0",
 			oView = this.getView(),
 			oInput = this.getView().byId(sIdInput);
 			oModel.setProperty("/input",oInput);
