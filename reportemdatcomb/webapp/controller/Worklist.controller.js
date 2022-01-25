@@ -391,12 +391,14 @@ sap.ui.define([
 							}
 							for(var i=0;i<data.t_flocc.length;i++){
 								data.t_flocc[i].NRMAR=this.zeroFill(data.t_flocc[i].NRMAR,10);
+								data.t_flocc[i].NRMAR2 = data.t_flocc[i].NRMAR.toLocaleString();
 								if(data.t_flocc[i].FECCONMOV===null || data.t_flocc[i].FECCONMOV==="null"){
 									data.t_flocc[i].FECCONMOV="";
 									
 								}
 					
 								data.t_flocc[i].CNPDS = String(data.t_flocc[i].CNPDS.toFixed(2));
+								data.t_flocc[i].CNPDS2 = data.t_flocc[i].CNPDS.toLocaleString();
 								data.t_flocc[i].DESC_CDFAS = (data.t_flocc[i].DESC_CDFAS).toUpperCase();
 								data.t_flocc[i].FECCONMOV2 = data.t_flocc[i].FECCONMOV ? this.castFechasForReport(data.t_flocc[i].FECCONMOV) : "";
 								data.t_flocc[i].FCMOD2 = data.t_flocc[i].FCMOD ? this.castFechasForReport(data.t_flocc[i].FCMOD) : "";
