@@ -659,14 +659,58 @@ sap.ui.define([
 				
 				];
 		},
-		onExportarExcelData: function() {
+		onExportarExcelData: async function() {
 			oGlobalBusyDialog.open();
 			if(!exportarExcel){
 				MessageBox.error("Porfavor, realizar una búsqueda antes de exportar");
 				oGlobalBusyDialog.close();
 				return false;
 			}
-			var aCols, aProducts, oSettings, oSheet;
+			var aCols, aProducts, oSettings, oSheet, oData,
+			oTitulosField = {
+				"NRMAR2": "Num. Marea",
+				"CDEMB": "Cod. de Embarcación",
+				"NMEMB": "Nombre de Embarcación",
+				"DSMMA": "Motivo",
+				"PTOZA": "Puerto de Zarpe",
+				"FECZA2": "Fecha de Zarpe",
+				"HIZAR": "Hora de Zarpe",
+				"PTOAR": "Puerto de Arribo",
+				"FECAR2": "Fecha de Arribo",
+				"HIARR": "Hora de Arribo",
+				"FECCONMOV2": "Fecha de prod.",
+				"CNPDS": "Cant. desc. (Tn)",
+				"STCMB2": "Stock Inicial",
+				"CNSUM2": "Suministro",
+				"CONSU2": "Consumo",
+				"STFIN2": "Stock Final",
+				"HOZMP2": "Zarpe MP",
+				"HOZA12": "Zarpe A1",
+				"HOZA22": "Zarpe A2",
+				"HOZA32": "Zarpe A3",
+				"HOZA42": "Zarpe A4",
+				"HOZA52": "Zarpe A5",
+				"HOZPA2": "Zarpe PA",
+				"HOZFP2": "Zarpe FP",
+				"HOAMP2": "Arribo MP",
+				"HOAA12": "Arribo A1",
+				"HOAA22": "Arribo A2",
+				"HOAA32": "Arribo A3",
+				"HOAA42": "Arribo A4",
+				"HOAA52": "Arribo A5",
+				"HOAPA2": "Arribo PA",
+				"HOAFP2": "Arribo FP",
+				"HODMP2": "Descarga MP",
+				"HODFP2": "Descarga FP",
+				"HOHMP2": "Horometro MP",
+				"HOHA12": "Horometro A1",
+				"HOHA22": "Horometro A2",
+				"HOHA32": "Horometro A3",
+				"HOHA42": "Horometro A4",
+				"HOHA52": "Horometro A5",
+				"HOHPA2": "Horometro PA",
+				"HOHFP2": "Horometro FP"
+			};
 			
 				aCols = this.createColumnConfig5();
 			
@@ -674,6 +718,67 @@ sap.ui.define([
 			console.log(this.getView().getModel("Combustible"));
 			aProducts = this.getView().getModel("Combustible").getProperty('/listaCombustible');
 
+			oData = {
+				titulosField: oTitulosField,
+				data: aProducts
+			};
+
+			let data = await fetch(`${Utilities.onLocation()}analisiscombustible/ExportRegistroAnalisisCombus`, {
+				method: 'POST',
+				body: JSON.stringify(oData)
+			}).then(resp => resp.json());
+
+			/**
+			 * Creación del libro de Excel
+			 */
+			const content = data.base64;
+			const contentType = 'application/vnd.ms-excel';
+			const sliceSize = 512;
+			let byteCharacters = window.atob(
+				content);
+			let byteArrays = [];
+			const fileName = 'Reporte Análisis de Combustible.xls';
+
+			/**
+			 * Convertir base64 a Blob
+			 */
+			for (let offset = 0; offset < byteCharacters.length; offset +=
+				sliceSize) {
+				let slice = byteCharacters.slice(offset, offset + sliceSize);
+				let byteNumbers = new Array(slice.length);
+				for (let i = 0; i < slice.length; i++) {
+					byteNumbers[i] = slice.charCodeAt(i);
+				}
+				let byteArray = new Uint8Array(byteNumbers);
+				byteArrays.push(byteArray);
+			}
+			let blob = new Blob(byteArrays, {
+				type: contentType
+			});
+
+			/**
+			 * Exportar a Excel
+			 */
+			if (navigator.msSaveBlob) {
+				navigator.msSaveBlob(blob, fileName);
+				
+				oGlobalBusyDialog.close();
+			} else {
+				let link = document.createElement("a");
+				if (link.download !== undefined) {
+					let url = URL.createObjectURL(blob);
+					link.setAttribute("href", url);
+					link.setAttribute("download", fileName);
+					link.style.visibility = 'hidden';
+					document.body.appendChild(link);
+					link.click();
+					document.body.removeChild(link);
+
+					oGlobalBusyDialog.close();
+				}
+			}
+
+			/*
 			oSettings = {
 				
 				workbook: { 
@@ -698,6 +803,7 @@ sap.ui.define([
 				})
 				.finally(oSheet.destroy);
 				oGlobalBusyDialog.close();
+				*/
 		},
 		castFecha: function(idFechaInicio){
 			
