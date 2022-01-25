@@ -287,6 +287,12 @@ sap.ui.define([
 				var fechas = arrayFecha[2]+""+arrayFecha[1]+""+arrayFecha[0];
 				return fechas;
 			},
+			castFechasForReport: function(fecha){
+				var arrayFecha=fecha.split("/");
+				console.log(arrayFecha);
+				var fechas = arrayFecha[2]+"-"+arrayFecha[1]+"-"+arrayFecha[0];
+				return fechas;
+			},
 			onLimpiar:function(){
 				this.byId("inputId_W").setValue("");
 				this.byId("idFechaIniVigencia").setValue("");
@@ -391,6 +397,9 @@ sap.ui.define([
 								}
 					
 								data.t_flocc[i].CNPDS = String(data.t_flocc[i].CNPDS.toFixed(2));
+								data.t_flocc[i].DESC_CDFAS = (data.t_flocc[i].DESC_CDFAS).toUpperCase();
+								data.t_flocc[i].FECCONMOV2 = data.t_flocc[i].FECCONMOV ? this.castFechasForReport(data.t_flocc[i].FECCONMOV) : "";
+								data.t_flocc[i].FCMOD2 = data.t_flocc[i].FCMOD ? this.castFechasForReport(data.t_flocc[i].FCMOD) : "";
 							}
 							this.getModel("Lista").setProperty("/listaLista", data.t_flocc);
 							this.getModel("Lista").setProperty("/porcIndModif", data.indicadorPorc);
@@ -570,7 +579,6 @@ sap.ui.define([
 					aPorcIndMod = this.getView().getModel("Lista").getProperty('/porcIndModif')
 
 					oData = {
-						titulosField: oTitulosField,
 						data: aProducts,
 						porcIndMod: aPorcIndMod
 					};

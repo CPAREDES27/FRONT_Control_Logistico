@@ -228,9 +228,9 @@ sap.ui.define([
 				}
 				for(var i=0;i<data.str_csmar.length;i++){
 					
-					data.str_csmar[i].STCMB2 = data.str_csmar[i].STCMB;
+					data.str_csmar[i].STCMB2 = data.str_csmar[i].STCMB.toLocaleString();
 					data.str_csmar[i].STCMB3 = data.str_csmar[i].STCMB.toLocaleString()+".000";
-					data.str_csmar[i].CNSUM2 = data.str_csmar[i].CNSUM;
+					data.str_csmar[i].CNSUM2 = data.str_csmar[i].CNSUM.toLocaleString();
 					data.str_csmar[i].CNSUM3 = data.str_csmar[i].CNSUM !==0?data.str_csmar[i].CNSUM.toLocaleString()+"0.000":".000";
 					data.str_csmar[i].CONSU2 = data.str_csmar[i].CONSU.toLocaleString();
 					data.str_csmar[i].STFIN2 = data.str_csmar[i].STFIN.toLocaleString();
@@ -719,7 +719,6 @@ sap.ui.define([
 			aProducts = this.getView().getModel("Combustible").getProperty('/listaCombustible');
 
 			oData = {
-				titulosField: oTitulosField,
 				data: aProducts
 			};
 
