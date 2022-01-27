@@ -270,7 +270,7 @@ sap.ui.define([
 					data.str_csmar[i].CNSUM=String(this.parseMil(data.str_csmar[i].CNSUM));
 					data.str_csmar[i].CONSU=String(this.parseMil(data.str_csmar[i].CONSU));
 					data.str_csmar[i].CNPDS=String(data.str_csmar[i].CNPDS);
-					data.str_csmar[i].CNPDS2=parseInt(data.str_csmar[i].CNPDS).toLocaleString();
+					data.str_csmar[i].CNPDS2=Math.round(data.str_csmar[i].CNPDS);
 					data.str_csmar[i].STFIN=String(data.str_csmar[i].STFIN);
 					data.str_csmar[i].NRMAR2 = data.str_csmar[i].NRMAR.toLocaleString();	
 						
