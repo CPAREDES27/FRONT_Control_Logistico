@@ -582,51 +582,56 @@ sap.ui.define([
 					 * Creación del libro de Excel
 					 */
 					const content = data.base64;
-					const contentType = 'application/vnd.ms-excel';
-					const sliceSize = 512;
-					let byteCharacters = window.atob(
-						content);
-					let byteArrays = [];
-					const fileName = 'Reporte de modificación de datos de combustible.xls';
+					if (content) {
+						const contentType = 'application/vnd.ms-excel';
+						const sliceSize = 512;
+						let byteCharacters = window.atob(
+							content);
+						let byteArrays = [];
+						const fileName = 'Reporte de modificación de datos de combustible.xls';
 
-					/**
-					 * Convertir base64 a Blob
-					 */
-					for (let offset = 0; offset < byteCharacters.length; offset +=
-						sliceSize) {
-						let slice = byteCharacters.slice(offset, offset + sliceSize);
-						let byteNumbers = new Array(slice.length);
-						for (let i = 0; i < slice.length; i++) {
-							byteNumbers[i] = slice.charCodeAt(i);
+						/**
+						 * Convertir base64 a Blob
+						 */
+						for (let offset = 0; offset < byteCharacters.length; offset +=
+							sliceSize) {
+							let slice = byteCharacters.slice(offset, offset + sliceSize);
+							let byteNumbers = new Array(slice.length);
+							for (let i = 0; i < slice.length; i++) {
+								byteNumbers[i] = slice.charCodeAt(i);
+							}
+							let byteArray = new Uint8Array(byteNumbers);
+							byteArrays.push(byteArray);
 						}
-						let byteArray = new Uint8Array(byteNumbers);
-						byteArrays.push(byteArray);
-					}
-					let blob = new Blob(byteArrays, {
-						type: contentType
-					});
+						let blob = new Blob(byteArrays, {
+							type: contentType
+						});
 
-					/**
-					 * Exportar a Excel
-					 */
-					if (navigator.msSaveBlob) {
-						navigator.msSaveBlob(blob, fileName);
-						
-						oGlobalBusyDialog.close();
-					} else {
-						let link = document.createElement("a");
-						if (link.download !== undefined) {
-							let url = URL.createObjectURL(blob);
-							link.setAttribute("href", url);
-							link.setAttribute("download", fileName);
-							link.style.visibility = 'hidden';
-							document.body.appendChild(link);
-							link.click();
-							document.body.removeChild(link);
-
+						/**
+						 * Exportar a Excel
+						 */
+						if (navigator.msSaveBlob) {
+							navigator.msSaveBlob(blob, fileName);
+							
 							oGlobalBusyDialog.close();
+						} else {
+							let link = document.createElement("a");
+							if (link.download !== undefined) {
+								let url = URL.createObjectURL(blob);
+								link.setAttribute("href", url);
+								link.setAttribute("download", fileName);
+								link.style.visibility = 'hidden';
+								document.body.appendChild(link);
+								link.click();
+								document.body.removeChild(link);
+
+								oGlobalBusyDialog.close();
+							}
 						}
+					} else {
+						oGlobalBusyDialog.close();
 					}
+					
 		
 					/*
 					aCols = this.createColumnConfig5();
