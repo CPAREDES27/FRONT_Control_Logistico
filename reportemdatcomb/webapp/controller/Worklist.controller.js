@@ -40,6 +40,7 @@ sap.ui.define([
 				{}
 				);
 				this.setModel(ViewModel, "consultaMareas");
+				this.setModel(ViewModel, "exportExcelOptions");
 		this.currentInputEmba = "";
 			this.primerOption = [];
 			this.segundoOption = [];
@@ -387,6 +388,8 @@ sap.ui.define([
 					   .then(resp => resp.json()).then(data => {
 							console.log(data);
 							if(data.t_flocc){
+								// Guardar los parámetros para la exportación
+								this.getView().getModel("exportExcelOptions").setProperty("/requestBody", body);
 								exportarExcel=true;
 							}
 							for(var i=0;i<data.t_flocc.length;i++){
@@ -565,29 +568,14 @@ sap.ui.define([
 						return false;
 					}
 					var aCols, aProducts, oSettings, oSheet, oData, aPorcIndMod,
-					oTitulosField = {
-						"NMEMB": "Embarcación",
-						"NRMAR": "Marea",
-						"DESC_CDFAS": "Fase",
-						"DESC_CDMMA": "Motivo de marea",
-						"FECCONMOV": "Fec. producción",
-						"FCMOD": "Fec. modificación",
-						"ATMOD": "Usuario",
-						"CNPDS": "Descarga (TN)",
-						"OBCOM": "Texto Explicativo"
-					};
+					oRequestBody = this.getView().getModel("exportExcelOptions").getProperty("/requestBody");
 
 					aProducts = this.getView().getModel("Lista").getProperty('/listaLista');
 					aPorcIndMod = this.getView().getModel("Lista").getProperty('/porcIndModif')
 
-					oData = {
-						data: aProducts,
-						porcIndMod: aPorcIndMod
-					};
-
 					let data = await fetch(`${Utilities.onLocation()}reportesmodifdatoscombustible/Exportar`, {
 						method: "POST",
-						body: JSON.stringify(oData),
+						body: JSON.stringify(oRequestBody),
 					}).then(resp => resp.json());
 
 					/**

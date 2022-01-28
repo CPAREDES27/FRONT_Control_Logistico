@@ -53,6 +53,7 @@ sap.ui.define([
 				{}
 				);
 				this.setModel(ViewModel, "consultaMareas");
+				this.setModel(ViewModel, "exportExcelOptions");
 		this.currentInputEmba = "";
 			this.primerOption = [];
 			this.segundoOption = [];
@@ -224,6 +225,8 @@ sap.ui.define([
 				var totalCNPDS=0;
 				var totalCONSU=0;
 				if(data){
+					// Guardar los parámetros para la exportación
+					this.getView().getModel("exportExcelOptions").setProperty("/requestBody", body);
 					exportarExcel=true;
 				}
 				for(var i=0;i<data.str_csmar.length;i++){
@@ -667,65 +670,17 @@ sap.ui.define([
 				oGlobalBusyDialog.close();
 				return false;
 			}
-			var aCols, aProducts, oSettings, oSheet, oData,
-			oTitulosField = {
-				"NRMAR2": "Num. Marea",
-				"CDEMB": "Cod. de Embarcación",
-				"NMEMB": "Nombre de Embarcación",
-				"DSMMA": "Motivo",
-				"PTOZA": "Puerto de Zarpe",
-				"FECZA2": "Fecha de Zarpe",
-				"HIZAR": "Hora de Zarpe",
-				"PTOAR": "Puerto de Arribo",
-				"FECAR2": "Fecha de Arribo",
-				"HIARR": "Hora de Arribo",
-				"FECCONMOV2": "Fecha de prod.",
-				"CNPDS": "Cant. desc. (Tn)",
-				"STCMB2": "Stock Inicial",
-				"CNSUM2": "Suministro",
-				"CONSU2": "Consumo",
-				"STFIN2": "Stock Final",
-				"HOZMP2": "Zarpe MP",
-				"HOZA12": "Zarpe A1",
-				"HOZA22": "Zarpe A2",
-				"HOZA32": "Zarpe A3",
-				"HOZA42": "Zarpe A4",
-				"HOZA52": "Zarpe A5",
-				"HOZPA2": "Zarpe PA",
-				"HOZFP2": "Zarpe FP",
-				"HOAMP2": "Arribo MP",
-				"HOAA12": "Arribo A1",
-				"HOAA22": "Arribo A2",
-				"HOAA32": "Arribo A3",
-				"HOAA42": "Arribo A4",
-				"HOAA52": "Arribo A5",
-				"HOAPA2": "Arribo PA",
-				"HOAFP2": "Arribo FP",
-				"HODMP2": "Descarga MP",
-				"HODFP2": "Descarga FP",
-				"HOHMP2": "Horometro MP",
-				"HOHA12": "Horometro A1",
-				"HOHA22": "Horometro A2",
-				"HOHA32": "Horometro A3",
-				"HOHA42": "Horometro A4",
-				"HOHA52": "Horometro A5",
-				"HOHPA2": "Horometro PA",
-				"HOHFP2": "Horometro FP"
-			};
+			var aCols, aProducts, oSettings, oSheet, oData, oRequestBody;
+			oRequestBody = this.getModel("exportExcelOptions").getProperty("/requestBody");
 			
 				aCols = this.createColumnConfig5();
 			
 			
 			console.log(this.getView().getModel("Combustible"));
-			aProducts = this.getView().getModel("Combustible").getProperty('/listaCombustible');
-
-			oData = {
-				data: aProducts
-			};
 
 			let data = await fetch(`${Utilities.onLocation()}analisiscombustible/ExportRegistroAnalisisCombus`, {
 				method: 'POST',
-				body: JSON.stringify(oData)
+				body: JSON.stringify(oRequestBody)
 			}).then(resp => resp.json());
 
 			/**
