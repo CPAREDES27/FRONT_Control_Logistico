@@ -29,7 +29,7 @@
                                 </form:label>
                                 <form:fields>
                                 <Input type="Text" showValueHelp="false" value="{Aceite>CDEMB}" id="idEmbarcacionDetail" enabled="false" visible="true" width="91%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
-                                    <Text text="{Aceite>NMEMB}"  width="50%" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <Text text="{Aceite>NMEMB}"  width="50%" maxLines="1" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
