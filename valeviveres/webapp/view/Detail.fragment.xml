@@ -265,52 +265,66 @@
 
                     <t:Table id="" rows="{ path:'Suministro>/listaSuministro', templateShareable:true}" width="auto" selectionMode="None" class="sapUiResponsiveMargin" visibleRowCount="{modelValeViveres>/RowListaSuministro}">
                         <t:columns>
-                            <t:Column width="auto">
+                            <t:Column width="6rem">
                                 <Label text="Fecha"/>
                                 <t:template>
-                                    <Text text="{Suministro>FECHA}" width="auto" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <Text text="{Suministro>FECHA}" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </t:template>
                             </t:Column>
-                            <t:Column width="auto">
+                            <t:Column width="5rem" hAlign="End">
                                 <Label text="Posición"/>
                                 <t:template>
-                                    <Text text="{Suministro>NRPOS}" width="auto" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <Text text="{Suministro>NRPOS}" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </t:template>
                             </t:Column>
-                            <t:Column width="auto">
+                            <t:Column width="20rem">
                                 <Label text="Suministro"/>
                                 <t:template>
-                                    <Text text="{Suministro>DSSUM}" width="auto" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <Text text="{Suministro>DSSUM}" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </t:template>
                             </t:Column>
-                            <t:Column width="auto" hAlign="End">
+                            <t:Column width="4.5rem" hAlign="End">
                                 <Label text="Ración"/>
                                 <t:template>
-                                    <Text text="{Suministro>CNRAC}" width="auto" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <Text text="{Suministro>CNRAC}" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </t:template>
                             </t:Column>
-                            <t:Column width="auto">
+                            <t:Column width="9rem">
                                 <Label text="Unidad de medida"/>
                                 <t:template>
-                                    <Text text="{Suministro>DSUMD}" width="auto" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <Text text="{Suministro>DSUMD}" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </t:template>
                             </t:Column>
-                            <t:Column width="auto" hAlign="End">
+                            <t:Column width="7rem" hAlign="End">
                                 <Label text="Costo unitario"/>
                                 <t:template>
-                                    <Text text="{Suministro>CUSUM}" width="auto" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <Text text="{path:'Suministro>CUSUM', type:'sap.ui.model.type.Float',
+												formatOptions:{
+													style: 'short',
+													decimals: 2,
+													shortDecimals: 2,
+													groupingSeparator: ',',
+													decimalSeparator: '.'
+												}}" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </t:template>
                             </t:Column>
-                            <t:Column width="auto" hAlign="End">
+                            <t:Column width="6rem" hAlign="End">
                                 <Label text="Costo total"/>
                                 <t:template>
-                                    <Text text="{Suministro>QTSUM}" width="auto" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <Text text="{path:'Suministro>QTSUM' , type:'sap.ui.model.type.Float',
+												formatOptions:{
+													style: 'short',
+													decimals: 2,
+													shortDecimals: 2,
+													groupingSeparator: ',',
+													decimalSeparator: '.'
+												}}" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </t:template>
                             </t:Column>
                             <t:Column width="auto">
                                 <Label text="Observaciónes"/>
                                 <t:template>
-                                    <Text text="{Suministro>OBPVA}" width="auto" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <Text text="{Suministro>OBPVA}" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </t:template>
                             </t:Column>
                         </t:columns>

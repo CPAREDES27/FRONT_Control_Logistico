@@ -279,8 +279,8 @@
 						</table:template>
 					</table:Column>
 					<table:Column hAlign="End" width="7rem"
-						sortProperty="CONSU"
-						filterProperty="CONSU"
+						sortProperty="CONSU2"
+						filterProperty="CONSU2"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<table:label>
@@ -289,7 +289,7 @@
 						<table:template>
 					
 							
-								<Text text="{path:'Combustible>CONSU', type:'sap.ui.model.type.Float',
+								<Text text="{path:'Combustible>CONSU2', type:'sap.ui.model.type.Float',
 
                                                 formatOptions:{
 
@@ -394,7 +394,7 @@
 							<CheckBox selected="{Combustible>estadoCheck}" editable="{Combustible>SoloLecturaAjustComb}"/>
 						</table:template>
 					</table:Column >
-					<table:Column hAlign="End" width="8rem"
+					<!--<table:Column hAlign="End" width="8rem"
 						sortProperty=""
 						filterProperty=""
 						showFilterMenuEntry="true"
@@ -405,7 +405,7 @@
 						<table:template>
 							<Text text="{}"/>
 						</table:template>
-					</table:Column>
+					</table:Column>-->
 					<table:Column width="15rem"
 						sortProperty="descripcion"
 						filterProperty="descripcion"

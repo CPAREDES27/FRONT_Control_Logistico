@@ -535,6 +535,36 @@ sap.ui.define([
 					var dataPuerto=data;
 					console.log(dataPuerto);
 					console.log(dataPuerto.mensaje);
+					if(data.str_lgcco){
+						for(var i=0;i<data.str_lgcco.length;i++){
+
+							if(data.str_lgcco[i].cncon.includes(".000")){
+								var a= data.str_lgcco[i].cncon.replace(".000","");
+								if(a.length>3){
+									var b=data.str_lgcco[i].cncon.substring(0,1);
+									var c=data.str_lgcco[i].cncon.substring(1,4);
+									data.str_lgcco[i].cncon=b+","+c;
+								}if(a.length>4){
+									var b=data.str_lgcco[i].cncon.substring(0,2);
+									var c=data.str_lgcco[i].cncon.substring(2,5);
+									data.str_lgcco[i].cncon=b+","+c;
+								}else{
+									data.str_lgcco[i].cncon=a;
+								}
+							}else{
+								var a=parseFloat(data.str_lgcco[i].cncon);
+								data.str_lgcco[i].cncon=(a).toFixed(1);
+							}
+							/*
+							if(parseInt(data.str_lgcco[i].cncon)>1000.000){
+								var a=parseInt(data.str_lgcco[i].cncon);
+								data.str_lgcco[i].cncon=(a/1000).toFixed(1);
+							}else{
+								var a=parseInt(data.str_lgcco[i].cncon);
+								data.str_lgcco[i].cncon=(a).toFixed(0);
+							}*/
+						}
+					}	
 					if(dataPuerto.str_lgcco){
 						exportarExcel=true;
 					}

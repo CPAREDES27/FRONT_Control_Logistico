@@ -403,7 +403,7 @@
 						filterProperty="NRMAR"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
-						<Label text="Evento" />
+						<Label text="Fase" />
 						<t:template>
 							<Text text="{Reporte>DESC_CDFAS}" wrapping="false" />
 						</t:template>
@@ -437,14 +437,14 @@
                                                 }}"/>
 						</t:template>
 					</t:Column>
-                    <t:Column
+                    <t:Column hAlign="End"
 						id=""
 						width="11rem"
 						sortProperty="DESCR"
 						filterProperty="DESCR"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
-						<Label text="Stock Combustible" />
+						<Label text="Consumo (Gln)" />
 						<t:template>
 							<Text text="{path:'Reporte>CHMAR', type:'sap.ui.model.type.Float',
 

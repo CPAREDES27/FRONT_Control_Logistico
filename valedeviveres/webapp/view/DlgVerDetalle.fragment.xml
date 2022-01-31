@@ -304,7 +304,14 @@
                             <t:Column width="auto">
                                 <Label text="Costo total"/>
                                 <t:template>
-                                    <Text text="{modelValeViveres>QTSUM}" width="auto" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    <Text text="{path: 'modelValeViveres>QTSUM', type:'sap.ui.model.type.Float',
+												formatOptions:{
+													style: 'short',
+													decimals: 2,
+													shortDecimals: 2,
+													groupingSeparator: ',',
+													decimalSeparator: '.'
+												}}" width="auto" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </t:template>
                             </t:Column>
                             <t:Column width="auto">

@@ -65,7 +65,7 @@
 							<f:FormElement label="Embarcación">
 								<f:fields>
 									<m:Input type="Text" id="idEmbarcacion2" showValueHelp="true" enabled="true" visible="true" width="91%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="onOpenEmba"/>
-									<m:Text text="" id="txtEmbarca" width="50%" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<m:Text text="" id="txtEmbarca" width="50%" maxLines="1" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 								</f:fields>
 							</f:FormElement>
 							<f:FormElement label="Almacén">
@@ -147,7 +147,7 @@
 						showSortMenuEntry="true">
 							<m:Label text="Reserva" />
 						<template>
-							<m:Text text="{Aceite>NRRNV}" wrapping="false" />
+							<m:Text text="{Aceite>NRRNV}" wrapping="true" />
 						</template>
 					</Column>
                    <Column
@@ -159,7 +159,7 @@
 						showSortMenuEntry="true">
 							<m:Label text="Embarcación" />
 						<template>
-							<m:Text text="{Aceite>NMEMB}" wrapping="false" />
+							<m:Text text="{Aceite>NMEMB}" wrapping="true" />
 						</template>
 					</Column>
 					<Column
@@ -171,7 +171,7 @@
 						showSortMenuEntry="true">
 							<m:Label text="Material" />
 						<template>
-							<m:Text text="{Aceite>CDSUM}" wrapping="false" />
+							<m:Text text="{Aceite>CDSUM}" wrapping="true" />
 						</template>
 					</Column>
 					<Column
@@ -183,7 +183,7 @@
 						showSortMenuEntry="true">
 							<m:Label text="Almacén" />
 						<template>
-							<m:Text text="{Aceite>CDALMDESC}" wrapping="false" />
+							<m:Text text="{Aceite>CDALMDESC}" wrapping="true" />
 						</template>
 					</Column>
 					<Column
@@ -195,7 +195,7 @@
 						showSortMenuEntry="true">
 							<m:Label text="Fecha de reserva" />
 						<template>
-							<m:Text text="{Aceite>FHCRN}" wrapping="false" />
+							<m:Text text="{Aceite>FHCRN}" wrapping="true" />
 						</template>
 					</Column>
 					<Column
@@ -208,7 +208,7 @@
 						hAlign="End">
 							<m:Label text="Total peso Kg" />
 						<template>
-							<m:Text text="{Aceite>CNSUM}" wrapping="false" />
+							<m:Text text="{Aceite>CNSUM}" wrapping="true" />
 						</template>
 					</Column>
 					<Column
@@ -221,7 +221,7 @@
 						hAlign="End">
 							<m:Label text="Cant. galones" />
 						<template>
-							<m:Text text="{Aceite>NRTGA}" wrapping="false" />
+							<m:Text text="{Aceite>NRTGA}" wrapping="true" />
 						</template>
 					</Column>
 					<Column
@@ -233,7 +233,7 @@
 						showSortMenuEntry="true">
 							<m:Label text="UM" />
 						<template>
-							<m:Text text="{Aceite>MSEHL}" wrapping="false" />
+							<m:Text text="{Aceite>MSEHL}" wrapping="true" />
 						</template>
 					</Column>
 					<Column
@@ -245,7 +245,7 @@
 						showSortMenuEntry="true">
 							<m:Label text="Estado" />
 						<template>
-							<m:Text text="{Aceite>DESC_ESRNV}" wrapping="false" />
+							<m:Text text="{Aceite>DESC_ESRNV}" wrapping="true" />
 						</template>
 					</Column>
 					<Column

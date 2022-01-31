@@ -131,7 +131,7 @@
 				<columns>
                 	<Column
 						id="fecha"
-						width="9rem"
+						width="7rem"
 						sortProperty="fecha"
 						filterProperty="fecha"
 						showFilterMenuEntry="true"
@@ -141,7 +141,7 @@
 						
 						
 						<template>
-							<m:Text text="{Lista>NMEMB}" wrapping="false" />
+							<m:Text text="{Lista>NMEMB}" wrapping="true" />
 						</template>
 					</Column>
                    
@@ -158,7 +158,7 @@
                        
 						
 						<template>
-							<m:Text text="{path:'Lista>NRMAR'}" wrapping="false" />
+							<m:Text text="{path:'Lista>NRMAR'}" wrapping="true" />
 						</template>
 					</Column>
                     <Column
@@ -174,7 +174,7 @@
                     
 						
 						<template>
-							<m:Text text="{path:'Lista>DESC_CDFAS'}" wrapping="false" />
+							<m:Text text="{path:'Lista>DESC_CDFAS'}" wrapping="true" />
 						</template>
 					</Column>
                     <Column
@@ -206,7 +206,7 @@
                         
 						
 						<template>
-							<m:Text text="{path:'Lista>FECCONMOV'}" wrapping="false" />
+							<m:Text text="{path:'Lista>FECCONMOV'}" wrapping="true" />
 						</template>
 					</Column>
                     <Column
@@ -222,7 +222,7 @@
                  
 						
 						<template>
-							<m:Text text="{path:'Lista>FCMOD'}" wrapping="false" />
+							<m:Text text="{path:'Lista>FCMOD'}" wrapping="true" />
 						</template>
 					</Column>
                     <Column
@@ -238,7 +238,7 @@
                    
 						
 						<template>
-							<m:Text text="{path:'Lista>ATMOD'}" wrapping="false" />
+							<m:Text text="{path:'Lista>ATMOD'}" wrapping="true" />
 						</template>
 					</Column>
                     <Column
@@ -253,7 +253,7 @@
 						>
                         <m:Label text="Descarga (TN)"  width="100%"/>
 						<template>
-							<m:Text  text="{path:'Lista>CNPDS'}" wrapping="false" />
+							<m:Text  text="{path:'Lista>CNPDS'}" wrapping="true" />
 						</template>
 					</Column>
 					<Column
@@ -268,7 +268,7 @@
 						>
                         <m:Label text="Texto explicativo por modificación"  width="100%"/>
 						<template>
-							<m:Text  text="{path:'Lista>OBCOM'}" wrapping="false" />
+							<m:Text  text="{path:'Lista>OBCOM'}" wrapping="true" />
 						</template>
 					</Column>
 					 
