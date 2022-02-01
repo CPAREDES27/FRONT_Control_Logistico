@@ -4,7 +4,7 @@
         <content>
     <Panel height="auto" width="100%" headerText="Datos de marea" expandable="true" expanded="true" expandAnimation="true" backgroundDesign="Solid">
         <content>
-		          	<core:Icon
+		          <!--	<core:Icon
                     src="sap-icon://accept"
                     class="size1"
                     color="green" >
@@ -12,7 +12,7 @@
                         <FlexItemData growFactor="1" />
                     </core:layoutData>
                 </core:Icon>
-        	<Text text="  MotMarea:" id="idMotMarea2"/>
+        	<Text text="  MotMarea:" id="idMotMarea2"/>-->
             <form:Form width="100%" editable="true" visible="true">
                 <form:title/>
                 <form:formContainers>
@@ -130,38 +130,47 @@
 			    <t:columns>
 
 
-                	<t:Column hAlign="End"
+                	<t:Column 
 						id="NRMAR"
-						width="11rem"
+						width="15rem"
 						sortProperty="NRMAR"
 						filterProperty="NRMAR"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
-						<Label text="Evento" />
+						<t:multiLabels>
+							<Label text="" />
+							<Label text="Evento" />
+						</t:multiLabels>
 						<t:template>
-							<Text text="{Analisis>DESC_CDTEV}" wrapping="false" />
+							<Text text="{Analisis>DESC_CDTEV}" wrapping="true" />
 						</t:template>
 					</t:Column>
                     <t:Column hAlign="End"
 						id="NRDES"
-						width="11rem"
+						width="8rem"
 						sortProperty="NRDES"
 						filterProperty="NRDES"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
-						<Label text="Fecha/hora Inicio" />
+						<t:multiLabels>
+							<Label text="" />
+							<Label text="Fecha/hora Inicio" />
+						</t:multiLabels>
 						<t:template>
-							<Text text="{Analisis>FIEVN} {ConsumoTwo>HIEVN}" wrapping="false" />
+							<Text text="{Analisis>FIEVN} {ConsumoTwo>HIEVN}" wrapping="true" />
 						</t:template>
 					</t:Column>
                     <t:Column hAlign="End"
 						id="DESCR"
-						width="11rem"
+						width="10rem"
 						sortProperty="DESCR"
 						filterProperty="DESCR"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
-						<Label text="Stock Combustible" />
+						<t:multiLabels>
+							<Label text="" />
+							<Label text="Stock Combustible" />
+						</t:multiLabels>
 						<t:template>
 								<Text text="{path:'Analisis>STCMB', type:'sap.ui.model.type.Float',
 
@@ -182,15 +191,21 @@
                                                 }}"/>
 						</t:template>
 					</t:Column>
-                    <t:Column hAlign="End"
+                    <t:Column 
 						id="HORPR"
-						width="11rem"
+						width="4rem"
 						sortProperty="HORPR"
 						filterProperty="HORPR"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
-                        visible="true">
-						<Label text="MP" />
+                        visible="true"
+						class="col"
+						headerSpan="7,1"
+						hAlign="Center">
+						<t:multiLabels>
+							<Label text="Horómetros" textAlign="Center"/>
+							<Label text="MP" />
+						</t:multiLabels>	
 						<t:template>
 							<Text text="{path:'Analisis>HORPR', type:'sap.ui.model.type.Float',
 
@@ -202,20 +217,23 @@
 
                                                     decimalSeparator: '.'
 
-                                                }}"/>
+                                                }}" textAlign="End"/>
 						</t:template>
 					</t:Column>
                     
                     <t:Column hAlign="End"
 						id="FIDES"
-						width="11rem"
+						width="4rem"
 						sortProperty="FIDES"
 						filterProperty="FIDES"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
-						<Label text="A1" />
+						<t:multiLabels>
+							<Label text="Horómetros"/>
+							<Label text="A1" />
+						</t:multiLabels>
 						<t:template>
-							<!--<Text text="{Analisis>HORA1} {ConsumoTwo>HIDES}" wrapping="false" />-->
+							<!--<Text text="{Analisis>HORA1} {ConsumoTwo>HIDES}" wrapping="true" />-->
 							<Text text="{path:'Analisis>HORA1', type:'sap.ui.model.type.Float',
 
                                                 formatOptions:{
@@ -226,17 +244,20 @@
 
                                                     decimalSeparator: '.'
 
-                                                }}{ConsumoTwo>HIDES}"/>
+                                                }}{ConsumoTwo>HIDES}" wrapping="true"/>
 						</t:template>
 					</t:Column>
                     <t:Column hAlign="End"
 						id="FFDES"
-						width="11rem"
+						width="4rem"
 						sortProperty="FFDES"
 						filterProperty="FFDES"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
-						<Label text="A2" />
+						<t:multiLabels>
+							<Label text="Horómetros"/>
+							<Label text="A2" />
+						</t:multiLabels>
 						<t:template>
 							<Text text="{path:'Analisis>HORA2', type:'sap.ui.model.type.Float',
 
@@ -253,13 +274,16 @@
 					</t:Column>
                     <t:Column
 						id="CNPDS"
-						width="11rem"
+						width="4rem"
 						sortProperty="CNPDS"
 						filterProperty="CNPDS"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						hAlign="End">
-						<Label text="A3" />
+						<t:multiLabels>
+							<Label text="Horómetros"/>
+							<Label text="A3" />
+						</t:multiLabels>
 						<t:template>
 							<Text text="{path:'Analisis>HORA3', type:'sap.ui.model.type.Float',
 
@@ -276,12 +300,15 @@
 					</t:Column>
                     <t:Column hAlign="End"
 						id="FECCONMOV"
-						width="11rem"
+						width="4rem"
 						sortProperty="FECCONMOV"
 						filterProperty="FECCONMOV"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
-						<Label text="A4" />
+						<t:multiLabels>
+							<Label text="Horómetros"/>
+							<Label text="A4" />
+						</t:multiLabels>
 						<t:template>
 							<Text text="{path:'Analisis>HORA4', type:'sap.ui.model.type.Float',
 
@@ -298,12 +325,15 @@
 					</t:Column>
                     <t:Column hAlign="End"
 						id="NMEMB"
-						width="11rem"
+						width="4rem"
 						sortProperty="NMEMB"
 						filterProperty="NMEMB"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
-						<Label text="Panga" />
+						<t:multiLabels>
+							<Label text="Horómetros"/>
+							<Label text="Panga" />
+						</t:multiLabels>	
 						<t:template>
 							<Text text="{path:'Analisis>HORPA', type:'sap.ui.model.type.Float',
 
@@ -320,12 +350,15 @@
 					</t:Column>
                     <t:Column hAlign="End"
 						id="NAME1"
-						width="11rem"
+						width="4rem"
 						sortProperty="NAME1"
 						filterProperty="NAME1"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
-						<Label text="Fluj." />
+						<t:multiLabels>
+							<Label text="Horómetros"/>
+							<Label text="Fluj." />
+						</t:multiLabels>	
 						<t:template>
 							<Text text="{path:'Analisis>HORFL', type:'sap.ui.model.type.Float',
 
@@ -342,13 +375,16 @@
 					</t:Column>
                     <t:Column 
 						id="PRCTP" 
-						width="11rem"
+						width="7rem"
 						sortProperty="PRCTP"
 						filterProperty="PRCTP"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						hAlign="End">
-						<Label text="Suministros" />
+						<t:multiLabels>
+							<Label text=""/>
+							<Label text="Suministros" />
+						</t:multiLabels>	
 						<t:template>
 							
 								<Text text="{path:'Analisis>CNSUM', type:'sap.ui.model.type.Float',
@@ -398,24 +434,30 @@
 
                 	<t:Column
 						id="DESC_CDFAS"
-						width="11rem"
+						width="15rem"
 						sortProperty="NRMAR"
 						filterProperty="NRMAR"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
-						<Label text="Fase" />
+						<t:multiLabels>
+							<Label text="" />
+							<Label text="Fase" />
+						</t:multiLabels>
 						<t:template>
-							<Text text="{Reporte>DESC_CDFAS}" wrapping="false" />
+							<Text text="{Reporte>DESC_CDFAS}" wrapping="true" />
 						</t:template>
 					</t:Column>
                     <t:Column
 						id=""
-						width="11rem"
+						width="8rem"
 						sortProperty="NRDES"
 						filterProperty="NRDES"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
-						<Label text="Horas Ope. (Hr)" />
+						<t:multiLabels>
+							<Label text="" />
+							<Label text="Horas Ope. (Hr)" />
+						</t:multiLabels>
 						<t:template>
 					
 							<Text text="{path:'Reporte>HOROP', type:'sap.ui.model.type.Float',
@@ -439,12 +481,15 @@
 					</t:Column>
                     <t:Column hAlign="End"
 						id=""
-						width="11rem"
+						width="8rem"
 						sortProperty="DESCR"
 						filterProperty="DESCR"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
-						<Label text="Consumo (Gln)" />
+						<t:multiLabels>
+							<Label text="" />
+							<Label text="Consumo (Gln)" />
+						</t:multiLabels>	
 						<t:template>
 							<Text text="{path:'Reporte>CHMAR', type:'sap.ui.model.type.Float',
 
@@ -465,16 +510,21 @@
                                                 }}"/>
 						</t:template>
 					</t:Column>
-                    <t:Column hAlign="End"
+                    <t:Column
 						id=""
-						width="11rem"
+						width="3.5rem"
 						sortProperty="HORPR"
 						filterProperty="HORPR"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
-                        visible="true">
-						
-						<Label text="MP" />
+                        visible="true"
+						class="col"
+						headerSpan="7,1"
+						hAlign="Center">
+						<t:multiLabels>
+							<Label text="Horómetros" textAlign="Center"/>
+							<Label text="MP" />
+						</t:multiLabels>	
 						<t:template>
 							<Text text="{path:'Reporte>HORPR', type:'sap.ui.model.type.Float',
 
@@ -492,91 +542,114 @@
                     
                     <t:Column
 						id=""
-						width="11rem"
+						width="3.5rem"
 						sortProperty="FIDES"
 						filterProperty="FIDES"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						hAlign="End">
-						<Label text="A1" />
+						<t:multiLabels>
+							<Label text="Horómetros" />	
+							<Label text="A1" />
+						</t:multiLabels>	
 						<t:template>
-							<Text text="{Reporte>HORA1} {ConsumoTwo>HIDES}" wrapping="false" />								
+							<Text text="{Reporte>HORA1} {ConsumoTwo>HIDES}" wrapping="true" />								
 						</t:template>
 					</t:Column>
                     <t:Column
 						id=""
-						width="11rem"
+						width="4rem"
 						sortProperty="FFDES"
 						filterProperty="FFDES"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
-						hAlign="End">
-						<Label text="A2" />
+						hAlign="End">						
+						<t:multiLabels>
+							<Label text="Horómetros" />	
+							<Label text="A2" />
+						</t:multiLabels>
 						<t:template>
-							<Text text="{Reporte>HORA2}" wrapping="false"/>							
+							<Text text="{Reporte>HORA2}" wrapping="true"/>							
 						</t:template>
 					</t:Column>
                     <t:Column
 						id=""
-						width="11rem"
+						width="4rem"
 						sortProperty="CNPDS"
 						filterProperty="CNPDS"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						hAlign="End">
-						<Label text="A3" />
+						<t:multiLabels>
+							<Label text="Horómetros" />	
+							<Label text="A3" />
+						</t:multiLabels>
 						<t:template>
-							<Text text="{Reporte>HORA3}" wrapping="false"/>							
+							<Text text="{Reporte>HORA3}" wrapping="true"/>							
 						</t:template>
 					</t:Column>
                     <t:Column
 						id=""
-						width="11rem"
+						width="4rem"
 						sortProperty="FECCONMOV"
 						filterProperty="FECCONMOV"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						hAlign="End">
-						<Label text="A4" />
+						<t:multiLabels>
+							<Label text="Horómetros" />	
+							<Label text="A4" />
+						</t:multiLabels>
 						<t:template>
-							<Text text="{Reporte>HORPA}" wrapping="false"/>
+							<Text text="{Reporte>HORPA}" wrapping="true"/>
 						</t:template>
 					</t:Column>
                     <t:Column
 						id=""
-						width="11rem"
+						width="4rem"
 						sortProperty="NMEMB"
 						filterProperty="NMEMB"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						hAlign="End">
-						<Label text="Panga" />
+						<t:multiLabels>
+							<Label text="Horómetros" />	
+							<Label text="Panga" />
+						</t:multiLabels>
 						<t:template>
-							<Text text="{Reporte>HORPA}" wrapping="false"/>
+							<Text text="{Reporte>HORPA}" wrapping="true"/>
 						</t:template>
 					</t:Column>
                     <t:Column
 						id=""
-						width="11rem"
+						width="4rem"
 						sortProperty="NAME1"
 						filterProperty="NAME1"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						hAlign="End">
-						<Label text="Fluj." />
+						<t:multiLabels>
+							<Label text="Horómetros" />	
+							<Label text="Fluj." />
+						</t:multiLabels>
 						<t:template>
-							<Text text="{Reporte>HORFL}" wrapping="false"/>
+							<Text text="{Reporte>HORFL}" wrapping="true"/>
 						</t:template>
 					</t:Column>
 					<t:Column
 						id=""
-						width="11rem"
+						width="5rem"
 						sortProperty="NAME1"
 						filterProperty="NAME1"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
-						hAlign="End">
-						<Label text="Real" />
+						class="col"
+						headerSpan="2,1"
+						hAlign="Center">
+						<t:multiLabels>
+							<Label text="(Gln/Hr)" textAlign="Center"/>
+							<Label text="Real" />
+						</t:multiLabels>	
 						<t:template>
 								<Text text="{path:'Reporte>CNSRE', type:'sap.ui.model.type.Float',
 												formatOptions:{
@@ -585,18 +658,21 @@
 													shortDecimals: 2,
 													groupingSeparator: ',',
 													decimalSeparator: '.'
-												}}" wrapping="false"/>
+												}}" wrapping="true" textAlign="End"/>
 						</t:template>
 					</t:Column>
                     <t:Column
 						id=""
-						width="11rem"
+						width="5rem"
 						sortProperty="PRCTP"
 						filterProperty="PRCTP"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						hAlign="End">
-						<Label text="Teórico" />
+						<t:multiLabels>
+							<Label text="(Gln/Hr)" textAlign="Center"/>
+							<Label text="Teórico" />
+						</t:multiLabels>	
 						<t:template>
 							<Text text="{path:'Reporte>CHTER', type:'sap.ui.model.type.Float',
 												formatOptions:{
@@ -605,7 +681,7 @@
 													shortDecimals: 2,
 													groupingSeparator: ',',
 													decimalSeparator: '.'
-												}}" wrapping="false"/>
+												}}" wrapping="true"/>
 						</t:template>
 					</t:Column>
                     <t:Column width="6rem" hAlign="Center">

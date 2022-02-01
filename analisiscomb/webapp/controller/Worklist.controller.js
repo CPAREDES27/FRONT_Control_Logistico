@@ -1340,13 +1340,15 @@ sap.ui.define([
 			var cadena=oEvent.getSource().getBindingContext("Combustible").getPath().split("/")[2];
 			var array=this.getView().getModel("Combustible").oData.listaCombustible[cadena];
 			console.log(array.CDMMA);
+			console.log(array.DSMMA);
+
 			if(array.CDMMA==="7"||array.CDMMA==="8"){
 				await this.getCuadroAnalisis(array.NRMAR);
 				this._onOpenDialogArmador();
 				sap.ui.getCore().byId("idMarea").setText(array.NRMAR);
 				sap.ui.getCore().byId("idCalas").setText(array.CNCAL);
 				sap.ui.getCore().byId("idEmbarcacion").setText(array.NMEMB);
-				sap.ui.getCore().byId("idZarpe").setText(array.DESC_CDMMA);
+				sap.ui.getCore().byId("idZarpe").setText(array.DSMMA);
 				oGlobalBusyDialog.close();
 				sap.ui.getCore().byId("idMotMarea").setText("  MotMarea: "+array.CDMMA);
 			}else{
@@ -1355,7 +1357,7 @@ sap.ui.define([
 				sap.ui.getCore().byId("idMarea2").setText(array.NRMAR);
 				sap.ui.getCore().byId("idCalas2").setText(array.CNCAL);
 				sap.ui.getCore().byId("idEmbarcacion2").setText(array.NMEMB);
-				sap.ui.getCore().byId("idZarpe2").setText(array.DESC_CDMMA);
+				sap.ui.getCore().byId("idZarpe2").setText(array.DSMMA);
 				sap.ui.getCore().byId("idFechaP").setText(array.FECCONMOV);
 				sap.ui.getCore().byId("idCant").setText(array.CNPDS);
 				sap.ui.getCore().byId("idMotMarea2").setText("  MotMarea: "+array.CDMMA);

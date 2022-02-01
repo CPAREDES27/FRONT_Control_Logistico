@@ -85,6 +85,35 @@ sap.ui.define([
 		getResourceBundle : function () {
 			return this.getOwnerComponent().getModel("i18n").getResourceBundle();
 		},
+		_getHelpSearch:  function(){
+			var oRouter = window.location.origin;
+			var service=[];
+			if(oRouter.indexOf("localhost") !== -1){
+				service.push({
+					url:"https://tasaqas.launchpad.cfapps.us10.hana.ondemand.com/",
+					parameter:"IDH4_QAS"
+				})
+			}
+			if(oRouter.indexOf("tasadev")!== -1){
+				service.push({
+					url:"https://tasadev.launchpad.cfapps.us10.hana.ondemand.com/",
+					parameter:"IDH4_DEV"
+				})
+			}
+			if(oRouter.indexOf("tasaprd")!==-1){
+				service.push({
+					url:"https://tasaprd.launchpad.cfapps.us10.hana.ondemand.com/",
+					parameter:"IDH4_PRD"
+				})
+			}
+			if(oRouter.indexOf("tasaqas")!==-1){
+				service.push({
+					url:"https://tasaqas.launchpad.cfapps.us10.hana.ondemand.com/",
+					parameter:"IDH4_QAS"
+				})
+			}
+			return service;
+		},
 
 		/**
 		 * Event handler when the share by E-Mail button has been clicked
