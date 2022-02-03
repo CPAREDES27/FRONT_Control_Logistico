@@ -103,7 +103,7 @@
 				<table:extension>
 					<OverflowToolbar style="Clear">
 						<Button text="Cuadro de consumo" press="onCuadroConsumo"/>
-						<Button text="QlikView" press="onExporQlikView"/>
+						<Button text="QlikView" press="onExportarExcelDataQlikView"/>
 						<Button text="Carga Consumo" press="onCargarConsumo"/>
 						</OverflowToolbar>
 					<OverflowToolbar style="Clear">						

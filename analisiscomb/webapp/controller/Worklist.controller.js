@@ -670,10 +670,8 @@ sap.ui.define([
 				oGlobalBusyDialog.close();
 				return false;
 			}
-			var aCols, aProducts, oSettings, oSheet, oData, oRequestBody;
-			oRequestBody = this.getModel("exportExcelOptions").getProperty("/requestBody");
+			var oRequestBody ={}
 			
-				aCols = this.createColumnConfig5();
 			
 			
 			console.log(this.getView().getModel("Combustible"));
@@ -694,6 +692,126 @@ sap.ui.define([
 					content);
 				let byteArrays = [];
 				const fileName = 'Reporte Análisis de Combustible.xls';
+
+				/**
+				 * Convertir base64 a Blob
+				 */
+				for (let offset = 0; offset < byteCharacters.length; offset +=
+					sliceSize) {
+					let slice = byteCharacters.slice(offset, offset + sliceSize);
+					let byteNumbers = new Array(slice.length);
+					for (let i = 0; i < slice.length; i++) {
+						byteNumbers[i] = slice.charCodeAt(i);
+					}
+					let byteArray = new Uint8Array(byteNumbers);
+					byteArrays.push(byteArray);
+				}
+				let blob = new Blob(byteArrays, {
+					type: contentType
+				});
+
+				/**
+				 * Exportar a Excel
+				 */
+				if (navigator.msSaveBlob) {
+					navigator.msSaveBlob(blob, fileName);
+					
+					oGlobalBusyDialog.close();
+				} else {
+					let link = document.createElement("a");
+					if (link.download !== undefined) {
+						let url = URL.createObjectURL(blob);
+						link.setAttribute("href", url);
+						link.setAttribute("download", fileName);
+						link.style.visibility = 'hidden';
+						document.body.appendChild(link);
+						link.click();
+						document.body.removeChild(link);
+
+						oGlobalBusyDialog.close();
+					}
+				}
+			} else {
+				oGlobalBusyDialog.close();
+			}
+			
+
+			/*
+			oSettings = {
+				
+				workbook: { 
+					columns: aCols,
+					context: {
+						application: 'Debug Test Application',
+						version: '1.95.0',
+						title: 'Some random title',
+						modifiedBy: 'John Doe',
+						metaSheetName: 'Custom metadata'
+					}
+					
+				},
+				dataSource: aProducts,
+				fileName:"Reporte Análisis de Combustible"
+			};
+
+			oSheet = new Spreadsheet(oSettings);
+			oSheet.build()
+				.then( function() {
+					MessageToast.show('El Archivo ha sido exportado correctamente');
+				})
+				.finally(oSheet.destroy);
+				oGlobalBusyDialog.close();
+				*/
+		},
+		onExportarExcelDataQlikView: async function() {
+			oGlobalBusyDialog.open();
+			if(!exportarExcel){
+				MessageBox.error("Porfavor, realizar una búsqueda antes de exportar");
+				oGlobalBusyDialog.close();
+				return false;
+			}
+
+			var idEmbarcacion=this.byId("inputId0_R").getValue();
+			var idFechaInicio=this.byId("idFechaInicio").mProperties.dateValue;
+			var idFechaFin=this.byId("idFechaInicio").mProperties.secondDateValue;
+			var idEstado=this.byId("idEstado").getSelectedKey();
+			var idCant =this.byId("idCant").getValue();
+			
+			if(!idFechaInicio&&!idFechaFin){
+				MessageBox.error("No se ingresó un rango de fechas para la búsqueda");
+				oGlobalBusyDialog.close();
+				return false;
+			}
+			var idFechaIni=this.castFecha(idFechaInicio);
+			var idFechaF=this.castFecha(idFechaFin);
+
+			var body={
+				"pCdemb": idEmbarcacion,
+				"pCdmma": idEstado,
+				"pFfevn": idFechaF,
+				"pFievn": idFechaIni,
+				"pRow": 0
+			}
+			
+			
+			console.log(this.getView().getModel("Combustible"));
+
+			let data = await fetch(`${Utilities.onLocation()}analisiscombustible/ExportQlikView`, {
+				method: 'POST',
+				body: JSON.stringify(body)
+			}).then(resp => resp.json());
+
+			/**
+			 * Creación del libro de Excel
+			 */
+			const content = data.base64;
+			if (content) {
+				const contentType = 'application/vnd.ms-excel';
+				const sliceSize = 512;
+				let byteCharacters = window.atob(
+					content);
+				let byteArrays = [];
+				const fileName = 'ControlCombustible_QlikView.xls';
 
 				/**
 				 * Convertir base64 a Blob
