@@ -166,7 +166,7 @@
 						
 						
 						<template>
-							<m:Text text="{Combustible>nrmar}" wrapping="false" />
+							<m:Text text="{Combustible>nrmar}" wrapping="true" />
 						</template>
 					</Column>
                    
@@ -184,7 +184,7 @@
                        
 						
 						<template>
-							<m:Text text="{path:'Combustible>werks'}" wrapping="false" />
+							<m:Text text="{path:'Combustible>werks'}" wrapping="true" />
 						</template>
 					</Column>
                     <Column
@@ -201,7 +201,7 @@
                     
 						
 						<template>
-							<m:Text text="{path:'Combustible>fecon'}" wrapping="false" />
+							<m:Text text="{path:'Combustible>fecon'}" wrapping="true" />
 						</template>
 					</Column>
                     <Column
@@ -235,7 +235,7 @@
                         
 						
 						<template>
-							<m:Text text="{path:'Combustible>dsimp'}" wrapping="false" />
+							<m:Text text="{path:'Combustible>dsimp'}" wrapping="true" />
 						</template>
 					</Column>
                     <Column
@@ -251,7 +251,7 @@
                  
 						
 						<template>
-							<m:Text text="{path:'Combustible>cncon'}" wrapping="false" />
+							<m:Text text="{path:'Combustible>cncon'}" wrapping="true" />
 						</template>
 					</Column>
                     <Column
@@ -269,7 +269,7 @@
                    
 						
 						<template>
-							<m:Text text="{path:'Combustible>dsobs'}" wrapping="false" />
+							<m:Text text="{path:'Combustible>dsobs'}" wrapping="true" />
 						</template>
 					</Column>
                     <Column
@@ -284,7 +284,7 @@
 						>
                         <m:Label text="Estado" textAlign="Center" width="100%"/>
 						<template>
-							<m:Text  text="{path:'Combustible>desc_ESPRO'}" wrapping="false" />
+							<m:Text  text="{path:'Combustible>desc_ESPRO'}" wrapping="true" />
 						</template>
 					</Column>
 					 

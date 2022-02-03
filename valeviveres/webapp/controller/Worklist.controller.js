@@ -581,7 +581,7 @@ sap.ui.define([
 			  .then(resp => resp.json()).then(data => {
 				var listaViviere = data.data;
 				console.log(listaViviere);
-				console.log(listaViviere.length);
+				//console.log(listaViviere.length);
 
 				this.getView().getModel("Vivere").setProperty("/listaVivere",listaViviere);
 				oGlobalBusyDialog.close();

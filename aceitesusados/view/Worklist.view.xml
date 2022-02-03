@@ -145,7 +145,7 @@
 						showSortMenuEntry="true">
 							<m:Label text="Reserva" />
 						<template>
-							<m:Text text="{Aceite>NRRNV}" wrapping="false" />
+							<m:Text text="{Aceite>NRRNV}" wrapping="true" />
 						</template>
 					</Column>
                    <Column
@@ -157,7 +157,7 @@
 						showSortMenuEntry="true">
 							<m:Label text="Embarcación" />
 						<template>
-							<m:Text text="{Aceite>NMEMB}" wrapping="false" />
+							<m:Text text="{Aceite>NMEMB}" wrapping="true" />
 						</template>
 					</Column>
 					<Column
@@ -169,7 +169,7 @@
 						showSortMenuEntry="true">
 							<m:Label text="Material" />
 						<template>
-							<m:Text text="{Aceite>CDSUM}" wrapping="false" />
+							<m:Text text="{Aceite>CDSUM}" wrapping="true" />
 						</template>
 					</Column>
 					<Column
@@ -181,7 +181,7 @@
 						showSortMenuEntry="true">
 							<m:Label text="Almacén" />
 						<template>
-							<m:Text text="{Aceite>CDALM}" wrapping="false" />
+							<m:Text text="{Aceite>CDALM}" wrapping="true" />
 						</template>
 					</Column>
 					<Column
@@ -193,7 +193,7 @@
 						showSortMenuEntry="true">
 							<m:Label text="Fecha de reserva" />
 						<template>
-							<m:Text text="{Aceite>FHCRN}" wrapping="false" />
+							<m:Text text="{Aceite>FHCRN}" wrapping="true" />
 						</template>
 					</Column>
 					<Column
@@ -205,7 +205,7 @@
 						showSortMenuEntry="true">
 							<m:Label text="Total peso Kg" />
 						<template>
-							<m:Text text="{Aceite>CNSUM}" wrapping="false" />
+							<m:Text text="{Aceite>CNSUM}" wrapping="true" />
 						</template>
 					</Column>
 					<Column
@@ -217,7 +217,7 @@
 						showSortMenuEntry="true">
 							<m:Label text="Cant. galones" />
 						<template>
-							<m:Text text="{Aceite>NRTGA}" wrapping="false" />
+							<m:Text text="{Aceite>NRTGA}" wrapping="true" />
 						</template>
 					</Column>
 					<Column
@@ -229,7 +229,7 @@
 						showSortMenuEntry="true">
 							<m:Label text="UM" />
 						<template>
-							<m:Text text="{Aceite>MSEHL}" wrapping="false" />
+							<m:Text text="{Aceite>MSEHL}" wrapping="true" />
 						</template>
 					</Column>
 					<Column
@@ -241,7 +241,7 @@
 						showSortMenuEntry="true">
 							<m:Label text="Estado" />
 						<template>
-							<m:Text text="{Aceite>ESRNV}" wrapping="false" />
+							<m:Text text="{Aceite>ESRNV}" wrapping="true" />
 						</template>
 					</Column>
 					<Column

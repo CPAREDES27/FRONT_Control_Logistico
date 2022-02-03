@@ -40,6 +40,7 @@ sap.ui.define([
 				{}
 				);
 				this.setModel(ViewModel, "consultaMareas");
+				this.setModel(ViewModel, "exportExcelOptions");
 		this.currentInputEmba = "";
 			this.primerOption = [];
 			this.segundoOption = [];
@@ -287,6 +288,12 @@ sap.ui.define([
 				var fechas = arrayFecha[2]+""+arrayFecha[1]+""+arrayFecha[0];
 				return fechas;
 			},
+			castFechasForReport: function(fecha){
+				var arrayFecha=fecha.split("/");
+				console.log(arrayFecha);
+				var fechas = arrayFecha[2]+"-"+arrayFecha[1]+"-"+arrayFecha[0];
+				return fechas;
+			},
 			onLimpiar:function(){
 				this.byId("inputId_W").setValue("");
 				this.byId("idFechaIniVigencia").setValue("");
@@ -381,18 +388,26 @@ sap.ui.define([
 					   .then(resp => resp.json()).then(data => {
 							console.log(data);
 							if(data.t_flocc){
+								// Guardar los parámetros para la exportación
+								this.getView().getModel("exportExcelOptions").setProperty("/requestBody", body);
 								exportarExcel=true;
 							}
 							for(var i=0;i<data.t_flocc.length;i++){
 								data.t_flocc[i].NRMAR=this.zeroFill(data.t_flocc[i].NRMAR,10);
+								data.t_flocc[i].NRMAR2 = parseInt(data.t_flocc[i].NRMAR).toLocaleString();
 								if(data.t_flocc[i].FECCONMOV===null || data.t_flocc[i].FECCONMOV==="null"){
 									data.t_flocc[i].FECCONMOV="";
 									
 								}
 					
 								data.t_flocc[i].CNPDS = String(data.t_flocc[i].CNPDS.toFixed(2));
+								data.t_flocc[i].CNPDS2 = parseInt(data.t_flocc[i].CNPDS).toLocaleString();
+								data.t_flocc[i].DESC_CDFAS = (data.t_flocc[i].DESC_CDFAS).toUpperCase();
+								data.t_flocc[i].FECCONMOV2 = data.t_flocc[i].FECCONMOV ? this.castFechasForReport(data.t_flocc[i].FECCONMOV) : "";
+								data.t_flocc[i].FCMOD2 = data.t_flocc[i].FCMOD ? this.castFechasForReport(data.t_flocc[i].FCMOD) : "";
 							}
 							this.getModel("Lista").setProperty("/listaLista", data.t_flocc);
+							this.getModel("Lista").setProperty("/porcIndModif", data.indicadorPorc);
 							this.byId("title").setText("Indicador de modificación: "+data.indicadorPorc.toFixed(0)+"%");
 							oGlobalBusyDialog.close();
 
@@ -545,15 +560,80 @@ sap.ui.define([
 						
 						];
 				},
-				onExportarExcelData: function() {
+				onExportarExcelData: async function() {
 					oGlobalBusyDialog.open();
 					if(!exportarExcel){
 						MessageBox.error("Porfavor, realizar una búsqueda antes de exportar");
 						oGlobalBusyDialog.close();
 						return false;
 					}
-					var aCols, aProducts, oSettings, oSheet;
+					var aCols, aProducts, oSettings, oSheet, oData, aPorcIndMod,
+					oRequestBody = this.getView().getModel("exportExcelOptions").getProperty("/requestBody");
+
+					aProducts = this.getView().getModel("Lista").getProperty('/listaLista');
+					aPorcIndMod = this.getView().getModel("Lista").getProperty('/porcIndModif')
+
+					let data = await fetch(`${Utilities.onLocation()}reportesmodifdatoscombustible/Exportar`, {
+						method: "POST",
+						body: JSON.stringify(oRequestBody),
+					}).then(resp => resp.json());
+
+					/**
+					 * Creación del libro de Excel
+					 */
+					const content = data.base64;
+					if (content) {
+						const contentType = 'application/vnd.ms-excel';
+						const sliceSize = 512;
+						let byteCharacters = window.atob(
+							content);
+						let byteArrays = [];
+						const fileName = 'Reporte de modificación de datos de combustible.xls';
+
+						/**
+						 * Convertir base64 a Blob
+						 */
+						for (let offset = 0; offset < byteCharacters.length; offset +=
+							sliceSize) {
+							let slice = byteCharacters.slice(offset, offset + sliceSize);
+							let byteNumbers = new Array(slice.length);
+							for (let i = 0; i < slice.length; i++) {
+								byteNumbers[i] = slice.charCodeAt(i);
+							}
+							let byteArray = new Uint8Array(byteNumbers);
+							byteArrays.push(byteArray);
+						}
+						let blob = new Blob(byteArrays, {
+							type: contentType
+						});
+
+						/**
+						 * Exportar a Excel
+						 */
+						if (navigator.msSaveBlob) {
+							navigator.msSaveBlob(blob, fileName);
+							
+							oGlobalBusyDialog.close();
+						} else {
+							let link = document.createElement("a");
+							if (link.download !== undefined) {
+								let url = URL.createObjectURL(blob);
+								link.setAttribute("href", url);
+								link.setAttribute("download", fileName);
+								link.style.visibility = 'hidden';
+								document.body.appendChild(link);
+								link.click();
+								document.body.removeChild(link);
+
+								oGlobalBusyDialog.close();
+							}
+						}
+					} else {
+						oGlobalBusyDialog.close();
+					}
+					
 		
+					/*
 					aCols = this.createColumnConfig5();
 					console.log(this.getView().getModel("Lista"));
 					aProducts = this.getView().getModel("Lista").getProperty('/listaLista');
@@ -582,6 +662,7 @@ sap.ui.define([
 						})
 						.finally(oSheet.destroy);
 						oGlobalBusyDialog.close();
+						*/
 				},
 				onSearch: function (oEvent) {
 					// add filter for search

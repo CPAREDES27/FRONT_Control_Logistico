@@ -99,11 +99,11 @@
                             columnSelect="onColumnSelect"
                             cellContextmenu="onProductIdCellContextMenu"
                             ariaLabelledBy="title"
-							>
+							rowActionCount="1">
 				<table:extension>
 					<OverflowToolbar style="Clear">
 						<Button text="Cuadro de consumo" press="onCuadroConsumo"/>
-						<Button text="QlikView" press="onExporQlikView"/>
+						<Button text="QlikView" press="onExportarExcelDataQlikView"/>
 						<Button text="Carga Consumo" press="onCargarConsumo"/>
 						</OverflowToolbar>
 					<OverflowToolbar style="Clear">						
@@ -124,7 +124,7 @@
 					</OverflowToolbar>
 				</table:extension>
 				<table:columns editable="false">
-					<table:Column width="7rem"
+					<table:Column width="6.5rem"
 						 sortProperty="NRMAR"
 						filterProperty="NRMAR"
 						showFilterMenuEntry="true"
@@ -148,7 +148,7 @@
 							<Text text="{Combustible>NMEMB}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="8rem"
+					<table:Column width="6rem"
 						sortProperty="DSMMA"
 						filterProperty="DSMMA"
 						showFilterMenuEntry="true"
@@ -172,7 +172,7 @@
 							<Text text="{Combustible>PTOZA}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="9rem"
+					<table:Column width="8.5rem"
 						sortProperty="FECZA"
 						filterProperty="FECZA"
 						showFilterMenuEntry="true"
@@ -196,7 +196,7 @@
 							<Text text="{Combustible>PTOAR}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="9rem"
+					<table:Column width="8.5rem"
 						sortProperty="FECAR"
 						filterProperty="FECAR"
 						showFilterMenuEntry="true"
@@ -208,7 +208,7 @@
 							<Text text="{Combustible>FECAR} {Combustible>HIARR}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="7rem"
+					<table:Column width="6rem"
 						sortProperty="FECCONMOV"
 						filterProperty="FECCONMOV"
 						showFilterMenuEntry="true"
@@ -220,7 +220,7 @@
 							<Text text="{Combustible>FECCONMOV}"/>
 						</table:template>
 					</table:Column>
-					<table:Column hAlign="End" width="7rem"
+					<table:Column hAlign="End" width="6.5rem"
 						sortProperty="STCMB"
 						filterProperty="STCMB"
 						showFilterMenuEntry="true"
@@ -249,7 +249,7 @@
 						</table:template>
 					</table:Column>
 					
-					<table:Column hAlign="End" width="7rem"
+					<table:Column hAlign="End" width="4.5rem"
 						sortProperty="CNSUM"
 						filterProperty="CNSUM"
 						showFilterMenuEntry="true"
@@ -278,9 +278,9 @@
                                                 }}"/>
 						</table:template>
 					</table:Column>
-					<table:Column hAlign="End" width="7rem"
-						sortProperty="CONSU"
-						filterProperty="CONSU"
+					<table:Column hAlign="End" width="6rem"
+						sortProperty="CONSU2"
+						filterProperty="CONSU2"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<table:label>
@@ -289,7 +289,7 @@
 						<table:template>
 					
 							
-								<Text text="{path:'Combustible>CONSU', type:'sap.ui.model.type.Float',
+								<Text text="{path:'Combustible>CONSU2', type:'sap.ui.model.type.Float',
 
                                                 formatOptions:{
 
@@ -308,7 +308,7 @@
                                                 }}"/>
 						</table:template>
 					</table:Column>
-					<table:Column hAlign="End" width="7rem"
+					<table:Column hAlign="End" width="6rem"
 						sortProperty="STFIN"
 						filterProperty="STFIN"
 						showFilterMenuEntry="true"
@@ -378,14 +378,14 @@
                                                 }}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="4rem" hAlign="Center">
+					<!--<table:Column width="4rem" hAlign="Center">
 						<table:label>
 							<Label text=""/>
 						</table:label>
 						<table:template>
 							<Button icon="sap-icon://show" type="Emphasized" press="onDetail" />
 						</table:template>
-					</table:Column>
+					</table:Column>-->
 					<table:Column width="4rem">
 						<table:label>
 							<Label text="Selec."/>
@@ -394,7 +394,7 @@
 							<CheckBox selected="{Combustible>estadoCheck}" editable="{Combustible>SoloLecturaAjustComb}"/>
 						</table:template>
 					</table:Column >
-					<table:Column hAlign="End" width="8rem"
+					<!--<table:Column hAlign="End" width="8rem"
 						sortProperty=""
 						filterProperty=""
 						showFilterMenuEntry="true"
@@ -405,8 +405,8 @@
 						<table:template>
 							<Text text="{}"/>
 						</table:template>
-					</table:Column>
-					<table:Column width="15rem"
+					</table:Column>-->
+					<table:Column width="12rem"
 						sortProperty="descripcion"
 						filterProperty="descripcion"
 						showFilterMenuEntry="true"
@@ -496,7 +496,14 @@
 					</table:Column>
 					<!--EMBACACION-->
 				</table:columns>
-
+				<table:rowActionTemplate>
+                    <table:RowAction>
+                        <table:items >
+                            <table:RowActionItem icon="sap-icon://show" type="Emphasized" press="onDetail" >
+                            </table:RowActionItem>
+                        </table:items>
+                    </table:RowAction>
+                </table:rowActionTemplate> 		
 			</table:Table>
 		</semantic:content>
 

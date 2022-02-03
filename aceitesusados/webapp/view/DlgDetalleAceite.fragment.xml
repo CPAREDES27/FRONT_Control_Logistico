@@ -69,7 +69,7 @@
                                     <Label text="Cant. Galones" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input type="Text" showValueHelp="false"  value="{Aceite>NRTGA}"  id="idGalones" enabled="false" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    <Input type="Text" showValueHelp="false" textAlign="End" value="{Aceite>NRTGA}"  id="idGalones" enabled="false" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -77,7 +77,7 @@
                                     <Label text="Cant Barriles" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input type="Text" showValueHelp="false"  value="{Aceite>CNBAR}"  id="idBarriles" enabled="false" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    <Input type="Text" showValueHelp="false" textAlign="End" value="{Aceite>CNBAR}"  id="idBarriles" enabled="false" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
                             </form:FormElement>
                             <form:FormElement visible="true">
@@ -109,7 +109,7 @@
                                     <Label text="Total Peso en Kilos" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 </form:label>
                                 <form:fields>
-                                    <Input type="Text" showValueHelp="false"  value="{Aceite>CNSUM}"  id="idKilos" enabled="false" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                    <Input type="Text" showValueHelp="false" textAlign="End" value="{Aceite>CNSUM}"  id="idKilos" enabled="false" visible="true" width="50%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
                                 </form:fields>
                             </form:FormElement>
                         </form:formElements>

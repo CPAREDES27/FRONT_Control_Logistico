@@ -53,6 +53,7 @@ sap.ui.define([
 				{}
 				);
 				this.setModel(ViewModel, "consultaMareas");
+				this.setModel(ViewModel, "exportExcelOptions");
 		this.currentInputEmba = "";
 			this.primerOption = [];
 			this.segundoOption = [];
@@ -224,13 +225,15 @@ sap.ui.define([
 				var totalCNPDS=0;
 				var totalCONSU=0;
 				if(data){
+					// Guardar los parámetros para la exportación
+					this.getView().getModel("exportExcelOptions").setProperty("/requestBody", body);
 					exportarExcel=true;
 				}
 				for(var i=0;i<data.str_csmar.length;i++){
 					
-					data.str_csmar[i].STCMB2 = data.str_csmar[i].STCMB;
+					data.str_csmar[i].STCMB2 = data.str_csmar[i].STCMB.toLocaleString();
 					data.str_csmar[i].STCMB3 = data.str_csmar[i].STCMB.toLocaleString()+".000";
-					data.str_csmar[i].CNSUM2 = data.str_csmar[i].CNSUM;
+					data.str_csmar[i].CNSUM2 = data.str_csmar[i].CNSUM.toLocaleString();
 					data.str_csmar[i].CNSUM3 = data.str_csmar[i].CNSUM !==0?data.str_csmar[i].CNSUM.toLocaleString()+"0.000":".000";
 					data.str_csmar[i].CONSU2 = data.str_csmar[i].CONSU.toLocaleString();
 					data.str_csmar[i].STFIN2 = data.str_csmar[i].STFIN.toLocaleString();
@@ -270,6 +273,7 @@ sap.ui.define([
 					data.str_csmar[i].CNSUM=String(this.parseMil(data.str_csmar[i].CNSUM));
 					data.str_csmar[i].CONSU=String(this.parseMil(data.str_csmar[i].CONSU));
 					data.str_csmar[i].CNPDS=String(data.str_csmar[i].CNPDS);
+					data.str_csmar[i].CNPDS2=Math.round(data.str_csmar[i].CNPDS);
 					data.str_csmar[i].STFIN=String(data.str_csmar[i].STFIN);
 					data.str_csmar[i].NRMAR2 = data.str_csmar[i].NRMAR.toLocaleString();	
 						
@@ -659,21 +663,80 @@ sap.ui.define([
 				
 				];
 		},
-		onExportarExcelData: function() {
+		onExportarExcelData: async function() {
 			oGlobalBusyDialog.open();
 			if(!exportarExcel){
 				MessageBox.error("Porfavor, realizar una búsqueda antes de exportar");
 				oGlobalBusyDialog.close();
 				return false;
 			}
-			var aCols, aProducts, oSettings, oSheet;
+			var oRequestBody ={}
 			
-				aCols = this.createColumnConfig5();
 			
 			
 			console.log(this.getView().getModel("Combustible"));
-			aProducts = this.getView().getModel("Combustible").getProperty('/listaCombustible');
 
+			let data = await fetch(`${Utilities.onLocation()}analisiscombustible/ExportRegistroAnalisisCombus`, {
+				method: 'POST',
+				body: JSON.stringify(oRequestBody)
+			}).then(resp => resp.json());
+
+			/**
+			 * Creación del libro de Excel
+			 */
+			const content = data.base64;
+			if (content) {
+				const contentType = 'application/vnd.ms-excel';
+				const sliceSize = 512;
+				let byteCharacters = window.atob(
+					content);
+				let byteArrays = [];
+				const fileName = 'Reporte Análisis de Combustible.xls';
+
+				/**
+				 * Convertir base64 a Blob
+				 */
+				for (let offset = 0; offset < byteCharacters.length; offset +=
+					sliceSize) {
+					let slice = byteCharacters.slice(offset, offset + sliceSize);
+					let byteNumbers = new Array(slice.length);
+					for (let i = 0; i < slice.length; i++) {
+						byteNumbers[i] = slice.charCodeAt(i);
+					}
+					let byteArray = new Uint8Array(byteNumbers);
+					byteArrays.push(byteArray);
+				}
+				let blob = new Blob(byteArrays, {
+					type: contentType
+				});
+
+				/**
+				 * Exportar a Excel
+				 */
+				if (navigator.msSaveBlob) {
+					navigator.msSaveBlob(blob, fileName);
+					
+					oGlobalBusyDialog.close();
+				} else {
+					let link = document.createElement("a");
+					if (link.download !== undefined) {
+						let url = URL.createObjectURL(blob);
+						link.setAttribute("href", url);
+						link.setAttribute("download", fileName);
+						link.style.visibility = 'hidden';
+						document.body.appendChild(link);
+						link.click();
+						document.body.removeChild(link);
+
+						oGlobalBusyDialog.close();
+					}
+				}
+			} else {
+				oGlobalBusyDialog.close();
+			}
+			
+
+			/*
 			oSettings = {
 				
 				workbook: { 
@@ -698,6 +761,127 @@ sap.ui.define([
 				})
 				.finally(oSheet.destroy);
 				oGlobalBusyDialog.close();
+				*/
+		},
+		onExportarExcelDataQlikView: async function() {
+			oGlobalBusyDialog.open();
+			if(!exportarExcel){
+				MessageBox.error("Porfavor, realizar una búsqueda antes de exportar");
+				oGlobalBusyDialog.close();
+				return false;
+			}
+
+			var idEmbarcacion=this.byId("inputId0_R").getValue();
+			var idFechaInicio=this.byId("idFechaInicio").mProperties.dateValue;
+			var idFechaFin=this.byId("idFechaInicio").mProperties.secondDateValue;
+			var idEstado=this.byId("idEstado").getSelectedKey();
+			var idCant =this.byId("idCant").getValue();
+			
+			if(!idFechaInicio&&!idFechaFin){
+				MessageBox.error("No se ingresó un rango de fechas para la búsqueda");
+				oGlobalBusyDialog.close();
+				return false;
+			}
+			var idFechaIni=this.castFecha(idFechaInicio);
+			var idFechaF=this.castFecha(idFechaFin);
+
+			var body={
+				"pCdemb": idEmbarcacion,
+				"pCdmma": idEstado,
+				"pFfevn": idFechaF,
+				"pFievn": idFechaIni,
+				"pRow": 0
+			}
+			
+			
+			console.log(this.getView().getModel("Combustible"));
+
+			let data = await fetch(`${Utilities.onLocation()}analisiscombustible/ExportQlikView`, {
+				method: 'POST',
+				body: JSON.stringify(body)
+			}).then(resp => resp.json());
+
+			/**
+			 * Creación del libro de Excel
+			 */
+			const content = data.base64;
+			if (content) {
+				const contentType = 'application/vnd.ms-excel';
+				const sliceSize = 512;
+				let byteCharacters = window.atob(
+					content);
+				let byteArrays = [];
+				const fileName = 'ControlCombustible_QlikView.xls';
+
+				/**
+				 * Convertir base64 a Blob
+				 */
+				for (let offset = 0; offset < byteCharacters.length; offset +=
+					sliceSize) {
+					let slice = byteCharacters.slice(offset, offset + sliceSize);
+					let byteNumbers = new Array(slice.length);
+					for (let i = 0; i < slice.length; i++) {
+						byteNumbers[i] = slice.charCodeAt(i);
+					}
+					let byteArray = new Uint8Array(byteNumbers);
+					byteArrays.push(byteArray);
+				}
+				let blob = new Blob(byteArrays, {
+					type: contentType
+				});
+
+				/**
+				 * Exportar a Excel
+				 */
+				if (navigator.msSaveBlob) {
+					navigator.msSaveBlob(blob, fileName);
+					
+					oGlobalBusyDialog.close();
+				} else {
+					let link = document.createElement("a");
+					if (link.download !== undefined) {
+						let url = URL.createObjectURL(blob);
+						link.setAttribute("href", url);
+						link.setAttribute("download", fileName);
+						link.style.visibility = 'hidden';
+						document.body.appendChild(link);
+						link.click();
+						document.body.removeChild(link);
+
+						oGlobalBusyDialog.close();
+					}
+				}
+			} else {
+				oGlobalBusyDialog.close();
+			}
+			
+
+			/*
+			oSettings = {
+				
+				workbook: { 
+					columns: aCols,
+					context: {
+						application: 'Debug Test Application',
+						version: '1.95.0',
+						title: 'Some random title',
+						modifiedBy: 'John Doe',
+						metaSheetName: 'Custom metadata'
+					}
+					
+				},
+				dataSource: aProducts,
+				fileName:"Reporte Análisis de Combustible"
+			};
+
+			oSheet = new Spreadsheet(oSettings);
+			oSheet.build()
+				.then( function() {
+					MessageToast.show('El Archivo ha sido exportado correctamente');
+				})
+				.finally(oSheet.destroy);
+				oGlobalBusyDialog.close();
+				*/
 		},
 		castFecha: function(idFechaInicio){
 			
@@ -926,7 +1110,9 @@ sap.ui.define([
 			.then(resp => resp.json()).then(data => {
 			  console.log(data);
 			  for(var i=0;i<data.str_cef.length;i++){
-				  data.str_cef[i].NRMAR2=data.str_cef[i].NRMAR.toLocaleString()+".000";
+				  
+				  var nmar=data.str_cef[i].NRMAR.toLocaleString()+".000";
+				  data.str_cef[i].NRMAR2=nmar.replace(".",",");
 				  data.str_cef[i].CNPDS2=data.str_cef[i].CNPDS===0?".000":data.str_cef[i].CNPDS.toFixed(3);
 				  data.str_cef[i].HONAV2=data.str_cef[i].HONAV===0?".000":data.str_cef[i].HONAV.toFixed(3);
 				  data.str_cef[i].HODES2=data.str_cef[i].HODES===0?".000":data.str_cef[i].HODES.toFixed(3);
@@ -944,6 +1130,9 @@ sap.ui.define([
 				  data.str_cef[i].RPDES2=data.str_cef[i].RPDES===0?".000":data.str_cef[i].RPDES.toFixed(3);
 				  data.str_cef[i].RPPUE2=data.str_cef[i].RPPUE===0?".000":data.str_cef[i].RPPUE.toFixed(3);
 				  data.str_cef[i].RPMAR2=data.str_cef[i].RPMAR===0?".000":data.str_cef[i].RPMAR.toFixed(3);
+
+				  var fecha =data.str_cef[i].FEPRD;
+				  data.str_cef[i].FEPRD=fecha!="" ? fecha.split("/")[2]+"-"+fecha.split("/")[1]+"-"+fecha.split("/")[0] : "";
 			  }
 			  this.getView().getModel("Qlik").setProperty("/listaQlik",data.str_cef);
 			  console.log(this.getView().getModel("Qlik"));
@@ -1274,13 +1463,15 @@ sap.ui.define([
 			var cadena=oEvent.getSource().getBindingContext("Combustible").getPath().split("/")[2];
 			var array=this.getView().getModel("Combustible").oData.listaCombustible[cadena];
 			console.log(array.CDMMA);
+			console.log(array.DSMMA);
+
 			if(array.CDMMA==="7"||array.CDMMA==="8"){
 				await this.getCuadroAnalisis(array.NRMAR);
 				this._onOpenDialogArmador();
 				sap.ui.getCore().byId("idMarea").setText(array.NRMAR);
 				sap.ui.getCore().byId("idCalas").setText(array.CNCAL);
 				sap.ui.getCore().byId("idEmbarcacion").setText(array.NMEMB);
-				sap.ui.getCore().byId("idZarpe").setText(array.DESC_CDMMA);
+				sap.ui.getCore().byId("idZarpe").setText(array.DSMMA);
 				oGlobalBusyDialog.close();
 				sap.ui.getCore().byId("idMotMarea").setText("  MotMarea: "+array.CDMMA);
 			}else{
@@ -1289,7 +1480,7 @@ sap.ui.define([
 				sap.ui.getCore().byId("idMarea2").setText(array.NRMAR);
 				sap.ui.getCore().byId("idCalas2").setText(array.CNCAL);
 				sap.ui.getCore().byId("idEmbarcacion2").setText(array.NMEMB);
-				sap.ui.getCore().byId("idZarpe2").setText(array.DESC_CDMMA);
+				sap.ui.getCore().byId("idZarpe2").setText(array.DSMMA);
 				sap.ui.getCore().byId("idFechaP").setText(array.FECCONMOV);
 				sap.ui.getCore().byId("idCant").setText(array.CNPDS);
 				sap.ui.getCore().byId("idMotMarea2").setText("  MotMarea: "+array.CDMMA);
