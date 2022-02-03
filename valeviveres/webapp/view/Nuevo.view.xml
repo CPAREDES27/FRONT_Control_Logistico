@@ -160,7 +160,7 @@
                                             </form:label>
                                             <form:fields>
                                                 <HBox width="auto">
-                                                    <Input type="Text" id="idEmbarcacion"  showValueHelp="true" enabled="true" visible="true" width="276px" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="onOpenEmba"/>
+                                                    <Input type="Text" id="idEmbarcacion"  showValueHelp="true" enabled="true" visible="true" width="276px" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="onOpenEmba"/>
                                                     <!-- <Input id="inputId1_R" description="{/help/NMEMB}" placeholder="Seleccione embarcación" showValueHelp="true"  valueHelpRequest="onSearchHelp"/> -->
                                                 </HBox>
                                             </form:fields>
@@ -427,7 +427,7 @@
                             </form:layout>
                         </form:Form>
 
-                        <t:Table id="tbl_suministros"  rows="{ path:'Suministros>/listaSuministros', templateShareable:true}" width="auto" selectionMode="MultiToggle" class="sapUiSmallMargin" visibleRowCount="{modelReqPescaxPlanta>/RowSuministros}">
+                        <t:Table id="tbl_suministros" visibleRowCount="{/dataC}" rows="{ path:'Suministros>/listaSuministros', templateShareable:true}" width="auto" selectionMode="MultiToggle" class="sapUiSmallMargin" >
                             <t:extension>
                                 <OverflowToolbar style="Clear">
                                     <ToolbarSpacer/>

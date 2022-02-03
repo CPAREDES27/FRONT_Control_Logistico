@@ -1360,28 +1360,57 @@ sap.ui.define([
 		// 	}
 		// 	this.DialogComponent.open();
 		// },
-		onSearchHelp: async function(oEvent){
-			this.getModel().setProperty("/input",{});
+		onSearchHelp: function (oEvent) {
 			let sIdInput = oEvent.getSource().getId(),
-			oModel = this.getModel(),
-			oComponent = oModel.getProperty("/busqembarcaciones"),
-			oView = this.getView(),
-			oInput = this.getView().byId(sIdInput);
-			oModel.setProperty("/input",oInput);
-			oModel.setProperty("/inputId",sIdInput);
-			
-			if(!this.DialogComponent){
-				this.DialogComponent = await Fragment.load({
-					name:"com.tasa.valeviveres.view.fragments.BusqEmbarcacionLista",
-					controller:this
+				oModel = this.getModel(),
+				nameComponent = "busqembarcaciones",
+				idComponent = "busqembarcaciones",
+				urlComponent = this.HOST_HELP + ".AyudasBusqueda.busqembarcaciones-1.0.0",
+				oView = this.getView(),
+				oInput = sap.ui.getCore().byId(sIdInput);
+				oModel.setProperty("/input", oInput);
+
+			if (!this.DialogComponent) {
+				this.DialogComponent = new sap.m.Dialog({
+					title: "Búsqueda de embarcaciones",
+					icon: "sap-icon://search",
+					state: "Information",
+					endButton: new sap.m.Button({
+						icon: "sap-icon://decline",
+						text: "Cerrar",
+						type: "Reject",
+						press: function (oEvent) {
+							this.onCloseDialog(oEvent);
+						}.bind(this)
+					})
 				});
 				oView.addDependent(this.DialogComponent);
-				oModel.setProperty("/idDialogComp",this.DialogComponent.getId());
+				oModel.setProperty("/idDialogComp", this.DialogComponent.getId());
 			}
 
-			if(this.DialogComponent.getContent().length === 0){
+			let comCreateOk = function (oEvent) {
+				BusyIndicator.hide();
+			};
+
+
+			if (this.DialogComponent.getContent().length === 0) {
+				BusyIndicator.show(0);
+				let oComponent = new sap.ui.core.ComponentContainer({
+					id: idComponent,
+					name: nameComponent,
+					url: urlComponent,
+					settings: {},
+					componentData: {},
+					propagateModel: true,
+					componentCreated: comCreateOk,
+					height: '100%',
+					// manifest:true,
+					async: false
+				});
+
 				this.DialogComponent.addContent(oComponent);
 			}
+
 			this.DialogComponent.open();
 		},
 		onCloseDialog:function(oEvent){

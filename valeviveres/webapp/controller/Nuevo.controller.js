@@ -723,15 +723,19 @@ sap.ui.define([
 			var dia =idFechaTravesiaIni.split("/")[0];
 			var mes =idFechaTravesiaIni.split("/")[1];
 			var anio =idFechaTravesiaIni.split("/")[2];
-			var fechaInicio = anio+"/"+mes+"/"+dia;
-				let fecha2 = new Date()
-				let fecha1 = new Date(fechaInicio);
-			var resta=fecha2-fecha1;
-			var dias=Math.round(resta/ (1000*60*60*24));
-			console.log(dias);
+			var idFechaTravesiaIni = anio+"/"+mes+"/"+dia;
+			// 	let fecha2 = new Date()
+			// 	let fecha1 = new Date(fechaInicio);
+			// var resta=fecha2-fecha1;
+			// var dias=Math.round(resta/ (1000*60*60*24));
+			// console.log(dias);
 			
+			
+			let fecha2 = new Date()
+			var resta = Date.parse(fecha2)-Date.parse(idFechaTravesiaIni)
+			var dias=Math.round(resta/ (1000*60*60*24));
 			var estado=false;
-			if(dias===1){
+			if(dias>=3){
 				estado=true;
 			}
 			return estado;			
@@ -747,7 +751,7 @@ sap.ui.define([
 			var cboProveedor=this.byId("cboProveedor").getSelectedKey();
 			var cadena="";
 			var valida=false;
-			if(!this.validaFecha()){
+			if(this.validaFecha()){
 				var fechaAc = new Date();
 				var annio = fechaAc.getFullYear();
 				var month = fechaAc.getMonth();
@@ -801,10 +805,11 @@ sap.ui.define([
 				this.byId('cboProveedor').setValueState(sap.ui.core.ValueState.Error);
 				cadena+="El campo Proveedor es obligatorio\n";
 				valida=true;
+			}else{
+				this.byId('cboProveedor').setValueState();
 			}
-			if(idFechaTravesiaIni >idFechaTravesiaFin){
+			if(Date.parse(idFechaTravesiaIni) > Date.parse(idFechaTravesiaFin)){
 				valida=true;
-				this.byId('cboProveedor').setValueState(sap.ui.core.ValueState.Error);
 				cadena+="La fecha de fin no debe ser menor a la fecha de inicio"
 			}
 
@@ -892,6 +897,7 @@ sap.ui.define([
 			this.byId("idImporteVale").setText(total.toFixed(2));
 			this.byId("onGuardarVale").setEnabled(true);
 			console.log(sumi);			
+			this.getView().getModel().setProperty("/dataC",sumi.length);
 			this.getView().getModel("Suministros").setProperty("/listaSuministros",sumi);
 		},
 		
@@ -983,7 +989,7 @@ sap.ui.define([
 					this.byId("idImporteVale").setText(total.toFixed(2));
 					this.byId("onGuardarVale").setEnabled(true);
 					console.log(sumi);
-					
+					this.getView().getModel().setProperty("/dataC",sumi.length);
 					this.getView().getModel("Suministros").setProperty("/listaSuministros",sumi);
 					oGlobalBusyDialog.close();
 				  }).catch(function(error){
@@ -1240,6 +1246,7 @@ sap.ui.define([
 								actions: [MessageBox.Action.OK],
 								emphasizedAction: MessageBox.Action.OK,
 								onClose: function (oAction) { if(oAction=="OK"){
+									this.onLimpiar();
 									this.getRouter().navTo("worklist"); 
 								}}.bind(this)
 							}
@@ -1251,6 +1258,31 @@ sap.ui.define([
 					  );
 			}
 			
+
+		},
+		onLimpiar:function(){
+			this.getView().getModel("Suministros").setProperty("/listaSuministros",{});
+			this.byId("idPlantaIni").setValue("");
+			this.byId("idAlmacenIni").setValue("");
+			this.byId("idEmbarcacion").setValue("");
+			this.byId("idMatricula").setValue("");
+			this.byId("idArmadorIni").setValue("");
+			this.byId("idFechaTravesiaIni").setValue("");
+			this.byId("idFechaTravesiaFin").setValue("");
+			this.byId("idNroTripu").setValue("");
+			this.byId("idCocinero").setValue("");
+			this.byId("idCostoVivere").setValue("");
+			this.byId("idObserva").setValue("");
+			this.byId("idFecha").setValue("");
+			this.byId("idCentroText").setValue("");
+			this.byId("idAlmacenExterno").setValue("");
+			this.byId("idIndicador").setValue("");
+			this.byId("idRucArmador").setValue("");
+			this.byId("idDuracionTr").setValue("");
+			this.byId("idRucProveedor").setValue("");
+			
+			this.byId("cboTemporada").setSelectedKey("");
+			this.byId("cboProveedor").setSelectedKey("");
 
 		},
 		onImprimir: function(codigo){
