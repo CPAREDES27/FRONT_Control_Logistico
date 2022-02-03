@@ -1010,6 +1010,9 @@ sap.ui.define([
 				  data.str_cef[i].RPDES2=data.str_cef[i].RPDES===0?".000":data.str_cef[i].RPDES.toFixed(3);
 				  data.str_cef[i].RPPUE2=data.str_cef[i].RPPUE===0?".000":data.str_cef[i].RPPUE.toFixed(3);
 				  data.str_cef[i].RPMAR2=data.str_cef[i].RPMAR===0?".000":data.str_cef[i].RPMAR.toFixed(3);
+
+				  var fecha =data.str_cef[i].FEPRD;
+				  data.str_cef[i].FEPRD=fecha!="" ? fecha.split("/")[2]+"-"+fecha.split("/")[1]+"-"+fecha.split("/")[0] : "";
 			  }
 			  this.getView().getModel("Qlik").setProperty("/listaQlik",data.str_cef);
 			  console.log(this.getView().getModel("Qlik"));
