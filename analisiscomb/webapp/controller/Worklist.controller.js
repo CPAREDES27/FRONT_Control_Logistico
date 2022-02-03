@@ -992,7 +992,9 @@ sap.ui.define([
 			.then(resp => resp.json()).then(data => {
 			  console.log(data);
 			  for(var i=0;i<data.str_cef.length;i++){
-				  data.str_cef[i].NRMAR2=data.str_cef[i].NRMAR.toLocaleString()+".000";
+				  
+				  var nmar=data.str_cef[i].NRMAR.toLocaleString()+".000";
+				  data.str_cef[i].NRMAR2=nmar.replace(".",",");
 				  data.str_cef[i].CNPDS2=data.str_cef[i].CNPDS===0?".000":data.str_cef[i].CNPDS.toFixed(3);
 				  data.str_cef[i].HONAV2=data.str_cef[i].HONAV===0?".000":data.str_cef[i].HONAV.toFixed(3);
 				  data.str_cef[i].HODES2=data.str_cef[i].HODES===0?".000":data.str_cef[i].HODES.toFixed(3);
