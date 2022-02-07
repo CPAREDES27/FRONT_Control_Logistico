@@ -182,14 +182,13 @@ sap.ui.define([
 				this.embarcacionB=false;
 			}
 			if(idEmbarcacion){
-				console.log("Hola");
+				
 				bEmbarcacion=true;
 				
 			}else{
 				bEmbarcacion=false;
 			}
 			this.getView().getModel("Embarca").setProperty("/valida",bEmbarcacion);
-				console.log(this.getView().getModel("Embarca").getProperty("/valida"));
 			if(!idFechaInicio){
 				MessageBox.error("La fecha de arribo es obligatorio");
 				oGlobalBusyDialog.close();
@@ -199,8 +198,7 @@ sap.ui.define([
 			var idFechaF=this.castFecha(idFechaFin);
 			this.fechaInicio=idFechaIni;
 			this.fechaFin=idFechaF;
-			console.log(idFechaIni);
-			console.log(idFechaF);
+			
 			var body={
 				"embarcacionIni": idEmbarcacion,
 				"fechaFin": idFechaF,
@@ -209,7 +207,7 @@ sap.ui.define([
 				"p_row": idCant,
 				"p_user": this.userOperation
 			}
-			console.log(body);
+			
 		
 			fetch(`${Utilities.onLocation()}analisiscombustible/Listar`,
 			  {
@@ -289,7 +287,7 @@ sap.ui.define([
 					if((data.str_csmar[i].STCMB>=0)&&(data.str_csmar[i].STFIN>=0) && i>0){
 						var dato=data.str_csmar[i].STCMB-data.str_csmar[i-1].STFIN;;
 					
-						console.log(dato);
+					
 						data.str_csmar[i].CANTIDAD = String(dato.toFixed(3));
 						
 					
@@ -1043,14 +1041,14 @@ sap.ui.define([
 				]
 			}
 
-			console.log(body);
+			
 			fetch(`${Utilities.onLocation()}logregistrocombustible/Nuevo`,
 			  {
 				  method: 'POST',
 				  body: JSON.stringify(body)
 			  })
 			  .then(resp => resp.json()).then(data => {
-				console.log(data);
+				
 				var mensaje="";
 				for(var i=0;i<data.t_mensaje.length;i++){
 					mensaje +=data.t_mensaje[i].DSMIN+"\n";
@@ -1075,7 +1073,8 @@ sap.ui.define([
 				return "000000";
 			}
 			hora=hora+":00";
-			console.log(hora);
+		
+
 			var fechaFinal = hora.split(":");
 			
 			return fechaFinal[0]+fechaFinal[1]+fechaFinal[2];
@@ -1101,16 +1100,16 @@ sap.ui.define([
 				"pFievn": idFechaIni,
 				"pRow": 0
 			}
-			console.log(body);
+	
+			
 			fetch(`${Utilities.onLocation()}analisiscombustible/QlikView`,
 			{
 				method: 'POST',
 				body: JSON.stringify(body)
 			})
 			.then(resp => resp.json()).then(data => {
-			  console.log(data);
+			
 			  for(var i=0;i<data.str_cef.length;i++){
-				  
 				  var nmar=data.str_cef[i].NRMAR.toLocaleString()+".000";
 				  data.str_cef[i].NRMAR2=nmar.replace(".",",");
 				  data.str_cef[i].CNPDS2=data.str_cef[i].CNPDS===0?".000":data.str_cef[i].CNPDS.toFixed(3);
@@ -1135,7 +1134,6 @@ sap.ui.define([
 				  data.str_cef[i].FEPRD=fecha!="" ? fecha.split("/")[2]+"-"+fecha.split("/")[1]+"-"+fecha.split("/")[0] : "";
 			  }
 			  this.getView().getModel("Qlik").setProperty("/listaQlik",data.str_cef);
-			  console.log(this.getView().getModel("Qlik"));
 			  this.onExport();
 			  oGlobalBusyDialog.close();
 			}).catch(error => console.log(error)
@@ -1429,7 +1427,6 @@ sap.ui.define([
 			var aCols, aProducts, oSettings, oSheet;
 
 			aCols = this.createColumnConfig();
-			console.log(this.getView().getModel("Qlik"));
 			aProducts = this.getView().getModel("Qlik").getProperty('/listaQlik');
 
 			oSettings = {
@@ -1456,14 +1453,26 @@ sap.ui.define([
 				})
 				.finally(oSheet.destroy);
 		},
-
+		onCuadroConsumo: async function(){
+			console.log(bEmbarcacion);
+			if(!listaAnalisis){
+				MessageBox.error("No existe información en la grilla para generar el reporte");
+			}else{
+				if(bEmbarcacion){
+					this._onOpenDialogArmador5();
+					sap.ui.getCore().byId("fechaEmbarca").setText(this.byId("idFechaInicio").getValue());
+				}else{
+					await this.llenarZarpe();
+					this._onOpenDialogArmador4();
+					sap.ui.getCore().byId("idFecha").setText(this.byId("idFechaInicio").getValue());
+				}
+			}
+		},
 		onDetail: async function(oEvent){
 			oGlobalBusyDialog.open();
-			console.log();
+	
 			var cadena=oEvent.getSource().getBindingContext("Combustible").getPath().split("/")[2];
 			var array=this.getView().getModel("Combustible").oData.listaCombustible[cadena];
-			console.log(array.CDMMA);
-			console.log(array.DSMMA);
 
 			if(array.CDMMA==="7"||array.CDMMA==="8"){
 				await this.getCuadroAnalisis(array.NRMAR);
@@ -1473,7 +1482,7 @@ sap.ui.define([
 				sap.ui.getCore().byId("idEmbarcacion").setText(array.NMEMB);
 				sap.ui.getCore().byId("idZarpe").setText(array.DSMMA);
 				oGlobalBusyDialog.close();
-				sap.ui.getCore().byId("idMotMarea").setText("  MotMarea: "+array.CDMMA);
+				
 			}else{
 				await this.getCuadroAnalisis2(array.NRMAR);
 				this._onOpenDialogArmador2();
@@ -1483,11 +1492,99 @@ sap.ui.define([
 				sap.ui.getCore().byId("idZarpe2").setText(array.DSMMA);
 				sap.ui.getCore().byId("idFechaP").setText(array.FECCONMOV);
 				sap.ui.getCore().byId("idCant").setText(array.CNPDS);
-				sap.ui.getCore().byId("idMotMarea2").setText("  MotMarea: "+array.CDMMA);
+				
 			}
 			
 		},
+		//
+		_onOpenDialogArmador2: function() {
+				
+			this._getDialogArmador2().open();
+		},
+
+		_onCloseDialogArmador2: function() {
+			this._getDialogArmador2().close();
+	
+			
+		},
+
+		_getDialogArmador2 : function () {
+			if (!this._oDialogArmador2) {
+				this._oDialogArmador2 = sap.ui.xmlfragment("com.tasa.analisiscomb.view.Consumo", this.getView().getController());
+				this.getView().addDependent(this._oDialogArmador2);
+			}
+			return this._oDialogArmador2;
+		},
 		
+		//
+
+		_onOpenDialogArmador: function() {
+				
+			this._getDialogArmador().open();
+		},
+
+		_onCloseDialogArmador: function() {
+			this._getDialogArmador().close();
+	
+			
+		},
+
+		_getDialogArmador : function () {
+			if (!this._oDialogArmador) {
+				this._oDialogArmador = sap.ui.xmlfragment("com.tasa.analisiscomb.view.Consumo2",this.getView().getController());
+				this.getView().addDependent(this._oDialogArmador);
+				
+			}
+			
+			return this._oDialogArmador;
+		},
+
+		//
+
+		_onOpenDialogArmador5: function() {
+				
+			this._getDialogArmador5().open();
+		},
+
+		_onCloseDialogArmador5: function() {
+			this._getDialogArmador5().close();
+	
+			
+		},
+
+		_getDialogArmador5 : function () {
+			if (!this._oDialogArmador5) {
+				this._oDialogArmador5 = sap.ui.xmlfragment("com.tasa.analisiscomb.view.EmbarcacionCuadro",this.getView().getController());
+				this.getView().addDependent(this._oDialogArmador5);
+				
+			}
+			
+			return this._oDialogArmador5;
+		},
+
+		//
+
+		_onOpenDialogArmador4: function() {
+				
+			this._getDialogArmador4().open();
+		},
+
+		_onCloseDialogArmador4: function() {
+			this._getDialogArmador4().close();
+	
+			
+		},
+
+		_getDialogArmador4 : function () {
+			if (!this._oDialogArmador4) {
+				this._oDialogArmador4 = sap.ui.xmlfragment("com.tasa.analisiscomb.view.Cuadro",this.getView().getController());
+				this.getView().addDependent(this._oDialogArmador4);
+				
+			}
+			
+			return this._oDialogArmador4;
+		},
+
 		//
 		getCuadroAnalisis: async function(idMarea){
 			oGlobalBusyDialog.open();
@@ -1505,7 +1602,6 @@ sap.ui.define([
 				  body: JSON.stringify(body)
 			  })
 			  .then(resp => resp.json()).then(data => {
-				console.log(data.data);
 				this.getView().getModel("ConsumoTwo").setProperty("/listaConsumoTwo",data.data);
 				oGlobalBusyDialog.close();
 			  }).catch(error => console.log(error)
@@ -1528,7 +1624,6 @@ sap.ui.define([
 				  body: JSON.stringify(body)
 			  })
 			  .then(resp => resp.json()).then(data => {
-				console.log(data);
 				this.getView().getModel("Analisis").setProperty("/listaAnalisis",data.str_detf);
 				this.getView().getModel("Reporte").setProperty("/listaReporte",data.str_fase);
 				oGlobalBusyDialog.close();
@@ -1536,118 +1631,8 @@ sap.ui.define([
 			);
 
 		},
-
-
-		_onOpenDialogArmador2: function() {
-				
-			this._getDialogArmador2().open();
-		},
-
-		_onCloseDialogArmador2: function() {
-			this._getDialogArmador2().close();
 	
-			
-		},
-
-		_getDialogArmador2 : function () {
-			if (!this._oDialogArmador2) {
-				this._oDialogArmador2 = sap.ui.xmlfragment("com.tasa.analisiscomb.view.Consumo", this.getView().getController());
-				this.getView().addDependent(this._oDialogArmador2);
-				
-			}
-			
-			return this._oDialogArmador2;
-		},
-
-		//
-
-
-		_onOpenDialogArmador: function() {
-				
-			this._getDialogArmador().open();
-		},
-
-		_onCloseDialogArmador: function() {
-			this._getDialogArmador().close();
-	
-			
-		},
-
-		_getDialogArmador : function () {
-			if (!this._oDialogArmador) {
-				this._oDialogArmador = sap.ui.xmlfragment("com.tasa.analisiscomb.view.Consumo2", this.getView().getController());
-				this.getView().addDependent(this._oDialogArmador);
-				
-			}
-			
-			return this._oDialogArmador;
-		},
-
-
-		//
 		
-		_onOpenDialogArmador4: function() {
-				
-			this._getDialogArmador4().open();
-		},
-
-		_onCloseDialogArmador4: function() {
-			this._getDialogArmador4().close();
-	
-			
-		},
-
-		_getDialogArmador4 : function () {
-			if (!this._oDialogArmador4) {
-				this._oDialogArmador4 = sap.ui.xmlfragment("com.tasa.analisiscomb.view.Cuadro", this.getView().getController());
-				this.getView().addDependent(this._oDialogArmador4);
-				
-			}
-			
-			return this._oDialogArmador4;
-		},
-
-
-		//
-
-		_onOpenDialogArmador5: function() {
-				
-			this._getDialogArmador5().open();
-		},
-
-		_onCloseDialogArmador5: function() {
-			this._getDialogArmador5().close();
-	
-			
-		},
-
-		_getDialogArmador5 : function () {
-			if (!this._oDialogArmador5) {
-				this._oDialogArmador5 = sap.ui.xmlfragment("com.tasa.analisiscomb.view.EmbarcacionCuadro", this.getView().getController());
-				this.getView().addDependent(this._oDialogArmador5);
-				
-			}
-			
-			return this._oDialogArmador5;
-		},
-		
-		onCuadroConsumo: async function(){
-			console.log(bEmbarcacion);
-			if(!listaAnalisis){
-				MessageBox.error("No existe información en la grilla para generar el reporte");
-			}else{
-				if(bEmbarcacion){
-					this._onOpenDialogArmador5();
-					sap.ui.getCore().byId("fechaEmbarca").setText(this.byId("idFechaInicio").getValue());
-				}else{
-					await this.llenarZarpe();
-					this._onOpenDialogArmador4();
-					sap.ui.getCore().byId("idFecha").setText(this.byId("idFechaInicio").getValue());
-				}
-			}
-			
-			
-		},
 		llenarZarpe: async function(){
 
 			var body={

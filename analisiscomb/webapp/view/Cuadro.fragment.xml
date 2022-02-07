@@ -44,7 +44,7 @@
         
     
 		<t:Table
-				id="table"
+				id="tableCuadro"
 				rows="{path:'AnalisisCombustible>/listaAnalisisCombustible'}"
 				visibleRowCount="7"
                 selectionMode="None"
@@ -75,10 +75,10 @@
 						</t:template>
 					</t:Column>
                     <t:Column
-						id="NRDES"
+						id="NRDES2"
 						width="11rem"
-						sortProperty="NRDES"
-						filterProperty="NRDES"
+						sortProperty="NRDES2"
+						filterProperty="NRDES2"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<t:multiLabels>
@@ -91,10 +91,10 @@
 						</t:template>
 					</t:Column>
                     <t:Column
-						id="DESCR"
+						id="DESCR2"
 						width="11rem"
-						sortProperty="DESCR"
-						filterProperty="DESCR"
+						sortProperty="DESCR2"
+						filterProperty="DESCR2"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<t:multiLabels>
@@ -107,10 +107,10 @@
 						</t:template>
 					</t:Column>
                     <t:Column
-						id="HORPR"
+						id="HORPR2"
 						width="11rem"
-						sortProperty="HORPR"
-						filterProperty="HORPR"
+						sortProperty="HORPR2"
+						filterProperty="HORPR2"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						headerSpan="4,1"
@@ -127,10 +127,10 @@
 					</t:Column>
                     
                     <t:Column
-						id="FIDES"
+						id="FIDES2"
 						width="11rem"
-						sortProperty="FIDES"
-						filterProperty="FIDES"
+						sortProperty="FIDES2"
+						filterProperty="FIDES2"
 						showFilterMenuEntry="true"
 						headerSpan="4,1"
 						showSortMenuEntry="true"
@@ -145,10 +145,10 @@
 						</t:template>
 					</t:Column>
                     <t:Column
-						id="FFDES"
+						id="FFDES2"
 						width="11rem"
-						sortProperty="FFDES"
-						filterProperty="FFDES"
+						sortProperty="FFDES2"
+						filterProperty="FFDES2"
 						showFilterMenuEntry="true"
 						headerSpan="4,1"
 						showSortMenuEntry="true"
@@ -163,10 +163,10 @@
 						</t:template>
 					</t:Column>
                     <t:Column
-						id="CNPDS"
+						id="CNPDS2"
 						width="11rem"
-						sortProperty="CNPDS"
-						filterProperty="CNPDS"
+						sortProperty="CNPDS2"
+						filterProperty="CNPDS2"
 						showFilterMenuEntry="true"
 						headerSpan="4,1"
 						showSortMenuEntry="true"

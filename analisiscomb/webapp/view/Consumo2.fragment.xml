@@ -103,7 +103,7 @@
         
     
             <t:Table
-				id="table"
+				id="table4"
 				rows="{path:'ConsumoTwo>/listaConsumoTwo'}"
 				visibleRowCount="7"
                 selectionMode="None"
@@ -118,10 +118,10 @@
 
 
                 	<t:Column
-						id="NRMAR"
+						id="NRMAR4"
 						width="11rem"
-						sortProperty="NRMAR"
-						filterProperty="NRMAR"
+						sortProperty="NRMAR4"
+						filterProperty="NRMAR4"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<Label text="Evento" />
@@ -142,10 +142,10 @@
 						</t:template>
 					</t:Column>
                     <t:Column
-						id="DESCR"
+						id="DESCR4"
 						width="11rem"
-						sortProperty="DESCR"
-						filterProperty="DESCR"
+						sortProperty="DESCR4"
+						filterProperty="DESCR4"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<Label text="Stock Combustible" />
@@ -171,10 +171,10 @@
 						</t:template>
 					</t:Column>
                     <t:Column
-						id="CDSPC"
+						id="CDSPC4"
 						width="11rem"
-						sortProperty="CDSPC"
-						filterProperty="CDSPC"
+						sortProperty="CDSPC4"
+						filterProperty="CDSPC4"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
                         visible="true">
@@ -194,10 +194,10 @@
 					</t:Column>
                     
                     <t:Column
-						id="FIDES"
+						id="FIDES4"
 						width="11rem"
-						sortProperty="FIDES"
-						filterProperty="FIDES"
+						sortProperty="FIDES4"
+						filterProperty="FIDES4"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<Label text="A1" />
@@ -206,10 +206,10 @@
 						</t:template>
 					</t:Column>
                     <t:Column
-						id="FFDES"
+						id="FFDES4"
 						width="11rem"
-						sortProperty="FFDES"
-						filterProperty="FFDES"
+						sortProperty="FFDES4"
+						filterProperty="FFDES4"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<Label text="A2" />
@@ -218,10 +218,10 @@
 						</t:template>
 					</t:Column>
                     <t:Column
-						id="CNPDS"
+						id="CNPDS4"
 						width="11rem"
-						sortProperty="CNPDS"
-						filterProperty="CNPDS"
+						sortProperty="CNPDS4"
+						filterProperty="CNPDS4"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						hAlign="End">
@@ -231,10 +231,10 @@
 						</t:template>
 					</t:Column>
                     <t:Column
-						id="FECCONMOV"
+						id="FECCONMOV4"
 						width="11rem"
-						sortProperty="FECCONMOV"
-						filterProperty="FECCONMOV"
+						sortProperty="FECCONMOV4"
+						filterProperty="FECCONMOV4"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<Label text="A4" />
@@ -243,10 +243,10 @@
 						</t:template>
 					</t:Column>
                     <t:Column
-						id="NMEMB"
+						id="NMEMB4"
 						width="11rem"
-						sortProperty="NMEMB"
-						filterProperty="NMEMB"
+						sortProperty="NMEMB4"
+						filterProperty="NMEMB4"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<Label text="Panga" />
@@ -267,10 +267,10 @@
 						</t:template>
 					</t:Column>
                     <t:Column
-						id="PRCTP"
+						id="PRCTP4"
 						width="11rem"
-						sortProperty="PRCTP"
-						filterProperty="PRCTP"
+						sortProperty="PRCTP4"
+						filterProperty="PRCTP4"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						hAlign="End">

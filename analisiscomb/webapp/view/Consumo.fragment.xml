@@ -116,7 +116,7 @@
         
     
 		<t:Table
-				id="table"
+				id="table3"
 				rows="{path:'Analisis>/listaAnalisis'}"
 				visibleRowCount="7"
                 selectionMode="None"
@@ -131,10 +131,10 @@
 
 
                 	<t:Column 
-						id="NRMAR"
+						id="NRMARS"
 						width="15rem"
-						sortProperty="NRMAR"
-						filterProperty="NRMAR"
+						sortProperty="NRMARS"
+						filterProperty="NRMARS"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<t:multiLabels>
@@ -146,10 +146,10 @@
 						</t:template>
 					</t:Column>
                     <t:Column hAlign="End"
-						id="NRDES"
+						id="NRDES3"
 						width="8rem"
-						sortProperty="NRDES"
-						filterProperty="NRDES"
+						sortProperty="NRDES3"
+						filterProperty="NRDES3"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<t:multiLabels>
@@ -161,10 +161,10 @@
 						</t:template>
 					</t:Column>
                     <t:Column hAlign="End"
-						id="DESCR"
+						id="DESCR3"
 						width="10rem"
-						sortProperty="DESCR"
-						filterProperty="DESCR"
+						sortProperty="DESCR3"
+						filterProperty="DESCR3"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<t:multiLabels>
@@ -192,10 +192,10 @@
 						</t:template>
 					</t:Column>
                     <t:Column 
-						id="HORPR"
+						id="HORPR3"
 						width="4rem"
-						sortProperty="HORPR"
-						filterProperty="HORPR"
+						sortProperty="HORPR3"
+						filterProperty="HORPR3"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
                         visible="true"
@@ -222,10 +222,10 @@
 					</t:Column>
                     
                     <t:Column hAlign="End"
-						id="FIDES"
+						id="FIDES3"
 						width="4rem"
-						sortProperty="FIDES"
-						filterProperty="FIDES"
+						sortProperty="FIDES3"
+						filterProperty="FIDES3"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<t:multiLabels>
@@ -248,10 +248,10 @@
 						</t:template>
 					</t:Column>
                     <t:Column hAlign="End"
-						id="FFDES"
+						id="FFDES3"
 						width="4rem"
-						sortProperty="FFDES"
-						filterProperty="FFDES"
+						sortProperty="FFDES3"
+						filterProperty="FFDES3"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<t:multiLabels>
@@ -273,10 +273,10 @@
 						</t:template>
 					</t:Column>
                     <t:Column
-						id="CNPDS"
+						id="CNPDS3"
 						width="4rem"
-						sortProperty="CNPDS"
-						filterProperty="CNPDS"
+						sortProperty="CNPDS3"
+						filterProperty="CNPDS3"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						hAlign="End">
@@ -299,10 +299,10 @@
 						</t:template>
 					</t:Column>
                     <t:Column hAlign="End"
-						id="FECCONMOV"
+						id="FECCONMOV3"
 						width="4rem"
-						sortProperty="FECCONMOV"
-						filterProperty="FECCONMOV"
+						sortProperty="FECCONMOV3"
+						filterProperty="FECCONMOV3"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<t:multiLabels>
@@ -324,10 +324,10 @@
 						</t:template>
 					</t:Column>
                     <t:Column hAlign="End"
-						id="NMEMB"
+						id="NMEMB3"
 						width="4rem"
-						sortProperty="NMEMB"
-						filterProperty="NMEMB"
+						sortProperty="NMEMB3"
+						filterProperty="NMEMB3"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<t:multiLabels>
@@ -349,10 +349,10 @@
 						</t:template>
 					</t:Column>
                     <t:Column hAlign="End"
-						id="NAME1"
+						id="NAME13"
 						width="4rem"
-						sortProperty="NAME1"
-						filterProperty="NAME1"
+						sortProperty="NAME13"
+						filterProperty="NAME13"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<t:multiLabels>
@@ -374,10 +374,10 @@
 						</t:template>
 					</t:Column>
                     <t:Column 
-						id="PRCTP" 
+						id="PRCTP3" 
 						width="7rem"
-						sortProperty="PRCTP"
-						filterProperty="PRCTP"
+						sortProperty="PRCTP3"
+						filterProperty="PRCTP3"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						hAlign="End">
@@ -450,8 +450,8 @@
                     <t:Column
 						id=""
 						width="8rem"
-						sortProperty="NRDES"
-						filterProperty="NRDES"
+						sortProperty="NRDES2"
+						filterProperty="NRDES2"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<t:multiLabels>
