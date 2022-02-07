@@ -343,6 +343,8 @@ sap.ui.define([
 				var cantidadRegistros="Lista de registros ("+data.str_csmar.length+")";
 				this.byId("idListaReg").setText(cantidadRegistros);
 
+				this.onColumnTable();
+
 				oGlobalBusyDialog.close();
 			  }).catch(error => console.log(error)
 			);
@@ -1659,7 +1661,14 @@ sap.ui.define([
 					totalCODES+=data.str_cef[i].CODES
 					totalCOPUE+=data.str_cef[i].COPUE
 					totalCOMAR+=data.str_cef[i].COMAR
+					data.str_cef[i].RRMAR=data.str_cef[i].RRMAR.toFixed(2);
+					data.str_cef[i].RRNAV=data.str_cef[i].RRNAV.toFixed(2);
+					data.str_cef[i].RRDES=data.str_cef[i].RRDES.toFixed(2);
+
+
 				}
+				
+
 				data.str_cef.push({
 					DSMMA:"Total",
 					CONAV:totalCONAV,
@@ -2430,6 +2439,39 @@ sap.ui.define([
 		},
 		onCloseDialog:function(oEvent){
 			oEvent.getSource().getParent().close();
+		},
+
+		onColumnTable: function(){
+			
+			var opcion=this.byId("idEstado").getSelectedKey();
+
+			if(opcion==="7" || opcion==="8"){
+				this.byId("idLabelPuerto").setText("Puerto");
+				this.byId("idLabelFechaHoraZarpe").setText("Fecha/hora eve.");
+
+				this.byId("idPuertoArribo").setVisible(false);
+				this.byId("idFechaHoraArribo").setVisible(false);
+				this.byId("idCons").setVisible(false);
+				this.byId("idStockFinal").setVisible(false);
+				this.byId("idCantDesc").setVisible(false);
+
+				this.byId("btnCdroConsumo").setVisible(false);
+
+
+			}else {
+				this.byId("idLabelPuerto").setText("Puert. Zarpe");
+				this.byId("idLabelFechaHoraZarpe").setText("Fecha/hora zarpe");
+
+				this.byId("idPuertoArribo").setVisible(true);
+				this.byId("idFechaHoraArribo").setVisible(true);
+				this.byId("idCons").setVisible(true);
+				this.byId("idStockFinal").setVisible(true);
+				this.byId("idCantDesc").setVisible(true);
+
+				this.byId("btnCdroConsumo").setVisible(true);
+
+
+			}
 		}
 	});
 });

@@ -53,14 +53,15 @@
 				enableCellFilter="{ui>/enableCellFilter}"
 				columnSelect="onColumnSelect"
 				cellContextmenu="onProductIdCellContextMenu"
-				ariaLabelledBy="title">
+				ariaLabelledBy="title"
+				class="tableCuadro">
 			
 			    <t:columns>
 
 
                 	<t:Column
 						id="NRMAR"
-						width="11rem"
+						width="5.5rem"
 						sortProperty="NRMAR"
 						filterProperty="NRMAR"
 						showFilterMenuEntry="true"
@@ -71,28 +72,28 @@
                         </t:multiLabels>
 					
 						<t:template>
-							<Text text="{AnalisisCombustible>CDEMB}" wrapping="false" />
+							<Text text="{AnalisisCombustible>CDEMB}" wrapping="true" />
 						</t:template>
 					</t:Column>
                     <t:Column
 						id="NRDES2"
-						width="11rem"
+						width="5rem"
 						sortProperty="NRDES2"
 						filterProperty="NRDES2"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<t:multiLabels>
 							<Label visible="false" />
-                            <Label text="Nombre emb." />
+                            <Label text="Nomb. emb." />
                         </t:multiLabels>
 						
 						<t:template>
-							<Text text="{AnalisisCombustible>NMEMB}" wrapping="false" />
+							<Text text="{AnalisisCombustible>NMEMB}" wrapping="true" />
 						</t:template>
 					</t:Column>
                     <t:Column
 						id="DESCR2"
-						width="11rem"
+						width="5.5rem"
 						sortProperty="DESCR2"
 						filterProperty="DESCR2"
 						showFilterMenuEntry="true"
@@ -103,14 +104,14 @@
                         </t:multiLabels>
 						
 						<t:template>
-							<Text text="{AnalisisCombustible>DSMMA}" wrapping="false" />
+							<Text text="{AnalisisCombustible>DSMMA}" wrapping="true" />
 						</t:template>
 					</t:Column>
                     <t:Column
 						id="HORPR2"
-						width="11rem"
-						sortProperty="HORPR2"
-						filterProperty="HORPR2"
+						width="3rem"
+						sortProperty="HONAV"
+						filterProperty="HONAV"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						headerSpan="4,1"
@@ -122,15 +123,23 @@
 						</t:multiLabels>
 					
 						<t:template>
-							<Text text="{AnalisisCombustible>HONAV}" wrapping="false" />
+							<Text text="{path:'AnalisisCombustible>HONAV', type:'sap.ui.model.type.Float',
+                                                formatOptions:{
+                                                    minIntegerDigits:1,
+                                                    minFractionDigits:2,
+                                                    maxFractionDigits:2,
+                                                    groupingEnabled:true,
+                                                    groupingSeparator: ',',
+                                                    decimalSeparator: '.'
+                                                }}"/>
 						</t:template>
 					</t:Column>
                     
                     <t:Column
 						id="FIDES2"
-						width="11rem"
-						sortProperty="FIDES2"
-						filterProperty="FIDES2"
+						width="3rem"
+						sortProperty="HODES"
+						filterProperty="HODES"
 						showFilterMenuEntry="true"
 						headerSpan="4,1"
 						showSortMenuEntry="true"
@@ -141,14 +150,22 @@
 						</t:multiLabels>
 						
 						<t:template>
-							<Text text="{AnalisisCombustible>HODES} " wrapping="false" />
+							<Text text="{path:'AnalisisCombustible>HODES', type:'sap.ui.model.type.Float',
+                                                formatOptions:{
+                                                    minIntegerDigits:1,
+                                                    minFractionDigits:2,
+                                                    maxFractionDigits:2,
+                                                    groupingEnabled:true,
+                                                    groupingSeparator: ',',
+                                                    decimalSeparator: '.'
+                                                }}"/>
 						</t:template>
 					</t:Column>
                     <t:Column
 						id="FFDES2"
-						width="11rem"
-						sortProperty="FFDES2"
-						filterProperty="FFDES2"
+						width="3rem"
+						sortProperty="HOPUE"
+						filterProperty="HOPUE"
 						showFilterMenuEntry="true"
 						headerSpan="4,1"
 						showSortMenuEntry="true"
@@ -159,14 +176,22 @@
 						</t:multiLabels>
 						
 						<t:template>
-							<Text text="{AnalisisCombustible>HOPUE}" wrapping="false" />
+							<Text text="{path:'AnalisisCombustible>HOPUE', type:'sap.ui.model.type.Float',
+                                                formatOptions:{
+                                                    minIntegerDigits:1,
+                                                    minFractionDigits:2,
+                                                    maxFractionDigits:2,
+                                                    groupingEnabled:true,
+                                                    groupingSeparator: ',',
+                                                    decimalSeparator: '.'
+                                                }}"/>
 						</t:template>
 					</t:Column>
                     <t:Column
 						id="CNPDS2"
-						width="11rem"
-						sortProperty="CNPDS2"
-						filterProperty="CNPDS2"
+						width="3rem"
+						sortProperty="HOMAR"
+						filterProperty="HOMAR"
 						showFilterMenuEntry="true"
 						headerSpan="4,1"
 						showSortMenuEntry="true"
@@ -177,14 +202,22 @@
 						</t:multiLabels>
 						
 						<t:template>
-							<Text text="{AnalisisCombustible>HOMAR}" wrapping="false" />
+							<Text text="{path:'AnalisisCombustible>HOMAR', type:'sap.ui.model.type.Float',
+                                                formatOptions:{
+                                                    minIntegerDigits:1,
+                                                    minFractionDigits:2,
+                                                    maxFractionDigits:2,
+                                                    groupingEnabled:true,
+                                                    groupingSeparator: ',',
+                                                    decimalSeparator: '.'
+                                                }}"/>
 						</t:template>
 					</t:Column>
                     <t:Column
 						id=""
-						width="11rem"
-						sortProperty="FECCONMOV"
-						filterProperty="FECCONMOV"
+						width="4.5rem"
+						sortProperty="CONAV"
+						filterProperty="CONAV"
 						showFilterMenuEntry="true"
 						headerSpan="4,1"
 						showSortMenuEntry="true"
@@ -195,14 +228,23 @@
 						</t:multiLabels>
 					
 						<t:template>
-							<Text text="{AnalisisCombustible>CONAV}" wrapping="false" />
+							<!--<Text text="{AnalisisCombustible>CONAV}" wrapping="true" />-->
+							<Text text="{path:'AnalisisCombustible>CONAV', type:'sap.ui.model.type.Float',
+                                                formatOptions:{
+                                                    minIntegerDigits:1,
+                                                    minFractionDigits:2,
+                                                    maxFractionDigits:2,
+                                                    groupingEnabled:true,
+                                                    groupingSeparator: ',',
+                                                    decimalSeparator: '.'
+                                                }}"/>
 						</t:template>
 					</t:Column>
                     <t:Column
 						id=""
-						width="11rem"
-						sortProperty="NMEMB"
-						filterProperty="NMEMB"
+						width="4.5rem"
+						sortProperty="CODES"
+						filterProperty="CODES"
 						showFilterMenuEntry="true"
 						headerSpan="4,1"
 						showSortMenuEntry="true"
@@ -213,14 +255,23 @@
 						</t:multiLabels>
 						
 						<t:template>
-							<Text text="{AnalisisCombustible>CODES}" wrapping="false" />
+							<!--<Text text="{AnalisisCombustible>CODES}" wrapping="true" />-->
+							<Text text="{path:'AnalisisCombustible>CODES', type:'sap.ui.model.type.Float',
+                                                formatOptions:{
+                                                    minIntegerDigits:1,
+                                                    minFractionDigits:2,
+                                                    maxFractionDigits:2,
+                                                    groupingEnabled:true,
+                                                    groupingSeparator: ',',
+                                                    decimalSeparator: '.'
+                                                }}"/>
 						</t:template>
 					</t:Column>
                     <t:Column
 						id=""
-						width="11rem"
-						sortProperty="NAME1"
-						filterProperty="NAME1"
+						width="4.5rem"
+						sortProperty="COPUE"
+						filterProperty="COPUE"
 						showFilterMenuEntry="true"
 						headerSpan="4,1"
 						showSortMenuEntry="true"
@@ -231,14 +282,23 @@
 						</t:multiLabels>
 						
 						<t:template>
-							<Text text="{AnalisisCombustible>COPUE}" wrapping="false" />
+							<!--<Text text="{AnalisisCombustible>COPUE}" wrapping="true" />-->
+							<Text text="{path:'AnalisisCombustible>COPUE', type:'sap.ui.model.type.Float',
+                                                formatOptions:{
+                                                    minIntegerDigits:1,
+                                                    minFractionDigits:2,
+                                                    maxFractionDigits:2,
+                                                    groupingEnabled:true,
+                                                    groupingSeparator: ',',
+                                                    decimalSeparator: '.'
+                                                }}"/>
 						</t:template>
 					</t:Column>
                     <t:Column
 						id=""
-						width="11rem"
-						sortProperty="PRCTP"
-						filterProperty="PRCTP"
+						width="4.5rem"
+						sortProperty="COMAR"
+						filterProperty="COMAR"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						headerSpan="4,1"
@@ -249,14 +309,23 @@
 						</t:multiLabels>
 						
 						<t:template>
-							<Text text="{AnalisisCombustible>COMAR}" wrapping="false" />
+							<!--<Text text="{AnalisisCombustible>COMAR}" wrapping="true" />-->
+							<Text text="{path:'AnalisisCombustible>COMAR', type:'sap.ui.model.type.Float',
+                                                formatOptions:{
+                                                    minIntegerDigits:1,
+                                                    minFractionDigits:2,
+                                                    maxFractionDigits:2,
+                                                    groupingEnabled:true,
+                                                    groupingSeparator: ',',
+                                                    decimalSeparator: '.'
+                                                }}"/>
 						</t:template>
 					</t:Column>
 					 <t:Column
 						id=""
-						width="11rem"
-						sortProperty="FECCONMOV"
-						filterProperty="FECCONMOV"
+						width="4.5rem"
+						sortProperty="RRNAV"
+						filterProperty="RRNAV"
 						showFilterMenuEntry="true"
 						headerSpan="4,1"
 						showSortMenuEntry="true"
@@ -267,14 +336,23 @@
 						</t:multiLabels>
 						
 						<t:template>
-							<Text text="{AnalisisCombustible>RRNAV}" wrapping="false" />
+							<!--<Text text="{AnalisisCombustible>RRNAV}" wrapping="true" />-->
+							<Text text="{path:'AnalisisCombustible>RRNAV', type:'sap.ui.model.type.Float',
+                                                formatOptions:{
+                                                    minIntegerDigits:1,
+                                                    minFractionDigits:2,
+                                                    maxFractionDigits:2,
+                                                    groupingEnabled:true,
+                                                    groupingSeparator: ',',
+                                                    decimalSeparator: '.'
+                                                }}"/>
 						</t:template>
 					</t:Column>
                     <t:Column
 						id=""
-						width="11rem"
-						sortProperty="NMEMB"
-						filterProperty="NMEMB"
+						width="4.5rem"
+						sortProperty="RRDES"
+						filterProperty="RRDES"
 						showFilterMenuEntry="true"
 						headerSpan="4,1"
 						showSortMenuEntry="true"
@@ -285,14 +363,23 @@
 						</t:multiLabels>
 						
 						<t:template>
-							<Text text="{AnalisisCombustible>RRDES}" wrapping="false" />
+							<!--<Text text="{AnalisisCombustible>RRDES}" wrapping="true" />-->
+							<Text text="{path:'AnalisisCombustible>RRDES', type:'sap.ui.model.type.Float',
+                                                formatOptions:{
+                                                    minIntegerDigits:1,
+                                                    minFractionDigits:2,
+                                                    maxFractionDigits:2,
+                                                    groupingEnabled:true,
+                                                    groupingSeparator: ',',
+                                                    decimalSeparator: '.'
+                                                }}"/>
 						</t:template>
 					</t:Column>
                     <t:Column
 						id=""
-						width="11rem"
-						sortProperty="NAME1"
-						filterProperty="NAME1"
+						width="4.5rem"
+						sortProperty="RRPUE"
+						filterProperty="RRPUE"
 						showFilterMenuEntry="true"
 						headerSpan="4,1"
 						showSortMenuEntry="true"
@@ -303,14 +390,23 @@
 						</t:multiLabels>
 						
 						<t:template>
-							<Text text="{AnalisisCombustible>RRPUE}" wrapping="false" />
+							<!--<Text text="{AnalisisCombustible>RRPUE}" wrapping="true" />-->
+							<Text text="{path:'AnalisisCombustible>RRPUE', type:'sap.ui.model.type.Float',
+                                                formatOptions:{
+                                                    minIntegerDigits:1,
+                                                    minFractionDigits:2,
+                                                    maxFractionDigits:2,
+                                                    groupingEnabled:true,
+                                                    groupingSeparator: ',',
+                                                    decimalSeparator: '.'
+                                                }}"/>
 						</t:template>
 					</t:Column>
                     <t:Column
 						id=""
-						width="11rem"
-						sortProperty="PRCTP"
-						filterProperty="PRCTP"
+						width="4.5rem"
+						sortProperty="RRMAR"
+						filterProperty="RRMAR"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						headerSpan="4,1"
@@ -321,14 +417,23 @@
 						</t:multiLabels>
 						
 						<t:template>
-							<Text text="{AnalisisCombustible>RRMAR}" wrapping="false" />
+							<!--<Text text="{AnalisisCombustible>RRMAR}" wrapping="true" />-->
+							<Text text="{path:'AnalisisCombustible>RRMAR', type:'sap.ui.model.type.Float',
+                                                formatOptions:{
+                                                    minIntegerDigits:1,
+                                                    minFractionDigits:2,
+                                                    maxFractionDigits:2,
+                                                    groupingEnabled:true,
+                                                    groupingSeparator: ',',
+                                                    decimalSeparator: '.'
+                                                }}"/>
 						</t:template>
 					</t:Column>
 					 <t:Column
 						id=""
-						width="11rem"
-						sortProperty="PRCTP"
-						filterProperty="PRCTP"
+						width="3.5rem"
+						sortProperty="RPNAV"
+						filterProperty="RPNAV"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						headerSpan="4,1"
@@ -339,14 +444,22 @@
 						</t:multiLabels>
 					
 						<t:template>
-							<Text text="{AnalisisCombustible>RPNAV}" wrapping="false" />
+							<Text text="{path:'AnalisisCombustible>RPNAV', type:'sap.ui.model.type.Float',
+                                                formatOptions:{
+                                                    minIntegerDigits:1,
+                                                    minFractionDigits:2,
+                                                    maxFractionDigits:2,
+                                                    groupingEnabled:true,
+                                                    groupingSeparator: ',',
+                                                    decimalSeparator: '.'
+                                                }}"/>
 						</t:template>
 					</t:Column>
 					 <t:Column
 						id=""
-						width="11rem"
-						sortProperty="PRCTP"
-						filterProperty="PRCTP"
+						width="3.5rem"
+						sortProperty="RPDES"
+						filterProperty="RPDES"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						headerSpan="4,1"
@@ -356,14 +469,22 @@
                            	<Label text="Des" />
 						</t:multiLabels>
 						<t:template>
-							<Text text="{AnalisisCombustible>RPDES}" wrapping="false" />
+							<Text text="{path:'AnalisisCombustible>RPDES', type:'sap.ui.model.type.Float',
+                                                formatOptions:{
+                                                    minIntegerDigits:1,
+                                                    minFractionDigits:2,
+                                                    maxFractionDigits:2,
+                                                    groupingEnabled:true,
+                                                    groupingSeparator: ',',
+                                                    decimalSeparator: '.'
+                                                }}"/>
 						</t:template>
 					</t:Column>
 					 <t:Column
 						id=""
-						width="11rem"
-						sortProperty="PRCTP"
-						filterProperty="PRCTP"
+						width="3.5rem"
+						sortProperty="RPPUE"
+						filterProperty="RPPUE"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						headerSpan="4,1"
@@ -373,14 +494,22 @@
                            	<Label text="Pue" />
 						</t:multiLabels>
 						<t:template>
-							<Text text="{AnalisisCombustible>RPPUE}" wrapping="false" />
+							<Text text="{path:'AnalisisCombustible>RPPUE', type:'sap.ui.model.type.Float',
+                                                formatOptions:{
+                                                    minIntegerDigits:1,
+                                                    minFractionDigits:2,
+                                                    maxFractionDigits:2,
+                                                    groupingEnabled:true,
+                                                    groupingSeparator: ',',
+                                                    decimalSeparator: '.'
+                                                }}"/>
 						</t:template>
 					</t:Column>
 					 <t:Column
 						id=""
-						width="11rem"
-						sortProperty="PRCTP"
-						filterProperty="PRCTP"
+						width="3.5rem"
+						sortProperty="RPMAR"
+						filterProperty="RPMAR"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						headerSpan="4,1"
@@ -390,7 +519,15 @@
                            	<Label text="Mar" />
 						</t:multiLabels>
 						<t:template>
-							<Text text="{AnalisisCombustible>RPMAR}" wrapping="false" />
+							<Text text="{path:'AnalisisCombustible>RPMAR', type:'sap.ui.model.type.Float',
+                                                formatOptions:{
+                                                    minIntegerDigits:1,
+                                                    minFractionDigits:2,
+                                                    maxFractionDigits:2,
+                                                    groupingEnabled:true,
+                                                    groupingSeparator: ',',
+                                                    decimalSeparator: '.'
+                                                }}"/>
 						</t:template>
 					</t:Column>
                     
