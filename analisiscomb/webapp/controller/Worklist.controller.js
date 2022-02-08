@@ -2424,7 +2424,7 @@ sap.ui.define([
 			oModel = this.getModel(),
 			nameComponent="busqembarcaciones",
 			idComponent="busqembarcaciones",
-			urlComponent=HOST+"/9acc820a-22dc-4d66-8d69-bed5b2789d3c.AyudasBusqueda.busqembarcaciones-1.0.0",
+			urlComponent=this.HOST_HELP+".AyudasBusqueda.busqembarcaciones-1.0.0",
 			oView = this.getView(),
 			oInput = this.getView().byId(sIdInput);
 			oModel.setProperty("/input",oInput);
