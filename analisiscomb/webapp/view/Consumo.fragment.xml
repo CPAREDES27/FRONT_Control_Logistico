@@ -157,7 +157,7 @@
 							<Label text="Fecha/hora Inicio" />
 						</t:multiLabels>
 						<t:template>
-							<Text text="{Analisis>FIEVN} {ConsumoTwo>HIEVN}" wrapping="true" />
+							<Text text="{Analisis>FIEVN} {Analisis>HIEVN}" wrapping="true" />
 						</t:template>
 					</t:Column>
                     <t:Column hAlign="End"

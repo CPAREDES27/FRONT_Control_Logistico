@@ -1605,6 +1605,7 @@ sap.ui.define([
 			  })
 			  .then(resp => resp.json()).then(data => {
 				this.getView().getModel("ConsumoTwo").setProperty("/listaConsumoTwo",data.data);
+				console.log("ConsumoTwo: "+data);
 				oGlobalBusyDialog.close();
 			  }).catch(error => console.log(error)
 			);
@@ -1626,6 +1627,7 @@ sap.ui.define([
 				  body: JSON.stringify(body)
 			  })
 			  .then(resp => resp.json()).then(data => {
+				console.log(data);
 				this.getView().getModel("Analisis").setProperty("/listaAnalisis",data.str_detf);
 				this.getView().getModel("Reporte").setProperty("/listaReporte",data.str_fase);
 				oGlobalBusyDialog.close();
