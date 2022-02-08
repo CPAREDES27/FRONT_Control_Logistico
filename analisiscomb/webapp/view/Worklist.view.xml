@@ -26,7 +26,7 @@
 						<f:formElements>
 							<f:FormElement label="Embarcación">
 								<f:fields>
-									<Input id="inputId0_R" placeholder="Seleccione embarcación" showValueHelp="true"  valueHelpRequest="onSearchHelp"/>
+									<Input id="inputId0_R" placeholder="Seleccione embarcación" showValueHelp="true" valueHelpOnly="true" valueHelpRequest="onSearchHelp" />
 								</f:fields>
 							</f:FormElement>
 							

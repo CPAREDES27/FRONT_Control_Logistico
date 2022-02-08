@@ -1652,6 +1652,7 @@ sap.ui.define([
 				this.byId("idListaReg").setText(cantidadRegistros);
 
 				console.log(data.str_cef);
+				/*	
 				var totalCONAV=0;
 				var totalCODES=0;
 				var totalCOPUE=0;
@@ -1675,7 +1676,7 @@ sap.ui.define([
 					CODES: totalCODES,
 					COPUE : totalCOPUE,
 					COMAR: totalCOMAR
-				})
+				})*/
 				this.getView().getModel("AnalisisCombustible").setProperty("/listaAnalisisCombustible",data.str_cef);
 				console.log(this.getView().getModel("AnalisisCombustible"));
 
@@ -2049,103 +2050,135 @@ sap.ui.define([
 					label: 'Motivo',
 					property: 'DSMMA',
 					type: EdmType.String,
+					width:19
 				
 				},
 				{
 					label: 'Nav',
 					property: 'HONAV',
-					type: EdmType.String,
-					scale: 2
+					type: EdmType.Number,
+					scale: 2,
+					delimiter: true
 				},
 				{
 					label: 'Des',
 					property: 'HODES',
-					type: EdmType.String,
-					scale: 0
+					type: EdmType.Number,
+					scale: 2,
+					width:12,
+					delimiter: true
 				},
 				{
 					label: 'Pue',
 					property: 'HOPUE',
-					type: EdmType.String,
-					scale: 0
+					type: EdmType.Number,
+					scale: 2,
+					width:12,
+					delimiter: true
 				},
 				{
 					label: 'Mar',
 					property: 'HOMAR',
-					type: EdmType.String,
-					scale: 0
+					type: EdmType.Number,
+					scale: 2,
+					width:12,
+					delimiter: true
 				},
 				{
 					label: 'Nav',
 					property: 'CONAV',
-					type: EdmType.String,
-					scale: 0
+					type: EdmType.Number,
+					scale: 2,
+					width:12,
+					delimiter: true
 				},
 				{
 					label: 'Des',
 					property: 'CODES',
-					type: EdmType.String,
-					scale: 0
+					type: EdmType.Number,
+					scale: 2,
+					width:12,
+					delimiter: true
 				},
 				{
 					label: 'Pue',
 					property: 'COPUE',
-					type: EdmType.String,
-					scale: 0
+					type: EdmType.Number,
+					scale: 2,
+					width:12,
+					delimiter: true
 				},
 				{
 					label: 'Mar',
 					property: 'COMAR',
-					type: EdmType.String,
-					scale: 0
+					type: EdmType.Number,
+					scale: 2,
+					width:12,
+					delimiter: true
 				},
 				{
 					label: 'Nav',
 					property: 'RRNAV',
-					type: EdmType.String,
-					scale: 0
+					type: EdmType.Number,
+					scale: 2,
+					width:12,
+					delimiter: true
 				},
 				{
 					label: 'Des',
 					property: 'RRDES',
-					type: EdmType.String,
-					scale: 0
+					type: EdmType.Number,
+					scale: 2,
+					width:12,
+					delimiter: true
 				},
 				{
 					label: 'Pue',
 					property: 'RRPUE',
-					type: EdmType.String,
-					scale: 0
+					type: EdmType.Number,
+					scale: 2,
+					width:12,
+					delimiter: true
 				},
 				{
 					label: 'Mar',
 					property: 'RRMAR',
-					type: EdmType.String,
-					scale: 0
+					type: EdmType.Number,
+					scale: 2,
+					width:12,
+					delimiter: true
 				},
 				{
 					label: 'Nav',
 					property: 'RPNAV',
-					type: EdmType.String,
-					scale: 0
+					type: EdmType.Number,
+					scale: 2,
+					width:12,
+					delimiter: true
 				},
 				{
 					label: 'Des',
 					property: 'RPDES',
-					type: EdmType.String,
-					scale: 0
+					type: EdmType.Number,
+					scale: 2,
+					width:12,
+					delimiter: true
 				},
 				{
 					label: 'Pue',
 					property: 'RPPUE',
-					type: EdmType.String,
-					scale: 0
+					type: EdmType.Number,
+					scale: 2,
+					width:12,
+					delimiter: true
 				},
 				{
 					label: 'Mar',
 					property: 'RPMAR',
-					type: EdmType.String,
-					scale: 0
+					type: EdmType.Number,
+					scale: 2,
+					width:12,
+					delimiter: true
 				},
 				];
 		},
