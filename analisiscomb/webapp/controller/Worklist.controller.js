@@ -207,7 +207,7 @@ sap.ui.define([
 				"p_row": idCant,
 				"p_user": this.userOperation
 			}
-			
+			console.log(body);
 		
 			fetch(`${Utilities.onLocation()}analisiscombustible/Listar`,
 			  {

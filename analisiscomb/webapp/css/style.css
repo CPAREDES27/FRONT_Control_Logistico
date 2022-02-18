@@ -1,3 +1,7 @@
 .tableCuadro td :first-child{
     font-size: 11px;
       }
+
+.table td :first-child{
+        font-size: 10px;
+}

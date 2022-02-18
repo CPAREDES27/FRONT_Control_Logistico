@@ -99,7 +99,8 @@
                             columnSelect="onColumnSelect"
                             cellContextmenu="onProductIdCellContextMenu"
                             ariaLabelledBy="title"
-							rowActionCount="1">
+							rowActionCount="1"
+							class="table">
 				<table:extension>
 					<OverflowToolbar style="Clear">
 						<Button text="Cuadro de consumo" press="onCuadroConsumo" id="btnCdroConsumo"/>
@@ -124,7 +125,7 @@
 					</OverflowToolbar>
 				</table:extension>
 				<table:columns editable="false">
-					<table:Column width="6.5rem"
+					<table:Column width="4.7rem"
 						 sortProperty="NRMAR"
 						filterProperty="NRMAR"
 						showFilterMenuEntry="true"
@@ -136,7 +137,7 @@
 							<Text text="{Combustible>NRMAR}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="6rem"
+					<table:Column width="5rem"
 						sortProperty="NMEMB"
 						filterProperty="NMEMB"
 						showFilterMenuEntry="true"
@@ -148,7 +149,7 @@
 							<Text text="{Combustible>NMEMB}"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="6rem"
+					<table:Column width="5rem"
 						sortProperty="DSMMA"
 						filterProperty="DSMMA"
 						showFilterMenuEntry="true"
@@ -172,7 +173,8 @@
 							<Text text="{Combustible>PTOZA}"/>
 						</table:template>
 					</table:Column>
-					<table:Column id="idFechaHoraZarpe" width="8.5rem"
+					<table:Column id="idFechaHoraZarpe" 
+						width="7rem"
 						sortProperty="FECZA"
 						filterProperty="FECZA"
 						showFilterMenuEntry="true"
@@ -184,7 +186,7 @@
 							<Text text="{Combustible>FECZA} {Combustible>HIZAR}"/>
 						</table:template>
 					</table:Column>
-					<table:Column id="idPuertoArribo" width="6rem"
+					<table:Column id="idPuertoArribo" width="5rem"
 						sortProperty="PTOAR"
 						filterProperty="PTOAR"
 						showFilterMenuEntry="true"
@@ -196,7 +198,8 @@
 							<Text text="{Combustible>PTOAR}"/>
 						</table:template>
 					</table:Column>
-					<table:Column id="idFechaHoraArribo" width="8.5rem"
+					<table:Column id="idFechaHoraArribo" 
+						width="7rem"
 						sortProperty="FECAR"
 						filterProperty="FECAR"
 						showFilterMenuEntry="true"
@@ -208,7 +211,7 @@
 							<Text text="{Combustible>FECAR} {Combustible>HIARR}"/>
 						</table:template>
 					</table:Column>
-					<table:Column id="idFechaProd" width="6rem"
+					<table:Column id="idFechaProd" width="4.5rem"
 						sortProperty="FECCONMOV"
 						filterProperty="FECCONMOV"
 						showFilterMenuEntry="true"
@@ -220,7 +223,7 @@
 							<Text text="{Combustible>FECCONMOV}"/>
 						</table:template>
 					</table:Column>
-					<table:Column id="idStockInicial" hAlign="End" width="6.5rem"
+					<table:Column id="idStockInicial" hAlign="End" width="5rem"
 						sortProperty="STCMB"
 						filterProperty="STCMB"
 						showFilterMenuEntry="true"
@@ -249,7 +252,7 @@
 						</table:template>
 					</table:Column>
 					
-					<table:Column id="idSumn" hAlign="End" width="4.5rem"
+					<table:Column id="idSumn" hAlign="End" width="3.5rem"
 						sortProperty="CNSUM"
 						filterProperty="CNSUM"
 						showFilterMenuEntry="true"
@@ -278,7 +281,7 @@
                                                 }}"/>
 						</table:template>
 					</table:Column>
-					<table:Column id="idCons" hAlign="End" width="6rem"
+					<table:Column id="idCons" hAlign="End" width="4.5rem"
 						sortProperty="CONSU2"
 						filterProperty="CONSU2"
 						showFilterMenuEntry="true"
@@ -308,7 +311,7 @@
                                                 }}"/>
 						</table:template>
 					</table:Column>
-					<table:Column id="idStockFinal" hAlign="End" width="6rem"
+					<table:Column id="idStockFinal" hAlign="End" width="5rem"
 						sortProperty="STFIN"
 						filterProperty="STFIN"
 						showFilterMenuEntry="true"
@@ -349,7 +352,7 @@
 							<Button   visible="{Combustible>estado}" icon="sap-icon://document-text" />
 						</table:template>
 					</table:Column>
-					<table:Column id="idCantDesc" hAlign="End" width="8rem"
+					<table:Column id="idCantDesc" hAlign="End" width="6rem"
 						sortProperty="CNPDS"
 						filterProperty="CNPDS"
 						showFilterMenuEntry="true"
