@@ -670,11 +670,27 @@ sap.ui.define([
 				oGlobalBusyDialog.close();
 				return false;
 			}
-			var oRequestBody ={}
+			var idFechaInicio=this.byId("idFechaInicio").mProperties.dateValue;
+			var idFechaFin=this.byId("idFechaInicio").mProperties.secondDateValue;
+			var idEmbarcacion=this.byId("inputId0_R").getValue();
+			var idEstado=this.byId("idEstado").getSelectedKey();
+			var idCant=this.byId("idCant").getValue();
+		
+			var idFechaIni=this.castFecha(idFechaInicio);
+			var idFechaF=this.castFecha(idFechaFin);
+			//this.fechaInicio=idFechaIni;
+			//this.fechaFin=idFechaF;
+			
+			var oRequestBody={
+				"embarcacionIni": idEmbarcacion,
+				"fechaFin": idFechaF,
+				"fechaIni": idFechaIni,
+				"motivoIni": idEstado,
+				"p_row": idCant,
+				"p_user": this.userOperation
+			}			
 			
 			
-			
-			console.log(this.getView().getModel("Combustible"));
 
 			let data = await fetch(`${Utilities.onLocation()}analisiscombustible/ExportRegistroAnalisisCombus`, {
 				method: 'POST',
@@ -1679,6 +1695,25 @@ sap.ui.define([
 					COPUE : totalCOPUE,
 					COMAR: totalCOMAR
 				})*/
+
+				for(var i=0;i<data.str_cef.length;i++){
+					
+					if(data.str_cef[i].DSMMA!="Total"){
+						var rrmar=data.str_cef[i].RRMAR.toFixed(2);
+						var rrnav=data.str_cef[i].RRNAV.toFixed(2);
+						var rrdes=data.str_cef[i].RRDES.toFixed(2);
+						var rrpue=data.str_cef[i].RRPUE.toFixed(2);
+
+						data.str_cef[i].RRMAR=parseFloat(rrmar);
+						data.str_cef[i].RRNAV=parseFloat(rrnav);
+						data.str_cef[i].RRDES=parseFloat(rrdes);
+						data.str_cef[i].RRPUE=parseFloat(rrpue);
+					}
+
+
+				}
+
+
 				this.getView().getModel("AnalisisCombustible").setProperty("/listaAnalisisCombustible",data.str_cef);
 				console.log(this.getView().getModel("AnalisisCombustible"));
 
