@@ -345,6 +345,9 @@ sap.ui.define([
 
 				this.onColumnTable();
 
+				
+
+
 				oGlobalBusyDialog.close();
 			  }).catch(error => console.log(error)
 			);
@@ -1644,12 +1647,177 @@ sap.ui.define([
 			  })
 			  .then(resp => resp.json()).then(data => {
 				console.log(data);
-				this.getView().getModel("Analisis").setProperty("/listaAnalisis",data.str_detf);
-				this.getView().getModel("Reporte").setProperty("/listaReporte",data.str_fase);
+				var dataValid=this.validacionesCuadroAnalisis2(data);
+				this.getView().getModel("Analisis").setProperty("/listaAnalisis",dataValid.str_detf);
+				this.getView().getModel("Reporte").setProperty("/listaReporte",dataValid.str_fase);
 				oGlobalBusyDialog.close();
 			  }).catch(error => console.log(error)
 			);
 
+		},
+		validacionesCuadroAnalisis2: function(data){
+
+			var str_detf = data.str_detf;
+			var str_fase = data.str_fase;
+
+			let ultimoZarpe=-1,
+			ultimoArribo=-1,
+			ultimoHorometro=-1;
+
+			for(var i=0; i<data.str_detf.length; i++){
+
+				if(str_detf[i].CDTEV === "6"){
+					str_detf[i].STCMB = 0;
+				}
+				if(str_detf[i].CDTEV === "1"){
+					ultimoZarpe = i;
+				}					
+				if(str_detf[i].CDTEV === "5"){
+					ultimoArribo = i;
+				}					
+				if(str_detf[i].CDTEV === "H"){
+					ultimoHorometro = i;
+				}
+			}
+
+			var obj= str_detf[0];
+			var objUArribo= str_detf[ultimoArribo];//1
+			var objUZarpe= str_detf[ultimoZarpe];//2
+			var objUHorometro= str_detf[ultimoHorometro];//3
+
+			console.log(objUZarpe);
+			console.log(objUArribo);
+			console.log(objUHorometro);
+
+			let consumoNave=0, 
+			consumoPuer=0, 
+			consumoMare=0,
+			stcmb0 = 0,
+			stcmbZarpe = 0,
+			stcmbArribo=0,
+			stcmbHorometro=0;
+
+			if(obj!=undefined){
+				stcmb0 = obj.STCMB; 
+			}
+			if(objUZarpe!=undefined){
+				stcmbZarpe = objUZarpe.STCMB;
+			}
+			if(objUArribo!=undefined){
+				stcmbArribo = objUArribo.STCMB;
+			}
+			if(objUHorometro!=undefined){
+				stcmbHorometro = objUHorometro.STCMB;
+			}
+
+			var cnsumArribo= objUArribo.CNSUM;
+			console.log("cnsumZarpe: "+cnsumArribo);
+			console.log("stcmbZarpe: "+stcmbZarpe);
+
+
+			consumoNave = stcmb0 - stcmbArribo;
+
+			var sum = stcmbArribo + cnsumArribo;
+			console.log("sum: "+sum);
+
+			var diff = sum - stcmbZarpe;
+
+
+
+
+			if (ultimoZarpe == 0) {
+				if (ultimoHorometro != -1) {
+					console.log("ultimo horometro: "+ ultimoHorometro);
+
+					consumoPuer = sum - stcmbHorometro;
+					
+					consumoMare = stcmbZarpe + cnsum;
+					consumoMare = consumoMare - stcmbHorometro;
+				} else {
+
+					consumoPuer = stcmbArribo;
+					
+					consumoMare = stcmbArribo;
+
+					console.log("consumoPuer: "+ consumoPuer);
+					console.log("consumoMare: "+ consumoMare);
+
+
+				}
+			} else {
+				consumoPuer = diff;
+				console.log("diff: "+ diff);
+
+				console.log("stcmb0: "+ stcmb0);
+				console.log("cnsum: "+ cnsumArribo);
+				console.log("stcmbArribo: "+ stcmbArribo);
+
+
+				consumoMare = stcmb0 + cnsumArribo;
+				consumoMare = consumoMare - stcmbZarpe;
+
+				console.log("consumoMare: "+ consumoMare);
+
+			}
+
+
+			var mp=objUZarpe.HORPR - objUArribo.HORPR;
+			var h1=objUZarpe.HORA1 - objUArribo.HORA1;
+			var h2=objUZarpe.HORA2 - objUArribo.HORA2;
+			var h3=objUZarpe.HORA3 - objUArribo.HORA3;
+			var h4=objUZarpe.HORA4 - objUArribo.HORA4;
+			var panga=objUZarpe.HORPA - objUArribo.HORPA;
+			var flujo=objUZarpe.HORFL - objUArribo.HORFL;
+
+			console.log("consumoNave: "+consumoNave);
+			console.log(consumoPuer);
+			console.log(mp);
+			console.log(h1);
+			console.log(h2);
+			console.log(h3);
+			console.log(h4);
+			console.log(panga);
+			console.log(flujo);
+
+			
+			for(var i=0; i<data.str_fase.length; i++){
+
+				if(str_fase[i].CDFAS === "N"){
+					str_fase[i].CHMAR = consumoNave;
+				}
+				else if(str_fase[i].CDFAS === "D"){
+					str_fase[i].CHMAR = 0;
+				}					
+				else if(str_fase[i].CDFAS === "P" && (ultimoArribo!=-1  && ultimoZarpe!=-1)){
+					str_fase[i].CHMAR = consumoPuer;
+					str_fase[i].HORPR = mp;
+					str_fase[i].HORA1 = h1;
+					str_fase[i].HORA2 = h2;
+					str_fase[i].HORA3 = h3;
+					str_fase[i].HORA4 = h4;
+					str_fase[i].HORPA = panga;
+					str_fase[i].HORFL = flujo;
+
+					
+						if(parseFloat(str_fase[i].HOROP2)>=0 && consumoPuer>=0){
+							console.log("consumoPuer: "+consumoPuer);
+							console.log("horop2: "+parseFloat(str_fase[i].HOROP2));
+							var real = (consumoPuer/parseFloat(str_fase[i].HOROP2)).toString();
+							real=real.split(".")[0];
+							console.log("real: "+real);
+
+							str_fase[i].CNSRE=parseFloat(real);
+						}else{
+							str_fase[i].CNSRE=0;
+						}
+					
+				}					
+				else if(str_fase[i].CDFAS === "M"){
+					str_fase[i].CHMAR = consumoMare;
+				}
+			}
+			
+			return data;
 		},
 	
 		

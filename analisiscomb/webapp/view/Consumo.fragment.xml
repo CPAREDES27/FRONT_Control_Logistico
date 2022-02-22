@@ -133,8 +133,8 @@
                 	<t:Column 
 						id="NRMARS"
 						width="15rem"
-						sortProperty="NRMARS"
-						filterProperty="NRMARS"
+						sortProperty="DESC_CDTEV"
+						filterProperty="DESC_CDTEV"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<t:multiLabels>
@@ -148,8 +148,8 @@
                     <t:Column hAlign="End"
 						id="NRDES3"
 						width="8rem"
-						sortProperty="NRDES3"
-						filterProperty="NRDES3"
+						sortProperty="FIEVN"
+						filterProperty="FIEVN"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<t:multiLabels>
@@ -163,8 +163,8 @@
                     <t:Column hAlign="End"
 						id="DESCR3"
 						width="10rem"
-						sortProperty="DESCR3"
-						filterProperty="DESCR3"
+						sortProperty="STCMB"
+						filterProperty="STCMB"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<t:multiLabels>
@@ -194,8 +194,8 @@
                     <t:Column 
 						id="HORPR3"
 						width="4rem"
-						sortProperty="HORPR3"
-						filterProperty="HORPR3"
+						sortProperty="HORPR"
+						filterProperty="HORPR"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
                         visible="true"
@@ -224,8 +224,8 @@
                     <t:Column hAlign="End"
 						id="FIDES3"
 						width="4rem"
-						sortProperty="FIDES3"
-						filterProperty="FIDES3"
+						sortProperty="HORA1"
+						filterProperty="HORA1"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<t:multiLabels>
@@ -250,8 +250,8 @@
                     <t:Column hAlign="End"
 						id="FFDES3"
 						width="4rem"
-						sortProperty="FFDES3"
-						filterProperty="FFDES3"
+						sortProperty="HORA2"
+						filterProperty="HORA2"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<t:multiLabels>
@@ -275,8 +275,8 @@
                     <t:Column
 						id="CNPDS3"
 						width="4rem"
-						sortProperty="CNPDS3"
-						filterProperty="CNPDS3"
+						sortProperty="HORA3"
+						filterProperty="HORA3"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						hAlign="End">
@@ -301,8 +301,8 @@
                     <t:Column hAlign="End"
 						id="FECCONMOV3"
 						width="4rem"
-						sortProperty="FECCONMOV3"
-						filterProperty="FECCONMOV3"
+						sortProperty="HORA4"
+						filterProperty="HORA4"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<t:multiLabels>
@@ -326,8 +326,8 @@
                     <t:Column hAlign="End"
 						id="NMEMB3"
 						width="4rem"
-						sortProperty="NMEMB3"
-						filterProperty="NMEMB3"
+						sortProperty="HORPA"
+						filterProperty="HORPA"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<t:multiLabels>
@@ -351,8 +351,8 @@
                     <t:Column hAlign="End"
 						id="NAME13"
 						width="4rem"
-						sortProperty="NAME13"
-						filterProperty="NAME13"
+						sortProperty="HORFL"
+						filterProperty="HORFL"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<t:multiLabels>
@@ -376,8 +376,8 @@
                     <t:Column 
 						id="PRCTP3" 
 						width="7rem"
-						sortProperty="PRCTP3"
-						filterProperty="PRCTP3"
+						sortProperty="CNSUM"
+						filterProperty="CNSUM"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						hAlign="End">
@@ -435,8 +435,8 @@
                 	<t:Column
 						id="DESC_CDFAS"
 						width="15rem"
-						sortProperty="NRMAR"
-						filterProperty="NRMAR"
+						sortProperty="DESC_CDFAS"
+						filterProperty="DESC_CDFAS"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<t:multiLabels>
@@ -450,8 +450,8 @@
                     <t:Column
 						id=""
 						width="8rem"
-						sortProperty="NRDES2"
-						filterProperty="NRDES2"
+						sortProperty="HOROP"
+						filterProperty="HOROP"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<t:multiLabels>
@@ -482,8 +482,8 @@
                     <t:Column hAlign="End"
 						id=""
 						width="8rem"
-						sortProperty="DESCR"
-						filterProperty="DESCR"
+						sortProperty="CHMAR"
+						filterProperty="CHMAR"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<t:multiLabels>
@@ -543,8 +543,8 @@
                     <t:Column
 						id=""
 						width="3.5rem"
-						sortProperty="FIDES"
-						filterProperty="FIDES"
+						sortProperty="HORA1"
+						filterProperty="HORA1"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						hAlign="End">
@@ -559,8 +559,8 @@
                     <t:Column
 						id=""
 						width="4rem"
-						sortProperty="FFDES"
-						filterProperty="FFDES"
+						sortProperty="HORA2"
+						filterProperty="HORA2"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						hAlign="End">						
@@ -575,8 +575,8 @@
                     <t:Column
 						id=""
 						width="4rem"
-						sortProperty="CNPDS"
-						filterProperty="CNPDS"
+						sortProperty="HORA3"
+						filterProperty="HORA3"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						hAlign="End">
@@ -591,8 +591,8 @@
                     <t:Column
 						id=""
 						width="4rem"
-						sortProperty="FECCONMOV"
-						filterProperty="FECCONMOV"
+						sortProperty="HORA4"
+						filterProperty="HORA4"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						hAlign="End">
@@ -601,14 +601,14 @@
 							<Label text="A4" />
 						</t:multiLabels>
 						<t:template>
-							<Text text="{Reporte>HORPA}" wrapping="true"/>
+							<Text text="{Reporte>HORA4}" wrapping="true"/>
 						</t:template>
 					</t:Column>
                     <t:Column
 						id=""
 						width="4rem"
-						sortProperty="NMEMB"
-						filterProperty="NMEMB"
+						sortProperty="HORPA"
+						filterProperty="HORPA"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						hAlign="End">
@@ -623,8 +623,8 @@
                     <t:Column
 						id=""
 						width="4rem"
-						sortProperty="NAME1"
-						filterProperty="NAME1"
+						sortProperty="HORFL"
+						filterProperty="HORFL"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						hAlign="End">
@@ -639,8 +639,8 @@
 					<t:Column
 						id=""
 						width="5rem"
-						sortProperty="NAME1"
-						filterProperty="NAME1"
+						sortProperty="CNSRE"
+						filterProperty="CNSRE"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						class="col"
@@ -664,8 +664,8 @@
                     <t:Column
 						id=""
 						width="5rem"
-						sortProperty="PRCTP"
-						filterProperty="PRCTP"
+						sortProperty="CHTER"
+						filterProperty="CHTER"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						hAlign="End">
