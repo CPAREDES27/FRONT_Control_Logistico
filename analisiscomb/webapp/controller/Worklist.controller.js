@@ -216,7 +216,7 @@ sap.ui.define([
 			  })
 			  .then(resp => resp.json()).then(data => {
 				
-				console.log(data);
+				
 				var tamanio=data.str_csmar.length;
 				var dataFinal=data.str_csmar;
 				console.log(tamanio);
@@ -268,7 +268,7 @@ sap.ui.define([
 					data.str_csmar[i].FECZA2= this.changeFechaReport(data.str_csmar[i].FECZA);
 					data.str_csmar[i].FECCONMOV2= this.changeFechaReport(data.str_csmar[i].FECCONMOV);
 					data.str_csmar[i].FECAR2= this.changeFechaReport(data.str_csmar[i].FECAR);
-					data.str_csmar[i].CNSUM=String(this.parseMil(data.str_csmar[i].CNSUM));
+					//data.str_csmar[i].CNSUM=String(this.parseMil(data.str_csmar[i].CNSUM));
 					data.str_csmar[i].CONSU=String(this.parseMil(data.str_csmar[i].CONSU));
 					data.str_csmar[i].CNPDS=String(data.str_csmar[i].CNPDS);
 					data.str_csmar[i].CNPDS2=Math.round(data.str_csmar[i].CNPDS);
@@ -337,6 +337,7 @@ sap.ui.define([
 				if(data.str_csmar){
 					listaAnalisis=true;
 				}
+				console.log(data);
 			
 				this.getView().getModel("Combustible").setProperty("/listaCombustible",data.str_csmar);
 				
@@ -1512,7 +1513,17 @@ sap.ui.define([
 				sap.ui.getCore().byId("idEmbarcacion2").setText(array.NMEMB);
 				sap.ui.getCore().byId("idZarpe2").setText(array.DSMMA);
 				sap.ui.getCore().byId("idFechaP").setText(array.FECCONMOV);
-				sap.ui.getCore().byId("idCant").setText(array.CNPDS);
+				var canDescargada= array.CNPDS.toString();				
+				var decimals= canDescargada.split(".")[1];				
+				if(decimals.length==2){
+					canDescargada=canDescargada+"0";
+				}
+				if(decimals.length==1){
+					canDescargada=canDescargada+"00";
+				}
+
+				sap.ui.getCore().byId("idCant").setText(canDescargada);
+
 				
 			}
 			
@@ -1731,7 +1742,7 @@ sap.ui.define([
 
 					consumoPuer = sum - stcmbHorometro;
 					
-					consumoMare = stcmbZarpe + cnsum;
+					consumoMare = stcmbZarpe + cnsumArribo;
 					consumoMare = consumoMare - stcmbHorometro;
 				} else {
 

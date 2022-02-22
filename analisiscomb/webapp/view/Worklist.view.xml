@@ -264,7 +264,7 @@
 					
 								<Text text="{path:'Combustible>CNSUM', type:'sap.ui.model.type.Float',
 
-                                                formatOptions:{
+                                                 formatOptions:{
 
                                                     minIntegerDigits:1,
 
@@ -435,7 +435,7 @@
 							<Label text="Fecha contable"></Label>
 						</table:label>
 						<table:template>
-							<Text text="{Combustible>FECCONMOV}"/>
+							<Text text="{Combustible>FECCONMOV}" />
 						</table:template>
 					</table:Column>
 					<table:Column width="20rem"
@@ -486,7 +486,7 @@
 							<Label text="Fecha contable"></Label>
 						</table:label>
 						<table:template>
-							<Text text="{Combustible>FECCONMO2}"/>
+							<Text text="{Combustible>FECCONMO2}"  />
 						</table:template>
 					</table:Column>
 					<table:Column width="20rem" visible="{Embarca>/valida}">
