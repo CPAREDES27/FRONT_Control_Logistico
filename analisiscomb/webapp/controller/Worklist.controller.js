@@ -200,7 +200,7 @@ sap.ui.define([
 			this.fechaFin=idFechaF;
 			
 			var body={
-				"embarcacionIni": idEmbarcacion,
+				"embarcacionIni":idEmbarcacion,
 				"fechaFin": idFechaF,
 				"fechaIni": idFechaIni,
 				"motivoIni": idEstado,
@@ -1735,6 +1735,7 @@ sap.ui.define([
 
 
 
+			console.log("ultimoZarpe: "+ ultimoZarpe);
 
 			if (ultimoZarpe == 0) {
 				if (ultimoHorometro != -1) {

@@ -435,7 +435,7 @@
 							<Label text="Fecha contable"></Label>
 						</table:label>
 						<table:template>
-							<Text text="{Combustible>FECCONMOV}" />
+							<DatePicker value="{Combustible>FECCONMOV}" editable="{Combustible>SoloLecturaAjustComb}" displayFormat="dd/MM/yyyy" valueFormat="dd/MM/yyyy" />
 						</table:template>
 					</table:Column>
 					<table:Column width="20rem"
@@ -486,7 +486,7 @@
 							<Label text="Fecha contable"></Label>
 						</table:label>
 						<table:template>
-							<Text text="{Combustible>FECCONMO2}"  />
+							<DatePicker value="{Combustible>FECCONMO2}" displayFormat="dd/MM/yyyy" valueFormat="dd/MM/yyyy" />
 						</table:template>
 					</table:Column>
 					<table:Column width="20rem" visible="{Embarca>/valida}">
