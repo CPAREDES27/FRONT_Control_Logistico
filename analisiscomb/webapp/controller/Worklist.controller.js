@@ -328,7 +328,9 @@ sap.ui.define([
 						
 					}
 						
-						
+					data.str_csmar[i].HIZAR = data.str_csmar[i].HIZAR.split(":")[0]+":"+data.str_csmar[i].HIZAR.split(":")[1];
+					data.str_csmar[i].HIARR = data.str_csmar[i].HIARR.split(":")[0]+":"+data.str_csmar[i].HIARR.split(":")[1];
+
 					
 					
 					//estadoPRE2
@@ -345,7 +347,7 @@ sap.ui.define([
 				this.byId("idListaReg").setText(cantidadRegistros);
 
 				this.onColumnTable();
-
+				this.autoResizeColumns();
 				
 
 
@@ -354,6 +356,10 @@ sap.ui.define([
 			);
 
 		},
+		autoResizeColumns: function() {
+			const table = this.byId("table");
+			table.getColumns().map((col, index) => table.autoResizeColumn(index));
+		  },
 		createColumnConfigEmba:function(){
 			return [
 				{

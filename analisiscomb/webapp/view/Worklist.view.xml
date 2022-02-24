@@ -252,7 +252,9 @@
 						</table:template>
 					</table:Column>
 					
-					<table:Column id="idSumn" hAlign="End" width="3.5rem"
+					<table:Column id="idSumn" hAlign="End"  
+						autoResizable="true"
+						width = "auto"
 						sortProperty="CNSUM"
 						filterProperty="CNSUM"
 						showFilterMenuEntry="true"

@@ -125,7 +125,8 @@
 				enableCellFilter="{ui>/enableCellFilter}"
 				columnSelect="onColumnSelect"
 				cellContextmenu="onProductIdCellContextMenu"
-				ariaLabelledBy="title">
+				ariaLabelledBy="title"
+				class="table3">
 			
 			    <t:columns>
 
@@ -193,7 +194,7 @@
 					</t:Column>
                     <t:Column 
 						id="HORPR3"
-						width="4rem"
+						width="5rem"
 						sortProperty="HORPR"
 						filterProperty="HORPR"
 						showFilterMenuEntry="true"
@@ -427,7 +428,8 @@
 				enableCellFilter="{ui>/enableCellFilter}"
 				columnSelect="onColumnSelect"
 				cellContextmenu="onProductIdCellContextMenu"
-				ariaLabelledBy="title">
+				ariaLabelledBy="title"
+				class="table2">
 			
 			    <t:columns>
 
@@ -512,7 +514,7 @@
 					</t:Column>
                     <t:Column
 						id=""
-						width="3.5rem"
+						width="4.5rem"
 						sortProperty="HORPR"
 						filterProperty="HORPR"
 						showFilterMenuEntry="true"
@@ -644,10 +646,10 @@
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						class="col"
-						headerSpan="2,1"
+						headerSpan="2"
 						hAlign="Center">
 						<t:multiLabels>
-							<Label text="(Gln/Hr)" textAlign="Center"/>
+							<Label text="(Gln/Hr)" />
 							<Label text="Real" />
 						</t:multiLabels>	
 						<t:template>
@@ -658,7 +660,7 @@
 													shortDecimals: 2,
 													groupingSeparator: ',',
 													decimalSeparator: '.'
-												}}" wrapping="true" textAlign="End"/>
+												}}" wrapping="true"/>
 						</t:template>
 					</t:Column>
                     <t:Column
@@ -670,7 +672,7 @@
 						showSortMenuEntry="true"
 						hAlign="End">
 						<t:multiLabels>
-							<Label text="(Gln/Hr)" textAlign="Center"/>
+							<Label text="(Gln/Hr)" />
 							<Label text="Teórico" />
 						</t:multiLabels>	
 						<t:template>

@@ -43,10 +43,7 @@ sap.ui.define([
 			this.lastPage = "";
 			this.listPlanta();	
 			this.listAlmacen();
-			this.listaCombos();
-		
-			
-			
+			this.listaCombos();					
 		},
 		onAfterRendering: async function(){
 			this.userOperation =await this._getCurrentUser();
@@ -454,21 +451,12 @@ sap.ui.define([
 			var cboTemporada = this.byId("cboTemporada").getSelectedKey();
 			var cboIndicador = this.byId("cboIndicador").getSelectedKey();
 			var idCantidad = this.byId("idCantidad").getValue();
-
-			// if(!idFechaInicio){
-			// 	MessageBox.error("La fecha de arribo es obligatorio");
-			// 	oGlobalBusyDialog.close();
-			// 	return false;
-			// }
 			var idFechaIni=this.castFecha(idFechaInicio);
 			var idFechaF=this.castFecha(idFechaFin);
 			this.fechaInicio=idFechaIni;
 			this.fechaFin=idFechaF;
-
-			//validaInputs 
-			
-			//validaInputs
 			var options=[];
+
 			if(idValeIni&& idValeFin){
 				options.push({
 					"cantidad": "10",
@@ -581,7 +569,6 @@ sap.ui.define([
 			  .then(resp => resp.json()).then(data => {
 				var listaViviere = data.data;
 				console.log(listaViviere);
-				//console.log(listaViviere.length);
 
 				this.getView().getModel("Vivere").setProperty("/listaVivere",listaViviere);
 				oGlobalBusyDialog.close();

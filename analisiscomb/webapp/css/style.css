@@ -5,3 +5,9 @@
 .table td :first-child{
         font-size: 10px;
 }
+.table2 td :first-child{
+        font-size: 11px;
+}
+.table3 td :first-child{
+        font-size: 11px;
+}
