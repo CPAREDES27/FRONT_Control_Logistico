@@ -218,7 +218,7 @@
 
                                                     decimalSeparator: '.'
 
-                                                }}" textAlign="End"/>
+                                                }}" textAlign="End" class="real"/>
 						</t:template>
 					</t:Column>
                     
@@ -538,7 +538,7 @@
 
                                                     decimalSeparator: '.'
 
-                                                }}"/>
+                                                }}" textAlign="End" class="real"/>
 						</t:template>
 					</t:Column>
                     
@@ -660,7 +660,7 @@
 													shortDecimals: 2,
 													groupingSeparator: ',',
 													decimalSeparator: '.'
-												}}" wrapping="true"/>
+												}}" wrapping="true" textAlign="End" class="real"/>
 						</t:template>
 					</t:Column>
                     <t:Column
@@ -671,7 +671,7 @@
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true"
 						hAlign="End">
-						<t:multiLabels>
+						<t:multiLabels >
 							<Label text="(Gln/Hr)" />
 							<Label text="Teórico" />
 						</t:multiLabels>	
