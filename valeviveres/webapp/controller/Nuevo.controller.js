@@ -12,8 +12,9 @@ sap.ui.define([
 	"sap/ui/core/Popup",
 	"sap/m/PDFViewer",
 	"sap/ui/core/routing/History",
-	"sap/ui/core/BusyIndicator"
-], function (BaseController, JSONModel, formatter, Filter, FilterOperator,Fragment,MessageBox,MessageToast,ValidateException,Core,Popup,PDFViewer,History,BusyIndicator) {
+	"sap/ui/core/BusyIndicator",
+	"./Utilities",
+], function (BaseController, JSONModel, formatter, Filter, FilterOperator,Fragment,MessageBox,MessageToast,ValidateException,Core,Popup,PDFViewer,History,BusyIndicator, Utilities) {
 	"use strict";
 	var oGlobalBusyDialog = new sap.m.BusyDialog();
 	const mainUrlServices = 'https://cf-nodejs-qas.cfapps.us10.hana.ondemand.com/api/';
@@ -877,7 +878,7 @@ sap.ui.define([
 			var cboProveedor=this.byId("cboProveedor").getSelectedKey();
 			var cadena="";
 			var valida=false;
-			if(!await this.validarValeFecha()){
+			if( this.validarValeFecha()){
 				return false;
 			}
 			console.log("SEGUI");

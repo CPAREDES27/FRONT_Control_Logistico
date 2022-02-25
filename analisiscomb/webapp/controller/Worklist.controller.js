@@ -1010,7 +1010,7 @@ sap.ui.define([
 				}
 			}
 			
-			console.log(newArray);
+			//console.log(newArray);
 			console.log(newArray.length);
 			var arraySend=[];
 
@@ -1040,32 +1040,32 @@ sap.ui.define([
 					"hamar": this.castHora2(newArray[j].HAMAR),
 					"hiarr": this.castHora2(newArray[j].HIARR),
 					"hizar": this.castHora2(newArray[j].HIZAR),
-					"hoaa1": newArray[j].HOAA1,
-					"hoaa2": newArray[j].HOAA2,
-					"hoaa3": newArray[j].HOAA3,
-					"hoaa4": newArray[j].HOAA4,
-					"hoaa5": newArray[j].HOAA5,
-					"hoafp": newArray[j].HOAFP,
-					"hoamp": newArray[j].HOAMP,
-					"hoapa": newArray[j].HOAPA,
-					"hodfp": newArray[j].HODFP,
-					"hodmp": newArray[j].HODMP,
-					"hoha1": newArray[j].HOHA1,
-					"hoha2": newArray[j].HOHA2,
-					"hoha3": newArray[j].HOHA3,
-					"hoha4": newArray[j].HOHA4,
-					"hoha5": newArray[j].HOHA5,
-					"hohfp": newArray[j].HOHFP,
-					"hohmp": newArray[j].HOHMP,
-					"hohpa": newArray[j].HOHPA,
-					"hoza1": newArray[j].HOZA1,
-					"hoza2": newArray[j].HOZA2,
-					"hoza3": newArray[j].HOZA3,
-					"hoza4": newArray[j].HOZA4,
-					"hoza5": newArray[j].HOZA5,
-					"hozfp": newArray[j].HOZFP,
-					"hozmp": newArray[j].HOZMP,
-					"hozpa": newArray[j].HOZPA,
+					"hoaa1":"",
+					"hoaa2":"",
+					"hoaa3": "",
+					"hoaa4": "",
+					"hoaa5": "",
+					"hoafp": "",
+					"hoamp":"",
+					"hoapa": "",
+					"hodfp": "",
+					"hodmp": "",
+					"hoha1": "",
+					"hoha2": "",
+					"hoha3": "",
+					"hoha4": "",
+					"hoha5": "",
+					"hohfp": "",
+					"hohmp": "",
+					"hohpa": "",
+					"hoza1":"",
+					"hoza2": "",
+					"hoza3":"",
+					"hoza4": "",
+					"hoza5":"",
+					"hozfp": "",
+					"hozmp": "",
+					"hozpa": "",
 					"hxmar": this.castHora2(newArray[j].HXMAR),
 					"nmemb": newArray[j].NMEMB,
 					"nrmar": newArray[j].NRMAR,
@@ -1074,9 +1074,10 @@ sap.ui.define([
 					"stcmb": newArray[j].STCMB,
 					"stfin": newArray[j].STFIN,
 					"werks": newArray[j].WERKS,
-					"zcdzar": newArray[j].ZCDZAR
+					"zcdzar": ""
 				});
 			}
+			console.log(arraySend);
 			var body={
 				"fieldsStr_csmaj": [
 				  
