@@ -284,8 +284,8 @@
 						</table:template>
 					</table:Column>
 					<table:Column id="idCons" hAlign="End" width="4.5rem"
-						sortProperty="CONSU2"
-						filterProperty="CONSU2"
+						sortProperty="CONSU"
+						filterProperty="CONSU"
 						showFilterMenuEntry="true"
 						showSortMenuEntry="true">
 						<table:label>
@@ -294,7 +294,7 @@
 						<table:template>
 					
 							
-								<Text text="{path:'Combustible>CONSU2', type:'sap.ui.model.type.Float',
+								<Text text="{path:'Combustible>CONSU', type:'sap.ui.model.type.Float',
 
                                                 formatOptions:{
 

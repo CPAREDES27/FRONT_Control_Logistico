@@ -269,7 +269,7 @@ sap.ui.define([
 					data.str_csmar[i].FECCONMOV2= this.changeFechaReport(data.str_csmar[i].FECCONMOV);
 					data.str_csmar[i].FECAR2= this.changeFechaReport(data.str_csmar[i].FECAR);
 					//data.str_csmar[i].CNSUM=String(this.parseMil(data.str_csmar[i].CNSUM));
-					data.str_csmar[i].CONSU=String(this.parseMil(data.str_csmar[i].CONSU));
+					//data.str_csmar[i].CONSU=String(this.parseMil(data.str_csmar[i].CONSU));
 					data.str_csmar[i].CNPDS=String(data.str_csmar[i].CNPDS);
 					data.str_csmar[i].CNPDS2=Math.round(data.str_csmar[i].CNPDS);
 					data.str_csmar[i].STFIN=String(data.str_csmar[i].STFIN);
