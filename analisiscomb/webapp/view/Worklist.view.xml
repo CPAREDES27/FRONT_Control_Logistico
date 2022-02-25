@@ -107,7 +107,7 @@
 					<OverflowToolbar style="Clear">
 						<Button text="Cuadro de consumo" press="onCuadroConsumo" id="btnCdroConsumo"/>
 						<Button text="QlikView" press="onExportarExcelDataQlikView"/>
-						<Button text="Carga Consumo" press="onCargarConsumo"/>
+						<Button text="Carga Consumo" press="onConfirm"/>
 						</OverflowToolbar>
 					<OverflowToolbar style="Clear">						
 						<Title text="Lista de registros {/dataCount}" id="idListaReg"/>

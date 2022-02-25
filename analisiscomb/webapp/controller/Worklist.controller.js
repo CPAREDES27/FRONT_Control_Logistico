@@ -967,11 +967,7 @@ sap.ui.define([
 		onCargarConsumo: function(){
 			oGlobalBusyDialog.open();
 			console.log(this.cantidadReg);
-			if(this.cantidadReg===0){
-				MessageBox.error("No se realizó niguna búsqueda");
-				oGlobalBusyDialog.close();
-				return false;
-			}
+		
 			var table = this.byId("table");
 			console.log(table);
 			var array=table.oPropagatedProperties.oModels.Combustible.oData.listaCombustible;
@@ -983,22 +979,7 @@ sap.ui.define([
 					contador++;
 				}
 			}
-			if(contador==0){
-				MessageBox.error("No seleccionó ningún registro");
-				oGlobalBusyDialog.close();
-				return false;
-			}else{
-				MessageBox.show(
-					"¿Estás seguro que deseas realizar la carga de consumo?", {
-						icon: MessageBox.Icon.INFORMATION,
-						title: "Carga de Consumo",
-						actions: [MessageBox.Action.YES, MessageBox.Action.NO],
-						emphasizedAction: MessageBox.Action.YES,
-						onClose: function (oAction) { if(oAction==2 || oAction==3){ return false; } }
-					}
-				);
-
-			}
+			
 			console.log(newArray);
 			console.log(newArray.length);
 			var arraySend=[];
@@ -1113,6 +1094,46 @@ sap.ui.define([
 				oGlobalBusyDialog.close();
 			  }).catch(error => console.log(error)
 			);
+		},
+		onConfirm: function(){
+			oGlobalBusyDialog.open();
+			if(this.cantidadReg===0){
+				MessageBox.error("No se realizó niguna búsqueda");
+				oGlobalBusyDialog.close();
+				return false;
+			}
+			var table = this.byId("table");
+			console.log(table);
+			var array=table.oPropagatedProperties.oModels.Combustible.oData.listaCombustible;
+			var newArray=[];
+			var contador=0;
+			for(var i=0;i<array.length;i++){
+				if(array[i].estadoCheck===true){
+					newArray[contador]=array[i];
+					contador++;
+				}
+			}
+			if(contador==0){
+				MessageBox.error("No seleccionó ningún registro");
+				oGlobalBusyDialog.close();
+				return false;
+			}
+
+			MessageBox.warning(
+				"¿Estas seguro que desea realizar la carga de consumo?", {	
+					icon: MessageBox.Icon.WARNING,	
+					title: "Carga consumo",	
+					actions: [MessageBox.Action.YES,MessageBox.Action.NO],	
+					emphasizedAction: MessageBox.Action.OK,
+						onClose: function (oAction) { if(oAction=="YES"){	
+						this.onCargarConsumo();
+
+					}}.bind(this)
+
+				}
+
+			);
+			oGlobalBusyDialog.close();
 		},
 		castFecha2: function(fecha){
 			if(fecha==="null" || fecha==="" || fecha==="-"){
