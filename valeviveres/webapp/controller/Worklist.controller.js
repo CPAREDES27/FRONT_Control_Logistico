@@ -79,6 +79,7 @@ sap.ui.define([
 				var oModel = new JSONModel();
 
 				this.getView().setModel(oModel);
+				oGlobalBusyDialog.close();
 
 				  })
 			},

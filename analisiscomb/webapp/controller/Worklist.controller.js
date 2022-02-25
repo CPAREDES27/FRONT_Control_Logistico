@@ -35,6 +35,7 @@ sap.ui.define([
 	var fechaFin="";
 	var codFase="";
 	var exportarExcel=false;
+	var cantidadReg;
 	const HOST = "https://tasaqas.launchpad.cfapps.us10.hana.ondemand.com";
 	return BaseController.extend("com.tasa.analisiscomb.controller.Worklist", {
 
@@ -60,7 +61,7 @@ sap.ui.define([
 			this.currentPage = "";
 			this.lastPage = "";
 			this.loadCombos();	
-
+			this.cantidadReg=0;
 
 		},
 		
@@ -151,6 +152,9 @@ sap.ui.define([
 			this.byId("idEstado").setValue("");
 			this.byId("idCant").setValue("200");
 			this.getView().getModel("Combustible").setProperty("/listaCombustible",{});
+			this.cantidadReg=0;
+			var cantidadRegistros="Lista de registros ("+this.cantidadReg+")";
+			this.byId("idListaReg").setText(cantidadRegistros);
 		},
 		parseMil: function(price){
 			var num = price;
@@ -342,8 +346,8 @@ sap.ui.define([
 				console.log(data);
 			
 				this.getView().getModel("Combustible").setProperty("/listaCombustible",data.str_csmar);
-				
-				var cantidadRegistros="Lista de registros ("+data.str_csmar.length+")";
+				this.cantidadReg=data.str_csmar.length;
+				var cantidadRegistros="Lista de registros ("+this.cantidadReg+")";
 				this.byId("idListaReg").setText(cantidadRegistros);
 
 				this.onColumnTable();
@@ -962,6 +966,12 @@ sap.ui.define([
 			
 		onCargarConsumo: function(){
 			oGlobalBusyDialog.open();
+			console.log(this.cantidadReg);
+			if(this.cantidadReg===0){
+				MessageBox.error("No se realizó niguna búsqueda");
+				oGlobalBusyDialog.close();
+				return false;
+			}
 			var table = this.byId("table");
 			console.log(table);
 			var array=table.oPropagatedProperties.oModels.Combustible.oData.listaCombustible;
@@ -972,6 +982,22 @@ sap.ui.define([
 					newArray[contador]=array[i];
 					contador++;
 				}
+			}
+			if(contador==0){
+				MessageBox.error("No seleccionó ningún registro");
+				oGlobalBusyDialog.close();
+				return false;
+			}else{
+				MessageBox.show(
+					"¿Estás seguro que deseas realizar la carga de consumo?", {
+						icon: MessageBox.Icon.INFORMATION,
+						title: "Carga de Consumo",
+						actions: [MessageBox.Action.YES, MessageBox.Action.NO],
+						emphasizedAction: MessageBox.Action.YES,
+						onClose: function (oAction) { if(oAction==2 || oAction==3){ return false; } }
+					}
+				);
+
 			}
 			console.log(newArray);
 			console.log(newArray.length);

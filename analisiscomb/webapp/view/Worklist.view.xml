@@ -7,6 +7,8 @@
 	xmlns:f="sap.ui.layout.form"
 	xmlns:table="sap.ui.table">	
 
+<Shell appWidthLimited="false">
+<App id="app">
 	<semantic:SemanticPage
 		id="page">
 
@@ -513,5 +515,6 @@
 		</semantic:content>
 
 	</semantic:SemanticPage>
-
+	</App>
+	</Shell>
 </mvc:View>

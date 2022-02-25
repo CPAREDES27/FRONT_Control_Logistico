@@ -14,3 +14,10 @@
 .real{
         display: block;
 }
+/*
+@media (min-width: 1280px){
+html.sap-desktop .sapMShellAppWidthLimited .sapMShellCentralBox{
+        width: 1340px;
+        margin-left: -670px;
+}
+}*/

@@ -967,7 +967,8 @@ sap.ui.define([
 					for(var i=0;i<=numeroDias;i++){
 						sumi.push({
 							CDSUM:data.s_data[0].CDSUM,
-							CDUMD:this.zeroFill(i+1,3),
+							CDUMD:data.s_data[0].CDUMD,
+							//CDUMD:this.zeroFill(i+1,3),
 							NRPOS:this.zeroFill(i+1,4),
 							CUSUM:data.s_data[0].CUSUM,
 							DSSUM:data.s_data[0].DSSUM,
@@ -1248,6 +1249,7 @@ sap.ui.define([
 								onClose: function (oAction) { if(oAction=="OK"){
 									this.onLimpiar();
 									this.getRouter().navTo("worklist"); 
+									oGlobalBusyDialog.close();
 								}}.bind(this)
 							}
 						);
@@ -1401,8 +1403,8 @@ sap.ui.define([
 				CDPVE:cboProveedor,
 				OBVVI:idObserva,
 				EBELN:"",
-				ESVVI:"S",
-				ESIMP:"I",
+				ESVVI:"",
+				ESIMP:"",
 				FCVVI:this.getFechaActual(),
 				HCVVI:this.getHoraActual(),
 				ACVVI:this.userOperation,
@@ -1442,8 +1444,9 @@ sap.ui.define([
 							}}.bind(this)
 						}
 					);
-					oGlobalBusyDialog.close();
+				
 					this.onImprimir(data.p_vale);
+					oGlobalBusyDialog.close();
 				  }).catch(error => console.log(error)
 				  );
 		},
