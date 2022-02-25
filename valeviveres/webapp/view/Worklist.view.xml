@@ -28,14 +28,17 @@
 										id="idValeIni"
 										placeholder="Ingrese vale desde"
 										/>
-									<Input type="Text" maxLength="10"
+									<!-- <Input type="Text" maxLength="10"
 										id="idValeFin" 
-										placeholder="Ingrese vale hasta" />
+										placeholder="Ingrese vale hasta" /> -->
 								</form:fields>
 							</form:FormElement>
 							<form:FormElement label="Fecha">
 								<form:fields>
-									<DateRangeSelection id="idFechaVivere" displayFormat="dd/MM/yyyy" valueFormat="yyyyMMdd"/>
+									<DatePicker id="idFechaVivereIni" width="auto" displayFormat="dd/MM/yyyy" required="false" valueStateText="Invalid entry" enabled="true" valueFormat="dd/MM/yyyy"/>
+                                	<DatePicker id="idFechaVivereFin" width="auto" displayFormat="dd/MM/yyyy" required="false" valueStateText="Invalid entry" enabled="true" valueFormat="dd/MM/yyyy"/>
+									<!-- <DateRangeSelection id="idFechaVivere" displayFormat="dd/MM/yyyy" valueFormat="yyyyMMdd"/> -->
+									<!-- <DateRangeSelection id="idFechaVivere" displayFormat="dd/MM/yyyy" valueFormat="yyyyMMdd"/> -->
 								</form:fields>
 							</form:FormElement>
 							<form:FormElement label="Armador comercial">

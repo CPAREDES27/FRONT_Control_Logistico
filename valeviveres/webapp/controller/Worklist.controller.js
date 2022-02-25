@@ -79,9 +79,9 @@ sap.ui.define([
 				var oModel = new JSONModel();
 
 				this.getView().setModel(oModel);
-				oGlobalBusyDialog.close();
-
+			
 				  })
+				  oGlobalBusyDialog.close();
 			},
 		listaCombos: function(){
 			
@@ -439,12 +439,21 @@ sap.ui.define([
 				}
 				return number + ""; // siempre devuelve tipo cadena
 		},
+		castFechaVivere: function(fecha){
+			if(fecha){
+			var anio=fecha.split("/")[2];
+			var mes=fecha.split("/")[1];
+			var dia=fecha.split("/")[0];
+			return anio+""+mes+""+dia;
+			}else{
+				return "";
+			}
+		},
 		onBusqueda: function(){
 			var idValeIni = this.byId("idValeIni").getValue();
-			var idValeFin = this.byId("idValeFin").getValue();
-			var idFechaI = this.byId("idFechaVivere").getValue();	
-			var idFechaInicio=this.byId("idFechaVivere").mProperties.dateValue;
-			var idFechaFin= this.byId("idFechaVivere").mProperties.secondDateValue;
+			// var idValeFin = this.byId("idValeFin").getValue();
+			var idFechaInicio=this.byId("idFechaVivereIni").getValue();
+			var idFechaFin= this.byId("idFechaVivereFin").getValue();
 			var idArmadorIni = this.byId("idArmadorIni").getValue();
 			var idEmbarcacion = this.byId("inputId0_R").getValue();
 			var idPlantaIni = this.byId("idPlantaIni").getValue();
@@ -452,40 +461,49 @@ sap.ui.define([
 			var cboTemporada = this.byId("cboTemporada").getSelectedKey();
 			var cboIndicador = this.byId("cboIndicador").getSelectedKey();
 			var idCantidad = this.byId("idCantidad").getValue();
-			var idFechaIni=this.castFecha(idFechaInicio);
-			var idFechaF=this.castFecha(idFechaFin);
+
+			// if(!idFechaInicio){
+			// 	MessageBox.error("La fecha de arribo es obligatorio");
+			// 	oGlobalBusyDialog.close();
+			// 	return false;
+			// }
+			var idFechaIni=this.castFechaVivere(idFechaInicio);
+			var idFechaF=this.castFechaVivere(idFechaFin);
 			this.fechaInicio=idFechaIni;
 			this.fechaFin=idFechaF;
-			var options=[];
 
-			if(idValeIni&& idValeFin){
-				options.push({
-					"cantidad": "10",
-					"control": "MULTIINPUT",
-					"key": "NRVVI",
-					"valueHigh": idValeFin,
-					"valueLow": idValeIni
-				});
-			}
-			if(idValeIni&& !idValeFin){
-				options.push({
-					"cantidad": "10",
-					"control": "INPUT",
-					"key": "NRVVI",
-					"valueHigh": "",
-					"valueLow": idValeIni
-				});
-			}
-			if(!idValeIni&& idValeFin){
+			//validaInputs 
+			
+			//validaInputs
+			var options=[];
+			// if(idValeIni&& idValeFin){
+			// 	options.push({
+			// 		"cantidad": "10",
+			// 		"control": "MULTIINPUT",
+			// 		"key": "NRVVI",
+			// 		"valueHigh": idValeFin,
+			// 		"valueLow": idValeIni
+			// 	});
+			// }
+			if(idValeIni){
 				options.push({
 					"cantidad": "10",
 					"control": "INPUT",
 					"key": "NRVVI",
 					"valueHigh": "",
-					"valueLow": idValeFin
+					"valueLow": idValeIni
 				});
 			}
-			if(idFechaI){
+			// if(!idValeIni && idValeFin){
+			// 	options.push({
+			// 		"cantidad": "10",
+			// 		"control": "INPUT",
+			// 		"key": "NRVVI",
+			// 		"valueHigh": "",
+			// 		"valueLow": idValeFin
+			// 	});
+			// }
+			if(idFechaIni && idFechaF){
 				options.push({
 					"cantidad": "10",
 					"control": "MULTIINPUT",
@@ -494,6 +512,29 @@ sap.ui.define([
 					"valueLow": idFechaIni
 				});
 			}
+			
+			if(!idFechaIni && idFechaF){
+				options.push({
+					"cantidad": "10",
+					"control": "INPUT",
+					"key": "FCVVI",
+					"valueHigh": idFechaF,
+					"valueLow": ""
+				});
+			}
+
+
+			if(idFechaIni && !idFechaF){
+				options.push({
+					"cantidad": "10",
+					"control": "INPUT",
+					"key": "FCVVI",
+					"valueHigh":"",
+					"valueLow": idFechaIni
+				});
+			}
+
+
 
 			if(idArmadorIni){
 				options.push({
@@ -570,6 +611,7 @@ sap.ui.define([
 			  .then(resp => resp.json()).then(data => {
 				var listaViviere = data.data;
 				console.log(listaViviere);
+				//console.log(listaViviere.length);
 
 				this.getView().getModel("Vivere").setProperty("/listaVivere",listaViviere);
 				oGlobalBusyDialog.close();
@@ -612,7 +654,8 @@ sap.ui.define([
 			}
 			var body={
 				"numValeVivere": codigo,
-				"p_user": this.userOperation
+				"p_user": this.userOperation,
+				"estadoImpresion": "I"
 			}
 			fetch(`${Utilities.onLocation()}tripulantes/PDFValeViveres`,
 			  {
