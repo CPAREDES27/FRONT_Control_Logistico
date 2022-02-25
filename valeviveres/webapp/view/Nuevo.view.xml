@@ -160,8 +160,8 @@
                                             </form:label>
                                             <form:fields>
                                                 <HBox width="auto">
-                                                    <Input type="Text" id="idEmbarcacion"  showValueHelp="true" enabled="true" visible="true" width="276px" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="onOpenEmba"/>
-                                                    <!-- <Input id="inputId1_R" description="{/help/NMEMB}" placeholder="Seleccione embarcación" showValueHelp="true"  valueHelpRequest="onSearchHelp"/> -->
+                                                    <!-- <Input type="Text" id="idEmbarcacion"  showValueHelp="true" enabled="true" visible="true" width="276px" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="onOpenEmba"/> -->
+                                                    <Input id="inputId1_R" value="{path:'/help/WERKS',formatter:'.onFormat'}" description="{/help/NMEMB}" placeholder="Seleccione embarcación" valueHelpOnly="true" showValueHelp="true"  valueHelpRequest="onSearchHelp"/>
                                                 </HBox>
                                             </form:fields>
                                         </form:FormElement>
@@ -478,7 +478,7 @@
                                 <t:Column width="16%">
                                     <Label text="Costo unitario"/>
                                     <t:template>
-                                        <Input value="{Suministros>CUSUM}" change="reload" width="auto" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                        <Input value="{Suministros>CUSUM}" enabled="{Suministros>costo}" change="reload" width="auto" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                     </t:template>
                                 </t:Column>
                                 <t:Column width="16%">

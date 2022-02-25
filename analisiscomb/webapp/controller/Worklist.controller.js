@@ -677,6 +677,35 @@ sap.ui.define([
 				
 				];
 		},
+		getFechaActual:function(){
+			var fecha=new Date();
+			var dia = fecha.getDate();
+			var mes = fecha.getMonth()+1;
+			var anio= fecha.getFullYear();
+			if(dia<10){
+				dia=this.zeroFill(dia,2);
+			}
+			if(mes<10){
+				mes=this.zeroFill(mes,2);
+			}
+			return anio+""+mes+""+dia;
+		},
+		getHoraActual:function(){
+			var horaActual=new Date();
+			var hora=horaActual.getHours();
+			var minuto=horaActual.getMinutes();
+			var segundos=horaActual.getSeconds();
+			if(hora<10){
+				hora=this.zeroFill(hora,2);
+			}
+			if(minuto<10){
+				minuto=this.zeroFill(minuto,2);
+			}
+			if(segundos<10){
+				segundos=this.zeroFill(segundos,2);
+			}
+			return hora+""+minuto+""+segundos;
+		},
 		onExportarExcelData: async function() {
 			oGlobalBusyDialog.open();
 			if(!exportarExcel){
@@ -704,8 +733,7 @@ sap.ui.define([
 				"p_user": this.userOperation
 			}			
 			
-			
-
+			oRequestBody = this.getModel("exportExcelOptions").getProperty("/requestBody");
 			let data = await fetch(`${Utilities.onLocation()}analisiscombustible/ExportRegistroAnalisisCombus`, {
 				method: 'POST',
 				body: JSON.stringify(oRequestBody)
@@ -714,6 +742,8 @@ sap.ui.define([
 			/**
 			 * Creación del libro de Excel
 			 */
+			 let fecha = this.getFechaActual();
+			 let hora = this.getHoraActual();
 			const content = data.base64;
 			if (content) {
 				const contentType = 'application/vnd.ms-excel';
@@ -721,7 +751,7 @@ sap.ui.define([
 				let byteCharacters = window.atob(
 					content);
 				let byteArrays = [];
-				const fileName = 'Reporte Análisis de Combustible.xls';
+				const fileName = 'Reporte Análisis de Combustible'+fecha+hora+'.xls';
 
 				/**
 				 * Convertir base64 a Blob
