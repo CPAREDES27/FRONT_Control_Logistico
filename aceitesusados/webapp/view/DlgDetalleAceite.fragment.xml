@@ -155,7 +155,7 @@
         <beginButton/>
         <buttons>
             <Button text="Cerrar"
-             type="Reject" icon="sap-icon://decline" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="_onCloseDialogAceite"/>
+             type="Reject" icon="sap-icon://decline" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="onCloseDialogAceite"/>
         </buttons>
         <customHeader/>
         <endButton/>

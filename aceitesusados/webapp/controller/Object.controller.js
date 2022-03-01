@@ -28,7 +28,7 @@ sap.ui.define([
 					delay : 0
 				});
 
-			this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
+			this.getRouter().getRoute("object").attachPatternMatched(this.onObjectMatched, this);
 
 			// Store original busy indicator delay, so it can be restored later on
 			iOriginalBusyDelay = this.getView().getBusyIndicatorDelay();
@@ -71,13 +71,13 @@ sap.ui.define([
 		 * @param {sap.ui.base.Event} oEvent pattern match event in route 'object'
 		 * @private
 		 */
-		_onObjectMatched : function (oEvent) {
+		onObjectMatched : function (oEvent) {
 			var sObjectId =  oEvent.getParameter("arguments").objectId;
 			this.getModel().metadataLoaded().then( function() {
 				var sObjectPath = this.getModel().createKey("Categories", {
 					CategoryID :  sObjectId
 				});
-				this._bindView("/" + sObjectPath);
+				this.onBindView("/" + sObjectPath);
 			}.bind(this));
 		},
 
@@ -87,14 +87,14 @@ sap.ui.define([
 		 * @param {string} sObjectPath path to the object to be bound
 		 * @private
 		 */
-		_bindView : function (sObjectPath) {
+		onBindView : function (sObjectPath) {
 			var oViewModel = this.getModel("objectView"),
 				oDataModel = this.getModel();
 
 			this.getView().bindElement({
 				path: sObjectPath,
 				events: {
-					change: this._onBindingChange.bind(this),
+					change: this.onBindingChange.bind(this),
 					dataRequested: function () {
 						oDataModel.metadataLoaded().then(function () {
 							// Busy indicator on view should only be set if metadata is loaded,
@@ -111,7 +111,7 @@ sap.ui.define([
 			});
 		},
 
-		_onBindingChange : function () {
+		onBindingChange : function () {
 			var oView = this.getView(),
 				oViewModel = this.getModel("objectView"),
 				oElementBinding = oView.getElementBinding();

@@ -7,7 +7,6 @@ sap.ui.define([
     return {
         onLocation:function(){
 			var oRouter = window.location.origin;
-			console.log(oRouter)
 			var service="";
 			if(oRouter.indexOf("localhost") !== -1){
 				service='https://cf-nodejs-qas.cfapps.us10.hana.ondemand.com/api/'
@@ -21,7 +20,6 @@ sap.ui.define([
 			if(oRouter.indexOf("tasaqas")!==-1){
 				service='https://cf-nodejs-qas.cfapps.us10.hana.ondemand.com/api/'
 			}
-			console.log(service);
 			return service;
 		},
     }

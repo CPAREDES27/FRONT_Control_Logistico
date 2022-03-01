@@ -21,7 +21,7 @@
 		<semantic:headerContent>
 			<f:Form editable="true">
 				<f:title>
-					<core:Title text="Datos de Selección" />
+					<core:Title text="{i18n>datoSeleccion}" />
 				</f:title>
 				<f:formContainers>
 					<f:FormContainer >
@@ -64,7 +64,7 @@
 						<f:formElements>
 							<f:FormElement label="Embarcación">
 								<f:fields>
-									<m:Input type="Text" id="idEmbarcacion2" showValueHelp="true" enabled="true" visible="true" width="91%" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="onOpenEmba"/>
+									<m:Input type="Text" id="idEmbarcacion2" showValueHelp="true" enabled="true" visible="true" width="91%" valueHelpOnly="true" required="false" valueStateText="Invalid entry" maxLength="0" valueHelpRequest="onOpenEmba"/>
 									<m:Text text="" id="txtEmbarca" width="50%" maxLines="1" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 								</f:fields>
 							</f:FormElement>

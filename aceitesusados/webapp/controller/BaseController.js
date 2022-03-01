@@ -48,7 +48,7 @@ sap.ui.define([
 			return this.getOwnerComponent().getModel("i18n").getResourceBundle();
 		},
 		
-		_getCurrentUser: async function(){
+		onGetCurrentUser: async function(){
 
 			let oUshell = sap.ushell,
 
@@ -124,7 +124,7 @@ sap.ui.define([
 	
 		},
 		
-		_getHelpSearch:  function(){
+		onGetHelpSearch:  function(){
 			var oRouter = window.location.origin;
 			var service=[];
 			if(oRouter.indexOf("localhost") !== -1){

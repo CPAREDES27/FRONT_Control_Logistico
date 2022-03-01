@@ -159,7 +159,7 @@
         <buttons>
         <Button type="Emphasized" icon="sap-icon://save" text="Guardar" press="onGuardar" />
             <Button text="Cerrar"
-             type="Reject" icon="sap-icon://decline" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="_onCloseNuevoAceite"/>
+             type="Reject" icon="sap-icon://decline" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="onCloseNuevoAceite"/>
         </buttons>
         <customHeader/>
         <endButton/>
